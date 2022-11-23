@@ -339,7 +339,7 @@ PROC PROCProgramRunGitTseWindow()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.305</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.306</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. PROC Main()
  // e.g.  //
@@ -773,7 +773,12 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   EditFile( Format( "-a -s", " ", directoryRepositoryS ) )
   //
+  UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
   B = FNProgramRunGitTseOutputB( s, "s097", FALSE )
+  //
+  PROCProgramRunGitTseWindow()
+  Warn( "<Press any key to continue>" )
   //
   PopBlock()
   PopPosition()
@@ -1553,8 +1558,6 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  IF s3 == GetGlobalStr( "s018" )
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
-  // s = Format( s, " ", "&", " " )
-  // s = Format( s, "keystack", " ", '"', githubUserNameS, '"', " ", "enter", " ", '"', githubPasswordS, '"', " ", "enter" )
   s = Format( s, " ", "&", " " )
   s = Format( s, executableS, " ", "push", " ", "--set-upstream", " ", githubRemoteDirectoryUrlS, " ", githubNameBranchS )
   s = Format( s, " ", "&", " " )
@@ -1574,8 +1577,6 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    IF ( ( Ask( "branch remote repository directory (TRUNK|main|master) = ", gitlabNameBranchS, _EDIT_HISTORY_ ) ) AND ( Length( gitlabNameBranchS ) > 0 ) )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
-    // s = Format( s, " ", "&", " " )
-    // s = Format( s, "keystack", " ", '"', githubUserNameS, '"', " ", "enter", " ", '"', githubPasswordS, '"', " ", "enter" )
     s = Format( s, " ", "&", " " )
     s = Format( s, executableS, " ", "push", " ", "--set-upstream", " ", gitlabRemoteDirectoryUrlS, " ", gitlabNameBranchS )
     s = Format( s, " ", "&", " " )
@@ -1754,8 +1755,6 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    ENDIF
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
-   // s = Format( s, " ", "&", " " )
-   // s = Format( s, "keystack", " ", '"', githubUserNameS, '"', " ", "enter", " ", '"', githubPasswordS, '"', " ", "enter" )
    s = Format( s, " ", "&", " " )
    s = Format( s, executableS, " ", "clone", " ", directoryRepositoryS, " ", directoryRepositoryOtherS )
    s = Format( s, " ", "&", " " )
@@ -1782,8 +1781,6 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     IF ( ( Ask( "message = ", messageS, _EDIT_HISTORY_ ) ) AND ( Length( messageS ) > 0 ) )
      //
      s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
-     // s = Format( s, " ", "&", " " )
-     // s = Format( s, "keystack", " ", '"', githubUserNameS, '"', " ", "enter", " ", '"', githubPasswordS, '"', " ", "enter" )
      s = Format( s, " ", "&", " " )
      s = Format( s, executableS, " ", "rm", " ", fileNameExtensionS )
      s = Format( s, " ", "&", " " )
