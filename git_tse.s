@@ -3,7 +3,7 @@ FORWARD INTEGER PROC FNMacroCheckExecB( STRING s1 )
 FORWARD INTEGER PROC FNMacroCheckLoadB( STRING s1 )
 FORWARD INTEGER PROC FNMathCheckLogicNotB( INTEGER i1 )
 FORWARD INTEGER PROC FNMathGetNumberInputYesNoCancelPositionDefaultI( STRING s1 )
-FORWARD INTEGER PROC FNProgramRunDosGitB( STRING s1, STRING s2 )
+FORWARD INTEGER PROC FNProgramRunGitTseOutputB( STRING s1, STRING s2, INTEGER i1 )
 FORWARD INTEGER PROC FNStringCheckEmptyB( STRING s1 )
 FORWARD INTEGER PROC FNStringCheckEqualB( STRING s1, STRING s2 )
 FORWARD INTEGER PROC FNWindowSetCenterPopupOnB()
@@ -92,6 +92,7 @@ PROC Main()
   SetGlobalStr( "s048", "Optionally: Run graphical Gitk program on the current local repository directory (git-scm only)" )
   SetGlobalStr( "s049", "Optionally: Run graphical Git-GUI program on the current local repository directory (git-scm only)" )
   SetGlobalStr( "s050", "Optionally: Read your current local repository directory" )
+  SetGlobalStr( "s097", "Optionally: Read all files in your current local repository directory" )
   SetGlobalStr( "s051", "Optionally: Read your current branch name in your current local repository directory" )
   SetGlobalStr( "s052", "Optionally: Read all the branch names in the current local repository directory: Branch" )
   SetGlobalStr( "s053", "Optionally: Read all the branch names in the current local repository directory: Show-Branch" )
@@ -180,6 +181,7 @@ PROC Main()
   AddLine( GetGlobalStr( "s048" ) ) //
   AddLine( GetGlobalStr( "s049" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s050" ) ) AddLine( "--------------------------------------------------------------------------" )
+  AddLine( GetGlobalStr( "s097" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s051" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s052" ) ) //
   AddLine( GetGlobalStr( "s053" ) ) AddLine( "--------------------------------------------------------------------------" )
@@ -337,7 +339,7 @@ PROC PROCProgramRunGitTseWindow()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.300</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.305</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. PROC Main()
  // e.g.  //
@@ -406,6 +408,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   SetGlobalStr( "s048", "Optionally: Run graphical Gitk program on the current local repository directory (git-scm only)" )
  // e.g.   SetGlobalStr( "s049", "Optionally: Run graphical Git-GUI program on the current local repository directory (git-scm only)" )
  // e.g.   SetGlobalStr( "s050", "Optionally: Read your current local repository directory" )
+ // e.g.   SetGlobalStr( "s097", "Optionally: Read all files in your current local repository directory" )
  // e.g.   SetGlobalStr( "s051", "Optionally: Read your current branch name in your current local repository directory" )
  // e.g.   SetGlobalStr( "s052", "Optionally: Read all the branch names in the current local repository directory: Branch" )
  // e.g.   SetGlobalStr( "s053", "Optionally: Read all the branch names in the current local repository directory: Show-Branch" )
@@ -494,6 +497,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s048" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s049" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s050" ) ) AddLine( "--------------------------------------------------------------------------" )
+ // e.g.   AddLine( GetGlobalStr( "s097" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s051" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s052" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s053" ) ) AddLine( "--------------------------------------------------------------------------" )
@@ -635,6 +639,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // Todo: View difference between 2 versions using BeyondCompare (see Subversion implementation). HEAD, HEAD~1, HEAD~2, HEAD~3, HEAD~4, ...
  //
+ // Todo: Also log non-Dos() commands in the log file => create common procedure / function for the log file
+ //
  // ===
  //
  STRING iniFileNameS[255] = GetGlobalStr( "iniFileNameS" ) // this is the ini file containing your parameters. Change this to an ini file of your choice. The default is tse.ini
@@ -672,6 +678,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  STRING gitscmDownloadUrlS[255] = GetProfileStr( sectionS, "gitscmDownloadUrlS", "", iniFileNameS ) // this is the URL where to download Git-SCM
  //
  STRING gittortoiseDownloadUrlS[255] = GetProfileStr( sectionS, "gittortoiseDownloadUrlS", "", iniFileNameS ) // this is the URL where to download TortoiseGit
+ //
+ STRING githubRemoteDirectoryCreateUrlS[255] = GetProfileStr( sectionS, "githubRemoteDirectoryCreateUrlS", "", iniFileNameS ) // this is URL to create a new repository on GitHub
+ STRING gitlabRemoteDirectoryCreateUrlS[255] = GetProfileStr( sectionS, "gitlabRemoteDirectoryCreateUrlS", "", iniFileNameS ) // this is URL to create a new repository on GitHub
  //
  STRING bookVersionControlWithGitOReillyUrlS[255] = GetProfileStr( sectionS, "bookVersionControlWithGitOReillyUrlS", "", iniFileNameS ) // this is the URL where to read the 'Version Control with Git' O'Reilly book
  //
@@ -731,6 +740,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   StartPgm( bookVersionControlWithGitOReillyUrlS )
   //
+  B = FNProgramRunGitTseOutputB( s, "s077", FALSE )
+  //
  ENDIF
  //
  // ------------------------------------------------------------------------------
@@ -739,6 +750,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   StartPgm( gitTortoiseDownloadUrlS )
   //
+  B = FNProgramRunGitTseOutputB( s, "s039", FALSE )
+  //
  ENDIF
  //
  // ------------------------------------------------------------------------------
@@ -746,6 +759,24 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  IF s3 == GetGlobalStr( "s038" )
   //
   StartPgm( gitCygwinDownloadUrlS )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s038", FALSE )
+  //
+ ENDIF
+ //
+ // ------------------------------------------------------------------------------
+ //
+ IF s3 == GetGlobalStr( "s097" )
+  //
+  PushPosition()
+  PushBlock()
+  //
+  EditFile( Format( "-a -s", " ", directoryRepositoryS ) )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s097", FALSE )
+  //
+  PopBlock()
+  PopPosition()
   //
  ENDIF
  //
@@ -774,7 +805,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "commit", " ", "-m", " ", '"', messageS, '"' )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s017" )
+    B = FNProgramRunGitTseOutputB( s, "s017", TRUE )
     //
    ENDIF
    //
@@ -805,7 +836,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", s1 )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s047" )
+    B = FNProgramRunGitTseOutputB( s, "s047", TRUE )
     //
    ENDIF
    //
@@ -857,7 +888,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, executableS, " ", "ls-remote" )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s094" )
+     B = FNProgramRunGitTseOutputB( s, "s094", TRUE )
      //
     ENDIF
    //
@@ -914,7 +945,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "fetch", " ", githubRemoteDirectoryUrlS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s027" )
+    B = FNProgramRunGitTseOutputB( s, "s027", TRUE )
     //
    ENDIF
    //
@@ -968,7 +999,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "pull", " ", githubRemoteDirectoryUrlS ) // pull = fetch + merge
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s028" )
+    B = FNProgramRunGitTseOutputB( s, "s028", TRUE )
     //
    ENDIF
    //
@@ -1022,7 +1053,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "push", " ", githubRemoteDirectoryUrlS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s029" )
+    B = FNProgramRunGitTseOutputB( s, "s029", TRUE )
     //
    ENDIF
    //
@@ -1037,7 +1068,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "help", " ", "--al" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s072" )
+  B = FNProgramRunGitTseOutputB( s, "s072", TRUE )
   //
  ENDIF
  //
@@ -1048,7 +1079,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s073" )
+  B = FNProgramRunGitTseOutputB( s, "s073", TRUE )
   //
  ENDIF
  //
@@ -1059,7 +1090,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "help", " ", "-a" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s070" )
+  B = FNProgramRunGitTseOutputB( s, "s070", TRUE )
   //
  ENDIF
  //
@@ -1070,7 +1101,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "help", " ", "-g" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s071" )
+  B = FNProgramRunGitTseOutputB( s, "s071", TRUE )
   //
  ENDIF
  //
@@ -1083,7 +1114,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, "tree", " ", ".git" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s074" )
+  B = FNProgramRunGitTseOutputB( s, "s074", TRUE )
   //
  ENDIF
  //
@@ -1096,7 +1127,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableGitGuiS )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s049" )
+  B = FNProgramRunGitTseOutputB( s, "s049", TRUE )
   //
  ENDIF
  //
@@ -1109,7 +1140,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableGitkS )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s048" )
+  B = FNProgramRunGitTseOutputB( s, "s048", TRUE )
   //
  ENDIF
  //
@@ -1120,7 +1151,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "remote" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s030" )
+  B = FNProgramRunGitTseOutputB( s, "s030", TRUE )
   //
  ENDIF
  //
@@ -1131,7 +1162,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "remote", " ", "-v" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s031" )
+  B = FNProgramRunGitTseOutputB( s, "s031", TRUE )
   //
  ENDIF
  //
@@ -1142,6 +1173,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   PROCProgramRunGitTseWindow()
   Warn( directoryRepositoryS )
   //
+  B = FNProgramRunGitTseOutputB( s, "s050", FALSE )
+  //
  ENDIF
  //
  // ------------------------------------------------------------------------------
@@ -1149,6 +1182,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  IF s3 == GetGlobalStr( "s046" )
   //
   StartPgm( executableCommandLineS )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s046", FALSE )
   //
  ENDIF
  //
@@ -1161,7 +1196,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "stash", " ", "push" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s086" )
+  B = FNProgramRunGitTseOutputB( s, "s086", TRUE )
   //
  ENDIF
  //
@@ -1174,7 +1209,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "stash", " ", "pop" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s087" )
+  B = FNProgramRunGitTseOutputB( s, "s087", TRUE )
   //
  ENDIF
  //
@@ -1187,7 +1222,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "bisect", " ", "start" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s088" )
+  B = FNProgramRunGitTseOutputB( s, "s088", TRUE )
   //
  ENDIF
  //
@@ -1200,7 +1235,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "bisect", " ", "bad" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s089" )
+  B = FNProgramRunGitTseOutputB( s, "s089", TRUE )
   //
  ENDIF
  //
@@ -1213,7 +1248,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "bisect", " ", "good" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s090" )
+  B = FNProgramRunGitTseOutputB( s, "s090", TRUE )
   //
  ENDIF
  //
@@ -1225,7 +1260,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "bisect", " ", "reset" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s091" )
+  B = FNProgramRunGitTseOutputB( s, "s091", TRUE )
   //
  ENDIF
  //
@@ -1242,7 +1277,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "merge", " ", s1 )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s044" )
+   B = FNProgramRunGitTseOutputB( s, "s044", TRUE )
    //
   ENDIF
   //
@@ -1261,7 +1296,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "branch", " ", "-d", " ", s1 )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s036" )
+   B = FNProgramRunGitTseOutputB( s, "s036", TRUE )
    //
   ENDIF
   //
@@ -1280,7 +1315,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "branch", " ", s1 )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s035" )
+   B = FNProgramRunGitTseOutputB( s, "s035", TRUE )
    //
   ENDIF
   //
@@ -1295,7 +1330,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "branch", " ", "--show-current" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s051" )
+  B = FNProgramRunGitTseOutputB( s, "s051", TRUE )
   //
  ENDIF
  //
@@ -1308,7 +1343,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "branch" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s052" )
+  B = FNProgramRunGitTseOutputB( s, "s052", TRUE )
   //
  ENDIF
  //
@@ -1321,7 +1356,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "show-branch", " ", "-a" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s053" )
+  B = FNProgramRunGitTseOutputB( s, "s053", TRUE )
   //
  ENDIF
  //
@@ -1338,7 +1373,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "checkout", " ", s1 )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s021" )
+   B = FNProgramRunGitTseOutputB( s, "s021", TRUE )
    //
   ENDIF
   //
@@ -1351,7 +1386,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "--version" )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s076" )
+  B = FNProgramRunGitTseOutputB( s, "s076", TRUE )
   //
  ENDIF
  //
@@ -1379,6 +1414,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     //
    ENDIF
    //
+   B = FNProgramRunGitTseOutputB( s, "s043", FALSE )
+   //
    PopBlock()
    PopPosition()
    //
@@ -1401,7 +1438,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "commit", " ", "-m", " ", '"', messageS, '"' )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s045" )
+    B = FNProgramRunGitTseOutputB( s, "s045", TRUE )
     //
    ENDIF
    //
@@ -1414,6 +1451,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  IF s3 == GetGlobalStr( "s011" )
   //
   StartPgm( gitScmDownloadUrlS )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s011", FALSE )
   //
  ENDIF
  //
@@ -1440,7 +1479,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    // initialize that repository directory (it will create a hidden .git directory inside the root of that directory)
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS, " ", "&", " ", executableS, " ", "init", " ", "-b", " ", githubNameBranchS, " ", directoryRepositoryS )
-   B = FNProgramRunDosGitB( s, "s012" )
+   B = FNProgramRunGitTseOutputB( s, "s012", TRUE )
    //
   ENDIF
   //
@@ -1454,7 +1493,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   IF ( ( Ask( "user name = ", userNameS, _EDIT_HISTORY_ ) ) AND ( Length( userNameS ) > 0 ) )
    //
    s = Format( executableS, " ", "config", " ", "--global", " ", "user.name", " ", '"', userNameS, '"' )
-   B = FNProgramRunDosGitB( s, "s013" )
+   B = FNProgramRunGitTseOutputB( s, "s013", TRUE )
    //
   ENDIF
   //
@@ -1468,7 +1507,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   IF ( ( Ask( "user email = ", userEmailS, _EDIT_HISTORY_ ) ) AND ( Length( userEmailS ) > 0 ) )
    //
    s = Format( executableS, " ", "config", " ", "--global", " ", "user.email", " ", '"', userEmailS, '"' )
-   B = FNProgramRunDosGitB( s, "s014" )
+   B = FNProgramRunGitTseOutputB( s, "s014", TRUE )
    //
   ENDIF
   //
@@ -1502,7 +1541,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     // Dos( Format( s, " ", "2>&1" ), _DONT_PROMPT_ )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s010" )
+    B = FNProgramRunGitTseOutputB( s, "s010", TRUE )
    ENDIF
    //
   ENDIF
@@ -1520,7 +1559,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, executableS, " ", "push", " ", "--set-upstream", " ", githubRemoteDirectoryUrlS, " ", githubNameBranchS )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s018" )
+  B = FNProgramRunGitTseOutputB( s, "s018", TRUE )
   //
  ENDIF
  //
@@ -1541,7 +1580,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "push", " ", "--set-upstream", " ", gitlabRemoteDirectoryUrlS, " ", gitlabNameBranchS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s019" )
+    B = FNProgramRunGitTseOutputB( s, "s019", TRUE )
     //
    ENDIF
    //
@@ -1644,7 +1683,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
       //
       s = Format( s, " ", "&", " " )
       s = Format( s, "pause" )
-      B = FNProgramRunDosGitB( s, "s024" )
+      B = FNProgramRunGitTseOutputB( s, "s024", TRUE )
       //
      ENDIF
      //
@@ -1686,7 +1725,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "clone", " ", cloneRemoteWebSiteExampleS, " ", "", " ", directoryRepositoryOtherS ) // debug further
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s025" )
+    B = FNProgramRunGitTseOutputB( s, "s025", TRUE )
     //
    ENDIF
    //
@@ -1721,7 +1760,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "clone", " ", directoryRepositoryS, " ", directoryRepositoryOtherS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s023" )
+   B = FNProgramRunGitTseOutputB( s, "s023", TRUE )
    //
   ENDIF
   //
@@ -1751,7 +1790,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, executableS, " ", "commit", " ", "-m", " ", '"', messageS, '"', " ", fileNameExtensionS )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s037" )
+     B = FNProgramRunGitTseOutputB( s, "s037", TRUE )
      //
     ENDIF
     //
@@ -1781,7 +1820,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "blame", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s056" )
+   B = FNProgramRunGitTseOutputB( s, "s056", TRUE )
    //
   ENDIF
   //
@@ -1796,11 +1835,25 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    //
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( directoryRepositoryOtherS, ":", " ", "Do you want to change to this other Git repository directory?" ) ) == 1 )
     //
+    IF NOT FileExists( directoryRepositoryOtherS )
+     //
+     IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( directoryRepositoryOtherS, ":", " ", "This other Git repository directory does not exist. Create it now?" ) ) == 1 )
+      //
+      directoryRepositoryOtherS = QuotePath( directoryRepositoryOtherS )
+      //
+      MkDir( directoryRepositoryOtherS )
+      //
+     ENDIF
+     //
+    ENDIF
+    //
     directoryRepositoryOtherS = QuotePath( directoryRepositoryOtherS )
     //
     WriteProfileStr( sectionS, "directoryRepositoryInS", directoryRepositoryOtherS, iniFileNameS ) // this is now changed to your current repository directory
     //
     directoryRepositoryS = directoryRepositoryOtherS
+    //
+    B = FNProgramRunGitTseOutputB( s, "s020", FALSE )
     //
    ENDIF
    //
@@ -1828,7 +1881,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "reset", " ", "HEAD", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s085" )
+   B = FNProgramRunGitTseOutputB( s, "s085", TRUE )
    //
   ENDIF
   //
@@ -1856,7 +1909,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "checkout", " ", "HEAD~6", " ", "--", " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s078" )
+    B = FNProgramRunGitTseOutputB( s, "s078", TRUE )
     //
    ENDIF
    //
@@ -1886,7 +1939,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "checkout", " ", "HEAD~2", " ", "--", " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s079" )
+    B = FNProgramRunGitTseOutputB( s, "s079", TRUE )
     //
    ENDIF
    //
@@ -1916,7 +1969,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "checkout", " ", "HEAD~3", " ", "--", " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s080" )
+    B = FNProgramRunGitTseOutputB( s, "s080", TRUE )
     //
    ENDIF
    //
@@ -1946,7 +1999,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "checkout", " ", "HEAD~4", " ", "--", " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s081" )
+    B = FNProgramRunGitTseOutputB( s, "s081", TRUE )
     //
    ENDIF
    //
@@ -1976,7 +2029,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "checkout", " ", "HEAD~5", " ", "--", " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s082" )
+    B = FNProgramRunGitTseOutputB( s, "s082", TRUE )
     //
    ENDIF
    //
@@ -2006,7 +2059,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "checkout", " ", "HEAD~6", " ", "--", " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s083" )
+    B = FNProgramRunGitTseOutputB( s, "s083", TRUE )
     //
    ENDIF
    //
@@ -2039,7 +2092,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, executableS, " ", "checkout", " ", "HEAD~", s1, " ", "--", " ", fileNameExtensionS )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s084" )
+     B = FNProgramRunGitTseOutputB( s, "s084", TRUE )
     ENDIF
     //
    ENDIF
@@ -2068,7 +2121,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", "HEAD~1", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s058" )
+   B = FNProgramRunGitTseOutputB( s, "s058", TRUE )
    //
   ENDIF
   //
@@ -2094,7 +2147,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", "HEAD~2", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s059" )
+   B = FNProgramRunGitTseOutputB( s, "s059", TRUE )
    //
   ENDIF
   //
@@ -2120,7 +2173,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", "HEAD~3", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s060" )
+   B = FNProgramRunGitTseOutputB( s, "s060", TRUE )
    //
   ENDIF
   //
@@ -2146,7 +2199,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", "HEAD~4", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s061" )
+   B = FNProgramRunGitTseOutputB( s, "s061", TRUE )
    //
   ENDIF
   //
@@ -2172,7 +2225,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", "HEAD~5", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s062" )
+   B = FNProgramRunGitTseOutputB( s, "s062", TRUE )
    //
   ENDIF
   //
@@ -2198,7 +2251,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", "HEAD~6", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s063" )
+   B = FNProgramRunGitTseOutputB( s, "s063", TRUE )
    //
   ENDIF
   //
@@ -2227,7 +2280,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "diff", " ", "HEAD~", s1, " ", fileNameExtensionS )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s064" )
+    B = FNProgramRunGitTseOutputB( s, "s064", TRUE )
     //
    ENDIF
    //
@@ -2263,7 +2316,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, executableS, " ", "diff", " ", "HEAD~", s1, " ", "HEAD~", s2, " ", fileNameExtensionS )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s065" )
+     B = FNProgramRunGitTseOutputB( s, "s065", TRUE )
      //
     ENDIF
     //
@@ -2293,7 +2346,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "diff", " ", fileNameExtensionS )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s057" )
+   B = FNProgramRunGitTseOutputB( s, "s057", TRUE )
    //
   ENDIF
   //
@@ -2316,7 +2369,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "log", " ", "--oneline" )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s067" )
+   B = FNProgramRunGitTseOutputB( s, "s067", TRUE )
    //
   ENDIF
   //
@@ -2339,7 +2392,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "log" )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s066" )
+   B = FNProgramRunGitTseOutputB( s, "s066", TRUE )
    //
   ENDIF
   //
@@ -2362,7 +2415,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "show" )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s068" )
+   B = FNProgramRunGitTseOutputB( s, "s068", TRUE )
    //
   ENDIF
   //
@@ -2385,7 +2438,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, executableS, " ", "status" )
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
-   B = FNProgramRunDosGitB( s, "s069" )
+   B = FNProgramRunGitTseOutputB( s, "s069", TRUE )
    //
   ENDIF
   //
@@ -2397,6 +2450,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   StartPgm( githubRemoteDirectoryUrlS )
   //
+  B = FNProgramRunGitTseOutputB( s, "s041", FALSE )
+  //
  ENDIF
  //
  // ------------------------------------------------------------------------------
@@ -2405,6 +2460,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   StartPgm( gitlabRemoteDirectoryUrlS )
   //
+  B = FNProgramRunGitTseOutputB( s, "s042", FALSE )
+  //
  ENDIF
  //
  // ------------------------------------------------------------------------------
@@ -2412,7 +2469,11 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s095" )
   //
-  StartPgm( "https://github.com/new/" )
+  s1 = GetProfileStr( sectionS, "githubRemoteDirectoryCreateUrlS", "", iniFileNameS )
+  //
+  StartPgm( s1 )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s095", FALSE )
   //
  ENDIF
  //
@@ -2420,7 +2481,11 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s096" )
   //
-  StartPgm( "https://gitlab.com/projects/new/" )
+  s1 = GetProfileStr( sectionS, "gitlabRemoteDirectoryCreateUrlS", "", iniFileNameS )
+  //
+  StartPgm( s1 )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s096", FALSE )
   //
  ENDIF
  //
@@ -2438,6 +2503,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    KillPosition()
    //
   ENDIF
+  //
+  B = FNProgramRunGitTseOutputB( s, "s022", FALSE )
   //
  ENDIF
  //
@@ -2457,7 +2524,11 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    PROCProgramRunGitTseWindow()
    Warn( "no expected session", ":", " ", "[", sectionS, "]", " ", "found in", iniFileNameS, ". Please add it + add the parameters" )
   ENDIF
+  //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
+  B = FNProgramRunGitTseOutputB( s, "s015", FALSE )
+  //
   PROCProgramRunGitTseWindow()
   Warn( "<Press any key to continue>" )
   PopBlock()
@@ -2474,8 +2545,12 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   PushPosition()
   PushBlock()
   EditFile( directoryRepositoryS )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s040", FALSE )
+  //
   PROCProgramRunGitTseWindow()
   Warn( "<Press any key to continue>" )
+  //
   PopBlock()
   PopPosition()
   //
@@ -2508,6 +2583,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   ENDIF
   //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
+  B = FNProgramRunGitTseOutputB( s, "s055", FALSE )
+  //
   PROCProgramRunGitTseWindow()
   Warn( "<Press any key to continue>" )
   PopBlock()
@@ -2527,13 +2605,17 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   IF EditFile( s )
    QuitFile()
    EditFile( s )
+   B = FNProgramRunGitTseOutputB( s, "s054", FALSE )
   ELSE
    PROCProgramRunGitTseWindow()
    Warn( "File", ":", " ", s, " ", "not found. Please check." )
+   B = FNProgramRunGitTseOutputB( Format( "File", ":", " ", s, " ", "not found." ), "s054", FALSE )
   ENDIF
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
   PROCProgramRunGitTseWindow()
   Warn( "<Press any key to continue>" )
+  //
   PopBlock()
   PopPosition()
   //
@@ -2551,13 +2633,17 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   IF EditFile( s )
    QuitFile()
    EditFile( s )
+   B = FNProgramRunGitTseOutputB( s, "s092", FALSE )
   ELSE
    PROCProgramRunGitTseWindow()
    Warn( "File", ":", " ", s, " ", "not found. Please check." )
+   B = FNProgramRunGitTseOutputB( Format( "File", ":", " ", s, " ", "not found." ), "s092", FALSE )
   ENDIF
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
   PROCProgramRunGitTseWindow()
   Warn( "<Press any key to continue>" )
+  //
   PopBlock()
   PopPosition()
   //
@@ -2582,8 +2668,12 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    Warn( "File", ":", " ", s, " ", "not found. Please check." )
   ENDIF
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
+  B = FNProgramRunGitTseOutputB( s, "s075", FALSE )
+  //
   PROCProgramRunGitTseWindow()
   Warn( "<Press any key to continue>" )
+  //
   PopBlock()
   PopPosition()
   //
@@ -2602,6 +2692,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   PROCProgramRunGitTseWindow()
   Warn( s )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s093", FALSE )
   //
   PopBlock()
   PopPosition()
@@ -2637,7 +2729,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( "xcopy", " ", "/s", " ", s1, " ", s2 )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s026" )
+     B = FNProgramRunGitTseOutputB( s, "s026", TRUE )
      //
     ENDIF
     //
@@ -2675,7 +2767,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, executableS, " ", "remote", " ", "rename", " ", s1, " ", s2 )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s034" )
+     B = FNProgramRunGitTseOutputB( s, "s034", TRUE )
      //
     ENDIF
     //
@@ -2713,7 +2805,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, executableS, " ", "remote", " ", "add", " ", s1, " ", s2 )
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
-     B = FNProgramRunDosGitB( s, "s032" )
+     B = FNProgramRunGitTseOutputB( s, "s032", TRUE )
      //
     ENDIF
    //
@@ -2747,7 +2839,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     s = Format( s, executableS, " ", "remote", " ", "rm", " ", s1 )
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
-    B = FNProgramRunDosGitB( s, "s033" )
+    B = FNProgramRunGitTseOutputB( s, "s033", TRUE )
     //
    ENDIF
    //
@@ -2839,15 +2931,15 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: program: run: dos: git <description></description> <version control></version control> <version>1.0.0.0.27</version> <version control></version control> (filenamemacro=runprdgi.s) [<Program>] [<Research>] [kn, ri, sa, 19-11-2022 13:41:15]
-INTEGER PROC FNProgramRunDosGitB( STRING s, STRING caseS )
+// library: program: run: dos: git <description></description> <version control></version control> <version>1.0.0.0.28</version> <version control></version control> (filenamemacro=runprdgi.s) [<Program>] [<Research>] [kn, ri, sa, 19-11-2022 13:41:15]
+INTEGER PROC FNProgramRunGitTseOutputB( STRING s, STRING caseS, INTEGER dosB )
  // e.g. PROC Main()
  // e.g.  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) )
  // e.g.  //
  // e.g.  // SetGlobalStr( "sectionS", "git_tse" )
  // e.g.  SetGlobalStr( "sectionS", "git_tse_knud" )
  // e.g.  //
- // e.g.  Message( FNProgramRunDosGitB( "dir a*.s", "dir" ) ) // gives e.g. TRUE
+ // e.g.  Message( FNProgramRunGitTseOutputB( "dir a*.s", "dir", TRUE ) ) // gives e.g. TRUE
  // e.g. END
  // e.g.
  // e.g. <F12> Main()
@@ -2886,7 +2978,7 @@ INTEGER PROC FNProgramRunDosGitB( STRING s, STRING caseS )
  //
  // e.g. // QuickHelp( HELPDEFFNProgramRunDosGitB )
  // e.g. HELPDEF HELPDEFFNProgramRunDosGitB
- // e.g.  title = "FNProgramRunDosGitB( s1 ) help" // The help's caption
+ // e.g.  title = "FNProgramRunGitTseOutputB( s1 ) help" // The help's caption
  // e.g.  x = 100 // Location
  // e.g.  y = 3 // Location
  // e.g.  //
@@ -2919,11 +3011,15 @@ INTEGER PROC FNProgramRunDosGitB( STRING s, STRING caseS )
  // Warn( s ) // debug
  Message( s )
  //
- // making the command processor (e.g. Microsoft cmd.exe, JPSoft tcc.exe, Microsoft PowerShell, ...) variable for testing purposes
- //
- // Dos( s ) // old [kn, ri, mo, 21-11-2022 03:56:09]
- // LDos( executableCommandLineS, s, _DONT_WAIT_ )// old [kn, ri, mo, 21-11-2022 11:23:18]
- LDos( executableCommandLineS, Format( " ", "/c", " ", s ), flagI )
+ IF ( dosB )
+  //
+  // making the command processor (e.g. Microsoft cmd.exe, JPSoft tcc.exe, Microsoft PowerShell, ...) variable for testing purposes
+  //
+  // Dos( s ) // old [kn, ri, mo, 21-11-2022 03:56:09]
+  // LDos( executableCommandLineS, s, _DONT_WAIT_ )// old [kn, ri, mo, 21-11-2022 11:23:18]
+  LDos( executableCommandLineS, Format( " ", "/c", " ", s ), flagI )
+  //
+ ENDIF
  //
  PushPosition()
  PushBlock()
