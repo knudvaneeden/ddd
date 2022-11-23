@@ -62,6 +62,7 @@ PROC Main()
   SetGlobalStr( "s021", "Optionally: Change to another branch in the current local repository directory (checkout)" )
   SetGlobalStr( "s022", "Optionally: Change: Load another filename into TSE" )
   SetGlobalStr( "s094", "Optionally: Check for any updates / any changes in the remote repository directory (ls-remote)" )
+  SetGlobalStr( "s098", "Optionally: Clean (without performing the clean action) in your remote repository directory (clean -n)" )
   SetGlobalStr( "s023", "Optionally: Copy the current local repository directory completely to another local repository directory (clone)" )
   SetGlobalStr( "s024", "Optionally: Copy a remote Internet repository directory branch completely to a local repository directory (clone)" )
   SetGlobalStr( "s025", "Optionally: Copy a remote Internet repository directory branch completely to a local repository directory: Example (clone)" )
@@ -77,13 +78,14 @@ PROC Main()
   SetGlobalStr( "s095", "Optionally: Create a new remote repository on GitHub" )
   SetGlobalStr( "s096", "Optionally: Create a new remote repository on GitLab" )
   SetGlobalStr( "s035", "Optionally: Create a new branch in the current local repository directory" )
+  SetGlobalStr( "s099", "Optionally: Create a clean non-git directory (e.g. for cloning purposes) (MkDir)" )
   SetGlobalStr( "s036", "Optionally: Delete another branch from your current local repository directory" )
   SetGlobalStr( "s037", "Optionally: Delete your currently loaded file in TSE from your local repository directory" )
   SetGlobalStr( "s038", "Optionally: Download once and install: Git-Cygwin" )
   SetGlobalStr( "s039", "Optionally: Download once and install: Git-Tortoise" )
   SetGlobalStr( "s040", "Optionally: Get all filenames in your current local repository directory" )
-  SetGlobalStr( "s041", "Optionally: Goto your Git server web page on the Internet: GitHub" )
-  SetGlobalStr( "s042", "Optionally: Goto your Git server web page on the Internet: GitLab" )
+  SetGlobalStr( "s041", "Optionally: Goto your remote Git server web page on the Internet: GitHub" )
+  SetGlobalStr( "s042", "Optionally: Goto your remote Git server web page on the Internet: GitLab" )
   SetGlobalStr( "s043", "Optionally: Load a whole git directory into TSE" )
   SetGlobalStr( "s044", "Optionally: Merge your current branch with another branch in your current local repository directory" )
   SetGlobalStr( "s045", "Optionally: Rename a filename in the current local repository directory" )
@@ -150,6 +152,7 @@ PROC Main()
   AddLine( GetGlobalStr( "s020" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s021" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s022" ) ) AddLine( "--------------------------------------------------------------------------" )
+  AddLine( GetGlobalStr( "s098" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s094" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s023" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s024" ) ) //
@@ -166,6 +169,7 @@ PROC Main()
   AddLine( GetGlobalStr( "s095" ) ) //
   AddLine( GetGlobalStr( "s096" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s035" ) ) AddLine( "--------------------------------------------------------------------------" )
+  AddLine( GetGlobalStr( "s099" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s036" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s037" ) ) AddLine( "--------------------------------------------------------------------------" )
   AddLine( GetGlobalStr( "s038" ) ) //
@@ -229,7 +233,7 @@ PROC Main()
   //
   GotoLine( 1 )
   PROCProgramRunGitTseWindow()
-  IF List( "Choose an option", 130 )
+  IF List( "Choose an option", 140 )
    s1 = Trim( GetText( 1, 255 ) )
   ELSE
    AbandonFile( bufferI )
@@ -339,7 +343,7 @@ PROC PROCProgramRunGitTseWindow()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.306</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.316</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. PROC Main()
  // e.g.  //
@@ -378,6 +382,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   SetGlobalStr( "s021", "Optionally: Change to another branch in the current local repository directory (checkout)" )
  // e.g.   SetGlobalStr( "s022", "Optionally: Change: Load another filename into TSE" )
  // e.g.   SetGlobalStr( "s094", "Optionally: Check for any updates / any changes in the remote repository directory (ls-remote)" )
+ // e.g.   SetGlobalStr( "s098", "Optionally: Clean (without performing the clean action) in your remote repository directory (clean -n)" )
  // e.g.   SetGlobalStr( "s023", "Optionally: Copy the current local repository directory completely to another local repository directory (clone)" )
  // e.g.   SetGlobalStr( "s024", "Optionally: Copy a remote Internet repository directory branch completely to a local repository directory (clone)" )
  // e.g.   SetGlobalStr( "s025", "Optionally: Copy a remote Internet repository directory branch completely to a local repository directory: Example (clone)" )
@@ -393,13 +398,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   SetGlobalStr( "s095", "Optionally: Create a new remote repository on GitHub" )
  // e.g.   SetGlobalStr( "s096", "Optionally: Create a new remote repository on GitLab" )
  // e.g.   SetGlobalStr( "s035", "Optionally: Create a new branch in the current local repository directory" )
+ // e.g.   SetGlobalStr( "s099", "Optionally: Create a clean non-git directory (e.g. for cloning purposes) (MkDir)" )
  // e.g.   SetGlobalStr( "s036", "Optionally: Delete another branch from your current local repository directory" )
  // e.g.   SetGlobalStr( "s037", "Optionally: Delete your currently loaded file in TSE from your local repository directory" )
  // e.g.   SetGlobalStr( "s038", "Optionally: Download once and install: Git-Cygwin" )
  // e.g.   SetGlobalStr( "s039", "Optionally: Download once and install: Git-Tortoise" )
  // e.g.   SetGlobalStr( "s040", "Optionally: Get all filenames in your current local repository directory" )
- // e.g.   SetGlobalStr( "s041", "Optionally: Goto your Git server web page on the Internet: GitHub" )
- // e.g.   SetGlobalStr( "s042", "Optionally: Goto your Git server web page on the Internet: GitLab" )
+ // e.g.   SetGlobalStr( "s041", "Optionally: Goto your remote Git server web page on the Internet: GitHub" )
+ // e.g.   SetGlobalStr( "s042", "Optionally: Goto your remote Git server web page on the Internet: GitLab" )
  // e.g.   SetGlobalStr( "s043", "Optionally: Load a whole git directory into TSE" )
  // e.g.   SetGlobalStr( "s044", "Optionally: Merge your current branch with another branch in your current local repository directory" )
  // e.g.   SetGlobalStr( "s045", "Optionally: Rename a filename in the current local repository directory" )
@@ -466,6 +472,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s020" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s021" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s022" ) ) AddLine( "--------------------------------------------------------------------------" )
+ // e.g.   AddLine( GetGlobalStr( "s098" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s094" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s023" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s024" ) ) //
@@ -482,6 +489,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s095" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s096" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s035" ) ) AddLine( "--------------------------------------------------------------------------" )
+ // e.g.   AddLine( GetGlobalStr( "s099" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s036" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s037" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s038" ) ) //
@@ -545,7 +553,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   //
  // e.g.   GotoLine( 1 )
  // e.g.   PROCProgramRunGitTseWindow()
- // e.g.   IF List( "Choose an option", 130 )
+ // e.g.   IF List( "Choose an option", 140 )
  // e.g.    s1 = Trim( GetText( 1, 255 ) )
  // e.g.   ELSE
  // e.g.    AbandonFile( bufferI )
@@ -621,8 +629,6 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.  "<> = do something"
  // e.g. END
  //
- // CHANGE: ONCE: BEGIN
- //
  // ===
  //
  // Todo: Add a command line interpreter and create a programming language then create git programs. Add Remove LogFile ...
@@ -642,6 +648,34 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // Todo: Also log non-Dos() commands in the log file => create common procedure / function for the log file
  //
  // ===
+ //
+ // The most commonly used git commands are:
+ //
+ //    add        Add file contents to the index
+ //    bisect     Find by binary search the change that introduced a bug
+ //    branch     List, create, or delete branches
+ //    checkout   Checkout a branch or paths to the working tree
+ //    clone      Clone a repository into a new directory
+ //    commit     Record changes to the repository
+ //    diff       Show changes between commits, commit and working tree, etc
+ //    fetch      Download objects and refs from another repository
+ //    grep       Print lines matching a pattern
+ //    init       Create an empty git repository or reinitialize an existing one
+ //    log        Show commit logs
+ //    merge      Join two or more development histories together
+ //    mv         Move or rename a file, a directory, or a symlink
+ //    pull       Fetch from and merge with another repository or a local branch
+ //    push       Update remote refs along with associated objects
+ //    rebase     Forward-port local commits to the updated upstream head
+ //    reset      Reset current HEAD to the specified state
+ //    rm         Remove files from the working tree and from the index
+ //    show       Show various types of objects
+ //    status     Show the working tree status
+ //    tag        Create, list, delete or verify a tag object signed with GPG
+ //
+ // ===
+ //
+ // CHANGE: ONCE: BEGIN
  //
  STRING iniFileNameS[255] = GetGlobalStr( "iniFileNameS" ) // this is the ini file containing your parameters. Change this to an ini file of your choice. The default is tse.ini
  //
@@ -738,7 +772,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s077" )
   //
-  StartPgm( bookVersionControlWithGitOReillyUrlS )
+  s = bookVersionControlWithGitOReillyUrlS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s077", FALSE )
   //
@@ -748,7 +784,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s039" )
   //
-  StartPgm( gitTortoiseDownloadUrlS )
+  s = gitTortoiseDownloadUrlS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s039", FALSE )
   //
@@ -758,7 +796,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s038" )
   //
-  StartPgm( gitCygwinDownloadUrlS )
+  s = gitCygwinDownloadUrlS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s038", FALSE )
   //
@@ -771,7 +811,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   PushPosition()
   PushBlock()
   //
-  EditFile( Format( "-a -s", " ", directoryRepositoryS ) )
+  s = Format( "EditFile", "(", " ", directoryRepositoryS, " ", ")", " ", ")" )
+  //
+  EditFile( Format( directoryRepositoryS ) )
   //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
   //
@@ -1175,8 +1217,10 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s050" )
   //
+  s = directoryRepositoryS
+  //
   PROCProgramRunGitTseWindow()
-  Warn( directoryRepositoryS )
+  Warn( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s050", FALSE )
   //
@@ -1186,7 +1230,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s046" )
   //
-  StartPgm( executableCommandLineS )
+  s = executableCommandLineS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s046", FALSE )
   //
@@ -1455,7 +1501,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s011" )
   //
-  StartPgm( gitScmDownloadUrlS )
+  s = gitScmDownloadUrlS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s011", FALSE )
   //
@@ -1484,7 +1532,35 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    // initialize that repository directory (it will create a hidden .git directory inside the root of that directory)
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS, " ", "&", " ", executableS, " ", "init", " ", "-b", " ", githubNameBranchS, " ", directoryRepositoryS )
+   s = Format( s, " ", "&", " " )
+   s = Format( s, "pause" )
+   //
    B = FNProgramRunGitTseOutputB( s, "s012", TRUE )
+   //
+  ENDIF
+  //
+ ENDIF
+ //
+ // ------------------------------------------------------------------------------
+ IF s3 == GetGlobalStr( "s099" )
+  //
+  s = " "
+  //
+  PROCProgramRunGitTseWindow()
+  IF ( ( Ask( "clean non-git directory to create = ", s, _EDIT_HISTORY_ ) ) AND ( Length( s ) > 0 ) )
+   //
+   IF NOT FileExists( s )
+    //
+    PROCProgramRunGitTseWindow()
+    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( s, ":", " ", "This normal non-git directory does not exist. Create it now?" ) ) == 1 )
+     //
+     MkDir( s )
+     //
+    ENDIF
+    //
+   ENDIF
+   //
+   B = FNProgramRunGitTseOutputB( s, "s099", FALSE )
    //
   ENDIF
   //
@@ -1498,6 +1574,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   IF ( ( Ask( "user name = ", userNameS, _EDIT_HISTORY_ ) ) AND ( Length( userNameS ) > 0 ) )
    //
    s = Format( executableS, " ", "config", " ", "--global", " ", "user.name", " ", '"', userNameS, '"' )
+   s = Format( s, " ", "&", " " )
+   s = Format( s, "pause" )
    B = FNProgramRunGitTseOutputB( s, "s013", TRUE )
    //
   ENDIF
@@ -1512,6 +1590,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   IF ( ( Ask( "user email = ", userEmailS, _EDIT_HISTORY_ ) ) AND ( Length( userEmailS ) > 0 ) )
    //
    s = Format( executableS, " ", "config", " ", "--global", " ", "user.email", " ", '"', userEmailS, '"' )
+   s = Format( s, " ", "&", " " )
+   s = Format( s, "pause" )
    B = FNProgramRunGitTseOutputB( s, "s014", TRUE )
    //
   ENDIF
@@ -2445,7 +2525,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s041" )
   //
-  StartPgm( githubRemoteDirectoryUrlS )
+  s = githubRemoteDirectoryUrlS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s041", FALSE )
   //
@@ -2455,7 +2537,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s042" )
   //
-  StartPgm( gitlabRemoteDirectoryUrlS )
+  s = gitlabRemoteDirectoryUrlS
+  //
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s042", FALSE )
   //
@@ -2466,9 +2550,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s095" )
   //
-  s1 = GetProfileStr( sectionS, "githubRemoteDirectoryCreateUrlS", "", iniFileNameS )
+  s = GetProfileStr( sectionS, "githubRemoteDirectoryCreateUrlS", "", iniFileNameS )
   //
-  StartPgm( s1 )
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s095", FALSE )
   //
@@ -2478,9 +2562,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s096" )
   //
-  s1 = GetProfileStr( sectionS, "gitlabRemoteDirectoryCreateUrlS", "", iniFileNameS )
+  s = GetProfileStr( sectionS, "gitlabRemoteDirectoryCreateUrlS", "", iniFileNameS )
   //
-  StartPgm( s1 )
+  StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s096", FALSE )
   //
@@ -2489,6 +2573,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s022" )
+  //
+  s = Format( "changeFileB", " ", "=", " ", "TRUE" )
   //
   PROCProgramRunGitTseWindow()
   IF ( EditFile() )
@@ -2508,6 +2594,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s015" )
+  //
+  s = Format( "EditFile", "(", " ", iniFileNameS, " ", ")" )
   //
   PushPosition()
   PushBlock()
@@ -2538,6 +2626,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s040" )
+  //
+  s = Format( "EditFile", "(", " ", directoryRepositoryS, " ", ")" )
   //
   PushPosition()
   PushBlock()
@@ -2844,6 +2934,33 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
  ENDIF
  //
+ // ------------------------------------------------------------------------------
+ //
+ IF s3 == GetGlobalStr( "s098" )
+  //
+  IF NOT FileExists( directoryRepositoryS )
+   PROCProgramRunGitTseWindow()
+   Warn( "Run the initialize step first to create a Git repository" )
+  ELSE
+   //
+   PROCProgramRunGitTseWindow()
+   Warn( "<Press 'Q' to quit>" )
+   //
+   PROCProgramRunGitTseWindow()
+   Warn( "'unknown revision or path not in the working tree' means that the current file or directory is not under version control." )
+   //
+   s1 = " "
+    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
+    s = Format( s, " ", "&", " " )
+    s = Format( s, executableS, " ", "clean", " ", "-n" )
+    s = Format( s, " ", "&", " " )
+    s = Format( s, "pause" )
+    B = FNProgramRunGitTseOutputB( s, "s098", TRUE )
+    //
+   ENDIF
+   //
+  ENDIF
+  //
  // ------------------------------------------------------------------------------
  //
  // OTHERWISE
