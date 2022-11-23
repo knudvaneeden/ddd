@@ -337,7 +337,7 @@ PROC PROCProgramRunGitTseWindow()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.299</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.300</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. PROC Main()
  // e.g.  //
@@ -1528,14 +1528,24 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s019" )
   //
-  s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
-  // s = Format( s, " ", "&", " " )
-  // s = Format( s, "keystack", " ", '"', githubUserNameS, '"', " ", "enter", " ", '"', githubPasswordS, '"', " ", "enter" )
-  s = Format( s, " ", "&", " " )
-  s = Format( s, executableS, " ", "push", " ", "--set-upstream", " ", gitlabRemoteDirectoryUrlS, " ", gitlabNameBranchS )
-  s = Format( s, " ", "&", " " )
-  s = Format( s, "pause" )
-  B = FNProgramRunDosGitB( s, "s019" )
+  PROCProgramRunGitTseWindow()
+  IF ( ( Ask( "remote repository directory = ", gitlabRemoteDirectoryUrlS, _EDIT_HISTORY_ ) ) AND ( Length( gitlabRemoteDirectoryUrlS ) > 0 ) )
+   //
+   PROCProgramRunGitTseWindow()
+   IF ( ( Ask( "branch remote repository directory (TRUNK|main|master) = ", gitlabNameBranchS, _EDIT_HISTORY_ ) ) AND ( Length( gitlabNameBranchS ) > 0 ) )
+    //
+    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
+    // s = Format( s, " ", "&", " " )
+    // s = Format( s, "keystack", " ", '"', githubUserNameS, '"', " ", "enter", " ", '"', githubPasswordS, '"', " ", "enter" )
+    s = Format( s, " ", "&", " " )
+    s = Format( s, executableS, " ", "push", " ", "--set-upstream", " ", gitlabRemoteDirectoryUrlS, " ", gitlabNameBranchS )
+    s = Format( s, " ", "&", " " )
+    s = Format( s, "pause" )
+    B = FNProgramRunDosGitB( s, "s019" )
+    //
+   ENDIF
+   //
+  ENDIF
   //
  ENDIF
  //
@@ -1544,6 +1554,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  IF s3 == GetGlobalStr( "s024" )
   //
   directoryRepositoryOtherS = " "
+  //
   PROCProgramRunGitTseWindow()
   IF ( ( Ask( "other local repository directory  = ", directoryRepositoryOtherS, _EDIT_HISTORY_ ) ) AND ( Length( directoryRepositoryS ) > 0 ) )
    //
