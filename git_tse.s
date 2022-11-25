@@ -79,35 +79,32 @@ PROC Main()
   //
   // Git programs
   //
-  s1 = "add + commit current filename in the default repository directory"
+  s1 = "add + commit current filename in your current repository directory"
   SetGlobalStr( s1, "s010" )
   //
   s2 = "read your current repository directory"
   SetGlobalStr( s2, "s050" )
   //
-  s3 = "change to your default local repository directory"
-  SetGlobalStr( s3, "s101" )
+  s3 = "change to default local repository directory + add + commit current filename"
+  SetGlobalStr( s3, "s101 s010" )
   //
-  s4 = "Change to another local repository directory"
-  SetGlobalStr( s4, "s020" )
+  s4 = "change to your default local repository directory"
+  SetGlobalStr( s4, "s101" )
   //
-  s5 = "change to default local repository directory + add + commit current filename"
-  SetGlobalStr( s5, "s101 s010" )
+  s5 = "Change to another local repository directory"
+  SetGlobalStr( s5, "s020" )
   //
   s6 = "clone remote directory to a new local directory"
   SetGlobalStr( s6, "s099 s024" )
   //
   s7 = "push from current local repository directory to a remote directory"
-  SetGlobalStr( s7, "s020 s029" )
+  SetGlobalStr( s7, "s020 s029 s041" )
   //
   s8 = "pull from a remote directory to current local repository directory"
-  SetGlobalStr( s8, "s020 s028" )
+  SetGlobalStr( s8, "s020 s028 s041" )
   //
-  s9 = "change to current local repository directory + add + commit current filename"
-  SetGlobalStr( s9, "s101 s010" )
-  //
-  s10 = "initialize first git"
-  SetGlobalStr( s10, "s011 s012 s013 s014" )
+  s9 = "initialize first git"
+  SetGlobalStr( s9, "s011 s012 s013 s014" )
   //
   PushPosition()
   bufferI = CreateTempBuffer()
@@ -126,7 +123,6 @@ PROC Main()
   AddLine( s7 )
   AddLine( s8 )
   AddLine( s9 )
-  AddLine( s10 )
   //
   AddLine( "quit" )
   //
@@ -398,7 +394,7 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.34</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
+// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.36</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g. PROC Main()
  // e.g.  //
@@ -447,35 +443,32 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   //
  // e.g.   // Git programs
  // e.g.   //
- // e.g.   s1 = "add + commit current filename in the default repository directory"
+ // e.g.   s1 = "add + commit current filename in your current repository directory"
  // e.g.   SetGlobalStr( s1, "s010" )
  // e.g.   //
  // e.g.   s2 = "read your current repository directory"
  // e.g.   SetGlobalStr( s2, "s050" )
  // e.g.   //
- // e.g.   s3 = "change to your default local repository directory"
- // e.g.   SetGlobalStr( s3, "s101" )
+ // e.g.   s3 = "change to default local repository directory + add + commit current filename"
+ // e.g.   SetGlobalStr( s3, "s101 s010" )
  // e.g.   //
- // e.g.   s4 = "Change to another local repository directory"
- // e.g.   SetGlobalStr( s4, "s020" )
+ // e.g.   s4 = "change to your default local repository directory"
+ // e.g.   SetGlobalStr( s4, "s101" )
  // e.g.   //
- // e.g.   s5 = "change to default local repository directory + add + commit current filename"
- // e.g.   SetGlobalStr( s5, "s101 s010" )
+ // e.g.   s5 = "Change to another local repository directory"
+ // e.g.   SetGlobalStr( s5, "s020" )
  // e.g.   //
  // e.g.   s6 = "clone remote directory to a new local directory"
  // e.g.   SetGlobalStr( s6, "s099 s024" )
  // e.g.   //
  // e.g.   s7 = "push from current local repository directory to a remote directory"
- // e.g.   SetGlobalStr( s7, "s020 s029" )
+ // e.g.   SetGlobalStr( s7, "s020 s029 s041" )
  // e.g.   //
  // e.g.   s8 = "pull from a remote directory to current local repository directory"
- // e.g.   SetGlobalStr( s8, "s020 s028" )
+ // e.g.   SetGlobalStr( s8, "s020 s028 s041" )
  // e.g.   //
- // e.g.   s9 = "change to current local repository directory + add + commit current filename"
- // e.g.   SetGlobalStr( s9, "s101 s010" )
- // e.g.   //
- // e.g.   s10 = "initialize first git"
- // e.g.   SetGlobalStr( s10, "s011 s012 s013 s014" )
+ // e.g.   s9 = "initialize first git"
+ // e.g.   SetGlobalStr( s9, "s011 s012 s013 s014" )
  // e.g.   //
  // e.g.   PushPosition()
  // e.g.   bufferI = CreateTempBuffer()
@@ -494,7 +487,6 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   AddLine( s7 )
  // e.g.   AddLine( s8 )
  // e.g.   AddLine( s9 )
- // e.g.   AddLine( s10 )
  // e.g.   //
  // e.g.   AddLine( "quit" )
  // e.g.   //
