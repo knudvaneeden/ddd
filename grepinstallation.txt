@@ -46,23 +46,7 @@ Delete the .mac files packaged with these zip files:
 
  del *.mac /s
 
-(5) Make the following file name changes. This is necessary
-    because Linux is case-sensitive, while Windows is not.
-
-     ren GETHELP.SI gethelp.si
-
-     ren GETHELP.K32 gethelp.k32
-
-(6) Edit dialog.s, and find the following line.  At the time
-    I'm writing this, the line is 227:
-
-     String Paint[] = "DialogP"                      // name of paint module
-
-     Change to:
-
-     String Paint[] = "dialogp"                      // name of paint module
-
-(7) Create an executable file called build.bat with the
+(5) Create an executable file called build.bat with the
     following contents. The dashes below are delimiters
     here; do not include them in build.sh:
 
@@ -96,19 +80,6 @@ copy grepdlg.si ..
 copy guiinc.inc ..
 copy grep.s ..
 -----------------
-
-If using Linux:
-For the curious, the command lines define -dWIN32=0 because
-various macro files include a test checking for this
-define. Running this macro under Linux requires the same
-sections of code, so the easiest workaround is to just
-create the define at compile time.
-
-After creating this file, make it executable with the
-following command:
-
-If using Linux:
-chmod +x build.sh
 
 Now run it:
 
