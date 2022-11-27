@@ -1,0 +1,276 @@
+Latest instructions:
+
+(1) TSE comes with a grep.s macro from Semware. The
+    alternate grep discussed here also exists in a file
+    called grep.s. so the names will collide.  For now,
+    rename TSE's original grep file to grep.org, or some
+    other name of your choice. If you want to continue to
+    use both, you'll need to rename one or the other. I
+    primarily use this alternate, so I've renamed the TSE
+    original to tsegrep.s.
+
+(2) Download the following files from the "old" Semware web
+    site:
+
+     htps://semware.com/html/tseprofiles.php
+
+(3) Inside your TSE installation mac directory, create a
+    directory "grep". Move the zip files from (2) into that
+    directory.
+
+     cdd f:\wordproc\tse32_v44200\macdownlo\
+
+     md grep
+
+     copy grep3230.zip grep
+     copy dlg222.zip grep
+     copy dlg222p.zip grep
+     copy gethlp40.zip grep
+
+(4) Inside the grep directory, unzip the following:
+
+     cd grep
+
+     pkunzipc -extract -dir grep3230.zip
+     pkunzipc -extract -dir dlg222.zip
+     pkunzipc -extract -dir gethlp40.zip
+
+     Warning for duplicates, rename e.g. to the name of the current package
+
+      09/04/2002  01:20           4.041  dialogDUPLICATEDLG222.si
+      21/04/2005  01:22             363  file_idDUPLICATEDLG222.diz
+      19/05/2002  17:32             353  FILE_IDDUPLICATEGETHLP40.DIZ
+      19/05/2002  14:56           1.205  guiincDUPLICATEGETHLP40.inc
+
+Delete the .mac files packaged with these zip files:
+
+ del *.mac /s
+
+(5) Make the following file name changes. This is necessary
+    because Linux is case-sensitive, while Windows is not.
+
+     ren GETHELP.SI gethelp.si
+
+     ren GETHELP.K32 gethelp.k32
+
+(6) Edit dialog.s, and find the following line.  At the time
+    I'm writing this, the line is 227:
+
+     String Paint[] = "DialogP"                      // name of paint module
+
+     Change to:
+
+     String Paint[] = "dialogp"                      // name of paint module
+
+(7) Create an executable file called build.bat with the
+    following contents. The dashes below are delimiters
+    here; do not include them in build.sh:
+
+    First create a subdirectory, as I do not want these
+    files copied to my main mac directory, as this is
+    only testing.
+
+     md DDD
+     move *.* DDD
+     del *.*
+
+     copy build.bat DDD
+
+     cd DDD
+
+This is the content of build.bat:
+-----------------
+sc32 dialog.s
+sc32 dialogp.s
+sc32 gethelp.si
+sc32 grep.s
+REM
+copy *.mac ..
+copy grep.hlp ..
+REM
+REM additional actions to do to get grep.s maybe working
+REM
+copy dialog.si ..
+copy grepdlg.dlg ..
+copy grepdlg.si ..
+copy guiinc.inc ..
+copy grep.s ..
+-----------------
+
+If using Linux:
+For the curious, the command lines define -dWIN32=0 because
+various macro files include a test checking for this
+define. Running this macro under Linux requires the same
+sections of code, so the easiest workaround is to just
+create the define at compile time.
+
+After creating this file, make it executable with the
+following command:
+
+If using Linux:
+chmod +x build.sh
+
+Now run it:
+
+build.bat
+
+Here there was an error:
+
+File: F:\WORDPROC\tse32_v44200\MACDOWNLO\grep\DDD\dialog.s
+Compiling............................................................
+Error   2335  (1333,22)  Undefined symbol 'DlgMsgText' encountered
+
+SAL Compiler V4.50 (bcc version)
+Copyright 1991-2021 SemWare Corp.  All rights reserved worldwide.
+
+Solution:
+
+add at the top of the dialog.s (and similarly in dialogp.s) file this text, save and recompile.
+
+STRING DlgMsgText[255] = ""
+
+---
+
+Pay attention to the printed messages, looking for reported
+errors. If you do not see any errors, then the macro and
+help files should be ready to use. Verify with a directory
+listing of the mac directory.  You should see the followng
+files with recent dates:
+
+cd ..
+
+dir grep.hlp
+dir dialog.mac
+dir dialogp.mac
+dir gethelp.mac
+dir grep.mac
+
+Result:
+
+27/11/2022  14:04          15.623  dialog.mac
+27/11/2022  14:36           5.487  dialogp.mac
+27/11/2022  14:04          25.301  gethelp.mac
+14/04/2001  23:08          12.636  grep.hlp
+27/11/2022  14:04          24.077  grep.mac
+
+(8) To test, open up a text file in the editor. From the
+    main menu, select Macro - Execute, and then enter grep
+    into the Execute macro: prompt.  You should see a popup
+    dialog box with Grep in the title, and a list of Search
+    and Grep options on the bottom.
+
+===
+
+Execute macro grep.s with the parameter -w
+
+That will ask for a search string, then start searching.
+
+===
+
+E.g.
+
+ grep.mac -w <your search string>
+
+ grep.mac -w hello world
+
+That will start to search with 'hello world'
+
+===
+
+This seem to be some parameters possible:
+
+ Options:
+
+  -$ <your search string>      anchor to end of line
+  -b <your search string>      block in current file only
+  -c <your search string>      current file only
+  -d <your search string>      recurse subdirectories
+  -i <your search string>      ignore case (treat lower case and upper as identical)
+  -l <your search string>      filenames only (only list the names of files that have matches; do not list the matches themselves.)
+  -m <your search string>      files in memory
+  -p <your directory>          begins the search from the path <your directory>
+  -v <your search string>      verbose
+  -w <your search string>      match whole words.
+  -x <your search string>      regular expressions
+  -^ <your search string>      anchor to beginning of line
+
+  -e <your file specification> excludes files that match <your filespecification>
+
+                                E.g. G -e*.bak,*.tmp hello *.*
+
+                               Searches all files in the current directory, except *.bat and *.tmp, for the string "hello".
+
+                                E.g. f:\wordproc\tse32_v44200\macdownlo\grep\grep.mac -mef:\addjob.dok Identifier
+
+                               Searches in all files in memory, but excludes f:\addjob.dok for the string "Identifier"
+
+                                Note: this seems not to work as expected.
+
+                                It excludes the filename in the results, but shows instead non-matching results including
+                                from the excluded file.
+
+                                The root cause of the incorrect results
+                                seems to be that it can not handle files with many lines, e.g. 1 million or more.
+
+                                 addjob.dok is a very large file (1 gigabytes, 15 million lines)
+
+===
+
+The default is in grep.s is:
+
+// these must be defined to some value
+#define VARIATION 2				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
+
+This does not do anything when running grep.mac.
+
+You must thus call grep.mac with parameters to see something happening, e.g.
+
+ grep.mac -w
+
+===
+
+Conclusion:
+
+In grep.s you find this to start the 'Dialog' (e.g. Dieter Koessl):
+
+...
+#if VARIATION == 2
+proc SetCheck(string opt, string opts, integer nid)
+	ExecMacro(Format("DlgSetData"; nid; iif(Pos(opt, opts), TRUE, FALSE)))
+end
+...
+
+But it is out of the box never going to work, because there
+is no 'DlgSetData' macro file to be found in any of my
+filenames and I have all the possible files (e.g. downloaded
+from Semware) on my system.
+
+So the Dieter Koessl dialog boxes you are not / never going
+to see out of the box (because 'VARIATION == 2' is the default) is my current opinion.
+
+Also seems the current Chris Antos' grep.s not be able to
+handle very large files (like my work file which is 1
+gigabytes and 15 million lines), it showed clearly wrong
+results when testing e.g. exclude files.
+
+===
+
+If you want a TSE menu then in grep.s change VARIATION from 2 to 1, save and recompile.
+
+// these must be defined to some value
+#define VARIATION 1				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
+
+===
+
+If you want a TSE ask box then in grep.s change VARIATION from 2 to 0, save and recompile.
+
+// these must be defined to some value
+#define VARIATION 0				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
+
+will now automatically open a TSE ask box when you run grep.mac
+
+===
+
+If you want to use this version of grep, you will want to
+modify your UI file to assign a key combination to execute
+it.
