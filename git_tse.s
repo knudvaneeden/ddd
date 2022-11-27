@@ -1,5 +1,4 @@
 FORWARD INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING s1 )
-FORWARD INTEGER PROC FNFileSaveFileVersionControlGitSimplestInitializeB()
 FORWARD INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING s1 )
 FORWARD INTEGER PROC FNMacroCheckExecB( STRING s1 )
 FORWARD INTEGER PROC FNMacroCheckLoadB( STRING s1 )
@@ -64,7 +63,8 @@ PROC Main()
  //
  // CHANGE: ONCE: BEGIN
  //
- B = FNFileSaveFileVersionControlGitSimplestInitializeB()
+ // B = FNFileSaveFileVersionControlGitSimplestInitializeB()
+ PROCMacroRunKeep( "savefisi" )
  //
  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) ) // change this
  //
@@ -149,164 +149,19 @@ END
 
 // --- LIBRARY --- //
 
-// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.2</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
-INTEGER PROC FNFileSaveFileVersionControlGitSimplestInitializeB()
+// library: macro: run: keep <description>macro: run a macro, then keep it</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=runmarke.s) [<Program>] [<Research>] [[kn, zoe, fr, 27-10-2000 15:59:33]
+PROC PROCMacroRunKeep( STRING macronameS )
  // e.g. PROC Main()
- // e.g.  Message( FNFileSaveFileVersionControlGitSimplestInitializeB() ) // gives e.g. TRUE
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- // ===
- //
- // Use case =
- //
- // ===
- //
- // ===
- //
- // Method =
- //
- // ===
- //
- // ===
- //
- // Example:
- //
- // Input:
- //
- /*
---- cut here: begin --------------------------------------------------
---- cut here: end ----------------------------------------------------
- */
- //
- // Output:
- //
- /*
---- cut here: begin --------------------------------------------------
---- cut here: end ----------------------------------------------------
- */
- //
- // ===
- //
- // e.g. // QuickHelp( HELPDEFFNFileSaveFileVersionControlGitSimplestInitializeB )
- // e.g. HELPDEF HELPDEFFNFileSaveFileVersionControlGitSimplestInitializeB
- // e.g.  title = "FNFileSaveFileVersionControlGitSimplestInitializeB() help" // The help's caption
- // e.g.  x = 100 // Location
- // e.g.  y = 3 // Location
- // e.g.  //
- // e.g.  // The actual help text
- // e.g.  //
- // e.g.  "Usage:"
- // e.g.  "//"
- // e.g.  "1. Run this TSE macro"
- // e.g.  "2. Then press <CtrlAlt F1> to show this help."
- // e.g.  "3. Press <Shift Escape> to quit."
- // e.g.  "//"
- // e.g.  ""
- // e.g.  "Key: Definitions:"
- // e.g.  ""
- // e.g.  "<> = do something"
+ // e.g.  PROCMacroRunKeep( "mysubma1.mac myparameter11 myparameter12" )
+ // e.g.  PROCMacroRunKeep( "mysubma2.mac myparameter21" )
+ // e.g.  PROCMacroRunKeep( "mysubma3.mac myparameter31 myparameter32" )
  // e.g. END
  //
- INTEGER B = FALSE
- //
- SetGlobalStr( "s010", "5. Add + Commit your currently loaded file in TSE (into your local repository)" )
- SetGlobalStr( "s011", "1. Download once and install: Git-SCM" )
- SetGlobalStr( "s012", "2. Initialize once your repository directory" )
- SetGlobalStr( "s013", "3. Set once your name" )
- SetGlobalStr( "s014", "4. Set once your email" )
- SetGlobalStr( "s015", "Settings" )
- SetGlobalStr( "s016", "Quit" )
- SetGlobalStr( "s017", "Add + Commit all files in the root directory and all subdirectories of the current repository directory (add . / commit .)" )
- SetGlobalStr( "s018", "Add + Commit your currently loaded file in TSE into your remote repository: GitHub (push)" )
- SetGlobalStr( "s019", "Add + Commit your currently loaded file in TSE into your remote repository: GitLab (push)" )
- SetGlobalStr( "s020", "Change to another local repository directory" )
- SetGlobalStr( "s101", "Change to the default local repository directory" )
- SetGlobalStr( "s021", "Change to another branch in the current local repository directory (checkout)" )
- SetGlobalStr( "s022", "Change: Load another filename into TSE" )
- SetGlobalStr( "s094", "Check for any updates / any changes in the remote repository directory (ls-remote)" )
- SetGlobalStr( "s098", "Clean (without performing the clean action) in your remote repository directory (clean -n)" )
- SetGlobalStr( "s023", "Copy the current local repository directory completely to another local repository directory (clone)" )
- SetGlobalStr( "s024", "Copy a remote Internet repository directory branch completely to a local repository directory (clone)" )
- SetGlobalStr( "s025", "Copy a remote Internet repository directory branch completely to a local repository directory: Example (clone)" )
- SetGlobalStr( "s026", "Copy all files from a directory and its subdirectories to another directory (copy *.* /s)" )
- SetGlobalStr( "s027", "Collaborate: 1. Fetch from a remote repository directory to the current local repository directory" )
- SetGlobalStr( "s028", "Collaborate: 2. Pull from a remote repository directory to the current local repository directory" )
- SetGlobalStr( "s029", "Collaborate: 3. Push to a remote repository directory from the current local repository directory" )
- SetGlobalStr( "s030", "Collaborate: 4. Remote" )
- SetGlobalStr( "s031", "Collaborate: 4. Remote -v" )
- SetGlobalStr( "s032", "Collaborate: 4. Remote add <name> <url>" )
- SetGlobalStr( "s033", "Collaborate: 4. Remote rm <name>" )
- SetGlobalStr( "s034", "Collaborate: 4. Remote rename <old name> <new name>" )
- SetGlobalStr( "s095", "Create a new remote repository on GitHub" )
- SetGlobalStr( "s096", "Create a new remote repository on GitLab" )
- SetGlobalStr( "s035", "Create a new branch in the current local repository directory" )
- SetGlobalStr( "s099", "Create a clean non-git directory (e.g. for cloning purposes) (MkDir)" )
- SetGlobalStr( "s036", "Delete another branch from your current local repository directory" )
- SetGlobalStr( "s037", "Delete your currently loaded file in TSE from your local repository directory" )
- SetGlobalStr( "s038", "Download once and install: Git-Cygwin" )
- SetGlobalStr( "s039", "Download once and install: Git-Tortoise" )
- SetGlobalStr( "s040", "Get all filenames in your current local repository directory" )
- SetGlobalStr( "s041", "Goto your remote Git server web page on the Internet: GitHub" )
- SetGlobalStr( "s042", "Goto your remote Git server web page on the Internet: GitLab" )
- SetGlobalStr( "s043", "Load a whole git directory into TSE" )
- SetGlobalStr( "s044", "Merge your current branch with another branch in your current local repository directory" )
- SetGlobalStr( "s045", "Rename a filename in the current local repository directory" )
- SetGlobalStr( "s046", "Run the command line" )
- SetGlobalStr( "s047", "Run git commands in the current repository directory" )
- SetGlobalStr( "s048", "Run graphical Gitk program on the current local repository directory (git-scm only)" )
- SetGlobalStr( "s049", "Run graphical Git-GUI program on the current local repository directory (git-scm only)" )
- SetGlobalStr( "s050", "Read your current local repository directory" )
- SetGlobalStr( "s100", "Read your default local repository directory" )
- SetGlobalStr( "s097", "Read all files in your current local repository directory" )
- SetGlobalStr( "s051", "Read your current branch name in your current local repository directory" )
- SetGlobalStr( "s052", "Read all the branch names in the current local repository directory: Branch" )
- SetGlobalStr( "s053", "Read all the branch names in the current local repository directory: Show-Branch" )
- SetGlobalStr( "s054", "Read the git config file for the current local repository directory" )
- SetGlobalStr( "s092", "Read the global git config file for the currently logged in user" )
- SetGlobalStr( "s055", "Read the git .gitignore file for the current local repository directory" )
- SetGlobalStr( "s056", "Read the history: Who changed what when (blame)" )
- SetGlobalStr( "s057", "Read the history: Diff (see also 'Show')" )
- SetGlobalStr( "s058", "Read the history: Diff: last with previous one back" )
- SetGlobalStr( "s059", "Read the history: Diff: last with previous two back" )
- SetGlobalStr( "s060", "Read the history: Diff: last with previous three back" )
- SetGlobalStr( "s061", "Read the history: Diff: last with previous four back" )
- SetGlobalStr( "s062", "Read the history: Diff: last with previous five back" )
- SetGlobalStr( "s063", "Read the history: Diff: last with previous six back" )
- SetGlobalStr( "s064", "Read the history: Diff: last with previous N back" )
- SetGlobalStr( "s065", "Read the history: Diff: previous M with previous N back" )
- SetGlobalStr( "s066", "Read the history: Log" )
- SetGlobalStr( "s067", "Read the history: Log --oneline" )
- SetGlobalStr( "s068", "Read the history: Show" )
- SetGlobalStr( "s069", "Read the history: Status" )
- SetGlobalStr( "s070", "Read Help: Git command help: subcommands" )
- SetGlobalStr( "s071", "Read Help: Git command help: concept guides" )
- SetGlobalStr( "s072", "Read Help: Git command all" )
- SetGlobalStr( "s073", "Read Help: Git command help" )
- SetGlobalStr( "s074", "Read Help: Git view tree .git" )
- SetGlobalStr( "s075", "Read the log file" )
- SetGlobalStr( "s093", "Read the Git command line executable" )
- SetGlobalStr( "s076", "Read the Git version" )
- SetGlobalStr( "s077", "Read book 'Version Control with Git' (O'Reilly)" )
- SetGlobalStr( "s078", "Replace your current file in the current local repository directory with version 1 version before" )
- SetGlobalStr( "s079", "Replace your current file in the current local repository directory with version 2 versions before" )
- SetGlobalStr( "s080", "Replace your current file in the current local repository directory with version 3 versions before" )
- SetGlobalStr( "s081", "Replace your current file in the current local repository directory with version 4 versions before" )
- SetGlobalStr( "s082", "Replace your current file in the current local repository directory with version 5 versions before" )
- SetGlobalStr( "s083", "Replace your current file in the current local repository directory with version 6 versions before" )
- SetGlobalStr( "s084", "Replace your current file in the current local repository directory with version N versions before" )
- SetGlobalStr( "s085", "Reset HEAD of your current file in the local repository directory" )
- SetGlobalStr( "s086", "1. Save your current state of your local repository directory: Stash: Push" )
- SetGlobalStr( "s087", "2. Restore your current state of your local repository directory: Stash: Pop" )
- SetGlobalStr( "s088", "1. Set version state: Indicate that this version in this local repository directory is bad or good: start (bisect)" )
- SetGlobalStr( "s089", "2. Set version state: Indicate that this version in this local repository directory is bad (bisect)" )
- SetGlobalStr( "s090", "2. Set version state: Indicate that this version in this local repository directory is good (bisect)" )
- SetGlobalStr( "s091", "3. Set version state: Indicate that this version in this local repository directory is bad or good: reset (bisect)" )
- //
- B = TRUE
- //
- RETURN( B )
+ IF FNMacroCheckLoadB( FNStringGetCarS( macronameS ) ) // necessary if you pass parameters in a string
+  //
+  PROCMacroExec( macronameS )
+  //
+ ENDIF
  //
 END
 
@@ -394,7 +249,7 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.36</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
+// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.42</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g. PROC Main()
  // e.g.  //
@@ -428,7 +283,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.  //
  // e.g.  // CHANGE: ONCE: BEGIN
  // e.g.  //
- // e.g.  B = FNFileSaveFileVersionControlGitSimplestInitializeB()
+ // e.g.  // B = FNFileSaveFileVersionControlGitSimplestInitializeB()
+ // e.g.  PROCMacroRunKeep( "savefisi" )
  // e.g.  //
  // e.g.  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) ) // change this
  // e.g.  //
@@ -598,6 +454,51 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  //
 END
 
+// library: macro: check: load <description>macro: load: (Loads a Macro File From Disk Into Memory) R    LoadMacro(STRING macro_filename)*</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=checmacl.s) [<Program>] [<Research>] [[kn, zoe, we, 16-06-1999 01:07:06]
+INTEGER PROC FNMacroCheckLoadB( STRING macronameS )
+ // e.g. PROC Main()
+ // e.g.  Message( FNMacroCheckLoadB( macronameS ) ) // gives e.g. TRUE
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ RETURN( LoadMacro( macronameS ) )
+ //
+END
+
+// library: string: get: word: token: get: first: FNStringGetCarS(): Get the first word of a string (words delimited by a space " " (=space delimited list)). <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=getstgca.s) [<Program>] [<Research>] [kn, ni, su, 02-08-1998 15:54:17]
+STRING PROC FNStringGetCarS( STRING s )
+ // e.g. PROC Main()
+ // e.g.  STRING s1[255] = FNStringGetInitializeNewStringS()
+ // e.g.  s1 = FNStringGetInputS( "string: get: word: token: get: first: s = ", "this is a test" )
+ // e.g.  IF FNKeyCheckPressEscapeB( s1 ) RETURN() ENDIF
+ // e.g.  Message( FNStringGetCarS( s1 ) ) // gives e.g. "this"
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ // variation: RETURN( FNStringGetTokenFirstS( s, " " ) )
+ //
+ RETURN( GetToken( s, " ", 1 ) ) // faster, but not central
+ //
+END
+
+// library: macro: exec <description>macro: (Executes the Requested Macro) O    ExecMacro([<Program>] [<Research>] [STRING macroname])*</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=execmame.s) [[kn, zoe, we, 16-06-1999 01:06:54]
+PROC PROCMacroExec( STRING macronameS )
+ // e.g. PROC Main()
+ // e.g.  PROCMacroExec( "video" )
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ IF FNMathCheckLogicNotB( FNMacroCheckExecB( macronameS ) )
+  //
+  PROCWarnCons3( "macro", macronameS, ": could not be executed" )
+  //
+ ENDIF
+ //
+END
+
 // library: window: set: center: popup: on <description></description> <version control></version control> <version>1.0.0.0.3</version> <version control></version control> (filenamemacro=setwipon.s) [<Program>] [<Research>] [kn, ri, su, 06-11-2022 03:41:11]
 INTEGER PROC FNWindowSetCenterPopupOnB()
  // e.g. PROC Main()
@@ -664,24 +565,7 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: string: get: word: token: get: first: FNStringGetCarS(): Get the first word of a string (words delimited by a space " " (=space delimited list)). <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=getstgca.s) [<Program>] [<Research>] [kn, ni, su, 02-08-1998 15:54:17]
-STRING PROC FNStringGetCarS( STRING s )
- // e.g. PROC Main()
- // e.g.  STRING s1[255] = FNStringGetInitializeNewStringS()
- // e.g.  s1 = FNStringGetInputS( "string: get: word: token: get: first: s = ", "this is a test" )
- // e.g.  IF FNKeyCheckPressEscapeB( s1 ) RETURN() ENDIF
- // e.g.  Message( FNStringGetCarS( s1 ) ) // gives e.g. "this"
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- // variation: RETURN( FNStringGetTokenFirstS( s, " " ) )
- //
- RETURN( GetToken( s, " ", 1 ) ) // faster, but not central
- //
-END
-
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.331</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.335</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. PROC Main()
  // e.g.  //
@@ -708,7 +592,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   PushBlock()
  // e.g.   GotoBufferId( bufferI )
  // e.g.   //
- // e.g.   B = FNFileSaveFileVersionControlGitSimplestInitializeB()
+ // e.g.   // B = FNFileSaveFileVersionControlGitSimplestInitializeB()
+ // e.g.   PROCMacroRunKeep( "savefisi" )
  // e.g.   //
  // e.g.   AddLine( GetGlobalStr( "s010" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s011" ) ) AddLine( "--------------------------------------------------------------------------" )
@@ -745,6 +630,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s036" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s037" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s038" ) ) //
+ // e.g.   AddLine( GetGlobalStr( "s103" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s039" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s040" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s041" ) ) //
@@ -756,6 +642,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s047" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s048" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s049" ) ) AddLine( "--------------------------------------------------------------------------" )
+ // e.g.   AddLine( GetGlobalStr( "s102" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s050" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s100" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s097" ) ) AddLine( "--------------------------------------------------------------------------" )
@@ -909,6 +796,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // Todo: Read the programs from tse.ini
  //
+ // Todo: E.g. compile savefisp.s (single commands) and git_tse.s (composite commands) separately and pass the commands via the command line from program 1 to program 2 and back
+ //
  // ===
  //
  // The most commonly used git commands are:
@@ -969,6 +858,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  STRING gitlabPasswordS[255] = GetProfileStr( sectionS, "gitlabPasswordS", "", iniFileNameS ) // this is your GitLab password
  STRING gitlabRemoteDirectoryUrlS[255] = GetProfileStr( sectionS, "gitlabRemoteDirectoryUrlS", "", iniFileNameS ) // this is your GitLab remote directory
  //
+ STRING gitsmartgitDownloadUrlS[255] = GetProfileStr( sectionS, "gitsmartgitDownloadUrlS", "", iniFileNameS ) // this is the URL where to download SmartGit Git
+ //
  STRING gitcygwinDownloadUrlS[255] = GetProfileStr( sectionS, "gitcygwinDownloadUrlS", "", iniFileNameS ) // this is the URL where to download Cygwin Git
  //
  STRING gitscmDownloadUrlS[255] = GetProfileStr( sectionS, "gitscmDownloadUrlS", "", iniFileNameS ) // this is the URL where to download Git-SCM
@@ -986,6 +877,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // CHANGE: ONCE: END
  //
+ STRING executableS[255] = GetProfileStr( sectionS, "executableGitS", "", iniFileNameS )
+ //
  INTEGER B = FALSE
  //
  INTEGER changeFileB = FALSE
@@ -994,11 +887,11 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  STRING driveLetterS[255] = SplitPath( directoryRepositoryS, _DRIVE_ )
  //
- STRING executableS[255] = Format( QuotePath( AddTrailingSlash( directoryExecutableS ) ), "git.exe" )
- //
  STRING executableGitkS[255] = Format( QuotePath( AddTrailingSlash( directoryExecutableS ) ), "gitk.exe" )
  //
  STRING executableGitGuiS[255] = Format( QuotePath( AddTrailingSlash( directoryExecutableS ) ), "git-gui.exe" )
+ //
+ STRING executableSmartgitGuiS[255] = GetProfileStr( sectionS, "executableSmartgitGuiS", "", iniFileNameS )
  //
  STRING fileNameCurrentS[255] = Quotepath( CurrFilename() )
  //
@@ -1025,10 +918,18 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  INTEGER quitB = FALSE
  //
+ // ===
+ //
  PushPosition()
  PushBlock()
  //
- s3 = Trim( caseS )
+ s = Query( MacroCmdLine )
+ s = Trim( s )
+ IF EquiStr( s, "" )
+  s3 = Trim( caseS ) // do something
+ ELSE
+  s3 = s
+ ENDIF
  //
  // ------------------------------------------------------------------------------
  //
@@ -1063,6 +964,18 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   StartPgm( s )
   //
   B = FNProgramRunGitTseOutputB( s, "s038", FALSE )
+  //
+ ENDIF
+ //
+ // ------------------------------------------------------------------------------
+ //
+ IF s3 == GetGlobalStr( "s103" )
+  //
+  s = gitSmartgitDownloadUrlS
+  //
+  StartPgm( s )
+  //
+  B = FNProgramRunGitTseOutputB( s, "s103", FALSE )
   //
  ENDIF
  //
@@ -1450,6 +1363,19 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
   B = FNProgramRunGitTseOutputB( s, "s048", TRUE )
+  //
+ ENDIF
+ //
+ // ------------------------------------------------------------------------------
+ //
+ IF s3 == GetGlobalStr( "s102" )
+  //
+  s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
+  s = Format( s, " ", "&", " " )
+  s = Format( s, executableSmartgitGuiS )
+  s = Format( s, " ", "&", " " )
+  s = Format( s, "pause" )
+  B = FNProgramRunGitTseOutputB( s, "s102", TRUE )
   //
  ENDIF
  //
@@ -3320,6 +3246,45 @@ STRING PROC FNStringGetCdrS( STRING s )
  //
 END
 
+// library: math: check: logic: not <description></description> <version control></version control> <version>1.0.0.0.2</version> (filenamemacro=checmaln.s) [<Program>] [<Research>] [kn, ri, tu, 15-05-2001 16:54:21]
+INTEGER PROC FNMathCheckLogicNotB( INTEGER B )
+ // e.g. PROC Main()
+ // e.g.  STRING s[255] = FNStringGetInitializeNewStringS()
+ // e.g.  s = FNStringGetInputS( "math: check: logic: not: number = ", "1" )
+ // e.g.  IF FNKeyCheckPressEscapeB( s ) RETURN() ENDIF
+ // e.g.  Message( FNMathCheckLogicNotB( FNStringGetToIntegerI( s ) ) )
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ RETURN( NOT B )
+ //
+END
+
+// library: macro: check: exec <description>macro: (Executes the Requested Macro) O    ExecMacro([<Program>] [<Research>] [STRING macroname])*</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=checmace.s) [[kn, zoe, we, 16-06-1999 01:06:54]
+INTEGER PROC FNMacroCheckExecB( STRING macronameS )
+ // e.g. PROC Main()
+ // e.g.  Message( FNMacroCheckExecB( macronameS ) ) // gives e.g. TRUE
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ RETURN( ExecMacro( macronameS ) )
+ //
+END
+
+// library: warn: cons3 <description>error: warning: give a warning message via 3 strings</description> <version>1.0.0.0.2</version> <version control></version control> (filenamemacro=conswawd.s) [<Program>] [<Research>] [[kn, ri, su, 29-07-2001 18:24:52]
+PROC PROCWarnCons3( STRING s1, STRING s2, STRING s3 )
+ // e.g. PROC Main()
+ // e.g.  PROCWarnCons3( "error", "1", "2" ) // gives e.g. "error 1 2"
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ PROCWarn( FNStringGetCons3S( s1, s2, s3 ) )
+ //
+END
+
 // library: program: run: dos: git <description></description> <version control></version control> <version>1.0.0.0.28</version> <version control></version control> (filenamemacro=runprdgi.s) [<Program>] [<Research>] [kn, ri, sa, 19-11-2022 13:41:15]
 INTEGER PROC FNProgramRunGitTseOutputB( STRING s, STRING caseS, INTEGER dosB )
  // e.g. PROC Main()
@@ -3543,22 +3508,6 @@ STRING PROC FNStringGetDirectoryRepositoryGitDefaultS()
  //
 END
 
-// library: macro: run: keep <description>macro: run a macro, then keep it</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=runmarke.s) [<Program>] [<Research>] [[kn, zoe, fr, 27-10-2000 15:59:33]
-PROC PROCMacroRunKeep( STRING macronameS )
- // e.g. PROC Main()
- // e.g.  PROCMacroRunKeep( "mysubma1.mac myparameter11 myparameter12" )
- // e.g.  PROCMacroRunKeep( "mysubma2.mac myparameter21" )
- // e.g.  PROCMacroRunKeep( "mysubma3.mac myparameter31 myparameter32" )
- // e.g. END
- //
- IF FNMacroCheckLoadB( FNStringGetCarS( macronameS ) ) // necessary if you pass parameters in a string
-  //
-  PROCMacroExec( macronameS )
-  //
- ENDIF
- //
-END
-
 // library: string: space: remove: begin <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=remostsb.s) [<Program>] [<Research>] [kn, ri, th, 15-02-2001 06:06:51]
 STRING PROC FNStringGetSpaceRemoveBeginS( STRING s )
  // e.g. PROC Main()
@@ -3589,92 +3538,6 @@ STRING PROC FNStringGetDeleteWordFrontS( STRING s, STRING deleteS )
  //
 END
 
-// library: macro: check: load <description>macro: load: (Loads a Macro File From Disk Into Memory) R    LoadMacro(STRING macro_filename)*</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=checmacl.s) [<Program>] [<Research>] [[kn, zoe, we, 16-06-1999 01:07:06]
-INTEGER PROC FNMacroCheckLoadB( STRING macronameS )
- // e.g. PROC Main()
- // e.g.  Message( FNMacroCheckLoadB( macronameS ) ) // gives e.g. TRUE
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- RETURN( LoadMacro( macronameS ) )
- //
-END
-
-// library: macro: exec <description>macro: (Executes the Requested Macro) O    ExecMacro([<Program>] [<Research>] [STRING macroname])*</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=execmame.s) [[kn, zoe, we, 16-06-1999 01:06:54]
-PROC PROCMacroExec( STRING macronameS )
- // e.g. PROC Main()
- // e.g.  PROCMacroExec( "video" )
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- IF FNMathCheckLogicNotB( FNMacroCheckExecB( macronameS ) )
-  //
-  PROCWarnCons3( "macro", macronameS, ": could not be executed" )
-  //
- ENDIF
- //
-END
-
-// library: string: line: length: what is the length <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=getstgle.s) [<Program>] [<Research>] [kn, ri, we, 25-11-1998 20:20:58]
-INTEGER PROC FNStringGetLengthI( STRING s )
- // e.g. PROC Main()
- // e.g.  STRING s1[255] = FNStringGetInitializeNewStringS()
- // e.g.  s1 = FNStringGetInputS( "string: line: length: string = ", "this is a test" )
- // e.g.  IF FNKeyCheckPressEscapeB( s1 ) RETURN() ENDIF
- // e.g.  Message( FNStringGetLengthI( s1 ) ) // gives e.g. 14
- // e.g.  GetKey()
- // e.g.  Message( FNStringGetLengthI( "knud" ) ) // gives 4
- // e.g.  GetKey()
- // e.g.  Message( FNStringGetLengthI( "the" ) ) // gives 3
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- RETURN( Length( s ) )
- //
-END
-
-// library: math: check: logic: not <description></description> <version control></version control> <version>1.0.0.0.2</version> (filenamemacro=checmaln.s) [<Program>] [<Research>] [kn, ri, tu, 15-05-2001 16:54:21]
-INTEGER PROC FNMathCheckLogicNotB( INTEGER B )
- // e.g. PROC Main()
- // e.g.  STRING s[255] = FNStringGetInitializeNewStringS()
- // e.g.  s = FNStringGetInputS( "math: check: logic: not: number = ", "1" )
- // e.g.  IF FNKeyCheckPressEscapeB( s ) RETURN() ENDIF
- // e.g.  Message( FNMathCheckLogicNotB( FNStringGetToIntegerI( s ) ) )
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- RETURN( NOT B )
- //
-END
-
-// library: macro: check: exec <description>macro: (Executes the Requested Macro) O    ExecMacro([<Program>] [<Research>] [STRING macroname])*</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=checmace.s) [[kn, zoe, we, 16-06-1999 01:06:54]
-INTEGER PROC FNMacroCheckExecB( STRING macronameS )
- // e.g. PROC Main()
- // e.g.  Message( FNMacroCheckExecB( macronameS ) ) // gives e.g. TRUE
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- RETURN( ExecMacro( macronameS ) )
- //
-END
-
-// library: warn: cons3 <description>error: warning: give a warning message via 3 strings</description> <version>1.0.0.0.2</version> <version control></version control> (filenamemacro=conswawd.s) [<Program>] [<Research>] [[kn, ri, su, 29-07-2001 18:24:52]
-PROC PROCWarnCons3( STRING s1, STRING s2, STRING s3 )
- // e.g. PROC Main()
- // e.g.  PROCWarnCons3( "error", "1", "2" ) // gives e.g. "error 1 2"
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- PROCWarn( FNStringGetCons3S( s1, s2, s3 ) )
- //
-END
-
 // library: warn <description>error: warning: give a warning message</description> <version>1.0.0.0.3</version> <version control></version control> (filenamemacro=wawarn.s)  [<Program>] [<Research>] [kn, zoe, we, 09-06-1999 22:11:07]
 PROC PROCWarn( STRING s )
  // e.g. PROC Main()
@@ -3697,6 +3560,25 @@ STRING PROC FNStringGetCons3S( STRING s1, STRING s2, STRING s3 )
  // e.g. <F12> Main()
  //
  RETURN( FNStringGetConsS( FNStringGetConsS( s1, s2 ), s3 ) )
+ //
+END
+
+// library: string: line: length: what is the length <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=getstgle.s) [<Program>] [<Research>] [kn, ri, we, 25-11-1998 20:20:58]
+INTEGER PROC FNStringGetLengthI( STRING s )
+ // e.g. PROC Main()
+ // e.g.  STRING s1[255] = FNStringGetInitializeNewStringS()
+ // e.g.  s1 = FNStringGetInputS( "string: line: length: string = ", "this is a test" )
+ // e.g.  IF FNKeyCheckPressEscapeB( s1 ) RETURN() ENDIF
+ // e.g.  Message( FNStringGetLengthI( s1 ) ) // gives e.g. 14
+ // e.g.  GetKey()
+ // e.g.  Message( FNStringGetLengthI( "knud" ) ) // gives 4
+ // e.g.  GetKey()
+ // e.g.  Message( FNStringGetLengthI( "the" ) ) // gives 3
+ // e.g. END
+ // e.g.
+ // e.g. <F12> Main()
+ //
+ RETURN( Length( s ) )
  //
 END
 
