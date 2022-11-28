@@ -206,3 +206,17 @@ will now automatically open a TSE ask box when you run grep.mac
 If you want to use this version of grep, you will want to
 modify your UI file to assign a key combination to execute
 it.
+
+===
+
+Missing macros in order to be able to run the dialog boxes:
+
+DlgSetData
+DlgSetTitle
+DlgSetEnable
+
+ExecMacro( Format("DlgSetData"
+
+ExecMacro( Format("DlgSetTitle
+
+ExecMacro( Format("DlgSetEnable
