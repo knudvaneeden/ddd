@@ -37,7 +37,9 @@ Latest instructions:
 
      Warning for duplicates, rename e.g. to the name of the current package
 
-      09/04/2002  01:20           4.041  dialogDUPLICATEDLG222.si
+      (You should keep the dialog.si from dlg222.zip (and disable the other one)
+
+      09/04/2002  01:20           4.041  dialogDUPLICATEGREP3230.si
       21/04/2005  01:22             363  file_idDUPLICATEDLG222.diz
       19/05/2002  17:32             353  FILE_IDDUPLICATEGETHLP40.DIZ
       19/05/2002  14:56           1.205  guiincDUPLICATEGETHLP40.inc
@@ -59,7 +61,7 @@ Now run it:
 
 build.bat
 
-Here there was an error:
+Here there was an error (if you keep the dialog.si from dlg222.zip (and disable the other one) then this error should not occur)
 
 File: F:\WORDPROC\tse32_v44200\MACDOWNLO\grep\dialog.s
 Compiling............................................................
