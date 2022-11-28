@@ -1,0 +1,263 @@
+/*
+
+This file can be included to help a TSE 2.6 macro compile for TSE 2.5.
+
+Several constants and defined, and several TSE 2.6 commands are written here
+using TSE 2.5 commands.
+
+*/
+
+
+#ifndef COMPAT_SI
+#define COMPAT_SI 1
+
+#ifdef WIN32
+
+    constant MAXPATH = 255              // _MAXPATH_
+    constant MAXEXT = 12
+
+    constant RUN_DETACHED = 4           // _RUN_DETACHED_
+    constant DISPLAY_HELP = 3           // _DISPLAY_HELP_
+
+    string CONSOLE[] = "CONIN$"
+
+#else
+
+    constant MAXPATH = 128
+    constant MAXEXT = 4
+
+    constant RUN_DETACHED = 0           // Win32 only
+    constant DISPLAY_HELP = 3
+
+    string CONSOLE[] = "CON"
+
+
+    integer proc isCharDevice(integer handle)
+        register r
+
+        r.ax = 0x4400
+        r.bx = handle
+        intr(0x21, r)
+        return ((r.dx & 0x80) <> 0)
+    end
+
+
+    integer proc isTypeableKey(integer key)
+        integer lo = LoByte(key)
+
+        return(HiByte(key) == 0 or
+                lo >= 32 and (lo < 0xfa or lo > 0xfd) and
+                lo <> 0xf4 and lo <> 0xe0)
+    end
+
+
+    integer proc fDup2(integer oldhandle, integer newhandle)
+        register r
+
+        r.ax = 0x4600
+        r.bx = oldhandle
+        r.cx = newhandle
+        intr(0x21, r)
+        return (0)
+    end
+
+
+    /*---------------------------------------------------------------------
+      Empties the current buffer, sets the binary mode to reclen, loads fn
+      into it, returns true(non-zero)/false(zero).  No hooks are called.
+    ---------------------------------------------------------------------*/
+    integer proc LoadBuffer(string fn, integer reclen)
+        integer ok
+
+        EmptyBuffer()
+        BinaryMode(reclen)
+        PushBlock()
+        ok = InsertFile(fn, _DONT_PROMPT_)
+        PopBlock()
+        return (ok)
+    end
+
+
+    /*---------------------------------------------------------------------
+      Creates a new temporary buffer of type flags (_SYSTEM_ if not passed),
+      sets the binary mode to reclen, loads fn into it, makes it the current
+      buffer, returns id.  No hooks are called.
+    ---------------------------------------------------------------------*/
+    integer proc EditBuffer(string fn, integer flags, integer reclen)
+        integer id
+
+        id = CreateBuffer("", iif(flags == 0, _SYSTEM_, flags))
+        if id
+            LoadBuffer(fn, reclen)
+        endif
+        return (id)
+    end
+
+
+    integer proc LongestLineInBuffer()
+        integer maxlen = 0
+
+        PushPosition()
+        BegFile()
+        repeat
+            maxlen = Max(maxlen, CurrLineLen())
+        until not Down()
+        PopPosition()
+        return (maxlen)
+    end
+
+
+    string proc QuotePath(string path)
+        return (path)
+    end
+
+
+    integer proc BuildPickBufferEx(string s, integer a)
+        return(BuildPickBuffer(s, a))
+    end
+
+
+    integer proc PBSize()
+        return(PeekLong(AdjPtr(CurrLinePtr() , 7 - 1)))
+    end
+
+
+    integer proc PBAttribute()
+        return(CurrChar(2))
+    end
+
+
+    integer proc PBDate()
+        return(PeekWord(AdjPtr(CurrLinePtr(), 5 - 1)))
+    end
+
+
+    string proc PBDateStr()
+        string s[80] = DecodePickBuffer(GetText(1, CurrLineLen()))
+        return(s[26:8])
+    end
+
+
+    string proc PBTimeStr()
+        string s[80] = DecodePickBuffer(GetText(1, CurrLineLen()))
+        return(s[35:8])
+    end
+
+
+    string proc PBName()
+        string name[8], ext[4]
+
+        name = GetText(11 + ((PBAttribute() & _DIRECTORY_) <> 0), 8)
+        name = Trim(name)
+        ext = GetText(21, 3)
+        ext = Trim(ext)
+        if Length(ext)
+            ext = "." + ext
+        endif
+        return (name + ext)
+    end
+
+
+    string proc AddTrailingSlash(string s)
+        return (iif(s[Length(s)] == '\', s, s+'\'))
+    end
+
+
+    string proc RemoveTrailingSlash(string s)
+        return (iif(s[Length(s)] == '\', s[1:Length(s) - 1], s))
+    end
+
+
+    // emulates TSE 2.6 XlatHelp function - only works with TSE 2.6 help codes
+    integer proc XlatHelp(integer nPos, integer fStripHelp)
+        integer i = 1
+        integer n = 0
+
+        // this could easily be condensed, but i have chosen to optimize for speed
+        // instead.
+        if fStripHelp
+            while i <= nPos
+                n = n + 1
+
+                if CurrChar(i) == 174
+                    repeat
+                        i = i + 1
+                    until CurrChar(i-1) == 175 or CurrChar(i) == _BEYOND_EOL_
+                endif
+
+                if CurrChar(i) == _BEYOND_EOL_
+                    break
+                endif
+                i = i + 1
+            endwhile
+        else
+            while i <= nPos
+                n = n + 1
+
+                if CurrChar(i) == 174
+                    if i >= nPos
+                        break
+                    endif
+                    repeat
+                        n = n + 1
+                        i = i + 1
+                        nPos = nPos + 1
+                    until CurrChar(i-1) == 175 or CurrChar(i) == _BEYOND_EOL_
+                endif
+
+                if CurrChar(i) == _BEYOND_EOL_
+                    break
+                endif
+                i = i + 1
+            endwhile
+        endif
+
+        return(n)
+    end
+
+
+    // only works for TSE 2.5 help codes
+    integer proc XlatHelp2(integer nPos, integer fStripHelp)
+        integer i = 1
+        integer n = 0
+
+        // this could easily be condensed, but i have chosen to optimize for speed
+        // instead.
+        if fStripHelp
+            while i <= nPos
+                n = n + 1
+
+                if CurrChar(i-1) in 2, 4, 12, 174, 175
+                    n = n - 1
+                endif
+
+                if CurrChar(i) == _BEYOND_EOL_
+                    break
+                endif
+                i = i + 1
+            endwhile
+        else
+            while i <= nPos
+                n = n + 1
+
+                if CurrChar(i) in 2, 4, 12, 174, 175
+                    if i >= nPos
+                        break
+                    endif
+                    n = n + 1
+                    nPos = nPos + 1
+                endif
+
+                if CurrChar(i) == _BEYOND_EOL_
+                    break
+                endif
+                i = i + 1
+            endwhile
+        endif
+
+        return(n)
+    end
+
+#endif  // WIN32
+
+#endif  // COMPAT_SI

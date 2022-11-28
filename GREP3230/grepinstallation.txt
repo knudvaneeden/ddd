@@ -1,0 +1,55 @@
+Latest instructions:
+
+1. -Tested successfully in a clean TSE version 4.42
+
+2. -It did not work in my working TSE version 4.42 (probable cause .UI differences)
+
+3. -It is not mandatory to go to your mac directory,
+
+4. -You can choose an arbitrary directory. E.g. c:\TEMP\
+
+5. -Goto an arbitrary directory
+
+     c:\TEMP\
+
+6. -Create a directory grep there
+
+     md grep
+
+7. -Copy and unzip the 4 below zip files into this grep directory
+    (unzip these 4 .zip files mandatory in this order from top to bottom)
+
+     pkunzipc -extract -dir grep3230.zip
+
+     pkunzipc -extract -dir dlg222.zip
+
+     pkunzipc -extract -dir gethlp40.zip
+
+     pkunzipc -extract -dir dlg222p.zip
+
+    -Note: When asked to overwrite the dialog.si file when
+           unzipping 'dlg222.zip' answer thus 'YES' (that is
+           important, otherwise you get missing variables
+           errors 2 times later when compiling the .s and
+           .si)
+
+            Error   2335  (497,32)   Undefined symbol 'DlgMsgText' encountered
+
+           Answer 'Yes' when asking to over write 'guiinc.inc'
+
+           If asked to delete the .mac files, that is not so important
+           as they will be overwritten anyhow in the next steps.
+
+8. -Then create and run this build.bat file to compile (only) these
+    4 files (if you should compile more files than you will get one or more errors).
+
+sc32 dialog.s
+sc32 dialogp.s
+sc32 gethelp.si
+sc32 grep.s
+
+9. -Make sure there are no errors from this compiling.
+
+10. Then start TSE and run that latest 'grep.mac' in that grep directory.
+
+11. You should see a Dieter Koessl dialog box to fill in and run Chris Antos' grep.
