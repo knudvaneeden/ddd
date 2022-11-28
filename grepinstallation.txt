@@ -1,224 +1,55 @@
 Latest instructions:
 
-(1) TSE comes with a grep.s macro from Semware. The
-    alternate grep discussed here also exists in a file
-    called grep.s. so the names will collide.  For now,
-    rename TSE's original grep file to grep.org, or some
-    other name of your choice. If you want to continue to
-    use both, you'll need to rename one or the other. I
-    primarily use this alternate, so I've renamed the TSE
-    original to tsegrep.s.
+1. -Tested successfully in a clean TSE version 4.42
 
-(2) Download the following files from the "old" Semware web
-    site:
+2. -It did not work in my working TSE version 4.42 (probable cause .UI differences)
 
-     htps://semware.com/html/tseprofiles.php
+3. -It is not mandatory to go to your mac directory,
 
-(3) Inside your TSE installation mac directory, create a
-    directory "grep". Move the zip files from (2) into that
-    directory.
+4. -You can choose an arbitrary directory. E.g. c:\TEMP\
 
-     cdd f:\wordproc\tse32_v44200\macdownlo\
+5. -Goto an arbitrary directory
+
+     c:\TEMP\
+
+6. -Create a directory grep there
 
      md grep
 
-     copy grep3230.zip grep
-     copy dlg222.zip grep
-     copy dlg222p.zip grep
-     copy gethlp40.zip grep
-
-(4) Inside the grep directory, unzip the following:
-
-     cd grep
+7. -Copy and unzip the 4 below zip files into this grep directory
+    (unzip these 4 .zip files mandatory in this order from top to bottom)
 
      pkunzipc -extract -dir grep3230.zip
+
      pkunzipc -extract -dir dlg222.zip
+
      pkunzipc -extract -dir gethlp40.zip
 
-     Warning for duplicates, rename e.g. to the name of the current package
+     pkunzipc -extract -dir dlg222p.zip
 
-      (You should keep the dialog.si from dlg222.zip (and disable the other one)
+    -Note: When asked to overwrite the dialog.si file when
+           unzipping 'dlg222.zip' answer thus 'YES' (that is
+           important, otherwise you get missing variables
+           errors 2 times later when compiling the .s and
+           .si)
 
-      09/04/2002  01:20           4.041  dialogDUPLICATEGREP3230.si
-      21/04/2005  01:22             363  file_idDUPLICATEDLG222.diz
-      19/05/2002  17:32             353  FILE_IDDUPLICATEGETHLP40.DIZ
-      19/05/2002  14:56           1.205  guiincDUPLICATEGETHLP40.inc
+            Error   2335  (497,32)   Undefined symbol 'DlgMsgText' encountered
 
-Delete the .mac files packaged with these zip files:
+           Answer 'Yes' when asking to over write 'guiinc.inc'
 
- del *.mac /s
+           If asked to delete the .mac files, that is not so important
+           as they will be overwritten anyhow in the next steps.
 
-(5) Create an executable file called build.bat with the
-    following contents.
+8. -Then create and run this build.bat file to compile (only) these
+    4 files (if you should compile more files than you will get one or more errors).
 
-This is the content of build.bat:
------------------
-sc32 *.s
-sc32 *.si
------------------
+sc32 dialog.s
+sc32 dialogp.s
+sc32 gethelp.si
+sc32 grep.s
 
-Now run it:
+9. -Make sure there are no errors from this compiling.
 
-build.bat
+10. Then start TSE and run that latest 'grep.mac' in that grep directory.
 
-Here there was an error (if you keep the dialog.si from dlg222.zip (and disable the other one) then this error should not occur)
-
-File: F:\WORDPROC\tse32_v44200\MACDOWNLO\grep\dialog.s
-Compiling............................................................
-Error   2335  (1333,22)  Undefined symbol 'DlgMsgText' encountered
-
-SAL Compiler V4.50 (bcc version)
-Copyright 1991-2021 SemWare Corp.  All rights reserved worldwide.
-
-Solution:
-
-add at the top of the dialog.s (and similarly in dialogp.s) file this text, save and recompile.
-
-STRING DlgMsgText[255] = ""
-
----
-
-Pay attention to the printed messages, looking for reported
-errors. If you do not see any errors, then the macro and
-help files should be ready to use. Verify with a directory
-listing of the mac directory.
-
-(6) To test, open up a text file in the editor. From the
-    main menu, select Macro - Execute, and then enter grep
-    into the Execute macro: prompt.  You should see a popup
-    dialog box with Grep in the title, and a list of Search
-    and Grep options on the bottom.
-
-===
-
-Execute macro grep.s with the parameter -w
-
-  E.g.
-
-   grep\grep.mac -w
-
-That will ask for a search string, then start searching.
-
-===
-
-E.g.
-
- grep.mac -w <your search string>
-
- grep.mac -w hello world
-
-That will start to search with 'hello world'
-
-===
-
-This seem to be some parameters possible:
-
- Options:
-
-  -$ <your search string>      anchor to end of line
-  -b <your search string>      block in current file only
-  -c <your search string>      current file only
-  -d <your search string>      recurse subdirectories
-  -i <your search string>      ignore case (treat lower case and upper as identical)
-  -l <your search string>      filenames only (only list the names of files that have matches; do not list the matches themselves.)
-  -m <your search string>      files in memory
-  -p <your directory>          begins the search from the path <your directory>
-  -v <your search string>      verbose
-  -w <your search string>      match whole words.
-  -x <your search string>      regular expressions
-  -^ <your search string>      anchor to beginning of line
-
-  -e <your file specification> excludes files that match <your filespecification>
-
-                                E.g. G -e*.bak,*.tmp hello *.*
-
-                               Searches all files in the current directory, except *.bat and *.tmp, for the string "hello".
-
-                                E.g. f:\wordproc\tse32_v44200\macdownlo\grep\grep.mac -mef:\addjob.dok Identifier
-
-                               Searches in all files in memory, but excludes f:\addjob.dok for the string "Identifier"
-
-                                Note: this seems not to work as expected.
-
-                                It excludes the filename in the results, but shows instead non-matching results including
-                                from the excluded file.
-
-                                The root cause of the incorrect results
-                                seems to be that it can not handle files with many lines, e.g. 1 million or more.
-
-                                 addjob.dok is a very large file (1 gigabytes, 15 million lines)
-
-===
-
-The default is in grep.s is:
-
-// these must be defined to some value
-#define VARIATION 2				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
-
-This does not do anything when running grep.mac.
-
-You must thus call grep.mac with parameters to see something happening, e.g.
-
- grep.mac -w
-
-===
-
-Conclusion:
-
-In grep.s you find this to start the 'Dialog' (e.g. Dieter Koessl):
-
-...
-#if VARIATION == 2
-proc SetCheck(string opt, string opts, integer nid)
-	ExecMacro(Format("DlgSetData"; nid; iif(Pos(opt, opts), TRUE, FALSE)))
-end
-...
-
-But it is out of the box never going to work, because there
-is no 'DlgSetData' macro file to be found in any of my
-filenames and I have all the possible files (e.g. downloaded
-from Semware) on my system.
-
-So the Dieter Koessl dialog boxes you are not / never going
-to see out of the box (because 'VARIATION == 2' is the default) is my current opinion.
-
-Also seems the current Chris Antos' grep.s not be able to
-handle very large files (like my work file which is 1
-gigabytes and 15 million lines), it showed clearly wrong
-results when testing e.g. exclude files.
-
-===
-
-If you want a TSE menu then in grep.s change VARIATION from 2 to 1, save and recompile.
-
-// these must be defined to some value
-#define VARIATION 1				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
-
-===
-
-If you want a TSE ask box then in grep.s change VARIATION from 2 to 0, save and recompile.
-
-// these must be defined to some value
-#define VARIATION 0				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
-
-will now automatically open a TSE ask box when you run grep.mac
-
-===
-
-If you want to use this version of grep, you will want to
-modify your UI file to assign a key combination to execute
-it.
-
-===
-
-Missing macros in order to be able to run the dialog boxes:
-
-DlgSetData
-DlgSetTitle
-DlgSetEnable
-
-ExecMacro( Format("DlgSetData"
-
-ExecMacro( Format("DlgSetTitle
-
-ExecMacro( Format("DlgSetEnable
+11. You should see a Dieter Koessl dialog box to fill in and run Chris Antos' grep.
