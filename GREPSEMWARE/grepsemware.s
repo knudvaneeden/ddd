@@ -29,10 +29,13 @@ executableGrep04S=g:\borland\bcc55\bin\grep.exe
 executableGrep05S=g:\borland\bcc102\bin\grep.exe
 executableGrep06S=g:\cygwin\bin\grep.exe
 executableGrep07S=g:\dropbox\-\program files\crisp\bin.win64\grep.exe
-executableGrep08S=g:\dropbox\tse 4.40 a\grep.exe
-executableGrep09S=g:\language\computer\cpp\mingw\msys\1.0\bin\grep.exe
-executableGrep10S=g:\language\computer\julia\git\bin\grep.exe
-executableGrep11S=g:\language\computer\octave\octave-4.2.0-w64\bin\grep.exe
+executableGrep08S=g:\language\computer\cpp\mingw\msys\1.0\bin\grep.exe
+executableGrep09S=g:\language\computer\julia\git\bin\grep.exe
+executableGrep10S=g:\language\computer\octave\octave-4.2.0-w64\bin\grep.exe
+//
+// leave this line below here as the last entry (it acts like a sentinel)
+//
+executableGrep10S=last
 
 ===
 
@@ -230,7 +233,53 @@ proc Main()
     integer search_hist  = GetFreeHistory("grep:search")
     integer files_hist   = GetFreeHistory("grep:files")
     integer options_hist = GetFreeHistory("grep:options")
-
+    //
+    STRING s1[255] = ""
+    INTEGER bufferI = 0
+    //
+    SetGlobalStr( "executableGrep01S", GetProfileStr( "grepsemware", "executableGrep01S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep02S", GetProfileStr( "grepsemware", "executableGrep02S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep03S", GetProfileStr( "grepsemware", "executableGrep03S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep04S", GetProfileStr( "grepsemware", "executableGrep04S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep05S", GetProfileStr( "grepsemware", "executableGrep05S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep06S", GetProfileStr( "grepsemware", "executableGrep06S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep07S", GetProfileStr( "grepsemware", "executableGrep07S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep08S", GetProfileStr( "grepsemware", "executableGrep08S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep09S", GetProfileStr( "grepsemware", "executableGrep09S", "grep.exe", "" ) )
+    SetGlobalStr( "executableGrep10S", GetProfileStr( "grepsemware", "executableGrep10S", "grep.exe", "" ) )
+    //
+    PushPosition()
+    bufferI = CreateTempBuffer()
+    PopPosition()
+    //
+    PushPosition()
+    PushBlock()
+    GotoBufferId( bufferI )
+    //
+    AddLine( GetGlobalStr( "executableGrep01S" ) )
+    AddLine( GetGlobalStr( "executableGrep02S" ) )
+    AddLine( GetGlobalStr( "executableGrep03S" ) )
+    AddLine( GetGlobalStr( "executableGrep04S" ) )
+    AddLine( GetGlobalStr( "executableGrep05S" ) )
+    AddLine( GetGlobalStr( "executableGrep06S" ) )
+    AddLine( GetGlobalStr( "executableGrep07S" ) )
+    AddLine( GetGlobalStr( "executableGrep08S" ) )
+    AddLine( GetGlobalStr( "executableGrep09S" ) )
+    AddLine( GetGlobalStr( "executableGrep10S" ) )
+    //
+    GotoLine( 1 )
+    IF List( "Choose an executable grep", 80 )
+     s1 = Trim( GetText( 1, 255 ) )
+    ELSE
+     AbandonFile( bufferI )
+     RETURN()
+    ENDIF
+    AbandonFile( bufferI )
+    PopBlock()
+    PopPosition()
+    //
+    // do something with s1
+    //
     search  = GetHistoryStr(search_hist, 1)
     files   = GetHistoryStr(files_hist, 1)
     options = GetHistoryStr(options_hist, 1)
