@@ -17,6 +17,25 @@
               15 Dec 2010 SEM - Fix problem in making the filename ViewFinds
                 compatible.
 
+  Date:       30 November 2022 - by Knud van Eeden
+
+1. -Add the path to your different grep.exe to your tse.ini file (insert at the bottom)
+
+[grepsemware]
+executableGrep01S=grep.exe
+executableGrep02S=g:\search\regularexpression\gnu\bin\grep.exe
+executableGrep03S=g:\search\regularexpression\pcregrep\pcre2grep.exe
+executableGrep04S=g:\borland\bcc55\bin\grep.exe
+executableGrep05S=g:\borland\bcc102\bin\grep.exe
+executableGrep06S=g:\cygwin\bin\grep.exe
+executableGrep07S=g:\dropbox\-\program files\crisp\bin.win64\grep.exe
+executableGrep08S=g:\dropbox\tse 4.40 a\grep.exe
+executableGrep09S=g:\language\computer\cpp\mingw\msys\1.0\bin\grep.exe
+executableGrep10S=g:\language\computer\julia\git\bin\grep.exe
+executableGrep11S=g:\language\computer\octave\octave-4.2.0-w64\bin\grep.exe
+
+===
+
   Overview:
 
   This macro allows one to search a list of files for a specified
