@@ -237,16 +237,27 @@ proc Main()
     STRING s1[255] = ""
     INTEGER bufferI = 0
     //
-    SetGlobalStr( "executableGrep01S", GetProfileStr( "grepsemware", "executableGrep01S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep02S", GetProfileStr( "grepsemware", "executableGrep02S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep03S", GetProfileStr( "grepsemware", "executableGrep03S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep04S", GetProfileStr( "grepsemware", "executableGrep04S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep05S", GetProfileStr( "grepsemware", "executableGrep05S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep06S", GetProfileStr( "grepsemware", "executableGrep06S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep07S", GetProfileStr( "grepsemware", "executableGrep07S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep08S", GetProfileStr( "grepsemware", "executableGrep08S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep09S", GetProfileStr( "grepsemware", "executableGrep09S", "grep.exe", "" ) )
-    SetGlobalStr( "executableGrep10S", GetProfileStr( "grepsemware", "executableGrep10S", "grep.exe", "" ) )
+    STRING executableGrep01S[255] = ""
+    STRING executableGrep02S[255] = ""
+    STRING executableGrep03S[255] = ""
+    STRING executableGrep04S[255] = ""
+    STRING executableGrep05S[255] = ""
+    STRING executableGrep06S[255] = ""
+    STRING executableGrep07S[255] = ""
+    STRING executableGrep08S[255] = ""
+    STRING executableGrep09S[255] = ""
+    STRING executableGrep10S[255] = ""
+    //
+    executableGrep01S = GetProfileStr( "grepsemware", "executableGrep01S", "grep.exe", "" )
+    executableGrep02S = GetProfileStr( "grepsemware", "executableGrep02S", "grep.exe", "" )
+    executableGrep03S = GetProfileStr( "grepsemware", "executableGrep03S", "grep.exe", "" )
+    executableGrep04S = GetProfileStr( "grepsemware", "executableGrep04S", "grep.exe", "" )
+    executableGrep05S = GetProfileStr( "grepsemware", "executableGrep05S", "grep.exe", "" )
+    executableGrep06S = GetProfileStr( "grepsemware", "executableGrep06S", "grep.exe", "" )
+    executableGrep07S = GetProfileStr( "grepsemware", "executableGrep07S", "grep.exe", "" )
+    executableGrep08S = GetProfileStr( "grepsemware", "executableGrep08S", "grep.exe", "" )
+    executableGrep09S = GetProfileStr( "grepsemware", "executableGrep09S", "grep.exe", "" )
+    executableGrep10S = GetProfileStr( "grepsemware", "executableGrep10S", "grep.exe", "" )
     //
     PushPosition()
     bufferI = CreateTempBuffer()
@@ -256,16 +267,16 @@ proc Main()
     PushBlock()
     GotoBufferId( bufferI )
     //
-    AddLine( GetGlobalStr( "executableGrep01S" ) )
-    AddLine( GetGlobalStr( "executableGrep02S" ) )
-    AddLine( GetGlobalStr( "executableGrep03S" ) )
-    AddLine( GetGlobalStr( "executableGrep04S" ) )
-    AddLine( GetGlobalStr( "executableGrep05S" ) )
-    AddLine( GetGlobalStr( "executableGrep06S" ) )
-    AddLine( GetGlobalStr( "executableGrep07S" ) )
-    AddLine( GetGlobalStr( "executableGrep08S" ) )
-    AddLine( GetGlobalStr( "executableGrep09S" ) )
-    AddLine( GetGlobalStr( "executableGrep10S" ) )
+    AddLine( executableGrep01S )
+    AddLine( executableGrep02S )
+    AddLine( executableGrep03S )
+    AddLine( executableGrep04S )
+    AddLine( executableGrep05S )
+    AddLine( executableGrep06S )
+    AddLine( executableGrep07S )
+    AddLine( executableGrep08S )
+    AddLine( executableGrep09S )
+    AddLine( executableGrep10S )
     //
     GotoLine( 1 )
     IF List( "Choose an executable grep", 80 )
