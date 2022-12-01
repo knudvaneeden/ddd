@@ -12,7 +12,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.6</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
+// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.7</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestInitializeB()
  // e.g. PROC Main()
  // e.g.  Message( FNFileSaveFileVersionControlGitSimplestInitializeB() ) // gives e.g. TRUE

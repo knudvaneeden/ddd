@@ -34,10 +34,12 @@ FORWARD STRING PROC FNStringGetSpaceRemoveBeginS( STRING s1 )
 
 PROC Main()
  //
- STRING s1[255] = ""
+ STRING listS[255] = ""
+ STRING s[255] = ""
  //
  // declare possibly enough strings for Git programs
  //
+ STRING s1[255] = ""
  STRING s2[255] = ""
  STRING s3[255] = ""
  STRING s4[255] = ""
@@ -158,7 +160,7 @@ PROC Main()
   GotoLine( 1 )
   PROCProgramRunPopupWindowPositionTse()
   IF List( "Choose an option", 130 )
-   s1 = Trim( GetText( 1, 255 ) )
+   listS = Trim( GetText( 1, 255 ) )
   ELSE
    AbandonFile( bufferI )
    RETURN()
@@ -168,9 +170,9 @@ PROC Main()
   PopPosition()
   //
   PROCProgramRunPopupWindowPositionTse()
-  IF ( NOT ( AskFilename( "file: save: file: version: control: git: simplest: program: inS = ", s1, _DEFAULT_, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) ) RETURN() ENDIF
+  IF ( NOT ( Ask( "file: save: file: version: control: git: simplest: program: inS = ", listS, _EDIT_HISTORY_ ) ) AND ( Length( listS ) > 0 ) ) RETURN() ENDIF
   //
-  Message( FNFileSaveFileVersionControlGitSimplestProgramB( s1 ) ) // gives e.g. TRUE
+  Message( FNFileSaveFileVersionControlGitSimplestProgramB( listS ) ) // gives e.g. TRUE
   //
  UNTIL ( EquiStr( Lower( s1 ), "quit" ) )
  //
@@ -290,14 +292,16 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.62</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
+// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.70</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g. PROC Main()
  // e.g.  //
- // e.g.  STRING s1[255] = ""
+ // e.g.  STRING listS[255] = ""
+ // e.g.  STRING s[255] = ""
  // e.g.  //
  // e.g.  // declare possibly enough strings for Git programs
  // e.g.  //
+ // e.g.  STRING s1[255] = ""
  // e.g.  STRING s2[255] = ""
  // e.g.  STRING s3[255] = ""
  // e.g.  STRING s4[255] = ""
@@ -418,7 +422,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   GotoLine( 1 )
  // e.g.   PROCProgramRunPopupWindowPositionTse()
  // e.g.   IF List( "Choose an option", 130 )
- // e.g.    s1 = Trim( GetText( 1, 255 ) )
+ // e.g.    listS = Trim( GetText( 1, 255 ) )
  // e.g.   ELSE
  // e.g.    AbandonFile( bufferI )
  // e.g.    RETURN()
@@ -428,9 +432,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   PopPosition()
  // e.g.   //
  // e.g.   PROCProgramRunPopupWindowPositionTse()
- // e.g.   IF ( NOT ( AskFilename( "file: save: file: version: control: git: simplest: program: inS = ", s1, _DEFAULT_, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) ) RETURN() ENDIF
+ // e.g.  IF ( NOT ( Ask( ""file: save: file: version: control: git: simplest: program: inS = ", listS, _EDIT_HISTORY_ ) ) AND ( Length( listS ) > 0 ) ) RETURN() ENDIF
  // e.g.   //
- // e.g.   Message( FNFileSaveFileVersionControlGitSimplestProgramB( s1 ) ) // gives e.g. TRUE
+ // e.g.   Message( FNFileSaveFileVersionControlGitSimplestProgramB( listS ) ) // gives e.g. TRUE
  // e.g.   //
  // e.g.  UNTIL ( EquiStr( Lower( s1 ), "quit" ) )
  // e.g.  //
@@ -633,7 +637,7 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.358</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.360</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. #DEFINE ELIST_INCLUDED FALSE
  // e.g. //
