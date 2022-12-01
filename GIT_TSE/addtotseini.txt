@@ -1,0 +1,53 @@
+[git_tse]
+//
+bookVersionControlWithGitOReillyUrlS=https://learning.oreilly.com/library/view/version-control-with/9781492091189/ch01.html
+//
+// executableCommandLineS=g:\utils\jpsoft\tcmd\tcc.exe
+// executableCommandLineS=powershell.exe
+executableCommandLineS=cmd.exe
+//
+directoryExecutableS=g:\versioncontrol\git\gitscm\cmd\
+//
+// executableGitS=g:\versioncontrol\git\smartgit\git\bin\git.exe
+// executableGitS=g:\cygwin\bin\git.exe
+executableGitS=g:\versioncontrol\git\gitscm\bin\git.exe
+//
+executableSmartgitGuiS=g:\versioncontrol\git\smartgit\bin\smartgit.exe
+//
+executableDiffS=g:\utils\compare\beyondcompare\beyond compare 4\bcomp.exe
+//
+executableBeyondCompareS=g:\utils\compare\beyondcompare\beyond compare 4\bcomp.exe
+//
+directoryRepositoryInS=yourdecurrentrepositorydirectory (change this)
+directoryRepositoryDefaultS=yourdefaultrepositorydirectory // change this
+//
+gitcygwinDownloadUrlS=http://cygwin.com
+gitscmDownloadUrlS=https://git-scm.me
+gitsmartgitDownloadUrlS=https://www.syntevo.com/smartgit/download/
+gittortoiseDownloadUrlS=https://tortoisegit.org/download/
+//
+githubRemoteDirectoryUrlS=<your github remote directory> // change this
+githubNameBranchS=<your github remote directory branch> (change this (e.g. TRUNK, master, main, ...) // change this
+githubPasswordS=<your github password> // change this
+githubRemoteDirectoryCreateUrlS=https://github.com/new/
+githubuserEmailS=<your github email> // change this
+githubUserNameS=<your github username> // change this
+//
+gitlabRemoteDirectoryCreateUrlS=https://gitlab.com/projects/new/
+gitlabNameBranchS=<your gitlab remote directory branch> (change this (e.g. TRUNK, master, main, ...) // change this
+gitlabPasswordS=<your gitlab password> // change this
+gitlabRemoteDirectoryUrlS=<your gitlab remote directory> // change this
+gitlabUserNameS =<your gitlab username> // change this
+//
+messageS=changes in this revision = draft|backup|works|created|add setm|replace menu hotkey|save|major|minor|recompile|compiles|refactor|original
+//
+gitLogFileS=c:\temp\dddgit.log
+//
+cloneRemoteWebSiteExampleS=git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git
+//
+// pauseS=true
+pauseS=false
+//
+// gitShrinkListS=false
+gitShrinkListS=true
+//
