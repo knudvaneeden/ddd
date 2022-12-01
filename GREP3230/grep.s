@@ -30,7 +30,8 @@
 
 
 // these must be defined to some value
-#define VARIATION 2				// VARIATION:  0=Ask, 1=Menu, 2=Dialog
+// #define VARIATION 2				// VARIATION:  0=Ask, 1=Menu, 2=Dialog // old [kn, ri, tu, 29-11-2022 18:14:36]
+#define VARIATION 1				// VARIATION:  0=Ask, 1=Menu, 2=Dialog // new [kn, ri, tu, 29-11-2022 18:14:42]
 #define BACKGROUNDSEARCH TRUE	// BACKGROUNDSEARCH:  TRUE=Always, FALSE=Never
 
 
@@ -3414,6 +3415,7 @@ proc UI()
 	integer fOk
 
 	#ifdef WIN32CONSOLE
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new [kn, ri, tu, 29-11-2022 18:15:58]
 	fOk = Stuff("Grep ["+CurrDir()+"]")
 	#else
 	fOk = iif(not g_idSearch,
@@ -3614,7 +3616,7 @@ end
 		-e...		exclude files matching {...}.
 		-c			search current file only.
 //$ todo: 		-F...		file {...} is a list of files to search.
-		-Bn			bufferid {n} is a list of files to search (NOTE: grep 
+		-Bn			bufferid {n} is a list of files to search (NOTE: grep
 					takes ownership of the buffer, modifies it, and frees it).
 
 */
