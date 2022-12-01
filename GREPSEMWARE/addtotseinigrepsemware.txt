@@ -1,0 +1,15 @@
+[grepsemware]
+executableGrep01S=grep.exe
+executableGrep02S=g:\search\regularexpression\gnu\bin\grep.exe
+executableGrep03S=g:\search\regularexpression\pcregrep\pcre2grep.exe
+executableGrep04S=g:\borland\bcc55\bin\grep.exe
+executableGrep05S=g:\borland\bcc102\bin\grep.exe
+executableGrep06S=g:\cygwin\bin\grep.exe
+executableGrep07S=g:\dropbox\-\program files\crisp\bin.win64\grep.exe
+executableGrep08S=g:\language\computer\cpp\mingw\msys\1.0\bin\grep.exe
+executableGrep09S=g:\language\computer\julia\git\bin\grep.exe
+executableGrep10S=g:\language\computer\octave\octave-4.2.0-w64\bin\grep.exe
+//
+// leave this line below here as the last entry (it acts like a sentinel)
+//
+executableGrep10S=last
