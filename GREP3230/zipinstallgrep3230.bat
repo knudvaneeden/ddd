@@ -1,5 +1,5 @@
 REM
-REM compile all .s and .si files to .mac
+REM compile all relevant .s and .si files to .mac (do not compile all)
 REM
 sc32 dialog.si
 sc32 dialogp.s
@@ -12,7 +12,7 @@ REM ===
 REM
 REM refresh the zip file
 REM
-del zipgrep3230.zip
+del grep3230_knud.zip
 REM
 REM ===
 REM
@@ -20,48 +20,46 @@ REM zipping all these files
 REM
 REM ===
 REM
-pkzipc -add zipgrep3230.zip dialog.si
-pkzipc -add zipgrep3230.zip dialog.mac
+pkzipc -add grep3230_knud.zip dialog.si
+pkzipc -add grep3230_knud.zip dialog.mac
 REM
-pkzipc -add zipgrep3230.zip dialogp.s
-pkzipc -add zipgrep3230.zip dialogp.mac
+pkzipc -add grep3230_knud.zip dialogp.s
+pkzipc -add grep3230_knud.zip dialogp.mac
 REM
-pkzipc -add zipgrep3230.zip gethelp.si
-pkzipc -add zipgrep3230.zip gethelp.mac
+pkzipc -add grep3230_knud.zip gethelp.si
+pkzipc -add grep3230_knud.zip gethelp.mac
 REM
-pkzipc -add zipgrep3230.zip grep.hlp
+pkzipc -add grep3230_knud.zip grep.hlp
 REM
-pkzipc -add zipgrep3230.zip grep3230.s
-pkzipc -add zipgrep3230.zip grep3230.mac
+pkzipc -add grep3230_knud.zip grep.s
+pkzipc -add grep3230_knud.zip grep.mac
 REM
-pkzipc -add zipgrep3230.zip grep.txt
+pkzipc -add grep3230_knud.zip grep.txt
 REM
-pkzipc -add zipgrep3230.zip grepdlg.d
-pkzipc -add zipgrep3230.zip grepdlg.dlg
-pkzipc -add zipgrep3230.zip grepdlg.si
+pkzipc -add grep3230_knud.zip grepdlg.d
+pkzipc -add grep3230_knud.zip grepdlg.dlg
+pkzipc -add grep3230_knud.zip grepdlg.si
 REM
-pkzipc -add zipgrep3230.zip guiinc.inc
+pkzipc -add grep3230_knud.zip guiinc.inc
 REM
-pkzipc -add zipgrep3230.zip helphelp.s
-pkzipc -add zipgrep3230.zip helphelp.mac
+pkzipc -add grep3230_knud.zip helphelp.s
+pkzipc -add grep3230_knud.zip helphelp.mac
 REM
-pkzipc -add zipgrep3230.zip scpaint.si
+pkzipc -add grep3230_knud.zip scpaint.si
 REM
-pkzipc -add zipgrep3230.zip zipgrep3230.bat
+pkzipc -add grep3230_knud.zip zipgrep3230.bat
 REM
 REM view the result in the zip file
 REM
-zipview zipgrep3230.zip
+zipview grep3230_knud.zip
 REM
 REM after running the installation batch file, load this file in your TSE and run it
 REM
 md grep
-pkzipc -extract -dir zipgrep3230.zip grep
+pkzipc -extract -dir grep3230_knud.zip grep
 REM
 echo now run in TSE
 echo execute this macro
 echo grep\grep.s
 echo (or run grep\grep.mac)
 REM
-
-
