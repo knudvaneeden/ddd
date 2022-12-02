@@ -62,6 +62,10 @@ executableGrep10S=last
 
 *************************************************************************/
 
+STRING iniFileNameGS[255] = ".\grepsemware.ini"
+
+STRING executableGrepGS[255] = ""
+
 string grep[_MAX_PATH_]
 string tee32[_MAX_PATH_]
 
@@ -248,16 +252,16 @@ proc Main()
     STRING executableGrep09S[255] = ""
     STRING executableGrep10S[255] = ""
     //
-    executableGrep01S = GetProfileStr( "grepsemware", "executableGrep01S", "grep.exe", "" )
-    executableGrep02S = GetProfileStr( "grepsemware", "executableGrep02S", "grep.exe", "" )
-    executableGrep03S = GetProfileStr( "grepsemware", "executableGrep03S", "grep.exe", "" )
-    executableGrep04S = GetProfileStr( "grepsemware", "executableGrep04S", "grep.exe", "" )
-    executableGrep05S = GetProfileStr( "grepsemware", "executableGrep05S", "grep.exe", "" )
-    executableGrep06S = GetProfileStr( "grepsemware", "executableGrep06S", "grep.exe", "" )
-    executableGrep07S = GetProfileStr( "grepsemware", "executableGrep07S", "grep.exe", "" )
-    executableGrep08S = GetProfileStr( "grepsemware", "executableGrep08S", "grep.exe", "" )
-    executableGrep09S = GetProfileStr( "grepsemware", "executableGrep09S", "grep.exe", "" )
-    executableGrep10S = GetProfileStr( "grepsemware", "executableGrep10S", "grep.exe", "" )
+    executableGrep01S = GetProfileStr( "grepsemware", "executableGrep01S", "grep.exe", iniFileNameGS )
+    executableGrep02S = GetProfileStr( "grepsemware", "executableGrep02S", "grep.exe", iniFileNameGS )
+    executableGrep03S = GetProfileStr( "grepsemware", "executableGrep03S", "grep.exe", iniFileNameGS )
+    executableGrep04S = GetProfileStr( "grepsemware", "executableGrep04S", "grep.exe", iniFileNameGS )
+    executableGrep05S = GetProfileStr( "grepsemware", "executableGrep05S", "grep.exe", iniFileNameGS )
+    executableGrep06S = GetProfileStr( "grepsemware", "executableGrep06S", "grep.exe", iniFileNameGS )
+    executableGrep07S = GetProfileStr( "grepsemware", "executableGrep07S", "grep.exe", iniFileNameGS )
+    executableGrep08S = GetProfileStr( "grepsemware", "executableGrep08S", "grep.exe", iniFileNameGS )
+    executableGrep09S = GetProfileStr( "grepsemware", "executableGrep09S", "grep.exe", iniFileNameGS )
+    executableGrep10S = GetProfileStr( "grepsemware", "executableGrep10S", "grep.exe", iniFileNameGS )
     //
     PushPosition()
     bufferI = CreateTempBuffer()
@@ -290,6 +294,8 @@ proc Main()
     PopPosition()
     //
     // do something with s1
+    //
+    executableGrepGS = s1
     //
     search  = GetHistoryStr(search_hist, 1)
     files   = GetHistoryStr(files_hist, 1)
@@ -341,7 +347,8 @@ proc Main()
 //            if cols <> 80 and not (rows in 25,43,50)
 //                SetVideoRowsCols(25, 80)
 //            endif
-            ok = lDOS(tee32, format(grep;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_)
+            // ok = lDOS(tee32, format(grep;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // old [kn, ri, fr, 02-12-2022 03:53:21]
+            ok = lDOS(tee32, format(executableGrepGS;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // new [kn, ri, fr, 02-12-2022 03:53:24]
 //            SetVideoRowsCols(rows, cols)
             if ok
                 PushPosition()
@@ -430,7 +437,8 @@ proc find_editor_program(string fn, var string path)
 end
 
 proc WhenLoaded()
-    find_editor_program("grep.exe", grep)
+    // find_editor_program("grep.exe", grep) // old [kn, ri, fr, 02-12-2022 03:52:00]
+    find_editor_program( executableGrepGS, grep)
     find_editor_program("tee32.exe", tee32)
 end
 
