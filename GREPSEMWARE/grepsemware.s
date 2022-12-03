@@ -347,6 +347,10 @@ proc Main()
 //            if cols <> 80 and not (rows in 25,43,50)
 //                SetVideoRowsCols(25, 80)
 //            endif
+              //
+            IF NOT EquiStr( executableGrepGS, executableGrep01S ) // if not TSE grep.exse but another grep (e.g. GNU)
+             options = Format( options, " ", "-n -H" )
+            ENDIF
             // ok = lDOS(tee32, format(grep;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // old [kn, ri, fr, 02-12-2022 03:53:21]
             ok = lDOS(tee32, format(executableGrepGS;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // new [kn, ri, fr, 02-12-2022 03:53:24]
 //            SetVideoRowsCols(rows, cols)
@@ -357,6 +361,20 @@ proc Main()
                     grep_id = GetBufferId()
                     BufferType(_SYSTEM_)
                     ReplaceFile(grep_fn,_OVERWRITE_)
+                    //
+                    IF NOT EquiStr( executableGrepGS, executableGrep01S ) // if not TSE grep.exse but another grep (e.g. GNU)
+                     //
+                     // if Gnu you must use options -n -H
+                     //
+                     PushBlock()
+                     PushPosition()
+                     MarkLine( 1, NumLines() )
+                     ExecMacro( "grepsemwaregnu.mac" )
+                     PopPosition()
+                     PopBlock()
+                     //
+                    ENDIF
+                    ///
                     if lFind("File: ","^g")
                         repeat
                             GotoPos(FN_POS)
@@ -438,7 +456,7 @@ end
 
 proc WhenLoaded()
     // find_editor_program("grep.exe", grep) // old [kn, ri, fr, 02-12-2022 03:52:00]
-    find_editor_program( executableGrepGS, grep)
+    find_editor_program( executableGrepGS, grep) // new [kn, ri, sa, 03-12-2022 05:52:55]
     find_editor_program("tee32.exe", tee32)
 end
 
