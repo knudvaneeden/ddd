@@ -118,6 +118,10 @@ c:\temp\foobar2.txt
    DelLine()
   ENDIF
   //
+  WHILE LFind( ": Is a Directory$", "gix" )
+   DelLine()
+  ENDWHILE
+  //
   PopPosition()
   PopBlock()
   //

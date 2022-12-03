@@ -157,6 +157,7 @@ integer proc PopWin(string title, integer width, integer height)
     if y + height > Query(ScreenRows)
         y = Query(WindowRows) - height
     endif
+    ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
     if PopWinOpen(x,y,x + width - 1,y + height - 1,1,title,Query(MenuBorderAttr))
         return (TRUE)
     endif
@@ -283,6 +284,7 @@ proc Main()
     AddLine( executableGrep10S )
     //
     GotoLine( 1 )
+    ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
     IF List( "Choose an executable grep", 80 )
      s1 = Trim( GetText( 1, 255 ) )
     ELSE
@@ -425,6 +427,7 @@ proc ViewGrepResults(integer here_before)
             List("Grep Results", max(LongestLineInBuffer(), 49 - 6))
             BufferType(buffer_type)
         else
+            ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
             Warn("View buffer does not exist")
         endif
         PopPosition()
