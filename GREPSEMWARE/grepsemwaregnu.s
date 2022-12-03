@@ -12,7 +12,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: program: run: search: grep: tse: gnu <description></description> <version control></version control> <version>1.0.0.0.4</version> <version control></version control> (filenamemacro=grepsemwaregnu.s) [<Program>] [<Research>] [kn, ri, sa, 03-12-2022 15:59:22]
+// library: program: run: search: grep: tse: gnu <description></description> <version control></version control> <version>1.0.0.0.5</version> <version control></version control> (filenamemacro=grepsemwaregnu.s) [<Program>] [<Research>] [kn, ri, sa, 03-12-2022 15:59:22]
 INTEGER PROC FNProgramRunSearchGrepTseGnuB()
  // e.g. PROC Main()
  // e.g.  Message( FNProgramRunSearchGrepTseGnuB() ) // gives e.g. TRUE
@@ -44,16 +44,14 @@ INTEGER PROC FNProgramRunSearchGrepTseGnuB()
  //
  /*
 --- cut here: begin --------------------------------------------------
-c:\temp\foobar1.txt
-1: a
-2: a
-3: a
-4: a
-c:\temp\foobar2.txt
-1: a
-2: a
-3: a
-4: a
+c:\temp\foobar1.txt:1       a
+c:\temp\foobar1.txt:2       a
+c:\temp\foobar1.txt:3       a
+c:\temp\foobar1.txt:4       a
+c:\temp\foobar2.txt:1       a
+c:\temp\foobar2.txt:2       a
+c:\temp\foobar2.txt:3       a
+c:\temp\foobar2.txt:4       a
 --- cut here: end ----------------------------------------------------
  */
  //
