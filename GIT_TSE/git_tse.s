@@ -91,10 +91,10 @@ PROC Main()
   s3 = "read your current repository directory"
   SetGlobalStr( s3, "s050" )
   //
-  s4 = "push from current local repository directory to a remote directory"
+  s4 = "push all files from current local repository directory to a remote directory"
   SetGlobalStr( s4, "s020 s017 s029 s041" )
   //
-  s5 = "pull from a remote directory to current local repository directory"
+  s5 = "pull all files from a remote directory to current local repository directory"
   SetGlobalStr( s5, "s020 s028 s041" )
   //
   s6 = "clone remote directory to a new local directory"
@@ -170,7 +170,7 @@ PROC Main()
   PopPosition()
   //
   PROCProgramRunPopupWindowPositionTse()
-  IF ( NOT ( Ask( "file: save: file: version: control: git: simplest: program: inS = ", listS, _EDIT_HISTORY_ ) ) AND ( Length( listS ) > 0 ) ) RETURN() ENDIF
+ IF ( NOT ( Ask( "file: save: file: version: control: git: simplest: program: inS = ", listS, _EDIT_HISTORY_ ) ) AND ( Length( listS ) > 0 ) ) RETURN() ENDIF
   //
   Message( FNFileSaveFileVersionControlGitSimplestProgramB( listS ) ) // gives e.g. TRUE
   //
@@ -292,7 +292,7 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.70</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
+// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.74</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g. PROC Main()
  // e.g.  //
@@ -353,10 +353,10 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   s3 = "read your current repository directory"
  // e.g.   SetGlobalStr( s3, "s050" )
  // e.g.   //
- // e.g.   s4 = "push from current local repository directory to a remote directory"
+ // e.g.   s4 = "push all files from current local repository directory to a remote directory"
  // e.g.   SetGlobalStr( s4, "s020 s017 s029 s041" )
  // e.g.   //
- // e.g.   s5 = "pull from a remote directory to current local repository directory"
+ // e.g.   s5 = "pull all files from a remote directory to current local repository directory"
  // e.g.   SetGlobalStr( s5, "s020 s028 s041" )
  // e.g.   //
  // e.g.   s6 = "clone remote directory to a new local directory"
@@ -432,7 +432,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   PopPosition()
  // e.g.   //
  // e.g.   PROCProgramRunPopupWindowPositionTse()
- // e.g.  IF ( NOT ( Ask( ""file: save: file: version: control: git: simplest: program: inS = ", listS, _EDIT_HISTORY_ ) ) AND ( Length( listS ) > 0 ) ) RETURN() ENDIF
+ // e.g.  IF ( NOT ( Ask( "file: save: file: version: control: git: simplest: program: inS = ", listS, _EDIT_HISTORY_ ) ) AND ( Length( listS ) > 0 ) ) RETURN() ENDIF
  // e.g.   //
  // e.g.   Message( FNFileSaveFileVersionControlGitSimplestProgramB( listS ) ) // gives e.g. TRUE
  // e.g.   //
@@ -637,7 +637,7 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.360</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.364</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. #DEFINE ELIST_INCLUDED FALSE
  // e.g. //
@@ -897,6 +897,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // Todo: Instead of passing a string to Dos(), create a batch .bat file then run Dos() on it
  //
+ // Todo: Create a Camtasia video for each of the projects [kn, ri, sa, 03-12-2022 05:09:43]
+ //
  // ===
  //
  // The most commonly used git commands are:
@@ -1038,6 +1040,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s077" )
   //
+  s = ""
+  //
   s = bookVersionControlWithGitOReillyUrlS
   //
   StartPgm( s )
@@ -1049,6 +1053,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s039" )
+  //
+  s = ""
   //
   s = gitTortoiseDownloadUrlS
   //
@@ -1062,6 +1068,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s038" )
   //
+  s = ""
+  //
   s = gitCygwinDownloadUrlS
   //
   StartPgm( s )
@@ -1073,6 +1081,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s103" )
+  //
+  s = ""
   //
   s = gitSmartgitDownloadUrlS
   //
@@ -1086,6 +1096,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s097" )
   //
+  s = ""
+  //
   PushPosition()
   PushBlock()
   //
@@ -1096,6 +1108,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
   //
   B = FNProgramRunGitTseOutputB( s, "s097", FALSE )
+  //
+  // do not replace this, there should always be waited here
   //
   PROCProgramRunPopupWindowPositionTse()
   Warn( "<Press any key to continue>" )
@@ -1109,12 +1123,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s017" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "message = ", messageS, _EDIT_HISTORY_ ) ) AND ( Length( messageS ) > 0 ) )
@@ -1142,14 +1158,17 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s047" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
    s1 = " "
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "git command(s) to execute = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
@@ -1173,11 +1192,12 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s094" )
   //
-  PROCProgramRunGitTsePause()
+  s = ""
   //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "local repository where you cloned to to change to = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( directoryRepositoryOtherS, ":", " ", "Do you want to change to this other Git repository directory?" ) ) == 1 )
     //
     s1 = ""
@@ -1188,6 +1208,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     //
     PushPosition()
     PushBlock()
+    //
     GotoBufferId( bufferI )
     //
     AddLine( GetProfileStr( sectionS, "githubRemoteDirectoryUrlS", "" ) )
@@ -1229,13 +1250,15 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s027" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   //
-   PROCProgramRunGitTsePause()
    s1 = ""
    //
    PushPosition()
@@ -1283,12 +1306,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s028" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s1 = ""
    //
@@ -1337,12 +1362,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s029" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s1 = ""
    //
@@ -1391,6 +1418,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s072" )
   //
+  s = ""
+  //
   s = Format( executableS, " ", "help", " ", "--al" )
   //
   s = Format( s, " ", "&", " " )
@@ -1403,6 +1432,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s073" )
+  //
+  s = ""
   //
   s = Format( executableS )
   //
@@ -1417,6 +1448,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s070" )
   //
+  s = ""
+  //
   s = Format( executableS, " ", "help", " ", "-a" )
   //
   s = Format( s, " ", "&", " " )
@@ -1430,6 +1463,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s071" )
   //
+  s = ""
+  //
   s = Format( executableS, " ", "help", " ", "-g" )
   //
   s = Format( s, " ", "&", " " )
@@ -1442,6 +1477,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s074" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1459,6 +1496,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s049" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -1474,6 +1513,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s048" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1491,6 +1532,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s102" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -1507,6 +1550,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s030" )
   //
+  s = ""
+  //
   s = Format( executableS, " ", "remote" )
   //
   s = Format( s, " ", "&", " " )
@@ -1519,6 +1564,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s031" )
+  //
+  s = ""
   //
   s = Format( executableS, " ", "remote", " ", "-v" )
   //
@@ -1533,6 +1580,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s050" )
   //
+  s = ""
+  //
   s = directoryRepositoryS
   //
   PROCProgramRunPopupWindowPositionTse()
@@ -1544,6 +1593,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // ------------------------------------------------------------------------------
  IF s3 == GetGlobalStr( "s100" )
+  //
+  s = ""
   //
   s = FNStringGetDirectoryRepositoryGitDefaultS()
   //
@@ -1558,6 +1609,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s046" )
   //
+  s = ""
+  //
   s = executableCommandLineS
   //
   StartPgm( s )
@@ -1569,6 +1622,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s086" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1586,6 +1641,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s087" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -1601,6 +1658,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s088" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1618,6 +1677,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s089" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -1634,6 +1695,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s090" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -1649,6 +1712,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s091" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1735,6 +1800,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s051" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -1742,6 +1809,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   s = Format( s, " ", "&", " " )
   s = Format( s, "pause" )
+  //
   B = FNProgramRunGitTseOutputB( s, "s051", TRUE )
   //
  ENDIF
@@ -1749,6 +1817,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s052" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1765,6 +1835,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s053" )
+  //
+  s = ""
   //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
@@ -1805,6 +1877,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s076" )
   //
+  s = ""
+  //
   s = Format( executableS, " ", "--version" )
   //
   s = Format( s, " ", "&", " " )
@@ -1817,6 +1891,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s043" )
+  //
+  s = ""
   //
   PushPosition()
   PushBlock()
@@ -1854,13 +1930,15 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s045" )
   //
-  s = " "
+  s = ""
   //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "old filename = ", filenameOldS, _EDIT_HISTORY_ ) ) AND ( Length( filenameOldS ) > 0 ) )
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "new filename = ", filenameNewS, _EDIT_HISTORY_ ) ) AND ( Length( filenameNewS ) > 0 ) )
-    s = Format( s, executableS, " ", "mv", " ", fileNameOldS, " ", fileNameNewS )
+    //
+    s = Format( executableS, " ", "mv", " ", fileNameOldS, " ", fileNameNewS )
     //
     s = Format( s, " ", "&", " " )
     s = Format( s, executableS, " ", "commit", " ", "-m", " ", '"', messageS, '"' )
@@ -1880,6 +1958,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s011" )
   //
+  s = ""
+  //
   s = gitScmDownloadUrlS
   //
   StartPgm( s )
@@ -1891,6 +1971,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s012" )
+  //
+  s = ""
   //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "your local repository directory to initialize = ", directoryRepositoryS, _EDIT_HISTORY_ ) ) AND ( Length( directoryRepositoryS ) > 0 ) )
@@ -1950,6 +2032,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s013" )
   //
+  s = ""
+  //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "user name = ", userNameS, _EDIT_HISTORY_ ) ) AND ( Length( userNameS ) > 0 ) )
    //
@@ -1967,6 +2051,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s014" )
+  //
+  s = ""
   //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "user email = ", userEmailS, _EDIT_HISTORY_ ) ) AND ( Length( userEmailS ) > 0 ) )
@@ -1986,7 +2072,10 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s010" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
@@ -2020,7 +2109,10 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s106" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
@@ -2052,12 +2144,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s108" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "fileName not to be loaded into TSE = ", fileNameOtherS, _EDIT_HISTORY_ ) ) AND ( Length( fileNameOtherS ) > 0 ) )
    //
     PROCProgramRunPopupWindowPositionTse()
@@ -2090,7 +2186,10 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s107" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
@@ -2122,12 +2221,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s109" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "fileName not to be loaded into TSE = ", fileNameOtherS, _EDIT_HISTORY_ ) ) AND ( Length( fileNameOtherS ) > 0 ) )
    //
     PROCProgramRunPopupWindowPositionTse()
@@ -2160,12 +2263,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s110" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "fileName not to be loaded into TSE = ", fileNameOtherS, _EDIT_HISTORY_ ) ) AND ( Length( fileNameOtherS ) > 0 ) )
    //
     PROCProgramRunPopupWindowPositionTse()
@@ -2204,12 +2311,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s111" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "fileName not to be loaded into TSE = ", fileNameOtherS, _EDIT_HISTORY_ ) ) AND ( Length( fileNameOtherS ) > 0 ) )
    //
     PROCProgramRunPopupWindowPositionTse()
@@ -2247,12 +2358,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  IF s3 == GetGlobalStr( "s112" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "fileName not to be loaded into TSE = ", fileNameOtherS, _EDIT_HISTORY_ ) ) AND ( Length( fileNameOtherS ) > 0 ) )
    //
     PROCProgramRunPopupWindowPositionTse()
@@ -2291,6 +2406,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s018" )
   //
+  s = ""
+  //
   s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
   //
   s = Format( s, " ", "&", " " )
@@ -2306,6 +2423,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s019" )
+  //
+  s = ""
   //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "remote repository directory = ", gitlabRemoteDirectoryUrlS, _EDIT_HISTORY_ ) ) AND ( Length( gitlabRemoteDirectoryUrlS ) > 0 ) )
@@ -2332,6 +2451,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s024" )
+  //
+  s = ""
   //
   directoryRepositoryOtherS = " "
   //
@@ -2376,6 +2497,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    PopPosition()
    //
    gitRemoteDirectoryUrlS = Quotepath( s1 )
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "remote repository directory = ", gitRemoteDirectoryUrlS, _EDIT_HISTORY_ ) ) AND ( Length( gitRemoteDirectoryUrlS ) > 0 ) )
     //
@@ -2410,15 +2532,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     IF NOT quitB
      //
      gitBranchRemoteDirectoryUrlS = Quotepath( s1 )
+     //
      PROCProgramRunPopupWindowPositionTse()
      IF ( ( Ask( "remote repository directory = ", gitBranchRemoteDirectoryUrlS, _EDIT_HISTORY_ ) ) AND ( Length( gitBranchRemoteDirectoryUrlS ) > 0 ) )
       //
       IF EquiStr( Trim( gitBranchRemoteDirectoryUrlS ), "" )
        //
-       s = Format( s, executableS, " ", "clone", " ", gitRemoteDirectoryUrlS, " ", gitBranchRemoteDirectoryUrlS, " ", directoryRepositoryOtherS )
+       s = Format( executableS, " ", "clone", " ", gitRemoteDirectoryUrlS, " ", gitBranchRemoteDirectoryUrlS, " ", directoryRepositoryOtherS )
        //
       ELSE
-       s = Format( s, executableS, " ", "clone", " ", gitRemoteDirectoryUrlS, " ", "--branch", " ", gitBranchRemoteDirectoryUrlS, " ", directoryRepositoryOtherS )
+       s = Format( executableS, " ", "clone", " ", gitRemoteDirectoryUrlS, " ", "--branch", " ", gitBranchRemoteDirectoryUrlS, " ", directoryRepositoryOtherS )
        //
       ENDIF
       //
@@ -2441,6 +2564,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s025" )
   //
+  s = ""
+  //
+  PROCProgramRunPopupWindowPositionTse()
   Warn( "Do not use this example. When stopping it using <CTRL C> it will crash TSE. Additionally is it a very large directory, maybe 5 to 10 gigabytes" ) Halt
   //
   directoryRepositoryOtherS = " "
@@ -2464,7 +2590,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      //
     ENDIF
     //
-    s = Format( s, executableS, " ", "clone", " ", cloneRemoteWebSiteExampleS, " ", "", " ", directoryRepositoryOtherS ) // debug further
+    s = Format( executableS, " ", "clone", " ", cloneRemoteWebSiteExampleS, " ", "", " ", directoryRepositoryOtherS ) // debug further
     //
     s = Format( s, " ", "&", " " )
     s = Format( s, "pause" )
@@ -2481,12 +2607,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s023" )
   //
+  s = ""
+  //
   directoryRepositoryOtherS = " "
+  //
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "local repository to copy current local repository to = ", directoryRepositoryOtherS, _EDIT_HISTORY_ ) ) AND ( Length( directoryRepositoryS ) > 0 ) )
    //
    IF NOT FileExists( directoryRepositoryOtherS )
     //
+    PROCProgramRunPopupWindowPositionTse()
     IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( directoryRepositoryOtherS, ":", " ", "This other Git repository directory does not exist. Create it now?" ) ) == 1 )
      //
      directoryRepositoryOtherS = QuotePath( directoryRepositoryOtherS )
@@ -2512,12 +2642,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s037" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( fileNameExtensionS, ":", " ", "Are you sure that you want to delete and remove this file from the repository?" ) ) == 1 )
     //
     PROCProgramRunPopupWindowPositionTse()
@@ -2548,12 +2682,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s104" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( fileNameExtensionS, ":", " ", "Are you sure that you want to delete and remove this file from the repository?" ) ) == 1 )
     //
     PROCProgramRunPopupWindowPositionTse()
@@ -2584,12 +2722,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s105" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
    //
   ELSE
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( fileNameExtensionS, ":", " ", "Are you sure that you want to delete and remove this file from the repository?" ) ) == 1 )
     //
     PROCProgramRunPopupWindowPositionTse()
@@ -2620,18 +2762,23 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s056" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
+   //
    s = Format( s, " ", "&", " " )
    s = Format( s, executableS, " ", "blame", " ", fileNameExtensionS )
+   //
    s = Format( s, " ", "&", " " )
    s = Format( s, "pause" )
+   //
    B = FNProgramRunGitTseOutputB( s, "s056", TRUE )
    //
   ENDIF
@@ -2641,6 +2788,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s020" )
+  //
+  s = ""
   //
   // s = directoryRepositoryOtherS
   s = directoryRepositoryS
@@ -2654,10 +2803,12 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "local repository to change to = ", s, _EDIT_HISTORY_ ) ) AND ( Length( s ) > 0 ) )
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( s, ":", " ", "Do you want to change to this other Git repository directory?" ) ) == 1 )
     //
     IF NOT FileExists( s )
      //
+     PROCProgramRunPopupWindowPositionTse()
      IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( s, ":", " ", "This other Git repository directory does not exist. Create it now?" ) ) == 1 )
       //
       s = QuotePath( s )
@@ -2686,6 +2837,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s101" )
   //
+  s = ""
+  //
   s = FNStringGetDirectoryRepositoryGitDefaultS()
   //
   // necessary to give the string at least one space initialization value
@@ -2697,10 +2850,12 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   PROCProgramRunPopupWindowPositionTse()
   IF ( ( Ask( "default local repository to change to = ", s, _EDIT_HISTORY_ ) ) AND ( Length( s ) > 0 ) )
    //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( s, ":", " ", "Do you want to change to this other default Git repository directory?" ) ) == 1 )
     //
     IF NOT FileExists( s )
      //
+     PROCProgramRunPopupWindowPositionTse()
      IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( s, ":", " ", "This other default Git repository directory does not exist. Create it now?" ) ) == 1 )
       //
       s = QuotePath( s )
@@ -2730,12 +2885,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s085" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -2755,13 +2912,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s078" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
@@ -2783,13 +2943,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s079" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
@@ -2812,13 +2975,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s080" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
@@ -2841,13 +3007,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s081" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
@@ -2870,13 +3039,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s082" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
@@ -2899,13 +3071,16 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s083" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
@@ -2928,16 +3103,20 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s084" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
+   PROCProgramRunPopupWindowPositionTse()
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( "Are you really sure you want to overwrite and replace the current version with an older version?" ) == 1 )
     //
     s1 = "7"
+    //
     PROCProgramRunPopupWindowPositionTse()
     IF ( ( Ask( "N = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
      //
@@ -2962,12 +3141,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s058" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -2987,12 +3168,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s059" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3012,12 +3195,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s060" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3037,12 +3222,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s061" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3062,12 +3249,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s062" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3087,12 +3276,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s063" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3112,14 +3303,17 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s064" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
    s1 = "7"
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "N = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
@@ -3143,15 +3337,19 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s065" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunGitTsePause()
-   //
    s1 = "2"
+   //
    s2 = "3"
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "M = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
@@ -3180,12 +3378,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s057" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3205,12 +3405,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s067" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3230,12 +3432,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s066" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3255,12 +3459,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s068" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
-   PROCMacroRunKeep( "ssetwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
-   Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+   PROCProgramRunPopupWindowPositionTse()
+   Warn( "Run the initialize step first to create a Git repository" )
+   //
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3280,12 +3486,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s069" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
-   PROCProgramRunGitTsePause()
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
@@ -3305,6 +3513,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s041" )
   //
+  s = ""
+  //
   s = githubRemoteDirectoryUrlS
   //
   StartPgm( s )
@@ -3316,6 +3526,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s042" )
+  //
+  s = ""
   //
   s = gitlabRemoteDirectoryUrlS
   //
@@ -3330,6 +3542,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s095" )
   //
+  s = ""
+  //
   s = GetProfileStr( sectionS, "githubRemoteDirectoryCreateUrlS", "", iniFileNameS )
   //
   StartPgm( s )
@@ -3342,6 +3556,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s096" )
   //
+  s = ""
+  //
   s = GetProfileStr( sectionS, "gitlabRemoteDirectoryCreateUrlS", "", iniFileNameS )
   //
   StartPgm( s )
@@ -3353,6 +3569,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s022" )
+  //
+  s = ""
   //
   s = Format( "changeFileB", " ", "=", " ", "TRUE" )
   //
@@ -3375,27 +3593,38 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s015" )
   //
+  s = ""
+  //
   s = Format( "EditFile", "(", " ", iniFileNameS, " ", ")" )
   //
   PushPosition()
   PushBlock()
+  //
   IF EditFile( iniFileNameS )
+   //
    QuitFile()
+   //
   ENDIF
+  //
   EditFile( iniFileNameS )
+  //
   IF LFind( sectionS, "" )
+   //
    ScrollToTop()
+   //
   ELSE
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "no expected session", ":", " ", "[", sectionS, "]", " ", "found in", iniFileNameS, ". Please add it + add the parameters" )
+   //
   ENDIF
   //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
   //
   B = FNProgramRunGitTseOutputB( s, "s015", FALSE )
   //
-  PROCProgramRunPopupWindowPositionTse()
-  Warn( "<Press any key to continue>" )
+  PROCProgramRunGitTsePause()
+  //
   PopBlock()
   PopPosition()
   //
@@ -3407,16 +3636,18 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s040" )
   //
+  s = ""
+  //
   s = Format( "EditFile", "(", " ", directoryRepositoryS, " ", ")" )
   //
   PushPosition()
   PushBlock()
+  //
   EditFile( directoryRepositoryS )
   //
   B = FNProgramRunGitTseOutputB( s, "s040", FALSE )
   //
-  PROCProgramRunPopupWindowPositionTse()
-  Warn( "<Press any key to continue>" )
+  PROCProgramRunGitTsePause()
   //
   PopBlock()
   PopPosition()
@@ -3429,16 +3660,21 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s055" )
   //
+  s = ""
+  //
   PushPosition()
   PushBlock()
+  //
   s = QuotePath( Format( AddTrailingSlash( directoryRepositoryS ), ".gitignore" ) )
+  //
   IF EditFile( s )
+   //
    QuitFile()
    EditFile( s )
+   //
   ELSE
    //
    PROCProgramRunPopupWindowPositionTse()
-   //
    IF ( FNMathGetNumberInputYesNoCancelPositionDefaultI( Format( "File", ":", " ", s, " ", "not found. Do you want to create it?" ) ) == 1 )
     //
     EditFile( s )
@@ -3453,8 +3689,11 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
   //
   B = FNProgramRunGitTseOutputB( s, "s055", FALSE )
   //
+  // do not replace this, there should always be waited here
+  //
   PROCProgramRunPopupWindowPositionTse()
   Warn( "<Press any key to continue>" )
+  //
   PopBlock()
   PopPosition()
   //
@@ -3466,23 +3705,32 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s054" )
   //
+  s = ""
+  //
   PushPosition()
   PushBlock()
+  //
   s = QuotePath( Format( AddTrailingSlash( directoryRepositoryS ), ".git\config" ) )
+  //
   IF EditFile( s )
+   //
    QuitFile()
    EditFile( s )
    //
    B = FNProgramRunGitTseOutputB( s, "s054", FALSE )
    //
   ELSE
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "File", ":", " ", s, " ", "not found. Please check." )
    //
    B = FNProgramRunGitTseOutputB( Format( "File", ":", " ", s, " ", "not found." ), "s054", FALSE )
    //
   ENDIF
+  //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
+  // do not replace this, there should always be waited here
   //
   PROCProgramRunPopupWindowPositionTse()
   Warn( "<Press any key to continue>" )
@@ -3498,23 +3746,32 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s092" )
   //
+  s = ""
+  //
   PushPosition()
   PushBlock()
+  //
   s = QuotePath( Format( "c:\", AddTrailingSlash( GetEnvStr( "HOMEPATH" ) ), ".gitconfig" ) )
+  //
   IF EditFile( s )
+   //
    QuitFile()
    EditFile( s )
    //
    B = FNProgramRunGitTseOutputB( s, "s092", FALSE )
    //
   ELSE
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "File", ":", " ", s, " ", "not found. Please check." )
    //
    B = FNProgramRunGitTseOutputB( Format( "File", ":", " ", s, " ", "not found." ), "s092", FALSE )
    //
   ENDIF
+  //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  //
+  // do not replace this, there should always be waited here
   //
   PROCProgramRunPopupWindowPositionTse()
   Warn( "<Press any key to continue>" )
@@ -3530,21 +3787,32 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s075" )
   //
+  s = ""
+  //
   PushPosition()
   PushBlock()
+  //
   s = gitLogFileS
+  //
   IF EditFile( s )
+   //
    QuitFile()
    EditFile( s )
    EndFile() // new [kn, ri, mo, 21-11-2022 04:24:47]
    BegLine() // new [kn, ri, mo, 21-11-2022 12:13:49]
+   //
   ELSE
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "File", ":", " ", s, " ", "not found. Please check." )
+   //
   ENDIF
+  //
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
   //
   B = FNProgramRunGitTseOutputB( s, "s075", FALSE )
+  //
+  // do not replace this, there should always be waited here
   //
   PROCProgramRunPopupWindowPositionTse()
   Warn( "<Press any key to continue>" )
@@ -3559,6 +3827,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // ------------------------------------------------------------------------------
  //
  IF s3 == GetGlobalStr( "s093" )
+  //
+  s = ""
   //
   PushPosition()
   PushBlock()
@@ -3581,24 +3851,26 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s026" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunPopupWindowPositionTse()
-   Warn( "<Press 'Q' to quit>" )
-   //
    s1 = " "
+   //
    s2 = " "
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "From directory = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
     PROCProgramRunPopupWindowPositionTse()
     IF ( ( Ask( "To directory = ", s2, _EDIT_HISTORY_ ) ) AND ( Length( s2 ) > 0 ) )
      //
-     s = Format( s, " ", "&", " " )
-     // s = Format( "copy", " ", "/s", " ", s1, " ", s2 )
+     // s = Format( "copy", " ", "/s", " ", s1, " ", s2 ) // only works in JPSoft TakeCommand or JPSoft tcc.exe
      s = Format( "xcopy", " ", "/s", " ", s1, " ", s2 )
      //
      s = Format( s, " ", "&", " " )
@@ -3618,16 +3890,19 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s034" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunPopupWindowPositionTse()
-   Warn( "<Press 'Q' to quit>" )
-   //
    s1 = " "
+   //
    s2 = " "
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "old alias name = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
@@ -3656,16 +3931,19 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s032" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunPopupWindowPositionTse()
-   Warn( "<Press 'Q' to quit>" )
-   //
    s1 = " "
+   //
    s2 = githubRemoteDirectoryUrlS
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "alias name = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
@@ -3694,15 +3972,17 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s033" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
+   //
    PROCProgramRunPopupWindowPositionTse()
    Warn( "Run the initialize step first to create a Git repository" )
+   //
   ELSE
    //
-   PROCProgramRunPopupWindowPositionTse()
-   Warn( "<Press 'Q' to quit>" )
-   //
    s1 = " "
+   //
    PROCProgramRunPopupWindowPositionTse()
    IF ( ( Ask( "alias name = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
     //
@@ -3726,13 +4006,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  IF s3 == GetGlobalStr( "s098" )
   //
+  s = ""
+  //
   IF NOT FileExists( directoryRepositoryS )
-   PROCProgramRunPopupWindowPositionTse()
-   Warn( "Run the initialize step first to create a Git repository" )
-  ELSE
    //
    PROCProgramRunPopupWindowPositionTse()
-   Warn( "<Press 'Q' to quit>" )
+   Warn( "Run the initialize step first to create a Git repository" )
+   //
+  ELSE
    //
    s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
    //
