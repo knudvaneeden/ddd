@@ -1,5 +1,5 @@
 REM
-REM compile all relevant .s and .si files to .mac (do not compile all)
+REM compile relevant .s and .si files to .mac
 REM
 sc32 dialog.si
 sc32 dialogp.s
@@ -31,8 +31,8 @@ pkzipc -add grep3230_knud.zip gethelp.mac
 REM
 pkzipc -add grep3230_knud.zip grep.hlp
 REM
-pkzipc -add grep3230_knud.zip grep.s
-pkzipc -add grep3230_knud.zip grep.mac
+pkzipc -add grep3230_knud.zip grep3230.s
+pkzipc -add grep3230_knud.zip grep3230.mac
 REM
 pkzipc -add grep3230_knud.zip grep.txt
 REM
@@ -51,15 +51,19 @@ pkzipc -add grep3230_knud.zip zipgrep3230.bat
 REM
 REM view the result in the zip file
 REM
-zipview grep3230_knud.zip
+echo zipview grep3230_knud.zip
 REM
 REM after running the installation batch file, load this file in your TSE and run it
 REM
-md grep
-pkzipc -extract -dir grep3230_knud.zip grep
+pkzipc -extract -dir grep3230_knud.zip
 REM
-echo now run in TSE
-echo execute this macro
-echo grep\grep.s
-echo (or run grep\grep.mac)
-REM
+echo To install
+echo 1. -Store all the files in this directory in some temporary directory
+echo 2. -Change directory to that temporary directory
+echo 3. -Then run this batch file
+echo 4. -That will recompile all or only the relevant .s and .si files and collect the necessary other files
+echo 5. -Then the resulting .zip file contains all the necessary files to run it on your computer
+echo 6. -Then unzip that resulting .zip file in some new arbitrary directory
+echo 7. -Then run in TSE
+echo 8. -execute this macro (you must supply the full path to this macro)
+echo grep.mac
