@@ -74,8 +74,8 @@ c:\temp\foobar2.txt
     ENDIF
     Up()
     //
-    Warn( s1; s2 ) // debug
-    UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop // debug
+    // Warn( s1; s2 ) // debug
+    // UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop // debug
     //
     IF EquiStr( s1, s2 ) AND ( B == FALSE )
      B = TRUE
