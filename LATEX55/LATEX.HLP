@@ -1,0 +1,2398 @@
+ ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»    v.03/01/05
+ º      PERSONAL HELP & MEMO FILE. FILL IT WITH ANYTHING USEFUL.       º
+ ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+
+\documentclass[11pt,{leqno,fleqn}]{article}
+\usepackage[T1]{fontenc}
+\usepackage[T1,mtbold,mtpluscal]{mathtime}           MT calligraphic fonts
+% \usepackage[T1,mtbold,cmcal]{mathtime}             CM calligraphic fonts
+% and adapt config.ps for cm type1 fonts
+\usepackage[{center/tb}tags,{no}{int/name/sum}limits]{amsmath}
+options: centertags, tbtags, sumlimits, nosumlimits, (no)intlimits, (no)namelimits
+\usepackage{amssymb}
+\usepackage{amsfonts}  (loaded by amssymb)
+\usepackage{a4}
+\usepackage{a4wide}
+\usepackage{a4dutch}
+\usepackage{float}
+\usepackage{graphics}
+\usepackage{color}
+\usepackage{rotate}
+\usepackage{epsf,psfrag}    %epsf is able to handle gzipped eps-files (psfig not)
+
+\usepackage[dutch]{babel}
+\usepackage{fax}
+\usepackage[widemargins]{a4}
+\renewcommand\bibname{Bibliography or whatever}
+
+\cite{ref1} regular, \citen{ref1} just the number
+
+   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+   ³ default          ³    2-sided printing  ³    1-sided printing  ³
+   ³ page layout:     ³  10 pt  11 pt  12 pt ³  10 pt  11 pt  12 pt ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ \oddsidemargin   ³  44     36     21    ³  63     54     39    ³
+   ³ \evensidemargin  ³  82     74     59    ³  63     54     39    ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ \marginparwidth  ³ 107    100     85    ³  90     83     68    ³
+   ³ \marginparsep    ³  11     10      "    ³  11     10      "    ³
+   ³ \marginparpush   ³   5      5      7    ³   5      5      7    ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ \topmargin       ³  27      "      "    ³  27      "      "    ³
+   ³ \headheight      ³  12      "      "    ³  12      "      "    ³
+   ³ \headsep         ³  25      "      "    ³  25      "      "    ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ \footskip        ³  30      "      "    ³  30      "      "    ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ \textheight      ³  43     38     36    ³  43     38     36    ³
+   ³                  ³    x baselineskip    ³    x baselineskip    ³
+   ³ \textwidth       ³ 345    360    390    ³ 345    360    390    ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÅÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ \columnsep       ³  10      "      "    ³  10      "      "    ³
+   ³ \columnseprule   ³   0      "      "    ³   0      "      "    ³
+   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+\font\tenbf=cmbx10                    % call font
+\font\bigotfont=cmr17 scaled \magstep1% enlarged text
+\font\bigmath=cmsy10 scaled \magstep4 % enlarged symbols
+\font\bigmath=cmsy10 at 24pt          % enlarged symbols
+\font\med = cmr10 scaled 1728
+\font\myfnt = cmbx10 at 14.4 true pt
+\parindent0pt
+
+\def\Ster{\mathop{\vphantom{\sum}\lower2.5pt\hbox{\bigmath\char3}}}
+A = \char65 = \char`81 = \char"41
+
+\font\bigmath=cmsy10 scaled \magstep2
+\def\bul{$\scriptstyle\bullet$}
+\def\Bul{$\bullet$}
+\def\BUL{$\mathop{\hbox{\bigmath \char15}}$}
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\edef\pounds{\text{\pounds}}    in some fonts \pounds is wrong in mathmode
+----------
+\def\today{\number\day\space \ifcase\month\or
+    Jan \or Feb \or Mar \or Apr \or May \or Jun \or
+    Jul \or Aug \or Sep \or Oct \or Nov \or Dec \fi
+    \number\year}
+\newcount\hours
+\newcount\minutes
+\def \SetTime{\hours=\time
+    \global\divide\hours by 60
+    \minutes=\hours
+    \multiply\minutes by 60
+    \advance\minutes by-\time
+    \global\multiply\minutes by-1 }
+\SetTime
+\def \now{\number\hours:\ifnum\minutes<10 0\fi\number\minutes}
+-----------
+\def\today{\ifnum\day<10 0\fi\number\day-\ifnum\month<10 0\fi\number\month-\number\year}
+\newcount\hours
+\newcount\minutes
+\def \SetTime{\hours=\time
+    \global\divide\hours by 60
+    \minutes=\hours
+    \multiply\minutes by 60
+    \advance\minutes by-\time
+    \global\multiply\minutes by-1 }
+\SetTime
+\def \now{\ifnum\hours<10 0\fi\number\hours:\ifnum\minutes<10 0\fi\number\minutes}
+----------
+
+\usepackage{fancyhdr}
+\pagestyle{fancyplain}{%
+\rhead{}
+\lfoot{\now\quad\today}
+\cfoot{\thepage}
+\rfoot{version: \status}}
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+cmb10  cmbxsl10 cmbxti10 cmcsc10 cmdunh10 cmff10 cmfi10 cmitt10
+cmbx5=\fivebf cmbx6 cmbx7=\sevenbf cmbx8 cmbx10=\tenbf cmbx12
+cmr5 =\fiverm cmr6  cmr7 =\sevenrm cmr8  cmr9 cmr10=\tenrm cmr12 cmr17
+cmsl8 cmsl9 cmsl10=\tensl cmsl12 cmsltt10
+cmss8 cmss10 cmss12 cmssbx10 cmssdc10 cmssi8 cmssi9 cmssi10
+cmssi12 cmssq8 cmssqi8 cmtcsc10
+cmti7 cmti8 cmti9 cmti10=\tenit cmti12
+cmtt8 cmtt9 cmtt10=\tentt cmtt12
+cmu10 cmvtt10
+
+cmsy5=\fivesy cmsy6 cmsy7=\sevensy cmsy8 cmsy9 cmsy10=\tensy
+cmmi5=\fivei cmmi6 cmmi7=\seveni cmmi8 cmmi10=\teni cmmi12
+cmex10=\tenex
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+a4wide: 10 pt:   \oddsidemargin  0.25  in
+                 \evensidemargin 0.25  in
+                 \marginparwidth 0.75  in
+                 \textwidth      5.875 in
+                 \topmargin      0     in
+                 \textheight 53\baselineskip
+        11 pt:   \oddsidemargin  0.125 in
+                 \evensidemargin 0.125 in
+                 \marginparwidth 0.75  in
+                 \textwidth      6.125 in
+                 \topmargin      0     in
+                 \textheight 46\baselineskip
+        12 pt:   \oddsidemargin  0     in
+                 \evensidemargin 0     in
+                 \marginparwidth 0.75  in
+                 \textwidth      6.375 in
+                 \topmargin      0     in
+                 \textheight 42\baselineskip
+
+topline:
+\begin{document}
+\pagestyle{plain}
+\setbox0\hbox{\footnotesize M.Y.Name-16/04/01}
+\mbox{}\vskip-38mm \smash{\hskip\textwidth\hskip-\wd0 \box0} \vskip20mm
+
+1 inch at all sides:
+   \oddsidemargin  0.0   in
+   \evensidemargin 0.0   in
+   \topmargin      0.0   in
+   \headheight     0.0   in
+   \headsep        14    pt
+   \marginparwidth 0.0   in
+   \textwidth      6.268 in
+   \textheight 58\baselineskip
+
+marginal notes:
+  \marginpar[left-text]{right-text}
+  better:
+  \def\marginlabel#1{\mbox{}\marginpar{\raggedleft\hspace{0pt}#1}}
+
+headers & footers:
+  \markboth{\mdseries GLOSSARY OF NOTATION}{\mdseries GLOSSARY OF NOTATION}
+  \usepackage{fancyhdr}
+  \pagestyle{fancy}
+  \chead{}
+  \lhead{}
+  \rhead{}
+  \cfoot{\parbox[t]{\textwidth}{\centerline{\thepage}\medskip%
+  \centerline{American Institute of Aeronautics and Astronautics}}}
+  \def\headrulewidth{0pt}
+
+\vbox{..} vertical box. textlines are broken according to actual \hsize
+\vspace{\smallskipamount}
+\parskip=.3\baselineskip plus .5\baselineskip  minus 1pt
+
+\arraycolsep1.5pt   (def. 5pt)   note bug in eqnarray
+\tabcolsep          (def. 6pt)
+\arrayrulewidth     (def. 0.4pt)
+\doublerulesep      (def. 2pt)
+\arraystretch       (def. 1.0)
+\extrarowheight     (def. 0pt)
+
+
+\null \vskip-36mm \hskip-25mm \hbox{\epsfbox{picture.eps}}
+
+\bigskip,\medskip,\smallskip,\vskip 10mm plus 5 mm : ends paragraph
+
+\penalty-10000          : push or pull page breaking
+
+\vskip-1em           Ä¿
+\vfill                ÃÄtrick to create space at page bottom
+....                  ³
+\clearpage           ÄÙ
+
+true (eg.: 12 true pt)  : not affected by \magnification
+
+\let\bs=\bigskip                   % define \bs as existing \bigskip
+\def\bigskip{\vskip 24pt}          % redefine \bigskip
+
+
+\def\sp{\vskip 3mm\par\noindent}
+\def\p{\par\noindent}
+\def\erf{\mathop{\rm erf}\nolimits}
+\def\rhaakje{\mathclose{>}}
+\def\lhaakje{\mathopen{<}}
+
+\def\bibname{Bibliography or whatever}
+\def\refname{References}
+\def\contentsname{Contents}
+\def\listfigurename{List of Figures}
+\def\listtablename{List of Tables}
+\def\bibname{Bibliography}
+\def\indexname{Index}
+\def\figurename{Figure}
+\def\tablename{Table}
+\def\chaptername{Chapter}
+\def\appendixname{Appendix}
+\def\partname{Part}
+
+\widowpenalty=150                 % default penalty for widow-lines
+
+\protect\comm = to protect fragile command \comm, e.g. in \section-argument
+\discretionary{before}{after}{without} complete hyphenation rule
+\hyphenation{ver-ge-lij-king ach-ter-lijk} (preamble)
+ver\-ge\-lij\-king                         (text)
+
+multi-letter variable:
+\def\mathvar#1{\mathchoice{\mbox{\it #1}\hspace*{2.0pt}}     % display
+                   {\mbox{\it #1}\hspace*{1.5pt}}            % text
+                   {\mbox{\scriptsize\it #1}\hspace*{0.4pt}} % script
+                   {\scriptscriptstyle #1\hspace*{0.2pt}}}   % scriptscript
+
+\def\frame #1#2#3#4{\vbox{\hrule height #1pt%   #1 = rule thickness in pts
+ \hbox{\vrule width #1pt\kern #2pt%             #2 = space between rules and
+ \vbox{\kern #2pt%                                   enclosed text in pts
+ \vbox{\hsize #3\noindent #4}%                  #3 = horizontal size of box
+ \kern #2pt}%                                   #4 = text
+ \kern #2pt\vrule width #1pt}%
+ \hrule height0pt depth #1pt}}%
+
+\def\pattern#1#2{\thusfar=0 %
+         \loop #1\advance\thusfar by 1 \ifnum\thusfar<#2 \repeat}
+
+\def\dash{\hbox{\raise2pt\hbox{\vrule width 10pt height 1pt depth 0pt}}}
+
+list of symbols:
+\def\SymbolsA{\mathop{\hbox{\bigmath  \char0  \char1   \char2   \char3   \char4   \char5   \char6   \char7   \char8   \char9   \char10  \char11  \char12  \char13  \char14  \char15 }}}
+\def\SymbolsB{\mathop{\hbox{\bigmath  \char16 \char17  \char18  \char19  \char20  \char21  \char22  \char23  \char24  \char25  \char26  \char27  \char28  \char29  \char30  \char31 }}}
+\def\SymbolsC{\mathop{\hbox{\bigmath  \char32 \char33  \char34  \char35  \char36  \char37  \char38  \char39  \char40  \char41  \char42  \char43  \char44  \char45  \char46  \char47 }}}
+\def\SymbolsD{\mathop{\hbox{\bigmath  \char48 \char49  \char50  \char51  \char52  \char53  \char54  \char55  \char56  \char57  \char58  \char59  \char60  \char61  \char62  \char63 }}}
+\def\SymbolsE{\mathop{\hbox{\bigmath  \char64 \char65  \char66  \char67  \char68  \char69  \char70  \char71  \char72  \char73  \char74  \char75  \char76  \char77  \char78  \char79 }}}
+\def\SymbolsF{\mathop{\hbox{\bigmath  \char80 \char81  \char82  \char83  \char84  \char85  \char86  \char87  \char88  \char89  \char90  \char91  \char92  \char93  \char94  \char95 }}}
+\def\SymbolsG{\mathop{\hbox{\bigmath  \char96 \char97  \char98  \char99  \char100 \char101 \char102 \char103 \char104 \char105 \char106 \char107 \char108 \char109 \char110 \char111}}}
+\def\SymbolsH{\mathop{\hbox{\bigmath \char112 \char113 \char114 \char115 \char116 \char117 \char118 \char119 \char120 \char121 \char122 \char123 \char124 \char125 \char126 \char127}}}
+\def\SymbolsI{\mathop{\hbox{\bigmath \char128 \char129 \char130 \char131 \char132 \char133 \char134 \char135 \char136 \char137 \char138 \char139 \char140 \char141 \char142 \char143}}}
+\def\SymbolsJ{\mathop{\hbox{\bigmath \char144 \char145 \char146 \char147 \char148 \char149 \char150 \char151 \char152 \char153 \char154 \char155 \char156 \char157 \char158 \char159}}}
+\def\SymbolsK{\mathop{\hbox{\bigmath \char160 \char161 \char162 \char163 \char164 \char165 \char166 \char167 \char168 \char169 \char170 \char171 \char172 \char173 \char174 \char175}}}
+\def\SymbolsL{\mathop{\hbox{\bigmath \char176 \char177 \char178 \char179 \char180 \char181 \char182 \char183 \char184 \char185 \char186 \char187 \char188 \char189 \char190 \char191}}}
+\def\SymbolsM{\mathop{\hbox{\bigmath \char192 \char193 \char194 \char195 \char196 \char197 \char198 \char199 \char200 \char201 \char202 \char203 \char204 \char205 \char206 \char207}}}
+\def\SymbolsN{\mathop{\hbox{\bigmath \char208 \char209 \char210 \char211 \char212 \char213 \char214 \char215 \char216 \char217 \char218 \char219 \char220 \char221 \char222 \char223}}}
+\def\SymbolsO{\mathop{\hbox{\bigmath \char224 \char225 \char226 \char227 \char228 \char229 \char230 \char231 \char232 \char233 \char234 \char235 \char236 \char237 \char238 \char239}}}
+\def\SymbolsP{\mathop{\hbox{\bigmath \char240 \char241 \char242 \char243 \char244 \char245 \char246 \char247 \char248 \char249 \char250 \char251 \char252 \char253 \char254 \char255}}}
+
+\def\Haakjel{\mathopen{\raise9.5pt\hbox{\bigmath \char"0}}}
+\def\Haakjer{\mathclose{\raise9.5pt\hbox{\bigmath \char"1}}}
+\def\Accoladel{\mathopen{\raise9.2pt\hbox{\Bigmath \char"8}}}
+\def\Accolader{\mathclose{\raise9.2pt\hbox{\bigmath \char"9}}}
+\def\ACCOladel{\mathopen{\raise14.4pt\hbox{\Bigmath \char"1A}}}
+\def\ACCOlader{\mathclose{\raise14.4pt\hbox{\bigmath \char"1B}}}
+\def\ACCOLADEl{\mathopen{\raise18.4pt\hbox{\bigmath \char"28}}}
+\def\ACCOLADEr{\mathclose{\raise18.4pt\hbox{\bigmath \char"29}}}
+
+\def\Sim{\mathop{\hbox{\bigmath\char24}}}
+\def\NSim{\mathop{\hbox{\Bigmath\char24}}}
+\def\Approx{\mathop{\hbox{\bigmath\char25}}}
+\def\Ll{\mathop{\hbox{\bigmath\char28}}}
+\def\Da{\mathop{\hbox{\bigmath\char43}}}
+\def\Ua{\mathop{\hbox{\bigmath\char42}}}
+\def\Ra{\mathop{\hbox{\bigmath\char41}}}
+\def\La{\mathop{\hbox{\bigmath\char40}}}
+\def\LRa{\mathop{\hbox{\bigmath\char44}}}
+
+also is possible:
+\def\tic{$\huge\mbox{$\Box$}$}
+
+the "oke" mark:
+\usepackage{pifont}
+\def\oke{\ding{52}} % 51 also possible
+
+\let\oldnabla=\nabla                    % define \oldnabla as regular \nabla
+\def\nabla{\boldsymbol{\oldnabla}}      % redefine \nabla as bold nabla
+
+-------------------------------------------------------------------------
+Generate testpage Dingbats font:
+-------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage{pifont}
+\oddsidemargin  0.125 in
+\evensidemargin 0.125 in
+\marginparwidth 0.75  in
+\textwidth      6.125 in
+\textheight 46\baselineskip
+\begin{document}
+\begin{table}[!htb/H]
+   \begin{tabular}{|cc|cc|cc|cc|cc|cc|cc|cc|}  \hline
+     33 &  \ding{ 33}  & 57 & \ding{ 57}  &  81& \ding{ 81}  & 105& \ding{105}  & 161 & \ding{161}  & 185   & \ding{185}  & 209   & \ding{209}  & 233   & \ding{233}     \\   \hline
+     34 &  \ding{ 34}  & 58 & \ding{ 58}  &  82& \ding{ 82}  & 106& \ding{106}  & 162 & \ding{162}  & 186   & \ding{186}  & 210   & \ding{210}  & 234   & \ding{234}     \\   \hline
+     35 &  \ding{ 35}  & 59 & \ding{ 59}  &  83& \ding{ 83}  & 107& \ding{107}  & 163 & \ding{163}  & 187   & \ding{187}  & 211   & \ding{211}  & 235   & \ding{235}     \\   \hline
+     36 &  \ding{ 36}  & 60 & \ding{ 60}  &  84& \ding{ 84}  & 108& \ding{108}  & 164 & \ding{164}  & 188   & \ding{188}  & 212   & \ding{212}  & 236   & \ding{236}     \\   \hline
+     37 &  \ding{ 37}  & 61 & \ding{ 61}  &  85& \ding{ 85}  & 109& \ding{109}  & 165 & \ding{165}  & 189   & \ding{189}  & 213   & \ding{213}  & 237   & \ding{237}     \\   \hline
+     38 &  \ding{ 38}  & 62 & \ding{ 62}  &  86& \ding{ 86}  & 110& \ding{110}  & 166 & \ding{166}  & 190   & \ding{190}  & 214   & \ding{214}  & 238   & \ding{238}     \\   \hline
+     39 &  \ding{ 39}  & 63 & \ding{ 63}  &  87& \ding{ 87}  & 111& \ding{111}  & 167 & \ding{167}  & 191   & \ding{191}  & 215   & \ding{215}  & 239   & \ding{239}     \\   \hline
+     40 &  \ding{ 40}  & 64 & \ding{ 64}  &  88& \ding{ 88}  & 112& \ding{112}  & 168 & \ding{168}  & 192   & \ding{192}  & 216   & \ding{216}  & 240   & \ding{240}     \\   \hline
+     41 &  \ding{ 41}  & 65 & \ding{ 65}  &  89& \ding{ 89}  & 113& \ding{113}  & 169 & \ding{169}  & 193   & \ding{193}  & 217   & \ding{217}  & 241   & \ding{241}     \\   \hline
+     42 &  \ding{ 42}  & 66 & \ding{ 66}  &  90& \ding{ 90}  & 114& \ding{114}  & 170 & \ding{170}  & 194   & \ding{194}  & 218   & \ding{218}  & 242   & \ding{242}     \\   \hline
+     43 &  \ding{ 43}  & 67 & \ding{ 67}  &  91& \ding{ 91}  & 115& \ding{115}  & 171 & \ding{171}  & 195   & \ding{195}  & 219   & \ding{219}  & 243   & \ding{243}     \\   \hline
+     44 &  \ding{ 44}  & 68 & \ding{ 68}  &  92& \ding{ 92}  & 116& \ding{116}  & 172 & \ding{172}  & 196   & \ding{196}  & 220   & \ding{220}  & 244   & \ding{244}     \\   \hline
+     45 &  \ding{ 45}  & 69 & \ding{ 69}  &  93& \ding{ 93}  & 117& \ding{117}  & 173 & \ding{173}  & 197   & \ding{197}  & 221   & \ding{221}  & 245   & \ding{245}     \\   \hline
+     46 &  \ding{ 46}  & 70 & \ding{ 70}  &  94& \ding{ 94}  & 118& \ding{118}  & 174 & \ding{174}  & 198   & \ding{198}  & 222   & \ding{222}  & 246   & \ding{246}     \\   \hline
+     47 &  \ding{ 47}  & 71 & \ding{ 71}  &  95& \ding{ 95}  & 119& \ding{119}  & 175 & \ding{175}  & 199   & \ding{199}  & 223   & \ding{223}  & 247   & \ding{247}     \\   \hline
+     48 &  \ding{ 48}  & 72 & \ding{ 72}  &  96& \ding{ 96}  & 120& \ding{120}  & 176 & \ding{176}  & 200   & \ding{200}  & 224   & \ding{224}  & 248   & \ding{248}     \\   \hline
+     49 &  \ding{ 49}  & 73 & \ding{ 73}  &  97& \ding{ 97}  & 121& \ding{121}  & 177 & \ding{177}  & 201   & \ding{201}  & 225   & \ding{225}  & 249   & \ding{249}     \\   \hline
+     50 &  \ding{ 50}  & 74 & \ding{ 74}  &  98& \ding{ 98}  & 122& \ding{122}  & 178 & \ding{178}  & 202   & \ding{202}  & 226   & \ding{226}  & 250   & \ding{250}     \\   \hline
+     51 &  \ding{ 51}  & 75 & \ding{ 75}  &  99& \ding{ 99}  & 123& \ding{123}  & 179 & \ding{179}  & 203   & \ding{203}  & 227   & \ding{227}  & 251   & \ding{251}     \\   \hline
+     52 &  \ding{ 52}  & 76 & \ding{ 76}  & 100& \ding{100}  & 124& \ding{124}  & 180 & \ding{180}  & 204   & \ding{204}  & 228   & \ding{228}  & 252   & \ding{252}     \\   \hline
+     53 &  \ding{ 53}  & 77 & \ding{ 77}  & 101& \ding{101}  & 125& \ding{125}  & 181 & \ding{181}  & 205   & \ding{205}  & 229   & \ding{229}  & 253   & \ding{253}     \\   \hline
+     54 &  \ding{ 54}  & 78 & \ding{ 78}  & 102& \ding{102}  & 126& \ding{126}  & 182 & \ding{182}  & 206   & \ding{206}  & 230   & \ding{230}  & 254   & \ding{254}     \\   \hline
+     55 &  \ding{ 55}  & 79 & \ding{ 79}  & 103& \ding{103}  &    &             & 183 & \ding{183}  & 207   & \ding{207}  & 231   & \ding{231}  &       &                \\   \hline
+     56 &  \ding{ 56}  & 80 & \ding{ 80}  & 104& \ding{104}  &    &             & 184 & \ding{184}  & 208   & \ding{208}  & 232   & \ding{232}  &       &                \\   \hline
+   \end{tabular}
+   \setbox0\hbox{Table for ding-font (package ``pifont'')}
+   \caption{\protect\parbox[t]{\wd0}{\box0}}
+\end{table}
+\end{document}
+-------------------------------------------------------------------------
+
+
+-------------------------------------------------------------------------
+Symbols:
+\alpha      \pm        \leq        \wp        \log         \triangle
+\beta       \mp        \prec       \Re        \arg         \triangleleft
+\gamma      \times     \preceq     \Im        \deg         \triangleright
+\Gamma      \otimes    \ll        {\mho}      \det         \bigtriangleup
+\delta      \bigotimes \subset     \prime     \dim         \bigtriangledown
+\Delta      \uplus     \subseteq   \emptyset  \gcd         \mapsto
+\epsilon    \biguplus {\sqsubset}  \nabla     \hom         \longmapsto
+\varepsilon \oplus     \sqsubseteq \surd      \ker        {\leadsto}
+\zeta       \bigoplus  \in         \top       \lg          \leftarrow
+\eta        \ominus    \vdash      \bot       \lim         \Leftarrow
+\theta      \setminus  \geq        \|         \sup         \rightarrow
+\vartheta   \div       \succ       \angle     \inf         \Rightarrow
+\Theta      \ast       \succeq     \forall    \limsup      \leftrightarrow
+\iota       \star      \gg         \exists    \liminf      \Leftrightarrow
+\kappa      \circ      \supset     \neg       \max         \hookleftarrow
+\lambda     \bigcirc   \supseteq   \flat      \min         \leftharpoonup
+\Lambda     \bullet   {\sqsupset}  \natural   \Pr          \leftharpoondown
+\mu         \cdot      \sqsupseteq \sharp     \lfloor      \rightleftharpoons
+\nu         \cap       \ni         \backslash \rfloor      \longleftarrow
+\xi         \bigcap    \dashv      \partial   \lceil       \Longleftarrow
+\Xi         \cup       \equiv      \infty     \rceil       \longrightarrow
+\pi         \bigcup    \sim       {\Box}      \langle      \Longrightarrow
+\varpi      \sqcap     \simeq      \sum       \rangle      \longleftrightarrow
+\Pi         \sqcup     \asymp      \prod      \hat{ }      \Longleftrightarrow
+\rho        \bigsqcup  \approx     \coprod    \widehat{}   \hookrightarrow
+\varrho     \vee       \cong       \int       \check{}     \rightharpoonup
+\sigma      \bigvee    \neq        \oint      \breve{}     \rightharpoondown
+\varsigma   \wedge     \doteq      \arcsin    \acute{}     \uparrow
+\Sigma      \bigwedge  \propto     \arccos    \grave{}     \Uparrow
+\tau        \wr        \models     \arctan    \tilde{}     \downarrow
+\upsilon   {\lhd}      \perp       \sin       \widetilde{} \Downarrow
+\Upsilon   {\rhd}      \mid        \sinh      \bar{}       \updownarrow
+\phi       {\unlhd}    \parallel   \cos       \vec{}       \Updownarrow
+\varphi    {\unrhd}    \bowtie     \cosh      \dot{}       \nearrow
+\Phi        \oslash   {\Join}      \tan       \ddot{}      \searrow
+\chi        \odot      \smile      \tanh     {\Diamond}    \swarrow
+\psi        \bigodot   \frown      \cot       \diamond     \nwarrow
+\Psi        \dag       \aleph      \coth      \clubsuit    \overleftarrow
+\omega      \dagger    \hbar       \sec       \diamondsuit \overrightarrow
+\Omega      \ddag      \imath      \csc       \heartsuit
+\copyright  \ddagger   \jmath      \exp       \spadesuit
+\pounds     \amalg     \ell        \ln
+
+\def\at{\char64}   ==  @
+
+\leqslant   \geqslant  \centerdot
+-------------------------------------------------------------------------
+backslash: math: $\backslash$
+           text: {\tt\char92}
+
+verbatim:
+   \verb+ this is exactly the same as typed +
+   \verb*+ this is exactly the same as typed + but with "hard" spaces
+   only text on a single input line
+   use instead of + any symbol except a space, a letter or *
+
+\hfuzz=1pt
+\kern = leaves hor. or vert. space
+\quad = \def\quad{\hskip1em\relax}
+\qquad = \def\qquad{\hskip2em\relax}
+\setlength{\fboxsep}{5mm}
+\unitlength 1mm
+\hss dynamical whitespace
+
+\footline={\rm\ifodd\pageno\folio\hss\else\hss\folio\fi}  %pageno's
+\footline={\ifnum\pageno=1\hss\else\hss\folio\hss\fi}     %no page no 1
+
+\def\linkertitel{\it Boektitel \hfill}                    %
+\def\rechtertitel{\it \hfill Hoofdstuktitel}              % headline
+\headline={\rm\ifodd\rechtertitel\else\linkertitel\fi}    %
+
+\footnote{..} \footnotetext{..} \footnotemark
+\setcounter{footnote}{n} \addtocounter{footnote}{-2}
+\def\thefootnote{*} or:
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\renewcommand{\thefootnote}{\arabic{footnote}}
+
+
+a footnote on the title page without footnotemark:
+ \chapter{This is a title}
+ \renewcommand{\thefootnote}{}
+ \renewcommand{\footnoterule}{\vspace*{-3pt}\noindent\rule{\textwidth}{0.4pt}\vspace*{2.6pt}}
+ \footnotetext{\smash{Published by this or that Institute}}
+ \renewcommand{\thefootnote}{\arabic{footnote}}
+ later in the text: correct the footnote rule to original
+ \renewcommand{\footnoterule}{\vspace*{-3pt}\rule{0.4\columnwidth}{0.4pt}\vspace*{2.6pt}}
+
+
+\linethickness{0.4pt}
+\null = \mbox{} = \hbox{} : used to open a line or page
+\negthinspace = \def\negthinspace{\kern-.16667em}
+\negmedspace
+\negthickspace
+@, = smallest positive distance
+@! = biggest  negative distance
+\ignorespaces
+
+      \line{..} = \def\line{\hbox to\hsize}           ¿
+  \leftline{..} = \def\leftline#1{\line{#1\hss}}      ³ outside
+\centerline{..} = \def\leftline#1{\line{\hss#1\hss}}  ³ paragraph
+ \rightline{..} = \def\leftline#1{\line{\hss#1}}      Ù
+
+center:  \mbox{}{\hfill  ....... \hfil}
+         \centerline{    ...........  }
+\hbox to 10cm {tekst}              %hbox of 10 cm
+\hbox spread 2cm {tekst}           %hbox with extra 2 cm
+\vadjust{\vskip1cm \centerline{tekst} \vskip1cm} wrap text around tekst inside paragraph
+
+Size of a letter, word, or sentence:
+put it in a box, and measure the size of the box
+     \newdimen\width        % create new dimension
+     \setbox0\hbox{ape}     % fill \box0 with \hbox{ape}
+     \width\wd0             % now \wd0, \ht0, \dp0 contains width, height,
+                            % depth of \box0
+     \box0  \copy0          % produces content of box0
+
+add     :  \advance\baselineskip by 1pt
+multiply:  \multiply\baselineskip by 2
+divide  :  \divide\baselineskip by 2
+
+2 columns:   \setbox0=\vbox{\hsize=0.4\hsize
+                       TEKST
+                           }
+             \dimen1=0.5\ht0
+             \advance\dimen1 by 0.5\baselineskip
+             \splittopskip=0pt
+             \setbox1=\vsplit 0 to \dimen1
+             \hbox to \hsize{\hfil\vtop{\hrule height 0pt \box1}%
+                            \hfil\vtop{\hrule height 0pt \box0}%
+                            \hfil}
+or:
+
+\begin{multicols}{3}[\section{Index} This index contains ...][6cm] ...
+\end{multicols}
+\raggedcolumns or \flushcolumns
+\columnbreak
+\begin{multicols*} does not balance columns on last page
+
+\hrule :  horizontal line over full page width; ends a paragraph
+\vrule width x height y depth z : line of size x(y+z); no paragraph end
+\hrulefill=\def\hrulefill{\leaders\hrule\hfill}  hor.line. in box
+         \hbox to 3cm{abc\hrulefill cde}
+\dotfill, \leftarrowfill, \rightarrowfill, \downbracefill, upbracefill
+broken line : \hbox to \hsize{\leaders\hbox to 5pt{-\hfil}\hfill}
+
+\def\vdotline#1#2{\smash{\raise #1 \vbox to #2{\hsize 1mm\leaders\vbox to 5pt{\vfil\noindent$\cdot$}\vfill}}}
+
+units: pt = point                   =  0.351 mm
+       pc = pica         = 12 pt    =  4.22  mm
+       in = inch         = 72.27 pt = 25.4   mm
+       bp = big point               =  0.353 mm (72 bp = 1 in)
+       cm = centimeter                          (1 cm = 28.54 pt)
+       mm = millimeter
+       dd = did“t point             =  0.376 mm (1157 d = 1238 pt)
+       cc = cicero       = 12 dd    =  4.51  mm
+       sp = scaled point            <  1E-5  mm (65536 = 2^16 sp = 1 pt
+
+       em = M
+       ex = x
+
+       mu = math unit, 18 mu = 1 em
+
+\, thin space    (Math mode) = \thinmuskip  = 3mu
+\: medium space  (Math mode) = \medmuskip   = 4mu plus 2mu minus 4mu
+\; thick space   (Math mode) = \thickmuskip = 5mu plus 5mu
+\! negative thin space (Math mode)          =-3mu
+\removelastskip  : remove previous white space
+
+explicit lengths:  mm, cm, in(=72.27pt), pt, pc(=12pt), em(M), ex(x)
+new length:
+           \newdimen\tijdelijk
+           \tijdelijk=\mathindent
+           \mathindent=31mm
+           .............
+           \mathindent=\tijdelijk
+increasing size:  ( , \Bigl( , \biggl( , \Biggl(
+           note:  ( = \bigl(
+
+brackets: (  \{  [  \lgroup  \langle |
+          )  \}  ]  \rgroup  \rangle
+\delimiterfactor=901  : bracket height is at least 90.1% of the formula
+
+\phantom{..} \vphantom{..} \hphantom{..}
+\smash{..} \smash[t]{..} \smash[b]{..}
+
+\\: new line
+\\*: new line without new paragraph
+\* : break in product-formulas
+\linebreak: with straight right margin
+\goodbreak
+\filbreak
+\newpage
+\clearpage  (pushes suspended floats)
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\dots + commas : baseline, \dots + binary ops: centered,
+\dotsc = dots with commas
+\dotsb = dots with binary ops
+\dotsm = multiplication dots
+\dotsi = dots with integrals
+\ddots = diagonal dots
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+On Labels:
+
+\label{key}  \ref{key}   \pageref{key}
+
+"To assign the number of a sectional unit to a key, you can put the
+\label command anywhere within the unit except within an
+environment in which it would assign some other number, or you
+can put it in the argument of the sectioning command."
+So: \section{ Title  \label{x123}} is correct.
+"The following environments generate numbers that can be assigned
+to keys with a \label command: equation, eqnarray, enumerate
+(assigns the current item's number), figure, table, and any theorem-
+like environment defined with the \newtheorem command."
+But for figure and table there is something special:
+"Since there can be several captions in a figure or table
+environment, caption works like a sectioning command within the
+environment, with the \label command going either after the \caption
+command or in its argument."
+In other words: \label must be after or in the caption.
+To be unambiguous, in the caption is easiest.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+numbering styles:  arabic, roman, Roman, alph, Alph
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+\usepackage{float}
+increase number of floats/page:
+\renewcommand\floatpagefraction{.9}
+\renewcommand\topfraction{.9}
+\renewcommand\bottomfraction{.9}
+\renewcommand\textfraction{.1}
+\setcounter{totalnumber}{50}
+\setcounter{topnumber}{50}
+\setcounter{bottomnumber}{50}
+
+The following variables control the vertical spacing with figures
+
+\floatsep     separation between floats on a page with text
+\intextsep    separation between floats and the text
+
+plus the hidden parameters for float pages:
+
+\@fptop       space at top of float page
+\@fpbot       space at bottom of float page
+\@fpsep       space between floats on a float page
+
+The vertical space between a graphic and the caption below it is
+\abovecaptionskip (10pt default) and the vertical space below a caption is
+\belowcaptionskip (0pt).
+
+cedille : \c{ }      dot under: \d{ }
+~  space         (Text + Math mode)
+-\! = \, ®  \:  ®  \;  ®  \,\,  =  ~  \quad \qquad
+
+word\@.  causes "end of sentence" space after .
+word.\@  prevents extra space from being added after .
+
+\[
+  |x| = \cases{ x & als $ x \ge 0 $ \cr
+               -x & als $ x \le 0 $ \cr }
+\]
+\[
+  |x| = \begin{cases}
+            \phantom{-}x & \text{als} \quad x \ge 0  \\
+                     - x & \text{als} \quad x \le 0
+        \end{cases}
+\]
+
+\dotfill \leftarrowfill \rightarrowfill \hrulefill
+
+subscript roman:  $\alpha_{\mbox{\scriptsize aap}}$
+subscript italic: $\alpha_{\hspace{-0.06em}\mbox{\scriptsize\it aap}}$
+\frac{\partial   }{\partial  }
+\frac{d   }{d t}
+n \choose k (TeX), \binom{n}k (AMSTex)
+{a \atop b}  {a \above2pt b}  {a \brace b}  {a \choose b}  {a \brack b}
+Christoffel symbol: { m \brace {i\,j}}
+Better: use \genfrac (valid only in math mode):
+  \genfrac{L}{R}{w}{s}{N}{D} = a fraction N over D,
+                               with left and right delimiters L and R.
+  The (optional) parameter w specifies the width of the fraction rule.
+  The (optional) parameter s specifies the style:
+   0 = \displaystyle,  1 = \textstyle,  2 = \scriptstyle,  3 = \scriptscriptstyle
+Examples:
+          \genfrac{}{}{}{}12           % this is \frac
+          \genfrac[]{2pt}{2}{aaa}{bbb} % brackets, small, thick
+          \genfrac(){0cm}{0}nm         % this is \dbinom
+
+\begin{subequations}
+\end{subequations}
+
+\stackrel{\text{$k$ times}}{\overbrace{x +...+ x}}
+\stackrel{\mbox{\tiny def}}{=}
+\buildrel {\rm def} \over {=\!\!=}
+\buildrel overtext \over text
+\raise-7pt\vbox{\hbox{\raise-4pt\hbox{\smash{$<$}}}\hbox{\raise5pt\hbox{\smash{$>$}}}}
+\sim    =  ~
+\simeq  =  ~_
+\equiv  =  ğ
+\approx =  ù÷
+\propto =  ÷
+\asymp  =  )(
+\cong   =  ~=
+\neq    =  |=
+\vskip10mm
+\hskip10mm
+$5\:\mbox{m}$
+$37^\circ\:\mbox{C}$
+{\it f\/}20,$-$
+{\it f\/}20,95
+\setlength{\unitlength}{1mm}
+\newtheorem{theorem}{Theorem}[chapter]
+\font\gnufont=cmr10 at 10pt
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\def\IC{\mbox{$\mathbb{C}$}}
+\def\IR{\mbox{$\mathbb{R}$}}
+\def\IZ{\mbox{$\mathbb{Z}$}}
+\def\IN{\hbox{$\mathbb{N}$}}
+\def\dC{\mbox{$C \hspace{2pt} \! \! \! \! \rule[0pt]{0.1mm}{7pt} $}}
+\def\dN{\hbox{$I \!\! N$}}
+\def\dQ{\hbox{$Q\hspace*{-1.25ex}\rule{0.15ex}{1.5ex}\hspace*{1.25ex}$}}
+\def\dR{\mbox{$I\!\! R$}}
+\def\dZ{\mbox{\boldmath $Z \! \! \! Z$\unboldmath}}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\def\Hat#1{\mathchoice{\widehat{#1}}{\widehat{#1}}
+    {#1\hskip-1.5pt\raise-0.3ex\hbox{$\scriptstyle\widehat{}$}\hskip1.5pt}
+    {#1\hskip-1.5pt\raise-0.5ex\hbox{$\scriptscriptstyle\widehat{}$}\hskip1.5pt}}
+\def\mathvar#1{\mathchoice{\mbox{\it #1}\hspace*{2.0pt}}
+                   {\mbox{\it #1}\hspace*{1.5pt}}
+                   {\mbox{\scriptsize\it #1}\hspace*{0.4pt}}
+                   {\scriptscriptstyle #1\hspace*{0.2pt}}}
+\def\Bar#1{\mathchoice{\overset{\rule[-0.5pt]{0.6em}{0.4pt}}{#1}}
+                      {\overset{\rule[-0.5pt]{0.6em}{0.4pt}}{#1}}
+                      {\overset{\rule[-0.5pt]{0.4em}{0.3pt}}{#1}}
+                      {\overset{\rule[-0.5pt]{0.32em}{0.2pt}}{#1}}}
+\def\5{\hspace{0.5pt}}
+\def\Ai{\mathop{\it Ai}\nolimits}
+\def\Bi{\mathop{\it Bi}\nolimits}
+\def\Exp#1{\mathop{\rm e}\nolimits^{#1}}
+of beter:
+\def\Exp#1{\def\strp{-}\def\strip##1##2*{\def\one{##1}}\expandafter\strip\expandafter#1*\mathop{\rm e}\nolimits^{\if\one\strp\else\hspace{0.5pt}\fi#1}}
+\def\Im{\mathop{\rm Im}\nolimits}
+\def\Re{\mathop{\rm Re}\nolimits}
+\def\arg{\mathop{\rm arg}\nolimits}
+\def\artanh{\mathop{\rm artanh}\nolimits}
+\def\cotg{\mathop{\rm cotg}\nolimits}
+
+\def\1{{\rm i}\mathchoice{\mkern0.5mu}{\mkern0.5mu}{\mkern0.2mu}{}}
+\def\e{\hspace{0.5pt}\mathrm{e}}
+\def\d{\mathrm{d}}
+\def\D{\mathrm{D}}
+
+useful abbreviations:
+
+\def\rmA{\mathrm{A}} \def\rma{\mathrm{a}} \def\bfA{\mathbf{A}} \def\bfa{\mathbf{a}}  \def\bA{\boldsymbol{A}}  \def\ba{\boldsymbol{a}}  \def\cA{\mathcal{A}} \def\ca{\mathcal{a}} \def\cbA{\boldsymbol{\mathcal{A}}} \def\sfA{\textsf{\fontshape{sl}\selectfont A}} \def\sfbA{\textsf{\fontseries{bx}\fontshape{sl}\selectfont A}}
+\def\rmB{\mathrm{B}} \def\rmb{\mathrm{b}} \def\bfB{\mathbf{B}} \def\bfb{\mathbf{b}}  \def\bB{\boldsymbol{B}}  \def\bb{\boldsymbol{b}}  \def\cB{\mathcal{B}} \def\cb{\mathcal{b}} \def\cbB{\boldsymbol{\mathcal{B}}} \def\sfB{\textsf{\fontshape{sl}\selectfont B}} \def\sfbB{\textsf{\fontseries{bx}\fontshape{sl}\selectfont B}}
+\def\rmC{\mathrm{C}} \def\rmc{\mathrm{c}} \def\bfC{\mathbf{C}} \def\bfc{\mathbf{c}}  \def\bC{\boldsymbol{C}}  \def\bc{\boldsymbol{c}}  \def\cC{\mathcal{C}} \def\cc{\mathcal{c}} \def\cbC{\boldsymbol{\mathcal{C}}} \def\sfC{\textsf{\fontshape{sl}\selectfont C}} \def\sfbC{\textsf{\fontseries{bx}\fontshape{sl}\selectfont C}}
+\def\rmD{\mathrm{D}} \def\rmd{\mathrm{d}} \def\bfD{\mathbf{D}} \def\bfd{\mathbf{d}}  \def\bD{\boldsymbol{D}}  \def\bd{\boldsymbol{d}}  \def\cD{\mathcal{D}} \def\cd{\mathcal{d}} \def\cbD{\boldsymbol{\mathcal{D}}} \def\sfD{\textsf{\fontshape{sl}\selectfont D}} \def\sfbD{\textsf{\fontseries{bx}\fontshape{sl}\selectfont D}}
+\def\rmE{\mathrm{E}} \def\rme{\mathrm{e}} \def\bfE{\mathbf{E}} \def\bfe{\mathbf{e}}  \def\bE{\boldsymbol{E}}  \def\be{\boldsymbol{e}}  \def\cE{\mathcal{E}} \def\ce{\mathcal{e}} \def\cbE{\boldsymbol{\mathcal{E}}} \def\sfE{\textsf{\fontshape{sl}\selectfont E}} \def\sfbE{\textsf{\fontseries{bx}\fontshape{sl}\selectfont E}}
+\def\rmF{\mathrm{F}} \def\rmf{\mathrm{f}} \def\bfF{\mathbf{F}} \def\bff{\mathbf{f}}  \def\bF{\boldsymbol{F}}  \def\bef{\boldsymbol{f}} \def\cF{\mathcal{F}} \def\cf{\mathcal{f}} \def\cbF{\boldsymbol{\mathcal{F}}} \def\sfF{\textsf{\fontshape{sl}\selectfont F}} \def\sfbF{\textsf{\fontseries{bx}\fontshape{sl}\selectfont F}}
+\def\rmG{\mathrm{G}} \def\rmg{\mathrm{g}} \def\bfG{\mathbf{G}} \def\bfg{\mathbf{g}}  \def\bG{\boldsymbol{G}}  \def\bg{\boldsymbol{g}}  \def\cG{\mathcal{G}} \def\cg{\mathcal{g}} \def\cbG{\boldsymbol{\mathcal{G}}} \def\sfG{\textsf{\fontshape{sl}\selectfont G}} \def\sfbG{\textsf{\fontseries{bx}\fontshape{sl}\selectfont G}}
+\def\rmH{\mathrm{H}} \def\rmh{\mathrm{h}} \def\bfH{\mathbf{H}} \def\bfh{\mathbf{h}}  \def\bH{\boldsymbol{H}}  \def\bh{\boldsymbol{h}}  \def\cH{\mathcal{H}} \def\ch{\mathcal{h}} \def\cbH{\boldsymbol{\mathcal{H}}} \def\sfH{\textsf{\fontshape{sl}\selectfont H}} \def\sfbH{\textsf{\fontseries{bx}\fontshape{sl}\selectfont H}}
+\def\rmI{\mathrm{I}} \def\rmi{\mathrm{i}} \def\bfI{\mathbf{I}} \def\bfi{\mathbf{i}}  \def\bI{\boldsymbol{I}}  \def\bi{\boldsymbol{i}}  \def\cI{\mathcal{I}} \def\ci{\mathcal{i}} \def\cbI{\boldsymbol{\mathcal{I}}} \def\sfI{\textsf{\fontshape{sl}\selectfont I}} \def\sfbI{\textsf{\fontseries{bx}\fontshape{sl}\selectfont I}}
+\def\rmJ{\mathrm{J}} \def\rmj{\mathrm{j}} \def\bfJ{\mathbf{J}} \def\bfj{\mathbf{j}}  \def\bJ{\boldsymbol{J}}  \def\bj{\boldsymbol{j}}  \def\cJ{\mathcal{J}} \def\cj{\mathcal{j}} \def\cbJ{\boldsymbol{\mathcal{J}}} \def\sfJ{\textsf{\fontshape{sl}\selectfont J}} \def\sfbJ{\textsf{\fontseries{bx}\fontshape{sl}\selectfont J}}
+\def\rmK{\mathrm{K}} \def\rmk{\mathrm{k}} \def\bfK{\mathbf{K}} \def\bfk{\mathbf{k}}  \def\bK{\boldsymbol{K}}  \def\bk{\boldsymbol{k}}  \def\cK{\mathcal{K}} \def\ck{\mathcal{k}} \def\cbK{\boldsymbol{\mathcal{K}}} \def\sfK{\textsf{\fontshape{sl}\selectfont K}} \def\sfbK{\textsf{\fontseries{bx}\fontshape{sl}\selectfont K}}
+\def\rmL{\mathrm{L}} \def\rml{\mathrm{l}} \def\bfL{\mathbf{L}} \def\bfl{\mathbf{l}}  \def\bL{\boldsymbol{L}}  \def\bl{\boldsymbol{l}}  \def\cL{\mathcal{L}} \def\cl{\mathcal{l}} \def\cbL{\boldsymbol{\mathcal{L}}} \def\sfL{\textsf{\fontshape{sl}\selectfont L}} \def\sfbL{\textsf{\fontseries{bx}\fontshape{sl}\selectfont L}}
+\def\rmM{\mathrm{M}} \def\rmm{\mathrm{m}} \def\bfM{\mathbf{M}} \def\bfm{\mathbf{m}}  \def\bM{\boldsymbol{M}}  \def\bm{\boldsymbol{m}}  \def\cM{\mathcal{M}} \def\cm{\mathcal{m}} \def\cbM{\boldsymbol{\mathcal{M}}} \def\sfM{\textsf{\fontshape{sl}\selectfont M}} \def\sfbM{\textsf{\fontseries{bx}\fontshape{sl}\selectfont M}}
+\def\rmN{\mathrm{N}} \def\rmn{\mathrm{n}} \def\bfN{\mathbf{N}} \def\bfn{\mathbf{n}}  \def\bN{\boldsymbol{N}}  \def\bn{\boldsymbol{n}}  \def\cN{\mathcal{N}} \def\cn{\mathcal{n}} \def\cbN{\boldsymbol{\mathcal{N}}} \def\sfN{\textsf{\fontshape{sl}\selectfont N}} \def\sfbN{\textsf{\fontseries{bx}\fontshape{sl}\selectfont N}}
+\def\rmO{\mathrm{O}} \def\rmo{\mathrm{o}} \def\bfO{\mathbf{O}} \def\bfo{\mathbf{o}}  \def\bO{\boldsymbol{O}}  \def\bo{\boldsymbol{o}}  \def\cO{\mathcal{O}} \def\co{\mathcal{o}} \def\cbO{\boldsymbol{\mathcal{O}}} \def\sfO{\textsf{\fontshape{sl}\selectfont O}} \def\sfbO{\textsf{\fontseries{bx}\fontshape{sl}\selectfont O}}
+\def\rmP{\mathrm{P}} \def\rmp{\mathrm{p}} \def\bfP{\mathbf{P}} \def\bfp{\mathbf{p}}  \def\bP{\boldsymbol{P}}  \def\bp{\boldsymbol{p}}  \def\cP{\mathcal{P}} \def\cp{\mathcal{p}} \def\cbP{\boldsymbol{\mathcal{P}}} \def\sfP{\textsf{\fontshape{sl}\selectfont P}} \def\sfbP{\textsf{\fontseries{bx}\fontshape{sl}\selectfont P}}
+\def\rmQ{\mathrm{Q}} \def\rmq{\mathrm{q}} \def\bfQ{\mathbf{Q}} \def\bfq{\mathbf{q}}  \def\bQ{\boldsymbol{Q}}  \def\bq{\boldsymbol{q}}  \def\cQ{\mathcal{Q}} \def\cq{\mathcal{q}} \def\cbQ{\boldsymbol{\mathcal{Q}}} \def\sfQ{\textsf{\fontshape{sl}\selectfont Q}} \def\sfbQ{\textsf{\fontseries{bx}\fontshape{sl}\selectfont Q}}
+\def\rmR{\mathrm{R}} \def\rmr{\mathrm{r}} \def\bfR{\mathbf{R}} \def\bfr{\mathbf{r}}  \def\bR{\boldsymbol{R}}  \def\br{\boldsymbol{r}}  \def\cR{\mathcal{R}} \def\car{\mathcal{r}}\def\cbR{\boldsymbol{\mathcal{R}}} \def\sfR{\textsf{\fontshape{sl}\selectfont R}} \def\sfbR{\textsf{\fontseries{bx}\fontshape{sl}\selectfont R}}
+\def\rmS{\mathrm{S}} \def\rms{\mathrm{s}} \def\bfS{\mathbf{S}} \def\bfs{\mathbf{s}}  \def\bS{\boldsymbol{S}}  \def\bs{\boldsymbol{s}}  \def\cS{\mathcal{S}} \def\cs{\mathcal{s}} \def\cbS{\boldsymbol{\mathcal{S}}} \def\sfS{\textsf{\fontshape{sl}\selectfont S}} \def\sfbS{\textsf{\fontseries{bx}\fontshape{sl}\selectfont S}}
+\def\rmT{\mathrm{T}} \def\rmt{\mathrm{t}} \def\bfT{\mathbf{T}} \def\bft{\mathbf{t}}  \def\bT{\boldsymbol{T}}  \def\bt{\boldsymbol{t}}  \def\cT{\mathcal{T}} \def\ct{\mathcal{t}} \def\cbT{\boldsymbol{\mathcal{T}}} \def\sfT{\textsf{\fontshape{sl}\selectfont T}} \def\sfbT{\textsf{\fontseries{bx}\fontshape{sl}\selectfont T}}
+\def\rmU{\mathrm{U}} \def\rmu{\mathrm{u}} \def\bfU{\mathbf{U}} \def\bfu{\mathbf{u}}  \def\bU{\boldsymbol{U}}  \def\bu{\boldsymbol{u}}  \def\cU{\mathcal{U}} \def\cu{\mathcal{u}} \def\cbU{\boldsymbol{\mathcal{U}}} \def\sfU{\textsf{\fontshape{sl}\selectfont U}} \def\sfbU{\textsf{\fontseries{bx}\fontshape{sl}\selectfont U}}
+\def\rmV{\mathrm{V}} \def\rmv{\mathrm{v}} \def\bfV{\mathbf{V}} \def\bfv{\mathbf{v}}  \def\bV{\boldsymbol{V}}  \def\bv{\boldsymbol{v}}  \def\cV{\mathcal{V}} \def\cv{\mathcal{v}} \def\cbV{\boldsymbol{\mathcal{V}}} \def\sfV{\textsf{\fontshape{sl}\selectfont V}} \def\sfbV{\textsf{\fontseries{bx}\fontshape{sl}\selectfont V}}
+\def\rmW{\mathrm{W}} \def\rmw{\mathrm{w}} \def\bfW{\mathbf{W}} \def\bfw{\mathbf{w}}  \def\bW{\boldsymbol{W}}  \def\bw{\boldsymbol{w}}  \def\cW{\mathcal{W}} \def\cw{\mathcal{w}} \def\cbW{\boldsymbol{\mathcal{W}}} \def\sfW{\textsf{\fontshape{sl}\selectfont W}} \def\sfbW{\textsf{\fontseries{bx}\fontshape{sl}\selectfont W}}
+\def\rmX{\mathrm{X}} \def\rmx{\mathrm{x}} \def\bfX{\mathbf{X}} \def\bfx{\mathbf{x}}  \def\bX{\boldsymbol{X}}  \def\bx{\boldsymbol{x}}  \def\cX{\mathcal{X}} \def\cx{\mathcal{x}} \def\cbX{\boldsymbol{\mathcal{X}}} \def\sfX{\textsf{\fontshape{sl}\selectfont X}} \def\sfbX{\textsf{\fontseries{bx}\fontshape{sl}\selectfont X}}
+\def\rmY{\mathrm{Y}} \def\rmy{\mathrm{y}} \def\bfY{\mathbf{Y}} \def\bfy{\mathbf{y}}  \def\bY{\boldsymbol{Y}}  \def\by{\boldsymbol{y}}  \def\cY{\mathcal{Y}} \def\cy{\mathcal{y}} \def\cbY{\boldsymbol{\mathcal{Y}}} \def\sfY{\textsf{\fontshape{sl}\selectfont Y}} \def\sfbY{\textsf{\fontseries{bx}\fontshape{sl}\selectfont Y}}
+\def\rmZ{\mathrm{Z}} \def\rmz{\mathrm{z}} \def\bfZ{\mathbf{Z}} \def\bfz{\mathbf{z}}  \def\bZ{\boldsymbol{Z}}  \def\bz{\boldsymbol{z}}  \def\cZ{\mathcal{Z}} \def\cz{\mathcal{z}} \def\cbZ{\boldsymbol{\mathcal{Z}}} \def\sfZ{\textsf{\fontshape{sl}\selectfont Z}} \def\sfbZ{\textsf{\fontseries{bx}\fontshape{sl}\selectfont Z}}
+
+\def\beps{\boldsymbol{\varepsilon}}
+\def\bell{\boldsymbol{\ell}}
+\def\balpha{\boldsymbol{\alpha}}
+\def\bbeta{\boldsymbol{\beta}}
+\def\bgamma{\boldsymbol{\gamma}}
+\def\bGamma{\boldsymbol{\Gamma}}
+\def\bdelta{\boldsymbol{\delta}}
+\def\bDelta{\boldsymbol{\Delta}}
+\def\bepsilon{\boldsymbol{\epsilon}}
+\def\bvarepsilon{\boldsymbol{\varepsilon}}
+\def\bzeta{\boldsymbol{\zeta}}
+\def\bfeta{\boldsymbol{\eta}}
+\def\btheta{\boldsymbol{\theta}}
+\def\bvartheta{\boldsymbol{\vartheta}}
+\def\bTheta{\boldsymbol{\Theta}}
+\def\biota{\boldsymbol{\iota}}
+\def\bkappa{\boldsymbol{\kappa}}
+\def\blambda{\boldsymbol{\lambda}}
+\def\bLambda{\boldsymbol{\Lambda}}
+\def\bmu{\boldsymbol{\mu}}
+\def\bnu{\boldsymbol{\nu}}
+\def\bxi{\boldsymbol{\xi}}
+\def\bXi{\boldsymbol{\Xi}}
+\def\bpi{\boldsymbol{\pi}}
+\def\bvarpi{\boldsymbol{\varpi}}
+\def\bPi{\boldsymbol{\Pi}}
+\def\brho{\boldsymbol{\rho}}
+\def\bvarrho{\boldsymbol{\varrho}}
+\def\bsigma{\boldsymbol{\sigma}}
+\def\bvarsigma{\boldsymbol{\varsigma}}
+\def\bSigma{\boldsymbol{\Sigma}}
+\def\btau{\boldsymbol{\tau}}
+\def\bupsilon{\boldsymbol{\upsilon}}
+\def\bUpsilon{\boldsymbol{\Upsilon}}
+\def\bphi{\boldsymbol{\phi}}
+\def\bvarphi{\boldsymbol{\varphi}}
+\def\bPhi{\boldsymbol{\Phi}}
+\def\bchi{\boldsymbol{\chi}}
+\def\bpsi{\boldsymbol{\psi}}
+\def\bPsi{\boldsymbol{\Psi}}
+\def\bom{\boldsymbol{\omega}}
+\def\bOm{\boldsymbol{\Omega}}
+\def\bzero{\mathbf{0}}
+
+\def\bell{\boldsymbol{\ell}}
+
+\def\eps{\varepsilon}
+
+\def\dfrac#1#2{{\displaystyle \frac{#1}{#2}}}
+\def\dis{\displaystyle}
+\def\convol#1#2{#1\mathrel{\makebox[0.1em][c]{$\ast$}}#2}
+\def\cross{\mkern-4mu\times\mkern-4mu}
+\def\dot#1{\stackrel{\hbox{\bf .}}{#1}}
+
+\def\ea{\emph{et al.\@\xspace}}
+\def\ie{\emph{i.e.,\xspace}}
+\def\eg{\emph{e.g.,\xspace}}
+\def\etc{\emph{etc.\@\xspace}}
+
+florin f:
+\def\ff#1,#2#3 {\def\strp{-}\def\test{#2}{\it\kern.11em f\kern.24em}#1,\ifx\test\strp$-$\else#2\fi#3 }
+
+\def\bigO#1{\hbox{$\mathord{\bigcirc}$}\hskip-8pt\hbox{\footnotesize{}#1}}
+
+\def\bgnl#1{\begin{list}{}{\leftmargin=#1}}
+\def\endl{\end{list}}
+
+\def\ils#1{\il_{~\,{#1}}\!\!\!\il}
+\def\ils#1{\il_{~\,{\makebox[0pt][c]{$#1$}}}\!\!\!\il}
+\def\ilv#1{\il\!\!\!\il_{#1}\!\!\!\il}
+\def\ilv#1{\il\!\!\!\il_{\makebox[0pt][c]{$#1$}}\!\!\!\il}
+\def\il{\int\limits}
+\def\Cdot{\mbox{\large\mbox{$\cdot\mkern1mu$}}}
+\def\inner{\mkern1.5mu\raise-0.30ex\hbox{\LARGE\mbox{$\cdot$}}\mkern2.0mu}
+\def\innernabla{\mkern1.5mu\raise-0.30ex\hbox{\LARGE\mbox{$\cdot$}}\mkern+0.5mu\nabla}
+\def\nablainner{\nabla\mkern-0.5mu\raise-0.30ex\hbox{\LARGE\mbox{$\cdot$}}\mkern1.5mu}
+\def\nablaouter{\nabla\mkern-0.5mu\hbox{\mbox{$\boldsymbol{\times}$}}\mkern0.5mu}
+\def\innertensor{\mkern1.5mu \hbox{\bf:} \mkern1.5mu}
+\def\inprod#1#2{\Bigl[#1\mkern-3mu\mathrel,\mkern-3mu#2\Bigr]}
+\def\inprod#1#2{\bigl\langle#1\mkern-3mu\mathrel,\mkern-3mu#2\bigr\rangle}
+\def\isdef{\buildrel {\rm def} \over {=\!\!=}}
+\def\la{\langle}
+\def\os{\underline}
+\def\oversetbrace#1#2{\mathop{\overbrace{#1}}\limits^{#2}}
+\def\undersetbrace#1#2{\mathop{\underbrace{#1}}\limits_{#2}}
+
+\def\Jm{J_m}
+\def\Jpm{J'_{\kern0.1pt\raise1.5pt\hbox{$\scriptstyle m$}}}
+
+\def\pad#1#2{\def\leeg{}\def\test{#1}\frac{\partial\ifx\test\leeg{\,}\else#1\fi}{\partial #2}}
+\def\tpad#1#2{\def\leeg{}\def\test{#1}\tfrac{\partial\ifx\test\leeg{\,}\else#1\fi}{\partial #2}}
+\def\Pad#1#2{\def\leeg{}\def\test{#1}\dfrac{\partial\ifx\test\leeg{\,}\else#1\fi}{\partial #2}}
+\def\padd#1#2{\def\leeg{}\def\test{#1}\frac{\partial^2\ifx\test\leeg{\,}\else#1\fi}{\partial #2^2}}
+\def\tpadd#1#2{\def\leeg{}\def\test{#1}\tfrac{\partial^2\ifx\test\leeg{\,}\else#1\fi}{\partial #2^2}}
+\def\Padd#1#2{\def\leeg{}\def\test{#1}\dfrac{\partial^2\ifx\test\leeg{\,}\else#1\fi}{\partial #2^2}}
+\def\padxy#1#2#3{\def\leeg{}\def\test{#1}\frac{\partial^2\ifx\test\leeg{\,}\else#1\fi}{\partial #2 \partial #3}}
+\def\tpadxy#1#2#3{\def\leeg{}\def\test{#1}\tfrac{\partial^2\ifx\test\leeg{\,}\else#1\fi}{\partial #2 \partial #3}}
+\def\Padxy#1#2#3{\def\leeg{}\def\test{#1}\dfrac{\partial^2\ifx\test\leeg{\,}\else#1\fi}{\partial #2 \partial #3}}
+\def\nd#1#2{\def\leeg{}\def\test{#1}\frac{\d\ifx\test\leeg{\,}\else#1\fi}{\d #2}}
+\def\Nd#1#2{\def\leeg{}\def\test{#1}\dfrac{\d\ifx\test\leeg{\,}\else#1\fi}{\d #2}}
+\def\tnd#1#2{\def\leeg{}\def\test{#1}\tfrac{\d\ifx\test\leeg{\,}\else#1\fi}{\d #2}}
+\def\ndd#1#2{\def\leeg{}\def\test{#1}\frac{\d^2\ifx\test\leeg{\,}\else#1\fi}{\d #2^2}}
+\def\Ndd#1#2{\def\leeg{}\def\test{#1}\dfrac{\d^2\ifx\test\leeg{\,}\else#1\fi}{\d #2^2}}
+\def\tndd#1#2{\def\leeg{}\def\test{#1}\tfrac{\d^2\ifx\test\leeg{\,}\else#1\fi}{\d #2^2}}
+
+\def\pa{\partial}
+\def\pr{{\ifmmode\rightarrow\else$\rightarrow$\fi}}
+\def\qqquad{\hskip3em\relax}
+\def\ra{\rangle}
+\def\sign{\mathop{\rm sign}\nolimits}
+\def\ster{\mbox{\boldmath$\ast$\unboldmath}}
+\def\sub#1{_{\mbox{\scriptsize #1}}}
+\def\tfrac#1#2{{\textstyle \frac{#1}{#2}}}
+\def\up#1{^{\mbox{\scriptsize #1}}}
+\def\varp{\varphi}
+\def\vart{\vartheta}
+not necessary with amsmath:
+\def\matrix#1{\let\\=\cr
+              \null\,\vcenter{\normalbaselines\mathsurround=0pt
+              \ialign{\hfil$##$\hfil&&\quad\hfil$##$\hfil\crcr
+              \mathstrut\crcr\noalign{\kern-\baselineskip}
+              #1\crcr\mathstrut\crcr\noalign{\kern-\baselineskip}}}\,}
+\def\pmatrix#1{\left(\matrix{#1}\right)}
+\def\bordermatrix#1{\begingroup \mathsurround=0pt \setbox0\vbox{%
+              \def\\{\crcr\noalign{\kern2pt\global\let\cr\endline}}%
+              \ialign{$##$\hfil\kern2pt\kern8.75pt&\thinspace\hfil$##$\hfil
+              &&\quad\hfil$##$\hfil\crcr
+              \omit\strut\hfil\crcr\noalign{\kern-\baselineskip}%
+              #1\crcr\omit\strut\cr}}%
+              \setbox2\vbox{\unvcopy0\global\setbox1\lastbox}%
+              \setbox2\hbox{\unhbox1\unskip\global\setbox1\lastbox}%
+              \setbox2\hbox{$\kern\wd1\kern-8.75pt\left(\kern-\wd1
+              \global\setbox1\vbox{\box1\kern2pt}%
+              \vcenter{\kern-\ht1\unvbox0\kern-\baselineskip}\,\right)$}%
+              \null\;\vbox{\kern\ht1\box2}\endgroup}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  V = \{x \in \dR^n \:|\: condition on x \},
+  V = \bigl\{x \in \dR^n \:\big|\: condition on x \bigr\},
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+contour integrals: along a
+  line   : \oint
+           \ointop
+  surface: \int\mkern-15mu\int\mkern-24.3mu\bigcirc\mkern5mu f(x)\,\d x
+           \int\mkern-15mu\int\mkern-24.3mu\bigcirc\mkern-6mu
+                            \rule[-1.9ex]{0pt}{10pt}_S \mkern3mu f(x)\,\d x
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+use of \ifx:
+ \def\poo#1#2{\def\a{no}\def\b{#1 and #2}\def\t{#1}\ifx\t\empty\a\else\b\fi}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\leftskip  : left  margin
+\rightskip : right margin
+
+hangindent:  in a paragraph
+\hangindent d true cm     : d>0 from left, d<0 from right
+\hangafter  n             : n>0 after n lines, n<0 the first n lines
+
+\parshape=n indent_1 length_1 .... indent_n length_n
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ad hoc line up:
+\makebox[0pt][l]{tel.:}\phantom{fax.: }020 - 123 4567 \\
+fax.: 020 - 123 9876
+and:
+\leftline{Ape Nuts}\\
+\leftline{\phantom{Ape} Mice}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+bmp graphics:
+\documentclass[11pt]{article}
+\usepackage{graphics}
+\begin{document}
+    \includegraphics[88.2mm, 134.7mm]{picture.bmp}
+\end{document}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+postscript-figure:
+\documentclass[10pt]{article}
+\usepackage{epsf,psfrag,psfig}              Note: epsf is able to handle gzipped
+\begin{document}                            eps-files, psfig not
+\begin{figure}[htb]
+  %\psfragdebugon (optional)
+  \psfrag{tag}[posn={tbBc}+{lrc}][psposn={tbBc}+{lrc}][scale][rot]{replacement}
+              default posn: no argument = Bl (baseline left)
+                            []          = cc (center)
+  \epsfxsize=14cm
+  \hspace{30mm} \epsfbox{picture.eps}
+  \caption{\protect\parbox[t]{6 cm}{Example}\label{fp}}
+\end{figure}
+or: \psfig{file=,figure=,height=,width=,
+		bbllx=,bblly=,bburx=,bbury=,
+		rheight=,rwidth=,clip=,angle=,silent=}
+or:
+   \centerline{\psfig{figure=.....eps,width=6cm}}
+or:
+\vadjust{\vskip5mm
+                  \epsfxsize=5cm
+                  \centerline{\epsfbox{tbf.eps}}
+                  \centerline{Figure 1. Caapties \hskip1cm}
+         \vskip5mm}
+\end{document}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+pstricks:
+\usepackage{pstricks}
+\newgray{verylightgray}{0.95}
+\psset{..}
+\begin{pspicture}(0,0)(16,7)
+      \psframe[linestyle=..,fillstyle=hlines](4.5,2)(9.5,4.9)
+      \pscustom[linestyle=..,fillstyle=..,fillcolor=..]{
+      \psline(4,3.5)(4,1)(10,1)(10,3.5)
+      \pscurve[liftpen=0](9.75,3.55)(9.5,3.5)
+      }
+      \psline[linewidth=1pt]{->}(4.25,2.75)(4.25,3.85)
+      \uput[u,d,l,r](7,1.0){\psovalbox*[fillcolor=..]{text}}
+      \uput[u,d,l,r](7,1.0){\psframebox*[fillcolor=..]{text}}
+\end{pspicture}
+
+family tree:
+\usepackage{pst-all}
+\newcommand{\XX}[1]{\Tr{\psframebox{\rule{0pt}{9pt}#1}}}
+\renewcommand{\psedge}{\ncangle}
+\psset{angleB=90,angleA=-90,levelsep=36pt,armB=14pt}
+\pstree{\XX{grandfather}}
+       {\pstree{\XX{uncle}}{\XX{cousin}}
+        \pstree{\XX{father}}
+               {\pstree{\XX{brother}}{\XX{niece}}
+                \pstree{\XX{Me}}
+                       {\pstree{\XX{sun}}
+                               {\XX{grandsun}}
+                       }
+               }
+       }
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+make index:
+
+\documentclass[10pt]{article}
+\usepackage{makeidx}
+  ..............
+\makeindex
+\begin{document}
+ .............
+\printindex
+\end{document}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+equations with a connecting line
+\begin{align}
+   f(x) & = 0   \\[-\belowdisplayskip]
+  \intertext{for \vskip-0.5\abovedisplayskip}
+   x & > 0
+\end{align}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+counters:
+\newcounter{newctr}{[oldctr]}
+\setcounter{ctr}{val}
+\addcounter{ctr}{val}
+\addtocounter{ctr}{val}
+\value{ctr}
+\stepcounter{ctr}
+\refstepcounter{ctr}   = \stepcounter but also defines current \ref-value
+                         to be the text generated by the command \thectr
+
+arabic{ctr},                   roman{ctr}, Roman{ctr},
+alph{ctr},    Alph{ctr},       fnsymbol{ctr},       \thectr
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+renumber equation-numbers:
+%
+\addtocounter{equation}{-1}
+\renewcommand{\theequation}{\arabic{equation}'}
+\begin{equation}
+   y=\sin x
+\end{equation}
+\renewcommand{\theequation}{\arabic{equation}}
+%
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\refstepcounter{equation}
+\[
+  \label{aap}
+  f(x), g(x), ...
+   \eqno{(\arabic{equation}\/{\it a,\! b})\hskip-0.5pt}%
+\]
+or:
+\refstepcounter{equation}% sometimes .......
+\begin{equation}
+  f(x), g(x), ...
+ \label{fg}
+ \tag{$\arabic{equation}\/{\it a,\! b}$}           % note the $
+\end{equation}
+but in the second case referring to a or b separately is not possible
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Colors:
+
+\pagecolor{yellow}
+\colorbox{color}{text}
+
+\definecolor{GreenYellow   }{cmyk}{0.15,0   ,0.69,0   }
+\definecolor{Yellow        }{cmyk}{0   ,0   ,1   ,0   }
+\definecolor{Goldenrod     }{cmyk}{0   ,0.10,0.84,0   }
+\definecolor{Dandelion     }{cmyk}{0   ,0.29,0.84,0   }
+\definecolor{Apricot       }{cmyk}{0   ,0.32,0.52,0   }
+\definecolor{Peach         }{cmyk}{0   ,0.50,0.70,0   }
+\definecolor{Melon         }{cmyk}{0   ,0.46,0.50,0   }
+\definecolor{YellowOrange  }{cmyk}{0   ,0.42,1   ,0   }
+\definecolor{Orange        }{cmyk}{0   ,0.61,0.87,0   }
+\definecolor{BurntOrange   }{cmyk}{0   ,0.51,1   ,0   }
+\definecolor{Bittersweet   }{cmyk}{0   ,0.75,1   ,0.24}
+\definecolor{RedOrange     }{cmyk}{0   ,0.77,0.87,0   }
+\definecolor{Mahogany      }{cmyk}{0   ,0.85,0.87,0.35}
+\definecolor{Maroon        }{cmyk}{0   ,0.87,0.68,0.32}
+\definecolor{BrickRed      }{cmyk}{0   ,0.89,0.94,0.28}
+\definecolor{Red           }{cmyk}{0   ,1   ,1   ,0   }
+\definecolor{OrangeRed     }{cmyk}{0   ,1   ,0.50,0   }
+\definecolor{RubineRed     }{cmyk}{0   ,1   ,0.13,0   }
+\definecolor{WildStrawberry}{cmyk}{0   ,0.96,0.39,0   }
+\definecolor{CarnationPink }{cmyk}{0   ,0.63,0   ,0   }
+\definecolor{Salmon        }{cmyk}{0   ,0.53,0.38,0   }
+\definecolor{Magenta       }{cmyk}{0   ,1   ,0   ,0   }
+\definecolor{VioletRed     }{cmyk}{0   ,0.81,0   ,0   }
+\definecolor{Rhodamine     }{cmyk}{0   ,0.82,0   ,0   }
+\definecolor{Mulberry      }{cmyk}{0.34,0.90,0   ,0.02}
+\definecolor{RedViolet     }{cmyk}{0.07,0.90,0   ,0.34}
+\definecolor{Fuchsia       }{cmyk}{0.47,0.91,0   ,0.08}
+\definecolor{Lavender      }{cmyk}{0   ,0.48,0   ,0   }
+\definecolor{Thistle       }{cmyk}{0.12,0.59,0   ,0   }
+\definecolor{Orchid        }{cmyk}{0.32,0.64,0   ,0   }
+\definecolor{DarkOrchid    }{cmyk}{0.40,0.80,0.20,0   }
+\definecolor{Purple        }{cmyk}{0.45,0.86,0   ,0   }
+\definecolor{Plum          }{cmyk}{0.50,1   ,0   ,0   }
+\definecolor{Violet        }{cmyk}{0.79,0.88,0   ,0   }
+\definecolor{RoyalPurple   }{cmyk}{0.75,0.90,0   ,0   }
+\definecolor{BlueViolet    }{cmyk}{0.86,0.91,0   ,0.04}
+\definecolor{Periwinkle    }{cmyk}{0.57,0.55,0   ,0   }
+\definecolor{CadetBlue     }{cmyk}{0.62,0.57,0.23,0   }
+\definecolor{CornflowerBlue}{cmyk}{0.65,0.13,0   ,0   }
+\definecolor{MidnightBlue  }{cmyk}{0.98,0.13,0   ,0.43}
+\definecolor{NavyBlue      }{cmyk}{0.94,0.54,0   ,0   }
+\definecolor{RoyalBlue     }{cmyk}{1   ,0.50,0   ,0   }
+\definecolor{Blue          }{cmyk}{1   ,1   ,0   ,0   }
+\definecolor{Cerulean      }{cmyk}{0.94,0.11,0   ,0   }
+\definecolor{Cyan          }{cmyk}{1   ,0   ,0   ,0   }
+\definecolor{ProcessBlue   }{cmyk}{0.96,0   ,0   ,0   }
+\definecolor{SkyBlue       }{cmyk}{0.62,0   ,0.12,0   }
+\definecolor{Turquoise     }{cmyk}{0.85,0   ,0.20,0   }
+\definecolor{TealBlue      }{cmyk}{0.86,0   ,0.34,0.02}
+\definecolor{Aquamarine    }{cmyk}{0.82,0   ,0.30,0   }
+\definecolor{BlueGreen     }{cmyk}{0.85,0   ,0.33,0   }
+\definecolor{Emerald       }{cmyk}{1   ,0   ,0.50,0   }
+\definecolor{JungleGreen   }{cmyk}{0.99,0   ,0.52,0   }
+\definecolor{SeaGreen      }{cmyk}{0.69,0   ,0.50,0   }
+\definecolor{Green         }{cmyk}{1   ,0   ,1   ,0   }
+\definecolor{ForestGreen   }{cmyk}{0.91,0   ,0.88,0.12}
+\definecolor{PineGreen     }{cmyk}{0.92,0   ,0.59,0.25}
+\definecolor{LimeGreen     }{cmyk}{0.50,0   ,1   ,0   }
+\definecolor{YellowGreen   }{cmyk}{0.44,0   ,0.74,0   }
+\definecolor{SpringGreen   }{cmyk}{0.26,0   ,0.76,0   }
+\definecolor{OliveGreen    }{cmyk}{0.64,0   ,0.95,0.40}
+\definecolor{RawSienna     }{cmyk}{0   ,0.72,1   ,0.45}
+\definecolor{Sepia         }{cmyk}{0   ,0.83,1   ,0.70}
+\definecolor{Brown         }{cmyk}{0   ,0.81,1   ,0.60}
+\definecolor{Tan           }{cmyk}{0.14,0.42,0.56,0   }
+\definecolor{Gray          }{cmyk}{0   ,0   ,0   ,0.50}
+\definecolor{Black         }{cmyk}{0   ,0   ,0   ,1   }
+\definecolor{White         }{cmyk}{0   ,0   ,0   ,0   }
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+                       <<<<ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+            \small   \footnotesize   \scriptsize   \tiny
+\normalsize
+            \large   \Large    \LARGE     \huge    \Huge
+                       ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ>>>>
+
+\rm roman         \it italic         \sc smal caps
+\em emphatic      \sl slanted        \tt typewriter
+\bf bold          \sf sans serif
+
+math mode:   \mit    \cal   \boldmath
+             \displaystyle  \textstyle  \scriptstyle  \scriptscriptstyle
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\rule[raise]{wdth}{hght}
+\parbox[t]{wdth}{txt}
+\makebox[wdth][pos]{text}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+{\topsep5pt
+\begin{center}
+   variable surrounding vertical space
+\end{center}}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\begin{figure}[!htb/H]
+  \begin{center}
+    \begin{minipage}{150\unitlength}
+      \begin{picture}(150,60)(0,0)
+       \put(0,0){\framebox(150,60)}
+      \end{picture}
+      \setbox0\hbox{Text for the figure}
+      \caption{\protect\parbox[t]{\wd0}{\box0}}
+      \label{f6.12}
+    \end{minipage}
+  \end{center}
+\end{figure}
+\begin{figure}[!htb/H]
+     \mbox{\hskip 12mm
+     \subfigure[Rime ice\label{rime}]{\psfig{file=rime.eps,height=18mm}}
+     \qquad
+     \subfigure[Glaze ice\label{glaze}]{\psfig{file=glaze.eps,height=18mm}}}
+     \setbox0\hbox{Main types of ice accretion.}
+     \caption{\protect\parbox[t]{\wd0}{\box0}}
+     \label{iceacc}
+\end{figure}
+\begin{wrapfigure}[height of figure in lines]{l|r}[overhang]{width}
+      ....................
+      \caption{Flow in a bend.} \label{f6.2}
+\end{wrapfigure}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+in box:
+\begin{equation}
+\hspace{-\fboxsep}
+\fbox{$\displaystyle
+   ............
+      $} \label{aap}
+\end{equation}
+\[
+\hspace{-\fboxsep}
+\fbox{$\displaystyle
+   ............
+      $}
+\]
+\begin{equation}
+\hspace{-\fboxsep}\hspace{-\arraycolsep}
+\fbox{$
+ \begin{array}{rcl}
+    {\displaystyle ..........} & {\displaystyle .........} \\[2mm]
+    {\displaystyle ..........} & {\displaystyle .........}
+ \end{array}
+     $} \label{aap}
+\end{equation}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+decimal align in array or tabular:
+
+\usepackage{dcolumn}
+\newcolumntype{.}{D{.}{.}{-1}}
+\newcolumntype{d}[1]{D{.}{.}{#1}}
+
+\begin{array}{.}
+10.1 \\ 2.09 \\ 4.2 \\ 6.7 \\ 10.4
+\end{array}
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+amsmath environments: no page breaks, or:
+                      global  :  \allowdisplaybreaks
+                      local   :  \displaybreak
+                      optional: {\allowdisplaybreaks
+                                 \begin{..}
+                                  ...
+                                 \end{..}}
+
+\begin{multline}
+   a+b=c\\
+   \shoveright{\text{right text}} \\
+   \shoveleft{\text{left text}}   \\
+   x+y=z
+\end{multline}
+
+\begin{equation}
+  \begin{split} % tag control by amsmath option
+    a+b & = c+d
+        & = p+q
+  \end{split}
+\end{equation}
+
+\begin{equation}
+ \begin{aligned}[{c/t/b}]
+    a+b & = c+d
+        & = p+q
+ \end{aligned}
+\end{equation}
+
+\begin{align}
+     aap & = noot //
+         & = mies
+\end{align}
+
+\begin{alignat}{2} % 2 = number of groups
+    a & = b    &    c & = d \\
+    p & = q    &    r & = s
+\end{alignat}
+\begin{alignat}{2}     % left-line out each column.
+   & a   && = b     \\
+   & pqr && = s
+\end{alignat}
+\begin{alignat}{4}
+   & a   && = b \hskip20mm && b && = c \\
+   & pqr && = s            && b && = c
+\end{alignat}
+\begin{xalignat}{2}     % xalignat for separated columns
+      a    & = b     & pqr  & = s   \\
+      pqr  & = s     & pqr  & = s
+\end{xalignat}
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+1 number for all equations
+\begin{equation}
+\left.
+\begin{minipage}[]{9cm}
+\[
+ \hspace{-\mathindent}
+ \begin{array}{@{}l@{\ }l@{\ }r@{\ }l}
+   ..... & ..... & ..... &= ..... \\ [3mm]
+   ..... & ..... & ..... .
+ \end{array}
+\]
+\end{minipage}
+\right\}
+\end{equation}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+1 number for 1 equation over 2 lines
+\begin{eqnarray}
+ \lefteqn{....~\mbox{and}}
+          \hspace{23mm} \nonumber \\[-\baselineskip]
+  &&\\[-\jot]
+  && .......      . \nonumber
+\end{eqnarray}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\begin{equation}
+  \left(
+        \begin{array}{cc}
+         a  &  b   \\
+         c  &  d
+        \end{array}
+  \right)
+  \left(
+        \begin{array}{c}
+         x  \\
+         y
+        \end{array}
+  \right)
+         =
+  \left(
+        \begin{array}{c}
+         p  \\
+         q
+        \end{array}
+  \right).    \label{5.79}
+\end{equation}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+break equation:
+\begin{eqnarray}
+ \lefteqn{ ............} \hspace{20mm}  \nonumber \\
+ && .....................   \label{1.23}
+\end{eqnarray}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+give equation another label
+\begin{equation} \tag{\ref{2.6}}
+                 ........................
+\end{equation}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\[
+ \begin{array}{@{}l@{\ }l@{\ }r@{\ }l}
+   ..... & ..... & ..... &= ..... \\ [3mm]
+   ..... & ..... & ..... .
+ \end{array}
+\]
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\begin{center}
+\begin{tabular}{|@{\quad [ }r@{\,--\,}l@{ ] \hfill}|r@{\quad}|}\hline
+    \multicolumn{2}{|c|}{some heading}&\multicolumn{1}{c|}{heading 2}\\
+    \hline
+     7000 &  7500 &  1  \rule[0pt]{0pt}{12pt}\\
+     7500 &  8000 & 19  \rule[-5pt]{0pt}{17pt}\\
+     \hline
+\end{tabular}
+\end{center}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\def\pnt#1#2{\def\n{&&}\def\w{#1&:&#2}\def\t{#2}\ifx\t\empty\n\else\w\fi}
+\def\blokje{|l@{\ }c@{\ }r|}
+\begin{center}
+ \begin{tabular}
+       {\blokje \blokje \blokje \blokje} \hline
+        \pnt{1a}{4}&\pnt{2a}{3}&\pnt{3a}{1}&\pnt{4a}{4}\\ \hline
+        \pnt{1b}{4}&\pnt{2b}{4}&\pnt{3b}{3}&\pnt{4b}{4}\\ \hline
+        \pnt{1c}{2}&\pnt{2c}{3}&\pnt{3c}{3}&\pnt{4c}{2}\\ \hline
+        \pnt{1d}{} &\pnt{2d}{} &\pnt{3d}{3}&\pnt{4d}{} \\ \hline
+ \end{tabular}\\[5mm]
+\end{center}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+tabularx environment:
+line fill left:\\
+\begin{tabularx}{12.7cm}{|X|X|X|}
+ \hline
+ aap&noot&mies\\
+ wim&zus &jet \\
+ \hline
+\end{tabularx}\\ \\
+left, middle full width:\\
+\begin{tabularx}{12.7cm}{|l|XlX|l|}
+ \hline
+ ape && nut && mice\\
+ tim && sis && jet \\
+ \hline
+\end{tabularx}\\ \\
+Center everything\\
+\begin{tabularx}{12.7cm}{|XcX|XcX|XcX|}
+ \hline
+ &aap&&&noot&&&mies&\\
+ &wim&&&zus &&&jet &\\
+ \hline
+\end{tabularx}\\ \\
+All left:\\
+\begin{tabularx}{12.7cm}{|XlX|XlX|XlX|}
+ \hline
+ &aap&&&noot&&&mies&\\
+ &wim&&&zus &&&jet &\\
+ \hline
+\end{tabularx}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\topsep0.5ex
+\begin{tabbing}
+   \hspace*{20mm}\=\hspace*{20mm}\=\kill
+    wim \> zus  \> jet \\
+    \> wim\' zus \> jet
+\end{tabbing}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+"Leslie matrix"   = \bordermatrix
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+matrix styles:
+%style 0: in line:
+$\bigl( { a \atop p} {b atop q} {c \atop r} \bigr)$
+%style 1
+\begin{tabbing}
+\hspace{\mathindent} \= \kill
+\>
+$   N\;=\; \bordermatrix{_{\mbox{\tiny van}}\setminus^{\mbox{\tiny naar}}
+            & \mbox{jong} & \mbox{volwassen}  & \mbox{oud} \cr
+              \mbox{jong} & 1 & 2 & 0 \cr
+              \mbox{volwassen} & 1 & 0 & 2 \cr
+              \mbox{oud} & 0 & 1 & 1 }
+$\\[5mm]
+\>
+$    N=\left(
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right)
+$\\[5mm]
+\>
+$    N= \pmatrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+$\\[5mm]
+\>
+$    N= \begin{pmatrix}
+                 1 & 2 & 0 \\
+                 1 & 0 & 2 \\
+                 0 & 1 & 1 \\
+        \end{pmatrix}
+$\\[5mm]
+$    N= \begin{bmatrix}
+                 1 & 2 & 0 \\
+                 1 & 0 & 2 \\
+                 0 & 1 & 1 \\
+        \end{bmatrix}
+$\\[5mm]
+\>
+$    N=\left(
+              \begin{array}{ccc}
+                 1 & 2 & 0 \\
+                 1 & 0 & 2 \\
+                 0 & 1 & 1
+              \end{array}
+         \right)
+$
+\end{tabbing}
+%style 2
+$   N\;=\; \bordermatrix{_{\mbox{\tiny van}}\setminus^{\mbox{\tiny naar}}
+            & \mbox{jong} & \mbox{volwassen}  & \mbox{oud} \cr
+              \mbox{jong} & 1 & 2 & 0 \cr
+              \mbox{volwassen} & 1 & 0 & 2 \cr
+              \mbox{oud} & 0 & 1 & 1 }
+$\\[5mm]
+$     N= \pmatrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+$\\[5mm]
+$    N=\left\lgroup
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right\rgroup
+$,
+$    N=\left[
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right]
+$,
+$     N=\left\{
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right\}
+$,
+$     N=\left|
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right|
+$\\ \\
+%style 3
+\[   N\;=\; \bordermatrix{_{\mbox{\tiny van}}\setminus^{\mbox{\tiny naar}}
+            & \mbox{jong} & \mbox{volwassen}  & \mbox{oud} \cr
+              \mbox{jong} & 1 & 2 & 0 \cr
+              \mbox{volwassen} & 1 & 0 & 2 \cr
+              \mbox{oud} & 0 & 1 & 1 }
+\]
+\[
+     N=\left\lgroup
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right\rgroup
+  \quad
+     N= \pmatrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+  \quad
+      N=\left(
+              \begin{array}{ccc}
+                 1 & 2 & 0 \\
+                 1 & 0 & 2 \\
+                 0 & 1 & 1
+              \end{array}
+         \right)
+\]
+%style 4
+\begin{equation}
+ N   =  \bordermatrix{_{\mbox{\tiny van}}\setminus^{\mbox{\tiny naar}}
+        & \mbox{jong} & \mbox{volwassen}  & \mbox{oud} \cr
+          \mbox{jong} & 1 & 2 & 0 \cr
+          \mbox{volwassen} & 1 & 0 & 2 \cr
+          \mbox{oud} & 0 & 1 & 1 }
+\end{equation}
+\begin{equation}
+     N=\left\lgroup
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right\rgroup
+\end{equation}
+\begin{equation}
+     N= \pmatrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+\end{equation}
+\begin{equation}
+ N  =  \left(
+          \begin{array}{ccc}
+             1 & 2 & 0 \\
+             1 & 0 & 2 \\
+             0 & 1 & 1
+          \end{array}
+     \right)
+\end{equation}
+%style 5
+\begin{subequations}
+\begin{eqnarray}
+ N  &=& \bordermatrix{_{\mbox{\tiny van}}\setminus^{\mbox{\tiny naar}}
+        & \mbox{jong} & \mbox{volwassen}  & \mbox{oud} \cr
+          \mbox{jong} & 1 & 2 & 0 \cr
+          \mbox{volwassen} & 1 & 0 & 2 \cr
+          \mbox{oud} & 0 & 1 & 1 } \\ [5mm]
+     N&=&\left\lgroup
+              \matrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr }
+         \right\rgroup  \\[5mm]
+     N&=& \pmatrix{
+                 1 & 2 & 0 \cr
+                 1 & 0 & 2 \cr
+                 0 & 1 & 1 \cr } \\[5mm]
+ N &=& \left(
+          \begin{array}{ccc}
+             1 & 2 & 0 \\
+             1 & 0 & 2 \\
+             0 & 1 & 1
+          \end{array}
+     \right)
+\end{eqnarray}
+\end{subequations}
+
+extended matrix:
+
+\def\vdotline#1#2{\smash{\raise #1 \vbox to #2{\hsize 1mm\leaders\vbox to 5pt{\vfil\noindent$\cdot$}\vfill}}}
+\[
+ \left(\begin{array}{@{\ }r@{\quad }r@{\quad }r@{~~~ }c@{~~ }r@{\ }}
+          1 &  0 &  0 & \vdotline{-19.5mm}{23mm} & 0 \\
+          0 &  1 &  0 &                          & 0 \\
+          0 &  0 &  1 &                          & 0 \\
+          0 &  0 &  0 &                          & 1 \\
+          0 &  0 &  0 &                          & 0
+ \end{array}\right),
+\]
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+slides:
+
+\documentclass[slidesonly,landscape]{seminar}
+\usepackage{sem-a4,semrot,fancybox}
+\renewcommand{\printlandscape}{\special{landscape}}
+\slidesmag{3}
+\slideheight162mm
+\articlemag{1}           % ??
+\renewcommand{\slideleftmargin}{3.5cm}
+\renewcommand{\slidetopmargin}{1cm}
+
+new:
+  \definecolor{tueblauw}{cmyk}{1,0.76,0,0.18}
+  \definecolor{tuegroen}{cmyk}{0.56,0.11,0,0.43}
+  \def\TUElogo{{\normalfont\fontfamily{zlo}\fontsize{3}{0.0pt}\selectfont
+                        {\color{tueblauw}1}{\color{tuegroen}2}}}
+  \def\facnaam{{\normalfont\fontfamily{zlo}\fontsize{3}{0.0pt}\selectfont \bfseries {\color{tueblauw}/k}}}
+  \newfont{\tcmsl}{cmsl8 at 4pt}
+  \newpagestyle{TU}{\hspace*{1cm}\TUElogo\facnaam \hfil\thepage\ of\ \pageref{laatstepagina}\hspace*{1cm}}%
+  {{\tcmsl \hfil S.W.R.2003\hspace*{1cm}}}
+  \pagestyle{TU}
+  \slideframe{plain}
+
+
+old:
+  \newfont{\TUEsm}{tue at 1pt}
+  \newfont{\tcmr}{cmr5 at 4pt}
+  \newpagestyle{AV}%
+   {{\tcmr Eindhoven {\TUEsm tue} University of Technology} \hfil\thepage}{%
+  {\tcmr  \hfil S.W.R. 2000}}
+  \pagestyle{AV}
+
+\rotateheaderstrue
+\slideframe{plain} % plain, shadow, double, oval, Oval (=thick oval)
+\title{}
+\author{Sjoerd Rienstra\\Eindhoven University of Technology\\Eindhoven\\The Netherlands}
+\date{September 2000\\ \vfill}
+\begin{document}
+\begin{slide} \pagecolor{myyellow} \null\vskip2cm \maketitle \end{slide}
+\begin{slide}
+........
+\end{slide}
+\begin{slide*} \sliderotation{left}
+........
+\end{slide*}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\begin{list}{label}{
+                   \settowidth{\labelwidth}{\mbox{--}}
+                   \newlength{\echtemarge}
+                   \echtemarge    1ex
+                   \labelsep      1ex
+                   \leftmargin    \labelwidth
+                   \addtolength{\leftmargin}{\labelsep}
+                   \addtolength{\leftmargin}{\echtemarge}
+                   \rightmargin   0cm
+                   \listparindent 0em
+                   \topsep      0.5ex
+                   \parsep        0mm
+                   \itemsep     0.1ex
+                  }
+\item[\bf --] this
+\item[\bf --] that
+\item[\bf --] again
+\end{list}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\newenvironment{name}[args][opt]{begdef}{enddef}
+\renewenvironment{name}[args][opt]{begdef}{enddef}
+
+args   integer from 1-9 denoting the number of arguments.
+       default is no arguments.
+
+begdef The text substituted for every occurrence of \begin{nam};
+       a parameter of the form #n in begdef is replaced by the text
+       of the nth argument when this substitution takes place.
+
+If opt is present, the first of the args arguments is optional with default
+value opt. If it is absent all arguments are mandatory
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\newenvironment{margin}[1]%
+{\begin{list}{label}{\setlength{\rightmargin}{0cm}
+                     \setlength{\listparindent}{0cm}
+                     \settowidth{\labelwidth}{\mbox{#1}}
+                     \setlength{\leftmargin}{1.1\labelwidth}
+                     \setlength{\labelsep}{.1\labelwidth}}\item}%
+{\end{list}}
+\newcommand{\item}[1]{\item[#1\hfill]}
+
+example:
+... last line. \\ \\ \\
+{\large\bf References}
+\begin{margin}{\hspace{1.6cm}}
+\item[{[3.1]}] {\sc Lighthill, M.J.}, ``On sound generated
+                aerodynamically'', I \&\ II, Proc.\ R.\ Soc.\
+                London Ser.\ A211 (1952) pp.\ 564--587 and Ser.\
+                A222 (1954) pp.\ 1--32.
+\item[{[3.2]}] {\sc Powell, A.}, ``Some aspects of
+                Aeroacoustics: From Rayleigh until today'',
+                Journal of Vibration and Acoustics 112 (1990)
+                pp.\ 145--159.
+\end{margin}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+new margin: change ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+\begin{list}{label}{               
+                    \leftmargin   10mm
+                    \rightmargin   0cm
+                    \listparindent 0cm
+                    \labelsep      0cm
+                    \topsep        0cm
+                    \parsep        0cm
+                    \itemsep       0cm
+                   }\item[]
+                    texst                             \\
+                    texst                             \\
+\end{list}
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+List environment:
+
+³                 preceding text                                      ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+                                 
+                                 ³ \topsep + \parskip [+ \partopsep ]
+                                 
+ ÚÄÄÄÄÄÄÄÄÄÄÄ¿ \labelsep ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³ Label 1   ³<ÄÄÄÄÄÄÄÄ> ³  Item 1                                    ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÙ           ³  Paragraph 1                               ³
+  <ÄÄÄÄÄÄÄÄÄ>            ³                                            ³
+  \labelwidth            ³                                            ³
+                         ³                                            ³
+<ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ> ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+     \leftmargin                                   
+                                                   ³ \parsep
+                         \listparindent            
+                         <ÄÄÄÄÄÄÄÄÄÄÄÄ> ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                         ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                             ³
+                         ³  Item 1                                    ³
+                         ³  Paragraph 2                               ³
+                         ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+                                 
+                                 ³ \itemsep + \parsep
+                                 
+ ÚÄÄÄÄÄÄÄÄÄÄÄ¿           ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³ Label 2   ³           ³  Item 2                                    ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÙ           ³  Paragraph 1                               ³
+                         ³                                            ³
+                         ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+                                 
+                                 ³ \topsep
+                                 
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+    <ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ\hsizeÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ>
+x -> \hoffset
+³
+ \voffset
+    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³  12pt       \headline                                              ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+       12 pt
+    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³                                                                   ³
+    ³ ³       \parindent ÚÄÄÄÄÄÄÄÄÄÄ³ \topskip ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿           ³
+    ³ ³       ÚÄÄÄÄÄÄÄÄÄÄÙ           ----------              ³           ³
+    ³ ³       ³                                               ³           ³
+    ³ ³       ³                                               ³           ³
+    ³ ³       ³            \baselineskip                     ³           ³
+    ³\leftskip³                                               ³ \rightskip³
+    ³ ³       ³                                               ³           ³
+    ³ ³       ³                                ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ           ³
+    ³ ³       ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                          ³
+    ³ ³                                                                  ³
+    ³ ³                             ³ \parskip                            ³
+    ³ ³                                                                  ³
+    ³ ³       \parindent ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿           ³
+    ³ ³       ÚÄÄÄÄÄÄÄÄÄÄÙ                                   ³           ³
+    ³ ³       ³               ³ \hangafter                    ³           ³
+    ³ ³       ³               ³                               ³           ³
+    ³ ³       ³                                              ³           ³
+    ³ ³       ³                ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ           ³
+    ³ ³       ³                ³        \hangindent                       ³
+    ³ ³       ³                ³ <ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ>            ³
+    ³ ³       ³                ³                                          ³
+    ³ ³       ³                ³                                          ³
+    ³        ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ                                          ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+       12 pt
+    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³  12pt       \footline                                              ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+\usepackage{graphics}:
+
+\resizebox{<hsize>unit}{<vsize>unit}{<text>}   or \resizebox{<hsize>unit}{!}{<text>} or \resizebox{!}{<vsize>unit}{<text>}
+\scalebox{<hscale>}[<vscale>]{<text>}          or \scalebox{<scale>}{<text>}
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ PSTricks Quick Reference I ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Color
+  \newgray{color}{num}
+  \newrgbcolor{color}{num1 num2 num3}
+  \newhsbcolor{color}{num1 num2 num3}
+  \newcmykcolor{color}{num1 num2 num3 num4}
+
+Setting graphics parameters
+  \psset{par1=value1,par2=value2,...}
+
+Dimensions, coordinates and angles
+  unit=dim                         Default: 1cm
+  \pssetlength{cmd}{dim}
+  \psaddtolength{cmd}{dim}
+  xunit=dim                        Default: 1cm
+  yunit=dim                        Default: 1cm
+  runit=dim                        Default: 1cm
+  \degrees[num]
+  \radians
+
+Basic graphics parameters
+  linewidth=dim                    Default: .8pt
+  linecolor=color                  Default: black
+  showpoints=true/false            Default: false
+
+Lines and polygons
+   linearc=dim                     Default: 0pt
+   framearc=num                    Default: 0
+   cornersize=relative/absolute    Default: relative
+   \psline*[par]{arrows}(x0,y0)(x1,y1)...(xn,yn)
+   \qline(coor0)(coor1)
+   \pspolygon*[par](x0,y0)(x1,y1)(x2,y2)...(xn,yn)
+   \psframe*[par](x0,y0)(x1,y1)
+
+Arcs, circles and ellipses
+   \pscircle*[par](x0,y0){radius}
+   \qdisk(coor){radius}
+   \pswedge*[par](x0,y0){radius}{angle1}{angle2}
+   \psellipse*[par](x0,y0)(x1,y1)
+   \psarc*[par]{arrows}(x,y){radius}{angleA}{angleB}
+   arcsepA=dim                     Default: 0pt
+   arcsepB=dim                     Default: 0pt
+   arcsep=dim                      Default: 0
+   \psarcn*[par]{arrows}(x,y){radius}{angleA}{angleB}
+
+Curves
+   \psbezier*[par]{arrows}(x0,y0)(x1,y1)(x2,y2)(x3,y3)
+   \parabola*[par]{arrows}(x0,y0)(x1,y1)
+   curvature=num1 num2 num3        Default: 1 .1 0
+
+PSTricks Quick Reference II
+   \pscurve*[par]{arrows}(x1,y1)...(xn,yn)
+   \psecurve*[par]{arrows}(x1,y1)...(xn,yn)]
+   \psccurve*[par]{arrows}(x1,y1)...(xn,yn)
+
+Dots
+   \psdots*[par ](x1,y1)(x2,y2)...(xn,yn)
+   dotstyle=style                  Default: *
+   * o + triangle triangle* square square* pentagon pentagon* |
+   dotscale=num1 num2              Default: 1
+   dotangle=angle                  Default: 0
+
+Grids
+   \psgrid(x0,y0)(x1,y1)(x2,y2)
+   gridwidth=dim                   Default: .8pt
+   gridcolor=color                 Default: black
+   griddots=num                    Default: 0
+   gridlabels=dim                  Default: 10pt
+   gridlabelcolor=color            Default: black
+   subgriddiv=int                  Default: 5
+   subgridwidth=dim                Default: .4pt
+   subgridcolor=color              Default: gray
+   subgriddots=num                 Default: 0
+
+Plots
+   \usepackage{pst-plot}:
+   plotstyle=style                 Default: line
+   \fileplot*[par]{file}
+   \dataplot*[par]{commands}
+   \savedata{command}[data]
+   \readdata{command}{file}
+   \listplot*[par]{list}
+   \psplot*[par]{x min }{x max }{function}
+   \parametricplot*[par]{t min }{t max }{function}
+   plotpoints=int                  Default: 50
+
+   example:
+   \usepackage{pstricks}
+   \usepackage{pst-plot}
+   \begin{document}
+   \newgray{verylightgray}{0.95}
+   \psset{unit=5mm}
+   \begin{pspicture}(-10,-2)(10,2)
+      \psframe(-10,-2)(10,2){\centerline{\psplot[linecolor=red, linewidth=2pt]{-8}{8}
+                                         {x neg -1 atan 180 sub 180 div 3.1416 mul}}}
+   \end{pspicture}
+
+
+Coordinate systems
+   origin={coor}                   Default: 0pt,0pt
+   swapaxes=true                   Default: false
+
+Line styles
+   linestyle=style                 Default: solid
+   dash=dim1 dim2                  Default: 5pt 3pt
+   dotsep=dim                      Default: 3pt
+   border=dim                      Default: 0pt
+   bordercolor=color               Default: white
+   doubleline=true/false           Default: false
+   doublesep=dim                   Default: 1.25\pslinewidth
+   doublecolor=color               Default: white
+   shadow=true/false               Default: false
+   shadowsize=dim                  Default: 3pt
+   shadowangle=angle               Default: ­45
+   shadowcolor=color               Default: darkgray
+   dimen=outer/inner/middle        Default: outer
+
+Fill styles
+   fillstyle=style, solid, hlines  Default: none
+   fillcolor=color                 Default: white
+   hatchwidth=dim                  Default: .8pt
+   hatchsep=dim                    Default: 4pt
+   hatchcolor=color                Default: black
+   hatchangle=rot                  Default: 45
+
+Arrowheads and such
+   arrows=style                    Default: ­
+   -     None
+   <->   Arrowheads.
+   >-<   Reverse arrowheads.
+   <<->> Double arrowheads.
+   >>-<< Double reverse arrowheads.
+   |-|   T-bars, flush to endpoints.
+   |*-|* T-bars, centered on endpoints.
+   [-]   Square brackets.
+   (-)   Rounded brackets.
+   o-o   Circles, centered on endpoints.
+   *-*   Disks, centered on endpoints.
+   oo-oo Circles, flush to endpoints.
+   **-** Disks, flush to endpoints.
+   c-c   Extended, rounded ends.
+   cc-cc Flush round ends.
+   C-C   Extended, square ends.
+   arrowsize=dim num               Default: 2pt 3
+   arrowlength=num                 Default: 1.4
+   arrowinset=num                  Default: .4
+   tbarsize=dim num                Default: 2pt 5
+   bracketlength=num               Default: .15
+   rbracketlength=num              Default: .15
+   dotsize=dim num                 Default: .5pt 2.5
+   arrowscale=arrowscale=num1 num2 Default: 1
+
+Custom styles
+   \newpsobject{name}{object}{par1=value1,...}
+   \newpsstyle{name}{par1=value1,...}
+
+The basics
+   \pscustom*[par ]{commands}
+
+Parameters
+   linetype=int                    Default: 0
+
+Graphics objects
+   liftpen=0/1/2                   Default: 0
+
+Safe tricks
+   \newpath
+   \moveto(coor)
+   \closepath
+   \stroke[par ]
+   \fill[par ]
+   \gsave
+   \grestore
+   \translate(coor)
+   \scale{num1 num2}
+   \rotate{angle}
+   \swapaxes
+   \msave
+   \mrestore
+   \openshadow[par ]
+   \closedshadow[par ]
+   \movepath(coor)
+
+Pretty safe tricks
+   \lineto(coor)
+   \rlineto(coor)
+   \curveto(x1,y1)(x2,y2)(x3,y3)
+   \rcurveto(x1,y1)(x2,y2)(x3,y3)
+
+For hackers only
+   \code{code}
+   \dim{dim}
+   \coor(x1,y1)(x2,y2)...(xn,yn)
+   \rcoor(x1,y1)(x2,y2)...(xn,yn)
+   \file{file}
+   \arrows{arrows}
+   \setcolor{color}
+
+Pictures
+   \pspicture*[baseline](x0,y0)(x1,y1)
+   \endpspicture
+
+Placing and rotating whatever
+   \rput*[refpoint ]{rotation}(x , y){stuff }
+   \uput*{labelsep}[refangle]{rotation}(x,y){stuff }
+   \pslabelsep
+   labelsep=dim                    Default: 5pt
+
+Repetition
+   \multirput*[refpoint ]{angle}(x0,y0)(x1,y1){int}{stuff }
+   \multips{angle}(x0,y0)(x1,y1){int}{graphics}
+
+Axes
+   \psaxes*[par ]{arrows}(x0,y0)(x1,y1)(x2,y2)
+   Axes label parameters:
+   Ox=num Oy=num (dflt: 0)   Label at origin.
+   Dx=num Dy=num (dflt: 1)   Label increment.
+   dx=dim oy=dim (dflt: 0pt) Dist btwn labels.
+
+   labels=all/x/y/none             Default: all
+   showorigin=true/false           Default: true
+   ticks=all/x/y/none              Default: all
+   tickstyle=full/top/bottom       Default: full
+   ticksize=dim                    Default: 3pt
+   \psxlabel
+   \psylabel
+   axesstyle=axes/frame/none       Default: axes
+
+Framed boxes
+   framesep=dim                    Default: 3pt
+   boxsep=true/false               Default: true
+   \psframebox*[par]{stuff }
+   \psdblframebox*[par]{stuff }
+   \psshadowbox*[par]{stuff }
+   \pscirclebox*[par]{stuff }
+   \cput*[par]{angle}(x , y){stuff }
+   \psovalbox*[par]{stuff }
+
+Clipping
+   \clipbox[dim]{stuff }
+   \psclip{graphics} ... \endpsclip
+
+Rotation and scaling boxes
+   \rotateleft{stuff }
+   \rotateright{stuff }
+   \rotatedown{stuff }
+   \rotatebox{angle}{stuff}    %(\usepackage{rotating})
+   \scalebox{num1 num2}{stuff }%(\usepackage{graphics})
+   \scaleboxto(x , y){stuff }
+
+Nodes
+   \rnode[refpoint ]{name}{stuff }
+   \Rnode(x,y){name}{stuff }
+   \RnodeRef
+   \pnode(x,y){name}
+   \cnode*[par](x,y){radius}{name}
+   \circlenode*[par]{name}{stuff }
+   \cnodeput*[par]{angle}(x,y){name}{stuff }
+   \ovalnode*[par]{name}{stuff }
+
+Node connections
+   nodesep=dim                     Default: 0
+   offset=dim                      Default: 0
+   arm=dim                         Default: 10pt
+   angle=angle                     Default: 0
+   arcangle=angle                  Default: 8
+   ncurv=num                       Default: .67
+   loopsize=dim                    Default: 1cm
+   \ncline*[par]{arrows}{nodeA}{nodeB}
+   \ncLine*[par]{arrows}{nodeA}{nodeB}
+   \nccurve*[par]{arrows}{nodeA}{nodeB}
+   \ncarc*[par]{arrows}{nodeA}{nodeB}
+   \ncbar*[par]{arrows}{nodeA}{nodeB}
+   \ncdiag*[par]{arrows}{nodeA}{nodeB}
+   \ncdiagg*[par]{arrows}{nodeA}{nodeB}
+   \ncangle*[par]{arrows}{nodeA}{nodeB}
+   \ncangles*[par]{arrows}{nodeA}{nodeB}
+   \ncloop*[par]{arrows}{nodeA}{nodeB}
+   \nccircle*[par]{arrows}{node}{radius}
+   \pcline*[par]{arrows}(x1,y1)(x2,y2)
+   \pccurve*[par]{arrows}(x1,y1)(x2,y2)
+   \pcarc*[par]{arrows}(x1,y1)(x2,y2)
+   \pcbar*[par]{arrows}(x1,y1)(x2,y2)
+   \pcdiag*[par]{arrows}(x1,y1)(x2,y2)
+   \pcangle*[par]{arrows}(x1,y1)(x2,y2)
+   \pcloop*[par]{arrows}(x1,y1)(x2,y2)
+
+Attaching labels to node connections
+   \lput*[refpoint ]{rotation}(pos){stuff }
+   \aput*[labelsep]{angle}(pos){stuff }
+   \bput*[labelsep]{angle}(pos){stuff }
+   \mput*[refpoint ]{stuff }
+   \Aput*[labelsep]{stuff }
+   \Bput*[labelsep]{stuff }
+
+Coils and zigzags
+   \pscoil*[par ]{arrows}(x0,y0)(x1,y1)
+   \psCoil*[par ]{angle1}{angle2}
+   \pszigzag*[par ]{arrows}(x0,y0)(x1,y1)
+   coilwidth=dim                   Default: 1cm
+   coilheight=num                  Default: 1
+   coilarm=dim                     Default: .5cm
+   coilaspect=angle                Default: 45
+   coilinc=angle                   Default: 10
+   \nccoil*[par ]{arrows}{nodeA}{nodeB}
+   \nczigzag*[par ]{arrows}{nodeA}{nodeB}
+   \pccoil*[par ]{arrows}(x1,y1)(x2,y2)
+   \pczigzag*[par ]{arrows}(x1,y1)(x2,y2)
+
+Special coordinates
+   \SpecialCoor
+
+   Coordinate   Example        Description
+   (x ,y)       (3,4)          Cartesian coordinate.
+   (r;a)        (3;110)        Polar coordinate.
+   (node)       (A)            Center of node.
+   ([par]node)  ([angle=45]A)  Relative to node.
+   (!ps)        (!5 3.3 2 exp) Raw PostScript.
+   (coor1|coor2) (A|1in;30)    Combination.
+
+   Angle        Example        Description
+   num          45             Angle.
+   (coor)       (­1,1)         Coordinate (vector).
+   !ps          !33 sqrt       Raw PostScript.
+
+   \NormalCoor
+
+Overlays
+   \overlaybox stuff\endoverlaybox
+   \psoverlay{string}
+   \putoverlaybox{string}
+   gradbegin=color                 Default: gradbegin
+   gradend=color                   Default: gradend
+   gradlines=int                   Default: 500
+   gradmidpoint=num                Default: .9
+   gradangle=angle                 Default: 0
+
+Typesetting text along a path
+   \pstextpath[pos](x,y){graphics object}{text}
+
+Stroking and filling character paths
+   \pscharpath*[par ]{text}
+   \pscharclip*[par ]{text} ... \endpscharclip
+
+Exporting EPS files
+   \TeXtoEPS
+   \endTeXtoEPS
+   \PSTtoEPS[par ]{file}{graphics objects}
+   bbllx=dim                       Default: ­1pt
+   bblly=dim                       Default: ­1pt
+   bburx=dim                       Default: 1pt
+   bbury=dim                       Default: 1pt
+   headerfile=file                 Default: s
+   headers=none/all/user           Default: none
+
+Boxes
+   \psmathboxtrue
+   \psmathboxfalse
+   \everypsbox{commands}
+   \pslongbox{name}{cmd}
+   \psverbboxtrue
+   \psverbboxfalse
+
+Tips and More Tricks
+   \PSTricksOff
+
+Including PostScript code
+   \pslbrace
+   \psrbrace
+
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°° POSTSCRIPT: °°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+directly in LateX:  \special{ps: ...............}
+
+/Times-Roman findfont   :  Helvetica
+                           Helvetica-Bold
+                           Helvetica-BoldOblique
+                           Times-Bold
+                           Times-BoldItalic
+                           Zapf-Dingbats
+                           Symbol
+                           Palatino
+                           Arial
+                           NewCenturySchlbk
+72 scalefont            : size
+setfont                 : make standard
+
+0.00  setgray                    % gray scale: 0 = black
+0.00  0.80  1.00  setrgbcolor    % red-green-blue
+0.5  0.0  1.0  0.3  setcmykcolor % cyan-magenta-yellow-black
+
+add, sub, mul, div            : a b add, etc
+boolean {proc} if             : if boolean then proc
+boolean {proc1} {proc2} ifelse: if boolean then proc1 else proc2
+pop                           : removes 1st stack
+dup                           : duplicates 1st stack
+exch                          : exchanges 1st & 2nd stack
+n k roll                      : rolls n stack elem. k times
+                                 x3                    x2
+                                 x2  --> 3 -1 roll --> x1
+                                 x1                    x3
+
+n index                       : copies n-th element from stack (n=0 ==first)
+                                                     x3
+                                 x3                  x2
+                                 x2  --> 2 index --> x1
+                                 x1                  x3
+
+save ...... restore           : saves complete system
+
+x y translate
+90 rotate
+x y scale
+
+make the coordinates oblique:
+gsave
+[1.3 0 -0.3 1.4 0 0] concat
+do what you want to do
+grestore
+
+x y moveto, rmoveto
+x y lineto, rlineto
+(Aap) show
+
+x s cvs                       : convert x-value to string s
+s stringwidth                 : length of string s
+
+/center{dup stringwidth pop 2 div neg 0 rmoveto} bind def
+/right{dup stringwidth pop neg 0 rmoveto} bind def
+(aap) center show             : centered
+(aap) right show              : right aligned
+
+\(=(, \)=), \r=CR, \n=lf, \f=ff, \t=tab, \b=backspace,\\=\,\nnn=octal ascii
+'A in Symbol gives A with overbar
+in Symbol:
+\137 _                       \262 ''         \272 equiv
+\242 '                       \263 >=         \273 approx
+\243 <=                      \264 x          \274 3dots
+\244 /                       \265 propto     \275 vertbar
+\245 ì                       \266 partial    \276 horbar
+\253\254\255\256\257 arrows  \267 bullet     \277 d-l hooked arrow
+\260 degree                  \270 div        \321 nabla
+\261 + or -                  \271 neq        \326 sqrt
+
+x y (Aap) ashow              : plaatst de letters telkens x,y verschoven
+p q moveto
+w z (Aap) ashow
+
+currentpoint: adds current X,Y in stack (??)
+
+(Aap) true charpath               : trekt lijntjes
+stroke
+
+(Aap) true charpath               : trekt lijntjes en vult ze
+fill
+showpage
+
+ 0 0 moveto  a 0 rlineto  0 b rlineto 0 0 lineto
+ closepath fill
+ 0.0 setgray (black)
+ 1.0 setgray (white)
+
+eofill: even-odd fill
+
+gsave
+   ...........
+grestore
+
+n {.....} repeat
+n_begin inc n_end { .... } for :   counter on 1st stack position
+
+18 setlinewidth
+2 1 scale   (vergroten in x, y richting, spiegelen)
+
+
+
+0 0 144 0 360 arc (middelpunt 0 0, radius 144, begin-eindhoek 0 360)
+stroke
+
+arcto ( + clear)
+
+newpath
+closepath
+
+-100 100 100 -150 200 0 curveto    (Bezier kromme)
+stroke                              -100,100 eerste steunpunt
+                                     100, -150 tweede steunpunt
+                                     200 0 eindpunt
+the perfect quarter circle:
+    /x1{  0      0   } def
+    /x2{  0     55.23} def
+    /x3{ 44.77 100   } def
+    /x4{100    100   } def
+    x1 moveto x2 x3 x4 curveto stroke
+    100 0 100 90 180 arc stroke
+
+a full square S:
+    /x1{   0   0} def
+    /x2{ 300   0} def
+    /x3{-200 100} def
+    /x4{ 100 100} def
+    x1 moveto x2 x3 x4 curveto stroke
+
+/pijlf{ % direction, length, width, thickness, slenderness, sharpness, grey
+       gsave 7 -1 roll rotate 6 1 roll 4 -1 roll 2 div 4 -1 roll 2 div 4 -1
+       roll 2 mul currentpoint translate newpath 0 0 moveto 0 2 index neg
+       lineto 4 index 3 index 2 index mul 6 -1 roll div sub dup 3 index neg
+       lineto 4 index 4 index 4 -1 roll mul sub dup 4 index neg lineto 5 -1
+       roll 0 lineto 4 -1 roll lineto 1 index lineto 0 exch lineto
+       closepath gsave setgray fill grestore stroke grestore
+     } bind def
+/pijl{ dup 5 div 1 1.05 0.0 pijlf } bind def    % direction, length, width
+
+/pijlo{ % x0, y0, direction, length, width, thickness, linethickness
+      gsave setlinewidth 2 div 6 1 roll 2 div 6 2 roll rotate translate
+      newpath 0 0 moveto 0 1 index neg lineto 2 index 2 index sub dup 2
+      index neg lineto dup 3 index neg lineto 4 3 roll 0 lineto dup 4 3
+      roll lineto 1 index lineto 0 exch lineto closepath stroke grestore
+      }
+      bind def
+
+/sinus{dup dup 2 div dup dup dup neg 5 index 0 gsave currentpoint translate
+       0 0 moveto curveto stroke grestore 0 rmoveto } bind def
+
+% horizontal and vertical dashed lines:
+/hdash{1 index 0 gsave currentpoint translate 0 0 moveto rlineto stroke
+       grestore add 0 rmoveto} bind def
+/vdash{0 2 index gsave currentpoint translate 0 0 moveto rlineto stroke
+       grestore add 0 exch rmoveto} bind def
+to be used (for example) as:  5 {6 3 vdash} repeat
+
+% a rectangle ("width height rh")
+/rh{1 index 0 rlineto 0 exch rlineto neg 0 rlineto closepath stroke}
+    bind def
+
+% a filled rectangle ("width height gray rhf")
+/rhf{gsave setgray 1 index 0 rlineto 0 exch rlineto neg 0 rlineto
+     fill grestore} bind def
+
+a circle ("x y radius cr")
+/cr{currentpoint newpath 0 360 arc stroke} bind def
+
+a filled circle of radius 3
+/c{currentpoint gsave translate newpath 0 0 3 0 360 arc fill grestore} bind def
+
+a circle part with a dot at the end :
+100 100 moveto gsave currentpoint translate newpath 0 0 100 0 90 arc
+  gsave stroke grestore c stroke grestore
+
+a circle part in negative direction with a dot at the end :
+100 100 moveto gsave currentpoint translate newpath 1 -1 scale
+  0 0 100  -90 0 arc gsave stroke grestore c stroke grestore
+
+/aap { a procedure} def
+/aap { a procedure} bind def     (faster)
+
+black circle of radius 3 with white border:
+/c{newpath 1 setgray 1 index 1 index 3.7 0 360 arc fill 0 setgray 3 0 360 arc fill} bind def
+
+calls font:    48 /Courier font
+/font {findfont exch scalefont setfont} bind def
+
+encapsulated Postscript:
+
+%!PS-Adobe-3.0 EPSF-3.0
+%%BoundingBox: 15 512 421 820
+  ...............
+
+a4 page = %%BoundingBox:  0  0  595 842  (based on Postscript points =1/72")
+                                           = 210 mm, 297 mm
+/mm{2.83464567 mul}  bind def   % from mm to points
+/cm{28.3464567 mul}  bind def   % from cm to points
+/in{72 mul}          bind def   % from inch to points
+
+/m {cm exch cm exch moveto} bind def      % move to (x cm,y cm)
+/s {3 1 roll m show}        bind def      % show text at given position
+/ml{4 2 roll moveto lineto} bind def      % draw line from x0,y0 to x1,y1
+
+
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+°°°°°°°°°°°°°°°°°°°°°° PSNUP - Multiple Pages Per Sheet °°°°°°°°°°°°°°°°°°°
+°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+
+Synopsis
+psnup [-w<width>][-h<height>][-p<paper>][-W<width>][-H<height>][-P<paper>]
+      [-l][-r][-f][-c]
+      [-m<margin>][-b<border>][-d<lwidth>][-s<scale>]
+      [-<nup>][-q][<infile>[<outfile>]]
+
+Description
+psnup puts multiple logical pages onto each physical sheet of paper.
+The input PostScript file should follow the Adobe Document Structuring
+Conventions.
+
+The -w option gives the paper width, and the -h option gives the paper
+height, normally specified in `cm' or `in' to convert  PostScript's points
+(1/72 of an inch) to centimeters or inches. The -p option can be used as an
+alternative, to set the paper size to a3, a4, a5, b5, letter, legal,
+tabloid, statement, executive, folio, quarto or 10x14. The default paper
+size is a4.
+
+The -W, -H, and -P options set the input paper size, if it is different
+from the output size. This makes it easy to impose pages of one size on a
+different size of paper.
+
+The -l option should be used for pages which are in landscape orientation
+(rotated 90 degrees anticlockwise). The -r option should be used for pages
+which are in seascape orientation (rotated 90 degrees clockwise), and the
+-f option should be used for pages which have the width and height
+interchanged, but are not rotated.
+
+psnup normally uses `row-major' layout, where adjacent pages are placed in
+rows across the paper. The -c option changes the order to `column-major',
+where successive pages are placed in columns down the paper.
+
+A margin to leave around the whole page can be specified with the -m
+option. This is useful for sheets of `thumbnail' pages, because the normal
+page margins are reduced by putting multiple pages on a single sheet.
+
+The -b option is used to specify an additional margin around each page on a
+sheet.
+
+The -d option draws a line around the border of each page, of the specified
+width. If the <lwidth> parameter is omitted, a default linewidth of 1 point
+is assumed. The linewidth is relative to the original page dimensions,
+i.e., it is scaled down with the rest of the page.
+
+The scale chosen by psnup can be overridden with the -s option. This is
+useful to merge pages which are already reduced.
+
+The -<nup> option selects the number of logical pages to put on each sheet
+of paper. This can be any whole number; psnup tries to optimise the layout
+so that the minimum amount of space is wasted. If psnup cannot find a
+layout within its tolerance limit, it will abort with an error message. The
+alternative form -n<nup> can also be used, for compatibility with other
+n-up programs.
+
+Psnup normally prints the page numbers of the pages re-arranged; the -q
+option suppresses this.
+
+Examples
+The potential use of this utility is varied but one particular use is in
+conjunction with psbook. For example, using groff to create a PostScript
+document and lpr as the Unix print spooler a typical command line might
+look like this:
+
+groff -Tps -ms <file> | psbook | psnup -2 | lpr
+
+Where file is a 4 page document this command will result in a two page
+document printing two pages of file per page and rearranges the page order
+to match the input pages 4 and 1 on the first output page and pages 2 then
+3 of the input document on the second output page.
+
+Author
+Copyright (c) Angus J. C. Duggan (angus@harlequin.co.uk) 1991-1995
+
+Bugs
+Psnup does not accept all legal DSC comments.

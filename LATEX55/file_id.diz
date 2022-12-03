@@ -1,0 +1,37 @@
+Latex procedures  version 5.5 (replaces 5.4)
+
+Author:  Sjoerd W. Rienstra (Netherlands)
+         (email: s dot w dot rienstra at tue dot nl)
+Date:    February 19, 2006
+
+TSE version: 4 and newer
+
+Description:
+- a couple of macros to edit, compile, view,
+  and print LaTeX & TeX files from within the
+  editor.
+- contains all (well, a lot) LaTeX and
+  AMS-LaTeX commands and symbols.
+- the present commands are prepared for a
+  standard MiKTeX-package.
+- dvi-files are viewed with Yap that comes
+  with MikTex.
+- PostScript-files are viewed with GsView
+- page layout of ps-files can be changed into
+  n pages per sheet with psnup.
+- files packed and unpacked by PKZip or GZip
+- ps-files can be converted to pdf-files by
+  Acrobat Distiller
+- automatic LaTeX re-run if labels changed.
+- block compilation for testing small piece.
+- testing and viewing of a single slide
+- generates complete \begin-\end environment.
+- an extension of the "WrapPara"-macro to
+  deal with LaTeX constructs
+- "main file", to be compiled, may be
+  different from edited "include file".
+- view symbol file
+- improved line-up of "environment"-insert
+- improved recognition of active GsView window
+- "new document" as article or slides
+= eurosym package (\euro), gensymb package (\celsius)

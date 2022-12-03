@@ -1,0 +1,185 @@
+\documentclass[10pt]{article}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{pifont}
+\usepackage{graphics}
+\oddsidemargin  -0.5 in
+\evensidemargin -0.5 in
+\marginparwidth 0.  in
+\textwidth      7.125 in
+\textheight 53\baselineskip
+\def\bs{\tt\char92}
+
+\begin{document}
+\centerline{Table of regular symbols in math mode}
+\bigskip
+
+\hspace*{-7mm}\scalebox{0.79}{
+\begin{tabular}{|l|c||l|c||l|c||l|c||l|c||l|c@{\protect\rule[-4.5pt]{0pt}{15pt}}|}  \hline
+   \bs alpha     &$\alpha     $ & \bs copyright         &$\copyright        $&\bs ominus    &$\ominus    $ &\bs bowtie            &$\bowtie            $& \bs aleph         &$\aleph       $ & \bs arctan        &$\arctan      $\\   \hline
+   \bs beta      &$\beta      $ & \bs pounds            &$\pounds           $&\bs otimes    &$\otimes    $ &\bs smile             &$\smile             $& \bs hbar          &$\hbar        $ & \bs arcsin        &$\arcsin      $\\   \hline
+   \bs gamma     &$\gamma     $ & \bs pm                &$\pm               $&\bs bigotimes &$\bigotimes $ &\bs frown             &$\frown             $& \bs imath         &$\imath       $ & \bs arccos        &$\arccos      $\\   \hline
+   \bs Gamma     &$\Gamma     $ & \bs mp                &$\mp               $&\bs oslash    &$\oslash    $ &\bs leftarrow         &$\leftarrow         $& \bs jmath         &$\jmath       $ & \bs sin           &$\sin         $\\   \hline
+   \bs delta     &$\delta     $ & \bs times             &$\times            $&\bs odot      &$\odot      $ &\bs Leftarrow         &$\Leftarrow         $& \bs ell           &$\ell         $ & \bs sinh          &$\sinh        $\\   \hline
+   \bs Delta     &$\Delta     $ & \bs div               &$\div              $&\bs bigodot   &$\bigodot   $ &\bs rightarrow        &$\rightarrow        $& \bs wp            &$\wp          $ & \bs cos           &$\cos         $\\   \hline
+   \bs epsilon   &$\epsilon   $ & \bs ast               &$\ast              $&\bs dag       &$\dag       $ &\bs Rightarrow        &$\Rightarrow        $& \bs Re            &$\Re          $ & \bs cosh          &$\cosh        $\\   \hline
+   \bs varepsilon&$\varepsilon$ & \bs star              &$\star             $&\bs dagger    &$\dagger    $ &\bs leftrightarrow    &$\leftrightarrow    $& \bs Im            &$\Im          $ & \bs tan           &$\tan         $\\   \hline
+   \bs zeta      &$\zeta      $ & \bs circ              &$\circ             $&\bs ddag      &$\ddag      $ &\bs Leftrightarrow    &$\Leftrightarrow    $& \bs prime         &$\prime       $ & \bs tanh          &$\tanh        $\\   \hline
+   \bs eta       &$\eta       $ & \bs bigcirc           &$\bigcirc          $&\bs ddagger   &$\ddagger   $ &\bs mapsto            &$\mapsto            $& \bs emptyset      &$\emptyset    $ & \bs cot           &$\cot         $\\   \hline
+   \bs theta     &$\theta     $ & \bs bullet            &$\bullet           $&\bs amalg     &$\amalg     $ &\bs hookleftarrow     &$\hookleftarrow     $& \bs nabla         &$\nabla       $ & \bs coth          &$\coth        $\\   \hline
+   \bs vartheta  &$\vartheta  $ & \bs cdot              &$\cdot             $&\bs leq       &$\leq       $ &\bs leftharpoonup     &$\leftharpoonup     $& \bs surd          &$\surd        $ & \bs sec           &$\sec         $\\   \hline
+   \bs Theta     &$\Theta     $ & \bs cap               &$\cap              $&\bs prec      &$\prec      $ &\bs leftharpoondown   &$\leftharpoondown   $& \bs top           &$\top         $ & \bs csc           &$\csc         $\\   \hline
+   \bs iota      &$\iota      $ & \bs bigcap            &$\bigcap           $&\bs preceq    &$\preceq    $ &\bs rightleftharpoons &$\rightleftharpoons $& \bs bot           &$\bot         $ & \bs exp           &$\exp         $\\   \hline
+   \bs kappa     &$\kappa     $ & \bs cup               &$\cup              $&\bs ll        &$\ll        $ &\bs longleftarrow     &$\longleftarrow     $& \bs |             &$\|           $ & \bs ln            &$\ln          $\\   \hline
+   \bs lambda    &$\lambda    $ & \bs bigcup            &$\bigcup           $&\bs subset    &$\subset    $ &\bs Longleftarrow     &$\Longleftarrow     $& \bs angle         &$\angle       $ & \bs log           &$\log         $\\   \hline
+   \bs Lambda    &$\Lambda    $ & \bs uplus             &$\uplus            $&\bs subseteq  &$\subseteq  $ &\bs longrightarrow    &$\longrightarrow    $& \bs forall        &$\forall      $ & \bs arg           &$\arg         $\\   \hline
+   \bs mu        &$\mu        $ & \bs biguplus          &$\biguplus         $&\bs sqsubseteq&$\sqsubseteq$ &\bs Longrightarrow    &$\Longrightarrow    $& \bs exists        &$\exists      $ & \bs deg           &$\deg         $\\   \hline
+   \bs nu        &$\nu        $ & \bs sqcap             &$\sqcap            $&\bs vdash     &$\vdash     $ &\bs longleftrightarrow&$\longleftrightarrow$& \bs neg           &$\neg         $ & \bs det           &$\det         $\\   \hline
+   \bs xi        &$\xi        $ & \bs sqcup             &$\sqcup            $&\bs geq       &$\geq       $ &\bs Longleftrightarrow&$\Longleftrightarrow$& \bs flat          &$\flat        $ & \bs dim           &$\dim         $\\   \hline
+   \bs Xi        &$\Xi        $ & \bs bigsqcup          &$\bigsqcup         $&\bs succ      &$\succ      $ &\bs longmapsto        &$\longmapsto        $& \bs natural       &$\natural     $ & \bs gcd           &$\gcd         $\\   \hline
+   \bs pi        &$\pi        $ & \bs vee               &$\vee              $&\bs succeq    &$\succeq    $ &\bs hookrightarrow    &$\hookrightarrow    $& \bs sharp         &$\sharp       $ & \bs hom           &$\hom         $\\   \hline
+   \bs varpi     &$\varpi     $ & \bs bigvee            &$\bigvee           $&\bs gg        &$\gg        $ &\bs rightharpoonup    &$\rightharpoonup    $& \bs backslash     &$\backslash   $ & \bs ker           &$\ker         $\\   \hline
+   \bs Pi        &$\Pi        $ & \bs wedge             &$\wedge            $&\bs supset    &$\supset    $ &\bs rightharpoondown  &$\rightharpoondown  $& \bs partial       &$\partial     $ & \bs lg            &$\lg          $\\   \hline
+   \bs rho       &$\rho       $ & \bs bigwedge          &$\bigwedge         $&\bs supseteq  &$\supseteq  $ &\bs uparrow           &$\uparrow           $& \bs infty         &$\infty       $ & \bs lim           &$\lim         $\\   \hline
+   \bs varrho    &$\varrho    $ & \bs setminus          &$\setminus         $&\bs sqsupseteq&$\sqsupseteq$ &\bs Uparrow           &$\Uparrow           $& \bs triangle      &$\triangle    $ & \bs sup           &$\sup         $\\   \hline
+   \bs sigma     &$\sigma     $ & \bs wr                &$\wr               $&\bs in        &$\in        $ &\bs downarrow         &$\downarrow         $& \bs clubsuit      &$\clubsuit    $ & \bs inf           &$\inf         $\\   \hline
+   \bs varsigma  &$\varsigma  $ & \bs diamond           &$\diamond          $&\bs ni        &$\ni        $ &\bs Downarrow         &$\Downarrow         $& \bs diamondsuit   &$\diamondsuit $ & \bs limsup        &$\limsup      $\\   \hline
+   \bs Sigma     &$\Sigma     $ & \bs triangleleft      &$\triangleleft     $&\bs notin     &$\notin     $ &\bs updownarrow       &$\updownarrow       $& \bs heartsuit     &$\heartsuit   $ & \bs liminf        &$\liminf      $\\   \hline
+   \bs tau       &$\tau       $ & \bs triangleright     &$\triangleright    $&\bs dashv     &$\dashv     $ &\bs Updownarrow       &$\Updownarrow       $& \bs spadesuit     &$\spadesuit   $ & \bs max           &$\max         $\\   \hline
+   \bs upsilon   &$\upsilon   $ & \bs bigtriangleup     &$\bigtriangleup    $&\bs equiv     &$\equiv     $ &\bs nearrow           &$\nearrow           $& \bs sum           &$\sum         $ & \bs min           &$\min         $\\   \hline
+   \bs Upsilon   &$\Upsilon   $ & \bs bigtriangledown   &$\bigtriangledown  $&\bs sim       &$\sim       $ &\bs searrow           &$\searrow           $& \bs prod          &$\prod        $ & \bs Pr            &$\Pr          $\\   \hline
+   \bs phi       &$\phi       $ & \bs oplus             &$\oplus            $&\bs simeq     &$\simeq     $ &\bs swarrow           &$\swarrow           $& \bs coprod        &$\coprod      $ & \bs lfloor        &$\lfloor      $\\   \hline
+   \bs varphi    &$\varphi    $ & \bs bigoplus          &$\bigoplus         $&\bs asymp     &$\asymp     $ &\bs nwarrow           &$\nwarrow           $& \bs int           &$\int         $ & \bs rfloor        &$\rfloor      $\\   \hline
+   \bs Phi       &$\Phi       $ & \bs models            &$\models           $&\bs approx    &$\approx    $ &\bs mid               &$\mid               $& \bs oint          &$\oint        $ & \bs lceil         &$\lceil       $\\   \hline
+   \bs chi       &$\chi       $ & \bs perp              &$\perp             $&\bs cong      &$\cong      $ &\bs parallel          &$\parallel          $& \bs breve\{\}     &$\breve{x}    $ & \bs rceil         &$\rceil       $\\   \hline
+   \bs psi       &$\psi       $ & \bs hat\{\}           &$\hat{x}           $&\bs neq       &$\neq       $ &\bs check\{\}         &$\check{x}          $& \bs tilde\{\}     &$\tilde{x}    $ & \bs langle        &$\langle      $\\   \hline
+   \bs Psi       &$\Psi       $ & \bs widehat\{\}       &$\widehat{x}       $&\bs doteq     &$\doteq     $ &\bs grave\{\}         &$\grave{x}          $& \bs widetilde\{\} &$\widetilde{x}$ & \bs rangle        &$\rangle      $\\   \hline
+   \bs omega     &$\omega     $ & \bs overleftarrow\{\} &$\overleftarrow{x} $&\bs propto    &$\propto    $ &\bs dot\{\}           &$\dot{x}            $& \bs vec\{\}       &$\vec{x}      $ &                   &$             $\\   \hline
+   \bs Omega     &$\Omega     $ & \bs overrightarrow\{\}&$\overrightarrow{x}$&\bs acute\{\} &$\acute{x}  $ &\bs ddot\{\}          &$\ddot{x}           $& \bs bar\{\}       &$\bar{x}      $ &                   &$             $\\   \hline
+   \bs overbrace &$\overbrace{A}$&\bs underbrace\{\}    &$\underbrace{A}    $&\bs lgroup    &$\lgroup    $ &\bs rgroup            &$\rgroup            $&                   &                &                   &               \\   \hline%
+    \end{tabular}}\\
+\bigskip
+\bigskip
+
+\centerline{Special characters in text mode}
+\begin{center}
+\hspace*{3mm}\scalebox{0.79}{
+\begin{tabular}{|@{\quad}l|c||@{\quad}l|c||@{\quad}l|c||@{\quad}l|c|
+                |@{\quad}l|c||@{\quad}l|c||@{\quad}l|c||@{\quad}l|c|
+                 @{\protect\rule[-4.5pt]{0pt}{15pt}}}  \hline
+  \makebox[11mm][l]{\bs'\{o\}           } & \'{o} &
+  \makebox[11mm][l]{\bs`\{o\}           } & \`{o} &
+  \makebox[11mm][l]{\bs$\hat{~}$\{o\}   } & \^{o} &
+  \makebox[11mm][l]{\bs"\{o\}           } & \"{o} &
+  \makebox[11mm][l]{\bs H\{o\}          } & \H{o} &
+  \makebox[11mm][l]{\bs $\tilde{~}$\{o\}} & \~{o} &
+  \makebox[11mm][l]{\bs .\{o\}          } & \.{o} &
+  \makebox[11mm][l]{\bs d\{o\}          } & \d{o} \\ \hline
+  \makebox[11mm][l]{\bs b\{o\}          } & \b{o} &
+  \makebox[11mm][l]{\bs t\{oo\}         } & \t{oo}&
+  \makebox[11mm][l]{\bs v\{o\}          } & \v{o} &
+  \makebox[11mm][l]{\bs u\{o\}          } & \u{o} &
+  \makebox[11mm][l]{\bs o               } & \o    &
+  \makebox[11mm][l]{\bs O               } & \O    &
+  \makebox[11mm][l]{\bs oe              } & \oe   &
+  \makebox[11mm][l]{\bs OE              } & \OE   \\ \hline
+  \makebox[11mm][l]{\bs ss              } & \ss   &
+  \makebox[11mm][l]{\bs c\{c\}          } & \c{c} &
+                                          &       &
+                                          &       &
+  \makebox[11mm][l]{\bs aa              } & \aa   &
+  \makebox[11mm][l]{\bs AA              } & \AA   &
+  \makebox[11mm][l]{\bs ae              } & \ae   &
+  \makebox[11mm][l]{\bs AE              } & \AE   \\ \hline
+\end{tabular}}
+\end{center}
+
+\newpage
+\centerline{Table of AMS symbols}
+\bigskip
+
+\hspace*{-9mm}\scalebox{0.79}{
+  \begin{tabular}{|l|c||l|c||l|c||l|c||l|c|}  \hline
+     \bs dots               &$\dots               $ & \bs looparrowleft    &$\looparrowleft    $& \bs sqsubset         &$\sqsubset         $ &\bs blacktriangleright&$\blacktriangleright$& \bs lvertneqq       &$\lvertneqq       $\\   \hline
+     \bs dotsc              &$\dotsc              $ & \bs looparrowright   &$\looparrowright   $& \bs sqsupset         &$\sqsupset         $ &\bs blacktriangleleft &$\blacktriangleleft $& \bs gvertneqq       &$\gvertneqq       $\\   \hline
+     \bs dotsb              &$\dotsb              $ & \bs upharpoonright   &$\upharpoonright   $& \bs nleq             &$\nleq             $ &\bs vartriangle       &$\vartriangle       $& \bs ncong           &$\ncong           $\\   \hline
+     \bs dotsm              &$\dotsm              $ & \bs leftrightharpoons&$\leftrightharpoons$& \bs ngeq             &$\ngeq             $ &\bs blacktriangle     &$\blacktriangle     $& \bs diagup          &$\diagup          $\\   \hline
+     \bs dotsi              &$\dotsi              $ & \bs rightleftharpoons&$\rightleftharpoons$& \bs nless            &$\nless            $ &\bs triangledown      &$\triangledown      $& \bs diagdown        &$\diagdown        $\\   \hline
+     \bs boxdot             &$\boxdot             $ & \bs downharpoonright &$\downharpoonright $& \bs ngtr             &$\ngtr             $ &\bs eqcirc            &$\eqcirc            $& \bs varsubsetneq    &$\varsubsetneq    $\\   \hline
+     \bs boxplus            &$\boxplus            $ & \bs upharpoonleft    &$\upharpoonleft    $& \bs nprec            &$\nprec            $ &\bs veebar            &$\veebar            $& \bs varsupsetneq    &$\varsupsetneq    $\\   \hline
+     \bs boxtimes           &$\boxtimes           $ & \bs downharpoonleft  &$\downharpoonleft  $& \bs nsucc            &$\nsucc            $ &\bs barwedge          &$\barwedge          $& \bs nsubseteqq      &$\nsubseteqq      $\\   \hline
+     \bs square             &$\square             $ & \bs Lsh              &$\Lsh              $& \bs lneqq            &$\lneqq            $ &\bs doublebarwedge    &$\doublebarwedge    $& \bs nsupseteqq      &$\nsupseteqq      $\\   \hline
+     \bs blacksquare        &$\blacksquare        $ & \bs Rsh              &$\Rsh              $& \bs gneqq            &$\gneqq            $ &\bs angle             &$\angle             $& \bs subsetneqq      &$\subsetneqq      $\\   \hline
+     \bs succsim            &$\succsim            $ & \bs circeq           &$\circeq           $& \bs nleqslant        &$\nleqslant        $ &\bs measuredangle     &$\measuredangle     $& \bs supsetneqq      &$\supsetneqq      $\\   \hline
+     \bs gtrsim             &$\gtrsim             $ & \bs multimap         &$\multimap         $& \bs ngeqslant        &$\ngeqslant        $ &\bs sphericalangle    &$\sphericalangle    $& \bs varsubsetneqq   &$\varsubsetneqq   $\\   \hline
+     \bs gtrapprox          &$\gtrapprox          $ & \bs binom\{\}\{\}    &$\binom{i}{j}      $& \bs lneq             &$\lneq             $ &\bs varpropto         &$\varpropto         $& \bs varsupsetneqq   &$\varsupsetneqq   $\\   \hline
+     \bs tfrac\{\}\{\}      &$\tfrac{a}{b}        $ & \bs tbinom\{\}\{\}   &$\tbinom{i}{j}     $& \bs gneq             &$\gneq             $ &\bs smallsmile        &$\smallsmile        $& \bs smallfrown      &$\smallfrown      $\\   \hline
+     \bs dfrac\{\}\{\}      &$\dfrac{a}{b}        $ & \bs dbinom\{\}\{\}   &$\dbinom{i}{j}     $& \bs sideset          &$\sideset{^*}{'}\sum$&\bs overset\{\}\{\}   &$\overset{a}{X}     $& \bs underset\{\}\{\}&$\underset{a}{X}  $\\   \hline
+     \bs centerdot          &$\centerdot          $ & \bs therefore        &$\therefore        $& \bs npreceq          &$\npreceq          $ &\bs subsetneq         &$\subsetneq         $& \bs supsetneq       &$\supsetneq       $\\   \hline
+     \bs lozenge            &$\lozenge            $ & \bs because          &$\because          $& \bs nsucceq          &$\nsucceq          $ &\bs nsubseteq         &$\nsubseteq         $& \bs nsupseteq       &$\nsupseteq       $\\   \hline
+     \bs blacklozenge       &$\blacklozenge       $ & \bs between          &$\between          $& \bs precnsim         &$\precnsim         $ &\bs Box               &$\Box               $& \bs nparallel       &$\nparallel       $\\   \hline
+     \bs circlearrowright   &$\circlearrowright   $ & \bs doteqdot         &$\doteqdot         $& \bs succnsim         &$\succnsim         $ &\bs Subset            &$\Subset            $& \bs nmid            &$\nmid            $\\   \hline
+     \bs circlearrowleft    &$\circlearrowleft    $ & \bs triangleq        &$\triangleq        $& \bs lnsim            &$\lnsim            $ &\bs Supset            &$\Supset            $& \bs nshortmid       &$\nshortmid       $\\   \hline
+     \bs boxminus           &$\boxminus           $ & \bs precsim          &$\precsim          $& \bs gnsim            &$\gnsim            $ &\bs Cup               &$\Cup               $& \bs nshortparallel  &$\nshortparallel  $\\   \hline
+     \bs twoheadrightarrow  &$\twoheadrightarrow  $ & \bs lesssim          &$\lesssim          $& \bs nleqq            &$\nleqq            $ &\bs Cap               &$\Cap               $& \bs Vdash           &$\Vdash           $\\   \hline
+     \bs twoheadleftarrow   &$\twoheadleftarrow   $ & \bs lessapprox       &$\lessapprox       $& \bs ngeqq            &$\ngeqq            $ &\bs curlywedge        &$\curlywedge        $& \bs Vvdash          &$\Vvdash          $\\   \hline
+     \bs leftleftarrows     &$\leftleftarrows     $ & \bs eqslantless      &$\eqslantless      $& \bs precneqq         &$\precneqq         $ &\bs curlyvee          &$\curlyvee          $& \bs vDash           &$\vDash           $\\   \hline
+     \bs rightrightarrows   &$\rightrightarrows   $ & \bs eqslantgtr       &$\eqslantgtr       $& \bs succneqq         &$\succneqq         $ &\bs leftthreetimes    &$\leftthreetimes    $& \bs nvdash          &$\nvdash          $\\   \hline
+     \bs upuparrows         &$\upuparrows         $ & \bs curlyeqprec      &$\curlyeqprec      $& \bs precnapprox      &$\precnapprox      $ &\bs rightthreetimes   &$\rightthreetimes   $& \bs nVdash          &$\nVdash          $\\   \hline
+     \bs downdownarrows     &$\downdownarrows     $ & \bs curlyeqsucc      &$\curlyeqsucc      $& \bs succnapprox      &$\succnapprox      $ &\bs subseteqq         &$\subseteqq         $& \bs nvDash          &$\nvDash          $\\   \hline
+     \bs rightarrowtail     &$\rightarrowtail     $ & \bs preccurlyeq      &$\preccurlyeq      $& \bs lnapprox         &$\lnapprox         $ &\bs supseteqq         &$\supseteqq         $& \bs nVDash          &$\nVDash          $\\   \hline
+     \bs leftarrowtail      &$\leftarrowtail      $ & \bs succcurlyeq      &$\succcurlyeq      $& \bs gnapprox         &$\gnapprox         $ &\bs bumpeq            &$\bumpeq            $& \bs ntrianglerighteq&$\ntrianglerighteq$\\   \hline
+     \bs leftrightarrows    &$\leftrightarrows    $ & \bs leqq             &$\leqq             $& \bs nsim             &$\nsim             $ &\bs Bumpeq            &$\Bumpeq            $& \bs ntrianglelefteq &$\ntrianglelefteq $\\   \hline
+     \bs rightleftarrows    &$\rightleftarrows    $ & \bs geqq             &$\geqq             $& \bs eqsim            &$\eqsim            $ &\bs lll               &$\lll               $& \bs ntriangleleft   &$\ntriangleleft   $\\   \hline
+     \bs Rrightarrow        &$\Rrightarrow        $ & \bs leqslant         &$\leqslant         $& \bs thicksim         &$\thicksim         $ &\bs ggg               &$\ggg               $& \bs ntriangleright  &$\ntriangleright  $\\   \hline
+     \bs nrightarrow        &$\nrightarrow        $ & \bs geqslant         &$\geqslant         $& \bs thickapprox      &$\thickapprox      $ &\bs circledS          &$\circledS          $& \bs divideontimes   &$\divideontimes   $\\   \hline
+     \bs nRightarrow        &$\nRightarrow        $ & \bs lessgtr          &$\lessgtr          $& \bs approxeq         &$\approxeq         $ &\bs pitchfork         &$\pitchfork         $& \bs varnothing      &$\varnothing      $\\   \hline
+     \bs Lleftarrow         &$\Lleftarrow         $ & \bs gtrless          &$\gtrless          $& \bs succapprox       &$\succapprox       $ &\bs dotplus           &$\dotplus           $& \bs nexists         &$\nexists         $\\   \hline
+     \bs nleftarrow         &$\nleftarrow         $ & \bs lesseqgtr        &$\lesseqgtr        $& \bs precapprox       &$\precapprox       $ &\bs backsim           &$\backsim           $& \bs Finv            &$\Finv            $\\   \hline
+     \bs nLeftarrow         &$\nLeftarrow         $ & \bs gtreqless        &$\gtreqless        $& \bs lhd              &$\lhd              $ &\bs backsimeq         &$\backsimeq         $& \bs Game            &$\Game            $\\   \hline
+     \bs nleftrightarrow    &$\nleftrightarrow    $ & \bs lesseqqgtr       &$\lesseqqgtr       $& \bs rhd              &$\rhd              $ &\bs complement        &$\complement        $& \bs mho             &$\mho             $\\   \hline
+     \bs nLeftrightarrow    &$\nLeftrightarrow    $ & \bs gtreqqless       &$\gtreqqless       $& \bs unlhd            &$\unlhd            $ &\bs intercal          &$\intercal          $& \bs backepsilon     &$\backepsilon     $\\   \hline
+     \bs rightsquigarrow    &$\rightsquigarrow    $ & \bs backprime        &$\backprime        $& \bs unrhd            &$\unrhd            $ &\bs circledcirc       &$\circledcirc       $& \bs digamma         &$\digamma         $\\   \hline
+     \bs leftrightsquigarrow&$\leftrightsquigarrow$ & \bs gtrdot           &$\gtrdot           $& \bs vartriangleright &$\vartriangleright $ &\bs circledast        &$\circledast        $& \bs varkappa        &$\varkappa        $\\   \hline
+     \bs leadsto            &$\leadsto            $ & \bs lessdot          &$\lessdot          $& \bs vartriangleleft  &$\vartriangleleft  $ &\bs circleddash       &$\circleddash       $& \bs Bbbk            &$\Bbbk            $\\   \hline%
+     \bs curvearrowleft     &$\curvearrowleft     $ & \bs risingdotseq     &$\risingdotseq     $& \bs trianglerighteq  &$\trianglerighteq  $ &\bs ltimes            &$\ltimes            $& \bs eth             &$\eth             $\\   \hline%
+     \bs curvearrowright    &$\curvearrowright    $ & \bs fallingdotseq    &$\fallingdotseq    $& \bs trianglelefteq   &$\trianglelefteq   $ &\bs rtimes            &$\rtimes            $& \bs beth            &$\beth            $\\   \hline%
+     \bs shortparallel      &$\shortparallel      $ & \bs hslash           &$\hslash           $& \bs bigstar          &$\bigstar          $ &\bs Join              &$\Join              $& \bs gimel           &$\gimel           $\\   \hline%
+     \bs shortmid           &$\shortmid           $ & \bs hbar             &$\hbar             $& \bs blacktriangledown&$\blacktriangledown$ &\bs Diamond           &$\Diamond           $& \bs daleth          &$\daleth          $\\   \hline%
+     \bs smallsetminus      &$\smallsetminus      $ &                              &$                  $&                              &$                  $ &                              &$                   $&                             &$                 $\\   \hline
+  \end{tabular}
+  }
+\newpage
+\centerline{Table of ding-font (package ``pifont'')}
+\bigskip
+
+\begin{center}
+\scalebox{1}{
+\begin{tabular}{|cc|cc|cc|cc|cc|cc|cc|cc|}  \hline
+  33 &  \ding{ 33}  & 57 & \ding{ 57}  &  81& \ding{ 81}  & 105& \ding{105}  & 161 & \ding{161}  & 185   & \ding{185}  & 209   & \ding{209}  & 233   & \ding{233}     \\   \hline
+  34 &  \ding{ 34}  & 58 & \ding{ 58}  &  82& \ding{ 82}  & 106& \ding{106}  & 162 & \ding{162}  & 186   & \ding{186}  & 210   & \ding{210}  & 234   & \ding{234}     \\   \hline
+  35 &  \ding{ 35}  & 59 & \ding{ 59}  &  83& \ding{ 83}  & 107& \ding{107}  & 163 & \ding{163}  & 187   & \ding{187}  & 211   & \ding{211}  & 235   & \ding{235}     \\   \hline
+  36 &  \ding{ 36}  & 60 & \ding{ 60}  &  84& \ding{ 84}  & 108& \ding{108}  & 164 & \ding{164}  & 188   & \ding{188}  & 212   & \ding{212}  & 236   & \ding{236}     \\   \hline
+  37 &  \ding{ 37}  & 61 & \ding{ 61}  &  85& \ding{ 85}  & 109& \ding{109}  & 165 & \ding{165}  & 189   & \ding{189}  & 213   & \ding{213}  & 237   & \ding{237}     \\   \hline
+  38 &  \ding{ 38}  & 62 & \ding{ 62}  &  86& \ding{ 86}  & 110& \ding{110}  & 166 & \ding{166}  & 190   & \ding{190}  & 214   & \ding{214}  & 238   & \ding{238}     \\   \hline
+  39 &  \ding{ 39}  & 63 & \ding{ 63}  &  87& \ding{ 87}  & 111& \ding{111}  & 167 & \ding{167}  & 191   & \ding{191}  & 215   & \ding{215}  & 239   & \ding{239}     \\   \hline
+  40 &  \ding{ 40}  & 64 & \ding{ 64}  &  88& \ding{ 88}  & 112& \ding{112}  & 168 & \ding{168}  & 192   & \ding{192}  & 216   & \ding{216}  & 240   & \ding{240}     \\   \hline
+  41 &  \ding{ 41}  & 65 & \ding{ 65}  &  89& \ding{ 89}  & 113& \ding{113}  & 169 & \ding{169}  & 193   & \ding{193}  & 217   & \ding{217}  & 241   & \ding{241}     \\   \hline
+  42 &  \ding{ 42}  & 66 & \ding{ 66}  &  90& \ding{ 90}  & 114& \ding{114}  & 170 & \ding{170}  & 194   & \ding{194}  & 218   & \ding{218}  & 242   & \ding{242}     \\   \hline
+  43 &  \ding{ 43}  & 67 & \ding{ 67}  &  91& \ding{ 91}  & 115& \ding{115}  & 171 & \ding{171}  & 195   & \ding{195}  & 219   & \ding{219}  & 243   & \ding{243}     \\   \hline
+  44 &  \ding{ 44}  & 68 & \ding{ 68}  &  92& \ding{ 92}  & 116& \ding{116}  & 172 & \ding{172}  & 196   & \ding{196}  & 220   & \ding{220}  & 244   & \ding{244}     \\   \hline
+  45 &  \ding{ 45}  & 69 & \ding{ 69}  &  93& \ding{ 93}  & 117& \ding{117}  & 173 & \ding{173}  & 197   & \ding{197}  & 221   & \ding{221}  & 245   & \ding{245}     \\   \hline
+  46 &  \ding{ 46}  & 70 & \ding{ 70}  &  94& \ding{ 94}  & 118& \ding{118}  & 174 & \ding{174}  & 198   & \ding{198}  & 222   & \ding{222}  & 246   & \ding{246}     \\   \hline
+  47 &  \ding{ 47}  & 71 & \ding{ 71}  &  95& \ding{ 95}  & 119& \ding{119}  & 175 & \ding{175}  & 199   & \ding{199}  & 223   & \ding{223}  & 247   & \ding{247}     \\   \hline
+  48 &  \ding{ 48}  & 72 & \ding{ 72}  &  96& \ding{ 96}  & 120& \ding{120}  & 176 & \ding{176}  & 200   & \ding{200}  & 224   & \ding{224}  & 248   & \ding{248}     \\   \hline
+  49 &  \ding{ 49}  & 73 & \ding{ 73}  &  97& \ding{ 97}  & 121& \ding{121}  & 177 & \ding{177}  & 201   & \ding{201}  & 225   & \ding{225}  & 249   & \ding{249}     \\   \hline
+  50 &  \ding{ 50}  & 74 & \ding{ 74}  &  98& \ding{ 98}  & 122& \ding{122}  & 178 & \ding{178}  & 202   & \ding{202}  & 226   & \ding{226}  & 250   & \ding{250}     \\   \hline
+  51 &  \ding{ 51}  & 75 & \ding{ 75}  &  99& \ding{ 99}  & 123& \ding{123}  & 179 & \ding{179}  & 203   & \ding{203}  & 227   & \ding{227}  & 251   & \ding{251}     \\   \hline
+  52 &  \ding{ 52}  & 76 & \ding{ 76}  & 100& \ding{100}  & 124& \ding{124}  & 180 & \ding{180}  & 204   & \ding{204}  & 228   & \ding{228}  & 252   & \ding{252}     \\   \hline
+  53 &  \ding{ 53}  & 77 & \ding{ 77}  & 101& \ding{101}  & 125& \ding{125}  & 181 & \ding{181}  & 205   & \ding{205}  & 229   & \ding{229}  & 253   & \ding{253}     \\   \hline
+  54 &  \ding{ 54}  & 78 & \ding{ 78}  & 102& \ding{102}  & 126& \ding{126}  & 182 & \ding{182}  & 206   & \ding{206}  & 230   & \ding{230}  & 254   & \ding{254}     \\   \hline
+  55 &  \ding{ 55}  & 79 & \ding{ 79}  & 103& \ding{103}  &    &             & 183 & \ding{183}  & 207   & \ding{207}  & 231   & \ding{231}  &       &                \\   \hline
+  56 &  \ding{ 56}  & 80 & \ding{ 80}  & 104& \ding{104}  &    &             & 184 & \ding{184}  & 208   & \ding{208}  & 232   & \ding{232}  &       &                \\   \hline
+\end{tabular}}
+\end{center}
+\end{document}
