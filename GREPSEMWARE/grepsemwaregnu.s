@@ -12,7 +12,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: program: run: search: grep: tse: gnu <description></description> <version control></version control> <version>1.0.0.0.5</version> <version control></version control> (filenamemacro=grepsemwaregnu.s) [<Program>] [<Research>] [kn, ri, sa, 03-12-2022 15:59:22]
+// library: program: run: search: grep: tse: gnu <description></description> <version control></version control> <version>1.0.0.0.8</version> <version control></version control> (filenamemacro=grepsemwaregnu.s) [<Program>] [<Research>] [kn, ri, sa, 03-12-2022 15:59:22]
 INTEGER PROC FNProgramRunSearchGrepTseGnuB()
  // e.g. PROC Main()
  // e.g.  Message( FNProgramRunSearchGrepTseGnuB() ) // gives e.g. TRUE
@@ -123,8 +123,11 @@ c:\temp\foobar2.txt
   IF NOT LFind( "^$", "cgx" )
    //
    GotoColumn( 3 ) // go past the first ':' after the drive letter
-   IF LFind( ":", "c" ) // search for the first filename
+   IF LFind( ":", "c" ) // search for the end of the first filename
     I1 = CurrCol()
+    //
+    // extract the first filename
+    //
     s1 = GetText( 1, I1 - 1 )
    ENDIF
    //
@@ -135,6 +138,9 @@ c:\temp\foobar2.txt
    GotoColumn( 3 ) // go past the first ':' after the drive letter
    IF LFind( ":", "c" ) // search for the filename below the current line
     I2 = CurrCol()
+    //
+    // extract the filename below the current line
+    //
     s2 = GetText( 1, I2 - 1 )
    ENDIF
    Up()
@@ -142,7 +148,8 @@ c:\temp\foobar2.txt
    // Warn( s1; s2 ) // debug
    // UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop // debug
    //
-   IF EquiStr( s1, s2 ) AND ( B == FALSE )
+   // IF ( EquiStr( s1, s2 ) AND ( B == FALSE ) ) OR ( ( NOT EquiStr( s1, s2 ) ) AND ( B == FALSE ) )
+   IF ( B == FALSE )
     B = TRUE
     InsertLine( Format( "File:", " ", s1 ) )
     Down()
