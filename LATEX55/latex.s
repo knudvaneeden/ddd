@@ -187,6 +187,8 @@ string LatexVersion[] = '5.5'
        lDos(cmd,cmf,_CREATE_NEW_CONSOLE_)
 ************************************************************************/
 
+STRING iniFileNameGS[255] = ".\latex55.ini"
+
 #ifndef EDITOR_VERSION
     #define EDITOR_VERSION 0
 #endif
@@ -428,6 +430,7 @@ end
          elseif n==1
                  Dos(cmd,1)
          else
+                 ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
                  Warn("Invalid option in mDos for NT")
          endif
      end
@@ -470,6 +473,7 @@ end
         elseif n==1
                 Dos(cmd,0)
         else
+                ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
                 Warn("Invalid option in mDos for 9X")
             endif
         endif
@@ -500,28 +504,29 @@ end
 //***************************************************************************************
 
 proc WriteSettings()
-        WriteProfileStr(LxSctn, c_txpth, txpth )
-        WriteProfileStr(LxSctn, c_gsvw , gsview)
-        WriteProfileStr(LxSctn, c_psnup, psnup )
-        WriteProfileStr(LxSctn, c_gzip , gzip  )
-        WriteProfileStr(LxSctn, c_tar  , tar   )
-        WriteProfileStr(LxSctn, c_pkzip, pkzip )
-        WriteProfileStr(LxSctn, c_acdst, acdist)
-        WriteProfileStr(LxSctn, c_myhlp, myhelp)
-        WriteProfileStr(LxSctn, c_tb2ps, Str(tb2ps) )
+        WriteProfileStr(LxSctn, c_txpth, txpth, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_gsvw , gsview, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_psnup, psnup, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_gzip , gzip, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_tar  , tar, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_pkzip, pkzip, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_acdst, acdist, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_myhlp, myhelp, iniFileNameGS )
+        WriteProfileStr(LxSctn, c_tb2ps, Str(tb2ps), iniFileNameGS )
 end
 
 proc GetSettings()
-        txpth  = GetProfileStr(LxSctn, c_txpth, '\texmf\miktex\bin\')
-        gsview = GetProfileStr(LxSctn, c_gsvw , '\gsview\gsview32.exe')
-        psnup  = GetProfileStr(LxSctn, c_psnup, '\psnup.exe')
-        gzip   = GetProfileStr(LxSctn, c_gzip , '\gzip.exe')
-        tar    = GetProfileStr(LxSctn, c_tar  , '\tar.exe')
-        pkzip  = GetProfileStr(LxSctn, c_pkzip, '\pkzip25.exe')
-        acdist = GetProfileStr(LxSctn, c_acdst, '\AcroDist.exe')
-        myhelp = GetProfileStr(LxSctn, c_myhlp, '\latex.hlp')
-        tb2ps  = Val(GetProfileStr(LxSctn, c_tb2ps, Str(0)))
+        txpth  = GetProfileStr(LxSctn, c_txpth, '\texmf\miktex\bin\', iniFileNameGS )
+        gsview = GetProfileStr(LxSctn, c_gsvw , '\gsview\gsview32.exe', iniFileNameGS )
+        psnup  = GetProfileStr(LxSctn, c_psnup, '\psnup.exe', iniFileNameGS )
+        gzip   = GetProfileStr(LxSctn, c_gzip , '\gzip.exe', iniFileNameGS )
+        tar    = GetProfileStr(LxSctn, c_tar  , '\tar.exe', iniFileNameGS )
+        pkzip  = GetProfileStr(LxSctn, c_pkzip, '\pkzip25.exe', iniFileNameGS )
+        acdist = GetProfileStr(LxSctn, c_acdst, '\AcroDist.exe', iniFileNameGS )
+        myhelp = GetProfileStr(LxSctn, c_myhlp, '\latex.hlp', iniFileNameGS )
+        tb2ps  = Val(GetProfileStr(LxSctn, c_tb2ps, Str(0), iniFileNameGS ) )
         if txpth == '\texmf\miktex\bin\'
+            ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
             Configure()
         endif
 end
@@ -560,9 +565,11 @@ end
 proc Configure()
         // looping allows us to refresh after each change
         while Options()
+              ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
               PolishConfig()
         endwhile
         // Alarm()
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         if MsgBox("","Save new settings ?",_OK_)
             WriteSettings()
         endif
@@ -600,6 +607,7 @@ menu LMenu()
 end  LMenu
 
 proc LatexMenu()
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         while LMenu()
         endwhile
 end
@@ -930,8 +938,9 @@ proc PgPsInit()
 
      WinL = min(38 + (CurrPos() - CurrXoffset())/2, Query(ScreenCols)-4)
      WinT = min( 5 + CurrRow()/2 , Query(ScreenRows)-22)
-
+     ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
      if not PopWinOpen(WinL,WinT,WinL+4,WinT+20,4,"ñ",ClrW)
+         ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
          Warn("Error opening popup window")
          Alarm()
          halt
@@ -1189,7 +1198,9 @@ integer proc PSView()
                return(1)
         endif
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',gsview+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
         return(1)
      endif
@@ -1211,7 +1222,9 @@ integer proc PSViewBlock()
                return(1)
         endif
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',gsview+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
      return(0)
@@ -1248,7 +1261,9 @@ proc PS2PDF()
         endif
         menu_history=2
      else
+           ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
            MsgBox('',acdist+ ' not found',_OK_)
+           ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
            Configure()
      endif
      ps_history = 1
@@ -1259,8 +1274,10 @@ proc DistCFG()
         lDos(acdist,'',_DONT_PROMPT_|_DONT_WAIT_|_RUN_DETACHED_)
         ps_history = 1
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',acdist+ ' not found',_OK_)
         ps_history = 5
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
      menu_history=19
@@ -1273,6 +1290,7 @@ proc PS2GZ()
               if CopyFile(UnQuote(psfile), Format(UnQuote(psfile),".tmp"), TRUE)
                 lDos(gzip,"-f "+QuotePath(psfile),1)
                 if not RenameDiskFile(Format(UnQuote(psfile),".tmp"),UnQuote(psfile))
+                   ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
                    Warn("No rename tmp-file possible")
                 endif
               else
@@ -1285,6 +1303,7 @@ proc PS2GZ()
         endif
         menu_history=2
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',gzip+ ' not found',_OK_)
         Configure()
      endif
@@ -1300,7 +1319,9 @@ proc PS2PKZ()
         endif
         menu_history=2
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',pkzip+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
      ps_history = 3
@@ -1324,7 +1345,9 @@ proc PS2PSNUP()
         endif
         menu_history=2
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',psnup+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
      ps_history = 4
@@ -1362,7 +1385,9 @@ proc F2GZ()
           endwhile
           zip_history = 1
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',gzip+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
 end  F2GZ
@@ -1391,7 +1416,9 @@ proc F2UGZ()
           endwhile
           zip_history = 2
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',gzip+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
 end  F2UGZ
@@ -1409,7 +1436,9 @@ proc F2PKZ()
           endwhile
           zip_history = 3
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',pkzip+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
 end  F2PKZ
@@ -1426,7 +1455,9 @@ proc F2UPKZ()
           endwhile
           zip_history = 4
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',pkzip+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
 end  F2UPKZ
@@ -1487,7 +1518,9 @@ proc F2TAR()
           endwhile
           zip_history = 5
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('','"'+tar+'" not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
 end  F2TAR
@@ -1509,6 +1542,7 @@ proc F2UTAR()
                 else
                    mkd = MkDir(s)
                    if not mkd
+                       ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
                        Warn('','Failed to create directory '+ QuotePath(s))
                    else
                        ChDir(s)
@@ -1523,7 +1557,9 @@ proc F2UTAR()
           endwhile
           zip_history = 6
      else
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         MsgBox('',tar+ ' not found',_OK_)
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
         Configure()
      endif
 end  F2UTAR
@@ -1565,6 +1601,7 @@ proc Dvi2PS()
           // this may be relieved by using lDos and split txtpth+dv2ps from the rest
        endif
        if length(psfn)==255
+          ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
           Warn("Note: "+psfn+ "may be incomplete")
        endif
        mDos(psfn,iif(prmpt,0,1))
@@ -1617,6 +1654,7 @@ integer proc TSE2GSview(string fn)
   SetForegroundWindow(hw)
   return(1)
 // else
+//  ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
 //  Warn("GSview not found")
 //  return(0)
  endif
@@ -2420,6 +2458,7 @@ proc LE_Init(integer crcl, integer cr)
      integer     WinL=Query(WindowX1), WinT=cr
 
      if not PopWinOpen(WinL,WinT,WinL+Query(WindowCols),WinT+2,0,"",ClrW)
+         ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
          Warn("Error opening popup window")
          Alarm()
          crcl = 0
@@ -3149,6 +3188,7 @@ proc LatComs()
 end  LatComs
 
 proc main()
+     ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
      Configure()
 end
 

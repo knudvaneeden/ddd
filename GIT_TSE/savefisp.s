@@ -27,9 +27,11 @@ FORWARD STRING PROC FNStringGetEmptyS()
 
 // --- MAIN --- //
 
-#DEFINE ELIST_INCLUDED FALSE
 //
+#DEFINE ELIST_INCLUDED FALSE
 #include [ "eList.s" ]
+//
+STRING iniFileNameGS[255] = ".\git_tse.ini"
 //
 PROC Main()
  //
@@ -41,6 +43,7 @@ PROC Main()
  //
  INTEGER B = FALSE
  //
+ // SetGlobalStr( "iniFileNameS", ".\git_tse.ini" ) // change this to .ini file in the current local directory
  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) ) // change this
  //
  // SetGlobalStr( "sectionS", "git_tse" ) // change this
@@ -220,8 +223,11 @@ PROC PROCMacroRunKeep( STRING macronameS )
  //
 END
 
-// library: program: run: git: tse: window <description></description> <version control></version control> <version>1.0.0.0.6</version> <version control></version control> (filenamemacro=runprtwi.s) [<Program>] [<Research>] [kn, ri, mo, 21-11-2022 12:31:19]
+// library: program: run: git: tse: window <description></description> <version control></version control> <version>1.0.0.0.11</version> <version control></version control> (filenamemacro=runprtwi.s) [<Program>] [<Research>] [kn, ri, mo, 21-11-2022 12:31:19]
 PROC PROCProgramRunPopupWindowPositionTse()
+ // e.g. //
+ // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  PROCProgramRunPopupWindowPositionTse()
  // e.g. END
@@ -316,11 +322,13 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.364</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.367</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
- // e.g. #DEFINE ELIST_INCLUDED FALSE
  // e.g. //
+ // e.g. #DEFINE ELIST_INCLUDED FALSE
  // e.g. #include [ "eList.s" ]
+ // e.g. //
+ // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
  // e.g. //
  // e.g. PROC Main()
  // e.g.  //
@@ -332,6 +340,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.  //
  // e.g.  INTEGER B = FALSE
  // e.g.  //
+ // e.g.  // SetGlobalStr( "iniFileNameS", ".\git_tse.ini" ) // change this to .ini file in the current local directory
  // e.g.  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) ) // change this
  // e.g.  //
  // e.g.  // SetGlobalStr( "sectionS", "git_tse" ) // change this
@@ -576,6 +585,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // Todo: Instead of passing a string to Dos(), create a batch .bat file then run Dos() on it
  //
+ // Todo: Create a Camtasia video for each of the projects [kn, ri, sa, 03-12-2022 05:09:43]
+ //
  // ===
  //
  // The most commonly used git commands are:
@@ -606,6 +617,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  // CHANGE: ONCE: BEGIN
  //
+ // STRING iniFileNameS[255] = ".\git_tse.ini" // change to local .ini file in the same directory
  STRING iniFileNameS[255] = GetGlobalStr( "iniFileNameS" ) // this is the ini file containing your parameters. Change this to an ini file of your choice. The default is tse.ini
  //
  STRING sectionS[255] = GetGlobalStr( "sectionS" ) // This is the section name that should be used in e.g. tse.ini. If you change it you must also change or add it additionally in the file e.g. tse.ini.
@@ -3835,8 +3847,11 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: program: run: dos: git <description></description> <version control></version control> <version>1.0.0.0.28</version> <version control></version control> (filenamemacro=runprdgi.s) [<Program>] [<Research>] [kn, ri, sa, 19-11-2022 13:41:15]
+// library: program: run: dos: git <description></description> <version control></version control> <version>1.0.0.0.35</version> <version control></version control> (filenamemacro=runprdgi.s) [<Program>] [<Research>] [kn, ri, sa, 19-11-2022 13:41:15]
 INTEGER PROC FNProgramRunGitTseOutputB( STRING s, STRING caseS, INTEGER dosB )
+ // e.g. //
+ // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  //
  // e.g.  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) )
@@ -3980,10 +3995,14 @@ INTEGER PROC FNMathGetNumberInputYesNoCancelPositionDefaultI( STRING infoS )
  //
 END
 
-// library: string: get: directory: repository: git: default <description></description> <version control></version control> <version>1.0.0.0.4</version> <version control></version control> (filenamemacro=getstrdj.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 22:34:38]
+// library: string: get: directory: repository: git: default <description></description> <version control></version control> <version>1.0.0.0.8</version> <version control></version control> (filenamemacro=getstrdj.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 22:34:38]
 STRING PROC FNStringGetDirectoryRepositoryGitDefaultS()
+ // e.g. //
+ // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  //
+ // e.g.  // SetGlobalStr( "iniFileNameS", ".\git_tse.ini" ) // change this to .ini file in the current local directory
  // e.g.  SetGlobalStr( "iniFileNameS", QuotePath( Format( AddTrailingSlash( LoadDir() ), "tse.ini" ) ) ) // change this
  // e.g.  //
  // e.g.  // SetGlobalStr( "sectionS", "git_tse" ) // change this
@@ -4058,8 +4077,11 @@ STRING PROC FNStringGetDirectoryRepositoryGitDefaultS()
  //
 END
 
-// library: program: run: git: tse: pause <description></description> <version control></version control> <version>1.0.0.0.3</version> <version control></version control> (filenamemacro=runprtpa.s) [<Program>] [<Research>] [kn, ri, sa, 26-11-2022 21:26:59]
+// library: program: run: git: tse: pause <description></description> <version control></version control> <version>1.0.0.0.5</version> <version control></version control> (filenamemacro=runprtpa.s) [<Program>] [<Research>] [kn, ri, sa, 26-11-2022 21:26:59]
 PROC PROCProgramRunGitTsePause()
+ // e.g. //
+ // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  PROCProgramRunGitTsePause()
  // e.g. END

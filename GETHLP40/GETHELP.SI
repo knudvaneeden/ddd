@@ -8,6 +8,8 @@
 
 STRING loadDirGS[255] = "" // [kn, ri, fr, 02-12-2022 01:20:32]
 
+STRING iniFileNameGS[255] = ".\gethlp40.ini" // [kn, ri, sa, 03-12-2022 19:52:37]
+
 #ifndef WIN32
 proc COMPILE_ERROR()
 GETHELP_needs_TSE_2_6_or_higher

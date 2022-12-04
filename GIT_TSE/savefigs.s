@@ -6,6 +6,9 @@ FORWARD PROC PROCProgramRunPopupWindowPositionTse()
 
 // --- MAIN --- //
 
+//
+#INCLUDE [ "git_tse.inc" ]
+//
 PROC Main()
  //
  PROCProgramRunPopupWindowPositionTse()
@@ -17,8 +20,11 @@ END
 
 // --- LIBRARY --- //
 
-// library: program: run: git: tse: window <description></description> <version control></version control> <version>1.0.0.0.4</version> <version control></version control> (filenamemacro=runprtwi.s) [<Program>] [<Research>] [kn, ri, mo, 21-11-2022 12:31:19]
+// library: program: run: git: tse: window <description></description> <version control></version control> <version>1.0.0.0.9</version> <version control></version control> (filenamemacro=runprtwi.s) [<Program>] [<Research>] [kn, ri, mo, 21-11-2022 12:31:19]
 PROC PROCProgramRunPopupWindowPositionTse()
+ // e.g. //
+ // e.g. #INCLUDE [ "git_tse.inc" ]
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  PROCProgramRunPopupWindowPositionTse()
  // e.g. END
@@ -79,6 +85,8 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
  INTEGER B = FALSE
  //
+ STRING caseS[255] = ""
+ //
  STRING sectionS[255] = GetGlobalStr( "sectionS" )
  //
  IF EquiStr( Trim( sectionS ), "" )
@@ -87,22 +95,35 @@ PROC PROCProgramRunPopupWindowPositionTse()
   //
  ELSE
   //
-  IF sectionS == "git_tse_knud"
-   //
-   ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
-   //
-  ELSE
-   //
-   B = FNWindowSetCenterPopupOnB()
-   //
-  ENDIF
+  caseS = sectionS
   //
+  CASE caseS
+   //
+   WHEN "git_tse"
+    //
+    B = FNWindowSetCenterPopupOnB()
+    //
+   WHEN "git_tse_knud"
+    //
+    ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
+    //
+   OTHERWISE
+    //
+    Warn( "PROCProgramRunPopupWindowPositionTse(", " ", "case", " ", ":", " ", caseS, ": not known" )
+    //
+    RETURN()
+    //
+  ENDCASE
+ //
  ENDIF
  //
 END
 
-// library: file: save: file: version: control: git: simplest <description></description> <version control></version control> <version>1.0.0.0.6</version> <version control></version control> (filenamemacro=savefigs.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 02:04:54]
+// library: file: save: file: version: control: git: simplest <description></description> <version control></version control> <version>1.0.0.0.13</version> <version control></version control> (filenamemacro=savefigs.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 02:04:54]
 MENU MENUFileSaveFileVersionControlGitSimplest()
+ // e.g. //
+ // e.g. #INCLUDE [ "git_tse.inc" ]
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  //
  // e.g.  PROCProgramRunPopupWindowPositionTse()

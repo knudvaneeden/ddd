@@ -4,6 +4,9 @@ FORWARD PROC Main()
 
 // --- MAIN --- //
 
+//
+STRING iniFileNameGS[255] = ".\git_tse.ini"
+//
 PROC Main()
  Message( FNFileSaveFileVersionControlGitSimplestInitializeB() ) // gives e.g. TRUE
 END
@@ -12,8 +15,11 @@ END
 
 // --- LIBRARY --- //
 
-// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.8</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
+// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.10</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestInitializeB()
+ // e.g. //
+ // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
+ // e.g. //
  // e.g. PROC Main()
  // e.g.  Message( FNFileSaveFileVersionControlGitSimplestInitializeB() ) // gives e.g. TRUE
  // e.g. END

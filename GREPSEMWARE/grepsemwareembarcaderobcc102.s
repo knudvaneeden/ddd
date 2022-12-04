@@ -12,7 +12,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: program: run: search: grep: tse: embarcaderobcc102 <description></description> <version control></version control> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=grepsemwareembarcaderobcc102.s) [<Program>] [<Research>] [kn, ri, su, 04-12-2022 22:34:42]
+// library: program: run: search: grep: tse: embarcaderobcc102 <description></description> <version control></version control> <version>1.0.0.0.2</version> <version control></version control> (filenamemacro=grepsemwareembarcaderobcc102.s) [<Program>] [<Research>] [kn, ri, su, 04-12-2022 22:34:42]
 INTEGER PROC FNProgramRunSearchGrepTseEmbarcaderobcc102B()
  // e.g. PROC Main()
  // e.g.  Message( FNProgramRunSearchGrepTseEmbarcaderobcc102B() ) // gives e.g. TRUE
@@ -111,13 +111,6 @@ c:\temp\foobar2.txt
  PushPosition()
  PushBlock()
  //
- // delete any lines not starting with a filename (e.g. C:, D:, E:, ...). Goal is to remove Embarcaderobcc102 warnings, ...
- //
- GotoBlockBegin()
- WHILE NOT LFind( "^[A-Za-z]:", "cgix" )
-  DelLine()
- ENDWHILE
- //
  GotoBlockEnd()
  AddLine( "Q" )
  //
@@ -130,7 +123,7 @@ c:\temp\foobar2.txt
   IF NOT LFind( "^$", "cgx" )
    //
    GotoColumn( 3 ) // go past the first ':' after the drive letter
-   IF LFind( ":", "c" ) // search for the end of the first filename
+   IF LFind( "[ :]", "cx" ) // search for the end of the first filename
     I1 = CurrCol()
     //
     // extract the first filename
@@ -143,7 +136,7 @@ c:\temp\foobar2.txt
    //
    Down()
    GotoColumn( 3 ) // go past the first ':' after the drive letter
-   IF LFind( ":", "c" ) // search for the filename below the current line
+   IF LFind( "[ :]", "cx" ) // search for the filename below the current line
     I2 = CurrCol()
     //
     // extract the filename below the current line
@@ -152,10 +145,6 @@ c:\temp\foobar2.txt
    ENDIF
    Up()
    //
-   // Warn( s1; s2 ) // debug
-   // UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop // debug
-   //
-   // IF ( EquiStr( s1, s2 ) AND ( B == FALSE ) ) OR ( ( NOT EquiStr( s1, s2 ) ) AND ( B == FALSE ) )
    IF ( B == FALSE )
     B = TRUE
     InsertLine( Format( "File:", " ", s1 ) )
@@ -173,14 +162,6 @@ c:\temp\foobar2.txt
    GotoColumn( I1 )
    MarkStream()
    Cut()
-   // BegLine()
-   // IF LFind( "[0-9]#\c", "cx" )
-   //  InsertText( ":", _INSERT_ )
-   // ENDIF
-   // Right()
-   // WHILE CurrChar() == Asc( " " )
-   // DelChar()
-   // ENDWHILE
    PopBlock()
    PopPosition()
    //

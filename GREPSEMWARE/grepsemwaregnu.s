@@ -145,10 +145,6 @@ c:\temp\foobar2.txt
    ENDIF
    Up()
    //
-   // Warn( s1; s2 ) // debug
-   // UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop // debug
-   //
-   // IF ( EquiStr( s1, s2 ) AND ( B == FALSE ) ) OR ( ( NOT EquiStr( s1, s2 ) ) AND ( B == FALSE ) )
    IF ( B == FALSE )
     B = TRUE
     InsertLine( Format( "File:", " ", s1 ) )
@@ -166,14 +162,6 @@ c:\temp\foobar2.txt
    GotoColumn( I1 )
    MarkStream()
    Cut()
-   // BegLine()
-   // IF LFind( "[0-9]#\c", "cx" )
-   //  InsertText( ":", _INSERT_ )
-   // ENDIF
-   // Right()
-   // WHILE CurrChar() == Asc( " " )
-   // DelChar()
-   // ENDWHILE
    PopBlock()
    PopPosition()
    //

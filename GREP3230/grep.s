@@ -22,6 +22,8 @@
 ///////////////////////////////////////////////////////////////////////////
 // Definitions
 
+STRING iniFileNameGS[255] = ".\grep3230.ini"
+
 // these should either be defined to 1, or not defined at all
 //#define DEBUG 1
 #define AUTO_HILITE 1			// AUTO_HILITE:	 hilite filename lines via TSE's _DISPLAY_FINDS_ mode
@@ -359,16 +361,16 @@ proc XferSettings(integer fLoad)
 	#endif
 
 	if fLoad
-		UpdateHistoryStr(GetProfileStr(section, GrepOptions, "vm"), hist_opts)
-		UpdateHistoryStr(GetProfileStr(section, GrepExclude, stDefExcl), hist_excl)
+		UpdateHistoryStr(GetProfileStr(section, GrepOptions, "vm", iniFileNameGS ), hist_opts)
+		UpdateHistoryStr(GetProfileStr(section, GrepExclude, stDefExcl, iniFileNameGS ), hist_excl)
 		#ifdef CONTEXT_WINDOW
-		g_fCtxWin = GetProfileInt(section, GrepCtxWin, TRUE)
+		g_fCtxWin = GetProfileInt(section, GrepCtxWin, TRUE, iniFileNameGS )
 		#endif
 	else
-		WriteProfileStr(section, GrepOptions, g_opts)
-		WriteProfileStr(section, GrepExclude, g_excl)
+		WriteProfileStr(section, GrepOptions, g_opts, iniFileNameGS )
+		WriteProfileStr(section, GrepExclude, g_excl, iniFileNameGS )
 		#ifdef CONTEXT_WINDOW
-		WriteProfileInt(section, GrepCtxWin, g_fCtxWin)
+		WriteProfileInt(section, GrepCtxWin, g_fCtxWin, iniFileNameGS )
 		#endif
 	endif
 
