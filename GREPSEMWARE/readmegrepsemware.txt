@@ -3,7 +3,9 @@ of using the default
 
 1. -TSE Semware grep.exe (located in your <TSE> installation
     directory) to optionally and alternatively also do the
-    grep using
+    grep using e.g.
+
+     TSE Semware grep
 
      GNU grep
 
@@ -25,7 +27,7 @@ of using the default
     included, so has be performed by yourself, by
     downloading and installing these from the Internet
 
-    So you will have to install the relevant for your grep
+    So you will have to install the relevant for you grep
     implementations (e.g. only GNU).
 
 3. -Further do you have to put the full path to TSE Semware
@@ -191,6 +193,10 @@ to see options.
       --directories=recurse
 
      (in TSE Semware grep this has to be '-s' for example)
+
+19. -Disclaimer: Feel free to use this software anyway you
+                 wamt, but if you use it it is always at
+                 your own risk.
 
 with friendly greetings
 Knud van Eeden
