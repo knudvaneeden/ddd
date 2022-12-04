@@ -1,2 +1,0 @@
-PROC Main()
-END

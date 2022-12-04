@@ -241,7 +241,6 @@ proc Main()
     STRING grep07S[255] = GetProfileStr( "grepsemware", "grep07S", "", iniFileNameGS )
     STRING grep08S[255] = GetProfileStr( "grepsemware", "grep08S", "", iniFileNameGS )
     STRING grep09S[255] = GetProfileStr( "grepsemware", "grep09S", "", iniFileNameGS )
-    STRING grep10S[255] = GetProfileStr( "grepsemware", "grep10S", "", iniFileNameGS )
     //
     PushPosition()
     bufferI = CreateTempBuffer()
@@ -260,7 +259,6 @@ proc Main()
     AddLine( grep07S )
     AddLine( grep08S )
     AddLine( grep09S )
-    AddLine( grep10S )
     //
     GotoLine( 1 )
     ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
@@ -352,6 +350,12 @@ proc Main()
               //
             //
             options = Format( options, " ", optionGrepGS )
+            //
+            // replace always in all the filenames the backslash '\' by the '/' (because of many grep implementations expect that).
+            //
+            // IF EquiStr( nameGrepGS, "cygwin" )
+             files = StrReplace( "\", files, "/", "" )
+            // ENDIF
             //
             // ok = lDOS(tee32, format(grep;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // old [kn, ri, fr, 02-12-2022 03:53:21]
             ok = lDOS(tee32, format(executableGrepGS;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // new [kn, ri, fr, 02-12-2022 03:53:24]
