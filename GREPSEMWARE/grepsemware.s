@@ -17,27 +17,9 @@
               15 Dec 2010 SEM - Fix problem in making the filename ViewFinds
                 compatible.
 
-  Date:       30 November 2022 - by Knud van Eeden
-
-1. -Add the path to your different grep.exe to your tse.ini file (insert at the bottom)
-
-[grepsemware]
-executableGrep01S=grep.exe
-executableGrep02S=g:\search\regularexpression\gnu\bin\grep.exe
-executableGrep03S=g:\search\regularexpression\pcregrep\pcre2grep.exe
-executableGrep04S=g:\borland\bcc55\bin\grep.exe
-executableGrep05S=g:\borland\bcc102\bin\grep.exe
-executableGrep06S=g:\cygwin\bin\grep.exe
-executableGrep07S=g:\dropbox\-\program files\crisp\bin.win64\grep.exe
-executableGrep08S=g:\language\computer\cpp\mingw\msys\1.0\bin\grep.exe
-executableGrep09S=g:\language\computer\julia\git\bin\grep.exe
-executableGrep10S=g:\language\computer\octave\octave-4.2.0-w64\bin\grep.exe
-//
-// leave this line below here as the last entry (it acts like a sentinel)
-//
-executableGrep10S=last
-
-===
+  Date:       30 November 2022 - Add the name and path to your different
+              grep.exe in your grepsemware.ini file.
+              by Knud van Eeden
 
   Overview:
 
@@ -63,8 +45,11 @@ executableGrep10S=last
 *************************************************************************/
 
 STRING iniFileNameGS[255] = ".\grepsemware.ini"
-
+STRING grepGS[255] = ""
+STRING nameGrepGS[255] = ""
+STRING macroGrepGS[255] = ""
 STRING executableGrepGS[255] = ""
+STRING optionGrepGS[255] = ""
 
 string grep[_MAX_PATH_]
 string tee32[_MAX_PATH_]
@@ -212,9 +197,14 @@ proc DisplayPromptInfo(integer x, integer y, string prompt, string s)
     PutStrXY(x + 9,y,s,Query(MenuTextAttr))
 end
 
-string search [128] = ""
-string files  [128] = "*.c *.h *.s"
-string options[128] = "-i -x"
+// string search [128] = ""
+string search [128] = '" <your search>"'
+
+// string files  [128] = "*.c *.h *.s"
+string files  [128] = ""
+
+// string options[128] = "-i -x"
+string options[128] = "-is"
 
 integer grep_id
 forward proc ViewGrepResults(integer here_before)
@@ -242,27 +232,16 @@ proc Main()
     STRING s1[255] = ""
     INTEGER bufferI = 0
     //
-    STRING executableGrep01S[255] = ""
-    STRING executableGrep02S[255] = ""
-    STRING executableGrep03S[255] = ""
-    STRING executableGrep04S[255] = ""
-    STRING executableGrep05S[255] = ""
-    STRING executableGrep06S[255] = ""
-    STRING executableGrep07S[255] = ""
-    STRING executableGrep08S[255] = ""
-    STRING executableGrep09S[255] = ""
-    STRING executableGrep10S[255] = ""
-    //
-    executableGrep01S = GetProfileStr( "grepsemware", "executableGrep01S", "grep.exe", iniFileNameGS )
-    executableGrep02S = GetProfileStr( "grepsemware", "executableGrep02S", "grep.exe", iniFileNameGS )
-    executableGrep03S = GetProfileStr( "grepsemware", "executableGrep03S", "grep.exe", iniFileNameGS )
-    executableGrep04S = GetProfileStr( "grepsemware", "executableGrep04S", "grep.exe", iniFileNameGS )
-    executableGrep05S = GetProfileStr( "grepsemware", "executableGrep05S", "grep.exe", iniFileNameGS )
-    executableGrep06S = GetProfileStr( "grepsemware", "executableGrep06S", "grep.exe", iniFileNameGS )
-    executableGrep07S = GetProfileStr( "grepsemware", "executableGrep07S", "grep.exe", iniFileNameGS )
-    executableGrep08S = GetProfileStr( "grepsemware", "executableGrep08S", "grep.exe", iniFileNameGS )
-    executableGrep09S = GetProfileStr( "grepsemware", "executableGrep09S", "grep.exe", iniFileNameGS )
-    executableGrep10S = GetProfileStr( "grepsemware", "executableGrep10S", "grep.exe", iniFileNameGS )
+    STRING grep01S[255] = GetProfileStr( "grepsemware", "grep01S", "", iniFileNameGS )
+    STRING grep02S[255] = GetProfileStr( "grepsemware", "grep02S", "", iniFileNameGS )
+    STRING grep03S[255] = GetProfileStr( "grepsemware", "grep03S", "", iniFileNameGS )
+    STRING grep04S[255] = GetProfileStr( "grepsemware", "grep04S", "", iniFileNameGS )
+    STRING grep05S[255] = GetProfileStr( "grepsemware", "grep05S", "", iniFileNameGS )
+    STRING grep06S[255] = GetProfileStr( "grepsemware", "grep06S", "", iniFileNameGS )
+    STRING grep07S[255] = GetProfileStr( "grepsemware", "grep07S", "", iniFileNameGS )
+    STRING grep08S[255] = GetProfileStr( "grepsemware", "grep08S", "", iniFileNameGS )
+    STRING grep09S[255] = GetProfileStr( "grepsemware", "grep09S", "", iniFileNameGS )
+    STRING grep10S[255] = GetProfileStr( "grepsemware", "grep10S", "", iniFileNameGS )
     //
     PushPosition()
     bufferI = CreateTempBuffer()
@@ -272,20 +251,20 @@ proc Main()
     PushBlock()
     GotoBufferId( bufferI )
     //
-    AddLine( executableGrep01S )
-    AddLine( executableGrep02S )
-    AddLine( executableGrep03S )
-    AddLine( executableGrep04S )
-    AddLine( executableGrep05S )
-    AddLine( executableGrep06S )
-    AddLine( executableGrep07S )
-    AddLine( executableGrep08S )
-    AddLine( executableGrep09S )
-    AddLine( executableGrep10S )
+    AddLine( grep01S )
+    AddLine( grep02S )
+    AddLine( grep03S )
+    AddLine( grep04S )
+    AddLine( grep05S )
+    AddLine( grep06S )
+    AddLine( grep07S )
+    AddLine( grep08S )
+    AddLine( grep09S )
+    AddLine( grep10S )
     //
     GotoLine( 1 )
     ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
-    IF List( "Choose an executable grep", 80 )
+    IF List( "Choose the name of a grep", 80 )
      s1 = Trim( GetText( 1, 255 ) )
     ELSE
      AbandonFile( bufferI )
@@ -297,7 +276,12 @@ proc Main()
     //
     // do something with s1
     //
-    executableGrepGS = s1
+    grepGS = s1
+    //
+    nameGrepGS = GetToken( grepGS, ",", 1 )
+    macroGrepGS = GetToken( grepGS, ",", 2 )
+    optionGrepGS = GetToken( grepGS, ",", 3 )
+    executableGrepGS = GetToken( grepGS, ",", 4 )
     //
     search  = GetHistoryStr(search_hist, 1)
     files   = GetHistoryStr(files_hist, 1)
@@ -306,9 +290,25 @@ proc Main()
     grep_fn = TempPath()
     exec = FALSE
     Set(Attr, Query(MenuTextAttr))
-    if PopWin("Grep ["+CurrDir()+"]", iif(Query(ScreenCols) > 68, 68, Query(ScreenCols)), 5)
+    if PopWin("Grep" + " " + nameGrepGS + " "+ "["+CurrDir()+"]", iif(Query(ScreenCols) > 68, 68, Query(ScreenCols)), 5)
         ClrScr()
+        //
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
+        Warn( "<CtrlAltShift K> ViewGrepResults" )
         WindowFooter("{Enter}-Execute  {Escape}-Abort  {Tab}-Next field")
+        //
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
+        Ask( "{S}earch:", search, _FIND_HISTORY_ ) // new [kn, ri, su, 19-03-2006 01:04:35]
+        AddHistoryStr( search, _FIND_HISTORY_) // new [kn, ri, su, 19-03-2006 01:04:49]
+        //
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
+        Ask( "{F}iles:", files, _EDIT_HISTORY_ ) // new [kn, ri, sa, 20-11-2010 20:54:14]
+        AddHistoryStr( files, _EDIT_HISTORY_) // new [kn, ri, su, 19-03-2006 01:04:49]
+        //
+        ExecMacro( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
+        Ask( "{O}ptions:", options, _FINDOPTIONS_HISTORY_ ) // new [kn, ri, su, 19-03-2006 01:04:35]
+        AddHistoryStr( options, _EDIT_HISTORY_) // new [kn, ri, su, 19-03-2006 01:04:49]
+        //
         DisplayPromptInfo(1,1,"{S}earch:" ,search)
         DisplayPromptInfo(1,2,"{F}iles:"  ,files)
         DisplayPromptInfo(1,3,"{O}ptions:",options)
@@ -350,9 +350,9 @@ proc Main()
 //                SetVideoRowsCols(25, 80)
 //            endif
               //
-            IF NOT EquiStr( executableGrepGS, executableGrep01S ) // if not TSE grep.exse but another grep (e.g. GNU)
-             options = Format( options, " ", "-n -H" )
-            ENDIF
+            //
+            options = Format( options, " ", optionGrepGS )
+            //
             // ok = lDOS(tee32, format(grep;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // old [kn, ri, fr, 02-12-2022 03:53:21]
             ok = lDOS(tee32, format(executableGrepGS;options;"-n";QuotePath(search);files;">";grep_fn),_DONT_PROMPT_|_TEE_OUTPUT_) // new [kn, ri, fr, 02-12-2022 03:53:24]
 //            SetVideoRowsCols(rows, cols)
@@ -364,19 +364,17 @@ proc Main()
                     BufferType(_SYSTEM_)
                     ReplaceFile(grep_fn,_OVERWRITE_)
                     //
-                    IF NOT EquiStr( executableGrepGS, executableGrep01S ) // if not TSE grep.exse but another grep (e.g. GNU)
-                     //
-                     // if Gnu you must use options -n -H
-                     //
-                     PushBlock()
-                     PushPosition()
-                     MarkLine( 1, NumLines() )
-                     ExecMacro( "grepsemwaregnu.mac" )
-                     PopPosition()
-                     PopBlock()
-                     //
-                    ENDIF
-                    ///
+                    // Halt // debug
+                    //
+                    PushBlock()
+                    PushPosition()
+                    MarkLine( 1, NumLines() )
+                    //
+                    ExecMacro( Format( macroGrepGS, " ", options ) ) // call the macro, but also pass the options (e.g. in TSE check for '-f'
+                    //
+                    PopPosition()
+                    PopBlock()
+                    //
                     if lFind("File: ","^g")
                         repeat
                             GotoPos(FN_POS)
@@ -464,4 +462,5 @@ proc WhenLoaded()
 end
 
 //<Alt G>     Main()
-<CtrlAlt G> ViewGrepResults(TRUE)
+// <CtrlAlt G> ViewGrepResults(TRUE)
+<CtrlAltShift K> ViewGrepResults(TRUE)
