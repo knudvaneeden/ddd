@@ -195,7 +195,7 @@ to see options.
      (in TSE Semware grep this has to be '-s' for example)
 
 19. -Disclaimer: Feel free to use this software anyway you
-                 wamt, but if you use it it is always at
+                 want, but if you use it it is always at
                  your own risk.
 
 with friendly greetings
