@@ -325,10 +325,12 @@ proc Context(integer n, integer fDown, integer id)
 			break
 		endif
 		if fDown
-			AddLine(Format(CurrLine():6, '  ',
+			// AddLine(Format(CurrLine():6, '  ',
+			AddLine(Format(CurrLine():10, '  ',
 					GetText(1, CurrLineLen())), id)
 		else
-			InsertLine(Format(CurrLine():6, '  ',
+			// InsertLine(Format(CurrLine():6, '  ',
+			InsertLine(Format(CurrLine():10, '  ',
 					GetText(1, CurrLineLen())), id)
 		endif
 	endfor
@@ -1064,7 +1066,8 @@ proc NonEditIdle()
 		g_nColOfsPrev = g_nColOfs
 
 		// get line number
-		ln = Val(GetText(1, 8))
+		// ln = Val(GetText(1, 8))
+		ln = Val(GetText(1, 20))
 
 		// get filename
 		PushPosition()
@@ -1767,7 +1770,8 @@ endif
 				endif
 
 				// add match to results buffer
-				i = AppendToBuffer(id, Format(CurrLine():6, ': ',
+				// i = AppendToBuffer(id, Format(CurrLine():6, ': ',
+				i = AppendToBuffer(id, Format(CurrLine():10, ': ',
 											  GetText(1, CurrLineLen())))
 
 				// record which line to highlight in results list
@@ -1796,7 +1800,8 @@ endif
 					if Length(s) > 240
 						s = DelStr(s, 241, 50)+"..."
 					endif
-					WriteLine(CurrLine():6, ': ', s)
+					// WriteLine(CurrLine():6, ': ', s)
+					WriteLine(CurrLine():10, ': ', s)
 				endif
 
 				if not InteractiveKeys()
@@ -2646,7 +2651,8 @@ retry:
 			else
 				fTwoWindows = (Query(Key) == <Ctrl Enter>)
 				PushPosition()
-				ln = Val(GetText(1, 8))
+				// ln = Val(GetText(1, 8))
+				ln = Val(GetText(1, 20))
 				EndLine()
 				if lFind(prefix, "^b")
 					path = QuotePath(ExtractFilename())
@@ -2869,7 +2875,6 @@ integer proc Engine(string _needle, string szOpts, string filespec, string exclu
 				opts = opts + szOpts[i]
 		endcase
 	endfor
-
 	// for safety (and speed)
 	hs = SetHookState(OFF)
 
