@@ -123,9 +123,28 @@ grep09S=octave, grepsemwareoctave, -n -H, g:\language\computer\octave\octave-4.2
      that of the installation of your grep (e.g. GNU,
      pcre2grep, ...), backup and save the file.
 
+16. -The TSE macro files
+
+      grepsemwaretse.s
+      grepsemwaregnu.s
+      grepsemwarepcre2grep.s
+      grepsemwareembarcaderobcc55.s
+      grepsemwarembarcaderobcc102.s
+      grepsemwarecygwin.s
+      grepsemwaremingw.s
+      grepsemwarejulia.s
+      grepsemwareoctave.s
+
+     files take care of removing any non-relevant text
+     and converting the lines
+
+      filename : linenumber : found text
+
+     to the default TSE grep notation
+
 ---
 
-16. -The method used to run these different grep versions is
+17. -The method used to run these different grep versions is
      to
 
 a. force those different grep versions to always include
@@ -174,7 +193,7 @@ c:\temp\foobar2.txt
 4: a
 --- cut here: end ----------------------------------------------------
 
-17. -Note further that you yourself will have to choose the
+18. -Note further that you yourself will have to choose the
      correct search option parameters for each of the grep.
 
       type e.g.
@@ -187,14 +206,14 @@ c:\temp\foobar2.txt
 
 to see options.
 
-18. -To recursively search directories you use for most
+19. -To recursively search directories you use for most
      implementations e.g.
 
       --directories=recurse
 
      (in TSE Semware grep this has to be '-s' for example)
 
-19. -Disclaimer: Feel free to use this software anyway you
+20. -Disclaimer: Feel free to use this software anyway you
                  want, but if you use it it is always at
                  your own risk.
 
