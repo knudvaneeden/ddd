@@ -126,16 +126,26 @@ grep09S=octave, grepsemwareoctave, -n -H, g:\language\computer\octave\octave-4.2
 16. -The TSE macro files
 
       grepsemwaretse.s
+
       grepsemwaregnu.s
+
       grepsemwarepcre2grep.s
+
       grepsemwareembarcaderobcc55.s
+
       grepsemwarembarcaderobcc102.s
+
       grepsemwarecygwin.s
+
       grepsemwaremingw.s
+
       grepsemwarejulia.s
+
       grepsemwareoctave.s
 
-     files take care of removing any non-relevant text
+      ...
+
+     take care of removing any non-relevant text
      and converting the lines
 
       filename : linenumber : found text
