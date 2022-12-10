@@ -8,6 +8,8 @@ sc32 grep3230.s
 sc32 grepdlg.si
 sc32 scpaint.si
 REM
+sc32 grep.s
+REM
 REM ===
 REM
 REM refresh the zip file
@@ -35,6 +37,9 @@ pkzipc -add grep3230_knud.zip grep3230.s
 pkzipc -add grep3230_knud.zip grep3230.mac
 REM
 pkzipc -add grep3230_knud.zip grep.txt
+REM
+pkzipc -add grep3230_knud.zip grep.s
+pkzipc -add grep3230_knud.zip grep.mac
 REM
 pkzipc -add grep3230_knud.zip grepdlg.d
 pkzipc -add grep3230_knud.zip grepdlg.dlg
