@@ -1461,15 +1461,15 @@ proc WhenLoaded()
     ChangeCurrFilename(my_macro_name + ':statuses',
                        _DONT_PROMPT_|_DONT_EXPAND_|_OVERWRITE_)
     GotoBufferId(org_id)
-    response_time = Val(GetProfileStr(my_macro_name + ':config', 'response_time', Str(RESPONSE_TIME_DEFAULT ), ".\uniview.ini" ) )
+    response_time = Val(GetProfileStr(my_macro_name + ':config', 'response_time', Str(RESPONSE_TIME_DEFAULT ), ".\unicode.ini" ) )
     response_time = iif(response_time > 0,
                         response_time,
                         RESPONSE_TIME_DEFAULT)
-    reposition_time = Val(GetProfileStr(my_macro_name + ':config', 'reposition_time', Str(REPOSITION_TIME_DEFAULT), ".\uniview.ini" ))
+    reposition_time = Val(GetProfileStr(my_macro_name + ':config', 'reposition_time', Str(REPOSITION_TIME_DEFAULT), ".\unicode.ini" ))
     reposition_time = iif(reposition_time > 0,
                           reposition_time,
                           REPOSITION_TIME_DEFAULT)
-    status_attr = Val(GetProfileStr(my_macro_name + ':config', 'status_color', '00', ".\uniview.ini" ), 16)
+    status_attr = Val(GetProfileStr(my_macro_name + ':config', 'status_color', '00', ".\unicode.ini" ), 16)
     if not is_valid_status_color(status_attr)
       status_attr = Query(MenuTextAttr)
       while not is_valid_status_color(status_attr)
@@ -1486,7 +1486,7 @@ proc WhenLoaded()
         status_attr = select_color(status_attr,
                                    'Pick a valid status text colour')
       endwhile
-      WriteProfileStr(my_macro_name + ':config', 'status_color', Str(status_attr, 16 ), ".\uniview.ini" )
+      WriteProfileStr(my_macro_name + ':config', 'status_color', Str(status_attr, 16 ), ".\unicode.ini" )
     endif
     status_attr_chr = Chr(status_attr)
     Hook(_IDLE_          , idle         )
@@ -1569,7 +1569,7 @@ proc config_set(string item_name)
         item_integer_value = Val(item_string_value)
         if (item_integer_value in 1 .. MAXINT)
           response_time = item_integer_value
-          WriteProfileStr(my_macro_name + ':config', 'response_time', Str(response_time), ".\uniview.ini" )
+          WriteProfileStr(my_macro_name + ':config', 'response_time', Str(response_time), ".\unicode.ini" )
         else
           Warn('"', item_string_value, '" is an illegal response time.')
         endif
@@ -1581,7 +1581,7 @@ proc config_set(string item_name)
         item_integer_value = Val(item_string_value)
         if (item_integer_value in 1 .. MAXINT)
           reposition_time = item_integer_value
-          WriteProfileStr(my_macro_name + ':config', 'reposition_time', Str(reposition_time), ".\uniview.ini" )
+          WriteProfileStr(my_macro_name + ':config', 'reposition_time', Str(reposition_time), ".\unicode.ini" )
         else
           Warn('"', item_string_value, '" is an illegal reposition time.')
         endif
@@ -1605,7 +1605,7 @@ proc config_set(string item_name)
         status_attr = select_color(status_attr,
                                    'Pick a valid status text colour')
       until is_valid_status_color(status_attr)
-      WriteProfileStr(my_macro_name + ':config', 'status_color', Format(status_attr:2:'0':16), ".\uniview.ini" )
+      WriteProfileStr(my_macro_name + ':config', 'status_color', Format(status_attr:2:'0':16), ".\unicode.ini" )
       status_attr_chr  = Chr(status_attr)
       restart_the_menu = TRUE
   endcase

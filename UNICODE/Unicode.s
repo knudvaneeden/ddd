@@ -1967,7 +1967,7 @@ end write_profile_error
 integer proc write_profile_int(string  section_name,
                                string  item_name,
                                integer item_value)
-  integer result = WriteProfileInt(section_name, item_name, item_value, ".\uniview.ini" )
+  integer result = WriteProfileInt(section_name, item_name, item_value, ".\unicode.ini" )
   if not result
     write_profile_error()
   endif
@@ -1978,7 +1978,7 @@ end write_profile_int
 integer proc write_profile_str(string section_name,
                                string item_name,
                                string item_value)
-  integer result = WriteProfileStr(section_name, item_name, item_value, ".\uniview.ini" )
+  integer result = WriteProfileStr(section_name, item_name, item_value, ".\unicode.ini" )
   if not result
     write_profile_error()
   endif
@@ -4491,7 +4491,7 @@ end paste_replace_from_win_clip
 
 string proc profile_get(string item)
   string new_value [13] = ''
-  string old_value [13] = GetProfileStr(varname_cfg_section, item, 'Default', ".\uniview.ini" )
+  string old_value [13] = GetProfileStr(varname_cfg_section, item, 'Default', ".\unicode.ini" )
   case item
     when 'AnsiUpgradeAction'
       new_value = iif((old_value in 'Ask', 'UTF-8', 'UTF-8+BOM',
@@ -4597,7 +4597,7 @@ end char_description_menu
 proc profile_set(string item)
   string new_value           [13] = ''
   string new_value_formatted [13] = ''
-  string old_value           [13] = GetProfileStr(varname_cfg_section, item, 'NoValue', ".\uniview.ini" )
+  string old_value           [13] = GetProfileStr(varname_cfg_section, item, 'NoValue', ".\unicode.ini" )
   case item
     when 'ConvertUnicodeFiles'
       new_value = iif(old_value == 'Enabled', 'Disabled', 'Enabled')
@@ -4655,7 +4655,7 @@ proc profile_set(string item)
         cfg_ansi_upgrade_action = new_value
       endif
     when 'MaxBytesToCheck'
-      new_value = GetProfileStr(varname_cfg_section, 'MaxBytesToCheck', Str(MAXINT - 1000), ".\uniview.ini" )
+      new_value = GetProfileStr(varname_cfg_section, 'MaxBytesToCheck', Str(MAXINT - 1000), ".\unicode.ini" )
       new_value_formatted = format_integer(new_value)
       if Ask('Max bytes to check to determine character encoding [255 - '
              + format_integer(Str(MAXINT - 1000)) + ']:',
@@ -4757,32 +4757,32 @@ end main_menu
 proc upgrade_old_configuration()
   string cfg_value [MAXSTRINGLEN] = ''
   if compare_versions(cfg_version, '1.6') == FIRST_OLDER_THAN_SECOND
-    if GetProfileStr(varname_cfg_section, 'ShowUTFwarnings', '', ".\uniview.ini" ) <> ''
+    if GetProfileStr(varname_cfg_section, 'ShowUTFwarnings', '', ".\unicode.ini" ) <> ''
       RemoveProfileItem(varname_cfg_section, 'ShowUTFwarnings')
     endif
-    cfg_value = GetProfileStr(varname_cfg_section, 'WhichCharDisplays', '', ".\uniview.ini" )
+    cfg_value = GetProfileStr(varname_cfg_section, 'WhichCharDisplays', '', ".\unicode.ini" )
     if cfg_value <> ''
       write_profile_str(varname_cfg_section, 'WhichCharPreviews', cfg_value)
       RemoveProfileItem(varname_cfg_section, 'WhichCharDisplays')
     endif
-    cfg_value = GetProfileStr(varname_cfg_section, 'CharDisplayX', '', ".\uniview.ini" )
+    cfg_value = GetProfileStr(varname_cfg_section, 'CharDisplayX', '', ".\unicode.ini" )
     if cfg_value <> ''
       write_profile_str(varname_cfg_section, 'CharPreviewX', cfg_value)
       RemoveProfileItem(varname_cfg_section, 'CharDisplayX')
     endif
-    cfg_value = GetProfileStr(varname_cfg_section, 'CharDisplayY', '', ".\uniview.ini" )
+    cfg_value = GetProfileStr(varname_cfg_section, 'CharDisplayY', '', ".\unicode.ini" )
     if cfg_value <> ''
       write_profile_str(varname_cfg_section, 'CharPreviewY', cfg_value)
       RemoveProfileItem(varname_cfg_section, 'CharDisplayY')
     endif
-    cfg_value = GetProfileStr(varname_cfg_section, 'MaxBytesToCheck', '', ".\uniview.ini" )
+    cfg_value = GetProfileStr(varname_cfg_section, 'MaxBytesToCheck', '', ".\unicode.ini" )
     write_profile_str(varname_cfg_section, 'MaxBytesToCheck', '4000')
     beeper()
     Warn("Unicode's configuration of ",
          '"Max bytes to check" can be set much lower than in previous ',
          'versions of this macro. It has been set to the new advised value: ',
          '4,000.')
-    cfg_value = GetProfileStr(varname_cfg_section, 'AsciiUpgradeAction', '', ".\uniview.ini" )
+    cfg_value = GetProfileStr(varname_cfg_section, 'AsciiUpgradeAction', '', ".\unicode.ini" )
     if cfg_value == 'Ask'
       write_profile_str(varname_cfg_section, 'AsciiUpgradeAction', 'ANSI')
       Warn('Unicode configuration change: When using a non-ASCII character ',
@@ -4795,14 +4795,14 @@ proc upgrade_old_configuration()
          'format.')
   endif
   if compare_versions(cfg_version, '2.1') == FIRST_OLDER_THAN_SECOND
-    cfg_value =  GetProfileStr(varname_cfg_section, 'ConvertUnicodeFiles', '', ".\uniview.ini" )
+    cfg_value =  GetProfileStr(varname_cfg_section, 'ConvertUnicodeFiles', '', ".\unicode.ini" )
     if cfg_value == 'Default'
       write_profile_str(varname_cfg_section, 'ConvertUnicodeFiles', 'Disabled')
       Warn('Unicode configuration change: Whether or not to convert Unicode';
            'files was changed from "Default" to the less ambiguous';
            'but equivalent value "Disabled".')
     endif
-    cfg_value = GetProfileStr(varname_cfg_section, 'ShowCharCodeFormat', '', ".\uniview.ini" )
+    cfg_value = GetProfileStr(varname_cfg_section, 'ShowCharCodeFormat', '', ".\unicode.ini" )
     if cfg_value == 'Default'
       write_profile_str(varname_cfg_section, 'ShowCharCodeFormat', 'Disabled')
       Warn("Unicode configuration change: Whether or not to show a file's";
@@ -4934,7 +4934,7 @@ proc WhenLoaded()
       abort = TRUE
     elseif WIN32
     and    not isGUI()
-      if GetProfileStr(varname_cfg_section, 'GiveConsoleWarning', 'n', ".\uniview.ini" ) <> 'y'
+      if GetProfileStr(varname_cfg_section, 'GiveConsoleWarning', 'n', ".\unicode.ini" ) <> 'y'
         Alarm()
         PushKey(<CursorRight>)
         if MsgBox('Skip this warning the next time?',
