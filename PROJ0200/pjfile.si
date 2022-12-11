@@ -2248,8 +2248,8 @@ try_again:
 				// load files from the command line from correct directory)
 				HookChDir(GetProjectStr(c_stCurrDir, ""))
 			endif
-			SetGlobalStr(c_stOpenPath, GetProjectStr(c_stOpenPath, ""))
-			Set_Str(iProjectExtensions, GetProjectStr(c_stExtensions, GetProfileStr(c_stIniSection, c_stExtensions, c_stDefaultExtensions), ".\proj0200.ini" ))
+                        SetGlobalStr(c_stOpenPath, GetProjectStr(c_stOpenPath, ""))
+                        Set_Str(iProjectExtensions, GetProjectStr(c_stExtensions, GetProfileStr(c_stIniSection, c_stExtensions, c_stDefaultExtensions, ".\proj0200.ini" )))
 #ifdef CTAGS
 			Set_Int(iFProjectTags, GetProjectInt(c_stProjTags, TRUE))
 			Set_Str(iTagsLocation, GetProjectStr(c_stTagLoc, ""))

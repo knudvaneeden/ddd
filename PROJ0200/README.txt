@@ -1,3 +1,22 @@
+[kn, ri, su, 11-12-2022 10:45:44]
+
+What needs to be done:
+
+1. -copy the DLL MSBSC60.DLL to your TSE main directory
+
+2. -edit the file proj0200.inc and change the path to where you installed this project (e.g. location of proj.si)
+
+3. -To run the menu start
+
+     proj.mac -m
+
+     or press <ALT P> to see the menu
+
+4. -The keys (e.g. <ALT P> are defined in the file 'keys.si'
+
+===
+
+
 Info for PROJ macro v2.00 (05/19/2002).
 by Chris Antos, chrisant@premier1.net
 

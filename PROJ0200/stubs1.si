@@ -10,7 +10,8 @@
 // Constants
 
 // string pjfile[] = "PJFILE" // old [kn, ri, su, 11-12-2022 04:31:22]
-string pjfile[] = "f:\bbc\taal\proj0200\pjfile.mac" // new [kn, ri, su, 11-12-2022 04:31:25]
+// string pjfile[] = "f:\bbc\taal\proj0200\pjfile.mac" // new [kn, ri, su, 11-12-2022 04:31:25]
+#include [ "proj0200.inc" ] // new [kn, ri, su, 11-12-2022 10:13:21]
 
 
 ///////////////////////////////////////////////////////////////////////////

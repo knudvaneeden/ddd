@@ -1,8 +1,10 @@
 REM
 REM compile all .s and .si files to .mac
 REM
-sc32 *.s
-sc32 *.si
+sc32 proj.si
+sc32 pjfile.si
+sc32 gethelp.si
+sc32 helphelp.s
 REM
 REM ===
 REM
@@ -29,4 +31,4 @@ REM
 @ECHO "6. -Then unzip that resulting .zip file in some new arbitrary directory"
 @ECHO "7. -Then run in TSE"
 @ECHO "8. -execute this macro (you must supply the full path to this macro)"
-@ECHO proj.mac
+@ECHO proj.mac -m
