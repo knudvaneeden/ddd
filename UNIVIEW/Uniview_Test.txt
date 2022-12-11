@@ -1,0 +1,51 @@
+
+With the Uniview extension enabled, below instead of their codes the actual
+non-ANSI characters should be displayed if the current font supports them.
+
+The Greek small letter alpha looks like α.
+The Greek small letter omega looks like ω.
+The Greek small letter pi looks like π.
+The current font shows an "e" followed by a "combining ´" as "é".
+Courier New does not support the check mark character ✓.
+Courier New does support box drawing characters like ┌ and ┐.
+Courier New does support box drawing characters like └ and ┘.
+
+
+"Left to right" in Chinese is "从左到右".
+
+
+Here are some emojis: 😂 🙇 🙈 🙉 🙊 🙋
+
+
+Here is an English/Russian text:
+
+Здравствуйте1.
+Hello.
+
+Меня зовут Николай.
+My name is Nikolay.
+
+Моя фамилия Петров.
+My surname is Petrov.
+
+Мне двадцать лет.
+I'm 20 years old.
+
+Я живу2 в Москве.
+I live in Moscow.
+
+Я студент.
+I'm a student.
+
+Я учусь в университете.
+I study at a university.
+
+Мой адрес: улица Тверская, дом пять, квартира семнадцать.
+My address is Tverskaya street, 5, appartment 17.
+
+Мои любимые занятия - чтение, музыка и рисование.
+My hobbies are reading, music and drawing.
+
+Мой любимый спорт - хоккей.
+My favorite sport is hockey.
+
