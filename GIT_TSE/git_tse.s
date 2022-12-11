@@ -86,17 +86,17 @@ PROC Main()
   //
   // Git programs
   //
-  s1 = "add + commit current filename in your current repository directory"
-  SetGlobalStr( s1, "s010" )
+  s1 = "push all files from current local repository directory to a remote directory"
+  SetGlobalStr( s1, "s020 s017 s029 s041" )
   //
-  s2 = "Add + Commit a filename not to be loaded into TSE to your current local repository directory"
-  SetGlobalStr( s2, "s110" )
+  s2 = "add + commit current filename in your current repository directory"
+  SetGlobalStr( s2, "s010" )
   //
-  s3 = "read your current repository directory"
-  SetGlobalStr( s3, "s050" )
+  s3 = "Add + Commit a filename not to be loaded into TSE to your current local repository directory"
+  SetGlobalStr( s3, "s110" )
   //
-  s4 = "push all files from current local repository directory to a remote directory"
-  SetGlobalStr( s4, "s020 s017 s029 s041" )
+  s4 = "read your current repository directory"
+  SetGlobalStr( s4, "s050" )
   //
   s5 = "pull all files from a remote directory to current local repository directory"
   SetGlobalStr( s5, "s020 s028 s041" )
@@ -299,7 +299,7 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.78</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
+// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.81</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g. //
  // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
@@ -355,17 +355,17 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   //
  // e.g.   // Git programs
  // e.g.   //
- // e.g.   s1 = "add + commit current filename in your current repository directory"
- // e.g.   SetGlobalStr( s1, "s010" )
+ // e.g.   s1 = "push all files from current local repository directory to a remote directory"
+ // e.g.   SetGlobalStr( s1, "s020 s017 s029 s041" )
  // e.g.   //
- // e.g.   s2 = "Add + Commit a filename not to be loaded into TSE to your current local repository directory"
- // e.g.   SetGlobalStr( s2, "s110" )
+ // e.g.   s2 = "add + commit current filename in your current repository directory"
+ // e.g.   SetGlobalStr( s2, "s010" )
  // e.g.   //
- // e.g.   s3 = "read your current repository directory"
- // e.g.   SetGlobalStr( s3, "s050" )
+ // e.g.   s3 = "Add + Commit a filename not to be loaded into TSE to your current local repository directory"
+ // e.g.   SetGlobalStr( s3, "s110" )
  // e.g.   //
- // e.g.   s4 = "push all files from current local repository directory to a remote directory"
- // e.g.   SetGlobalStr( s4, "s020 s017 s029 s041" )
+ // e.g.   s4 = "read your current repository directory"
+ // e.g.   SetGlobalStr( s4, "s050" )
  // e.g.   //
  // e.g.   s5 = "pull all files from a remote directory to current local repository directory"
  // e.g.   SetGlobalStr( s5, "s020 s028 s041" )
@@ -648,7 +648,7 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.367</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.371</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. //
  // e.g. #DEFINE ELIST_INCLUDED FALSE
@@ -725,7 +725,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s036" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s037" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s111" ) ) //
- // e.g.   AddLine( GetGlobalStr( "s112" ) ) //
+ // e.g.   AddLine( GetGlobalStr( "s112" ) ) AddLine( "--------------------------------------------------------------------------" )
+ // e.g.   AddLine( GetGlobalStr( "s113" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s104" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s105" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s038" ) ) //
@@ -1016,6 +1017,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  STRING fileNameOtherS[255] = "" // full path external filename not to be loaded into TSE
  //
  STRING fileNameExtensionOtherS[255] = "" // external filename.extension not to be loaded into TSE
+ //
+ STRING directoryDeleteOtherS[255] = "" // external directory to remove
  //
  STRING directoryRepositoryOtherS[255] = ""
  //
@@ -2408,6 +2411,48 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
      s = Format( s, "pause" )
      //
      B = FNProgramRunGitTseOutputB( s, "s112", TRUE )
+     //
+    ENDIF
+    //
+   ENDIF
+   //
+  ENDIF
+  //
+ ENDIF
+ //
+ // ------------------------------------------------------------------------------
+ IF s3 == GetGlobalStr( "s113" )
+  //
+  s = directoryDeleteOtherS
+  //
+  IF NOT FileExists( directoryDeleteOtherS )
+   //
+   PROCProgramRunPopupWindowPositionTse()
+   Warn( "Run the initialize step first to create a Git repository" )
+   //
+  ELSE
+   //
+   PROCProgramRunPopupWindowPositionTse()
+   IF ( ( Ask( "Directory to delete not to be loaded into TSE = ", directoryDeleteOtherS, _EDIT_HISTORY_ ) ) AND ( Length( directoryDeleteOtherS ) > 0 ) )
+   //
+    PROCProgramRunPopupWindowPositionTse()
+    IF ( ( Ask( "message = ", messageS, _EDIT_HISTORY_ ) ) AND ( Length( messageS ) > 0 ) )
+     //
+     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
+     //
+     s = Format( s, " ", "&", " " )
+     s = Format( s, executableS, " ", "rm", " ", "-r", " ", directoryDeleteOtherS )
+     //
+     s = Format( s, " ", "&", " " )
+     s = Format( s, "pause" )
+     //
+     s = Format( s, " ", "&", " " )
+     s = Format( s, executableS, " ", "commit", " ", "-m", " ", '"', messageS, '"', " ", directoryDeleteOtherS )
+     //
+     s = Format( s, " ", "&", " " )
+     s = Format( s, "pause" )
+     //
+     B = FNProgramRunGitTseOutputB( s, "s113", TRUE )
      //
     ENDIF
     //
@@ -3885,8 +3930,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
     PROCProgramRunPopupWindowPositionTse()
     IF ( ( Ask( "To directory = ", s2, _EDIT_HISTORY_ ) ) AND ( Length( s2 ) > 0 ) )
      //
-     // s = Format( "copy", " ", "/s", " ", s1, " ", s2 ) // only works in JPSoft TakeCommand or JPSoft tcc.exe
-     s = Format( "xcopy", " ", "/s", " ", s1, " ", s2 )
+     // s = Format( "copy", " ", "/s", " ", "/h", " ", s1, " ", s2 ) // only works in JPSoft TakeCommand or JPSoft tcc.exe
+     s = Format( "xcopy", " ", "/s", " ", "/h", " ", s1, " ", s2 )
      //
      s = Format( s, " ", "&", " " )
      s = Format( s, "pause" )
