@@ -5,14 +5,36 @@ What needs to be done:
 1. -copy the DLL MSBSC60.DLL to your TSE main directory
 
 2. -edit the file proj0200.inc and change the path to where you installed this project (e.g. location of proj.si)
+    and where the file 'pjfile.mac' is located.
 
-3. -To run the menu start
+     E.g.
+
+      f:\bbc\taal\proj0200\pjfile.mac
+
+3. -To install
+
+     1. -Take the file proj0200_knud.zip
+
+     2. -And unzip it in any arbitrary directory
+
+     3. -Then run the file zipinstallproj0200.bat
+
+     4. -That will create a new file proj0200_knud.zip
+         in that directory
+
+     5. -Unziop that latest file in a new arbitrary directory
+
+4. -To run the menu start
 
      proj.mac -m
 
      or press <ALT P> to see the menu
 
-4. -The keys (e.g. <ALT P> are defined in the file 'keys.si'
+5. -The keys (e.g. <ALT P> are defined in the file 'keys.si'
+
+6. -The .ini file is the file proj0200.ini in the same directory
+    (so you are not using tse.ini anymore, so keeping everything
+    as much independent as possible.
 
 ===
 
