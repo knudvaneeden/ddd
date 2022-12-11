@@ -4,14 +4,22 @@
 
      2. -And unzip it in any arbitrary directory
 
-     3. -Then run the file zipinstalldspell-e.bat
+     3. -edit and save the file dspell-e.inc and change the path to where you installed this project (e.g. location of dspell.s)
+         and where the file 'dspell2.mac' is located.
+         (otherwise you will see the error 'Cannot load macro')
 
-     4. -That will create a new file dspell-e_knud.zip
+           E.g.
+
+            f:\bbc\taal\dspell-e\dspell2.mac
+
+     4. -Then run the file zipinstalldspell-e.bat
+
+     5. -That will create a new file dspell-e_knud.zip
          in that directory
 
-     5. -Unzip that latest file in a new arbitrary directory
+     6. -Unzip that latest file in a new arbitrary directory
 
-     6. -Then run the file
+     7. -Then run the file
 
           dspell.mac
 
