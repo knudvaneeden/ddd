@@ -1,0 +1,34 @@
+<08-22-98>       TSE Pro v2.5 and Pro/32 v2.8
+4 macros to help solve OCR scanning errors.
+
+FuBookDu: Deletes duplicate scanned adjoining
+          identical pages.
+
+Ocr_bl  : Using a massive list of word pairs,
+          it replaces consistenly badly
+          scanned words with their correct
+          counterparts without any
+          interaction from the user. At the
+          end, the macro generates a report,
+          which can be consulted before the
+          text file is saved.
+
+2wrdlist: This is the macro to use, when the
+          OCR software mixes up two words,
+          that by themselves are perfectly
+          correct. You add such word pairs to
+          the 2wrdlist.wrd file, and let the
+          macro search for occurrences of
+          these words in the text file,
+          giving the user the choice to
+          easily swap each such word in the
+          text file.
+
+Goodcase: OCR software can have a problem
+          determining the case of some
+          letters: this macro solves such
+          mistaken cases, using the
+          surrounding letters to determine
+          the correct case.
+
+Author: Carlo Hogeveen (hyphen@xs4all.nl)
