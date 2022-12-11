@@ -1,5 +1,9 @@
 [kn, ri, su, 11-12-2022 10:45:44]
 
+Always save your work first (as I experienced already at least one crash without warning when trying to run proj.mac)
+
+===
+
 What needs to be done:
 
 1. -copy the DLL file 'msbsc60.dll' to your TSE main directory
@@ -13,7 +17,10 @@ What needs to be done:
 
       f:\bbc\taal\proj0200\pjfile.mac
 
-3. -To install
+3. -You must create a new directory called 'PJ'
+    in your TSE main directory
+
+4. -To install
 
      1. -Take the file proj0200_knud.zip
 
@@ -26,15 +33,15 @@ What needs to be done:
 
      5. -Unzip that latest file in a new arbitrary directory
 
-4. -To run the menu start
+5. -To run the menu start
 
      proj.mac -m
 
      or press <ALT P> to see the menu
 
-5. -Note: The keys (e.g. <ALT P>) are defined in the file 'keys.si'
+6. -Note: The keys (e.g. <ALT P>) are defined in the file 'keys.si'
 
-6. -The .ini file is the file proj0200.ini in the same directory
+7. -The .ini file is the file proj0200.ini in the same directory
     (so you are not using tse.ini anymore, so keeping everything
     as much independent as possible.
 
