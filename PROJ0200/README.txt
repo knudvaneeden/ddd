@@ -2,10 +2,12 @@
 
 What needs to be done:
 
-1. -copy the DLL MSBSC60.DLL to your TSE main directory
+1. -copy the DLL file 'msbsc60.dll' to your TSE main directory
+    (otherwise you will see the error 'Cannot load DLL')
 
-2. -edit the file proj0200.inc and change the path to where you installed this project (e.g. location of proj.si)
+2. -edit and save the file proj0200.inc and change the path to where you installed this project (e.g. location of proj.si)
     and where the file 'pjfile.mac' is located.
+    (otherwise you will see the error 'Cannot load macro')
 
      E.g.
 
@@ -22,7 +24,7 @@ What needs to be done:
      4. -That will create a new file proj0200_knud.zip
          in that directory
 
-     5. -Unziop that latest file in a new arbitrary directory
+     5. -Unzip that latest file in a new arbitrary directory
 
 4. -To run the menu start
 
@@ -30,7 +32,7 @@ What needs to be done:
 
      or press <ALT P> to see the menu
 
-5. -The keys (e.g. <ALT P> are defined in the file 'keys.si'
+5. -Note: The keys (e.g. <ALT P>) are defined in the file 'keys.si'
 
 6. -The .ini file is the file proj0200.ini in the same directory
     (so you are not using tse.ini anymore, so keeping everything
