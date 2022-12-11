@@ -20,4 +20,6 @@
 2. -The .ini file is the local file 'runblrur.ini'
     (thus not using tse.ini)
 
+===
 
+Use case: you have a highlighted block of URLs which you want to run in your browser.

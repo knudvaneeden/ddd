@@ -20,4 +20,20 @@
 2. -The .ini file is the local file 'setwiyde.ini'
     (thus not using tse.ini)
 
+===
 
+Use case: you want to position a popup window at a specific position on the monitor screen. E.g. the right top corner of the screen.
+
+===
+
+Method: You must insert the text
+
+         ExecMacro( "setwiyde" )
+
+        immediately 1 line before the following keywords, e.g.
+
+         ExecMacro( "setwiyde" )
+         Warn( "test" )
+
+         ExecMacro( "setwiyde" )
+         YesNo( "test" )

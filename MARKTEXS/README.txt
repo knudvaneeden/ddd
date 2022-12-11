@@ -20,4 +20,6 @@
 2. -The .ini file is the local file 'marktexs.ini'
     (thus not using tse.ini)
 
+===
 
+Use case: mark text between spaces (e.g. typically a URL)
