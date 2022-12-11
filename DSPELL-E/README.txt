@@ -1,3 +1,8 @@
+Note: Troubleshooting: When I did run dspell.mac directly in TSE it gave an
+                       opcode error. Then I loaded the dspell.s file
+                       into TSE and did compile it from there. That
+                       worked OK.
+
 1. -To install
 
      1. -Take the file dspell-e_knud.zip
