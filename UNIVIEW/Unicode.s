@@ -4676,7 +4676,7 @@ proc profile_set(string item)
   if not (new_value in old_value, '')
     write_profile_str(varname_cfg_section, item, new_value)
   endif
-  config_the_autoload()
+  // config_the_autoload() // new [kn, ri, su, 11-12-2022 15:40:10]
 end profile_set
 
 integer proc get_windows_or_linux_menu_flag()
@@ -4924,7 +4924,7 @@ proc WhenLoaded()
     cfg_show_char_code_format =    (profile_get('ShowCharCodeFormat'   ) == 'Enabled')
     cfg_version               =     profile_get('Version')
 
-    config_the_autoload()
+    // config_the_autoload() // new [kn, ri, su, 11-12-2022 15:40:18]
 
     if WhichOS() == _WINDOWS_
       Alarm()
