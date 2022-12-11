@@ -83,6 +83,7 @@ FORWARD PROC PROCLineRemoveWordFront()
 FORWARD PROC PROCLineSelectMarkCurrent()
 FORWARD PROC PROCMacroExec( STRING s1 )
 FORWARD PROC PROCMacroPurge( STRING s1 )
+FORWARD PROC PROCMacroRunKeep( STRING s1 )
 FORWARD PROC PROCMacroRunPurge( STRING s1 )
 FORWARD PROC PROCMacroRunPurgeParameter( STRING s1, STRING s2 )
 FORWARD PROC PROCScreenGotoScrollLeft_HorizontalN( INTEGER i1 )
@@ -172,6 +173,7 @@ FORWARD STRING PROC FNStringGet_FilenameIniDefaultS()
 PROC Main()
  STRING s1[255] = "0" // 1 = add indent spaces around '(' or ')' parentheses // 0 = do not // change this
  STRING s2[255] = "0" // 1 = add indent PROC | FN | B( | S( // 0 = do not // change this
+ PROCMacroRunKeep( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default
  IF ( NOT ( Ask( "change: convert: block: print: pretty print: bracketSpaceInsertB = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) ) RETURN() ENDIF
  //
  PROCBlockChangeConvertPrintPrettyTse( Val( s1 ), Val( s2 ) )
@@ -182,11 +184,28 @@ END
 
 // --- LIBRARY --- //
 
-// library: change: convert: block: print: pretty print <description></description> <version control></version control> <version>1.0.0.0.24</version> (filenamemacro=prettse.s) [<Program>] [<Research>] [kn, zoe, we, 13-10-1999 19:06:35]
+// library: macro: run: keep <description>macro: run a macro, then keep it</description> <version>1.0.0.0.1</version> <version control></version control> (filenamemacro=runmarke.s) [<Program>] [<Research>] [[kn, zoe, fr, 27-10-2000 15:59:33]
+PROC PROCMacroRunKeep( STRING macronameS )
+ // e.g. PROC Main()
+ // e.g.  PROCMacroRunKeep( "mysubma1.mac myparameter11 myparameter12" )
+ // e.g.  PROCMacroRunKeep( "mysubma2.mac myparameter21" )
+ // e.g.  PROCMacroRunKeep( "mysubma3.mac myparameter31 myparameter32" )
+ // e.g. END
+ //
+ IF FNMacroCheckLoadB( FNStringGetCarS( macronameS ) ) // necessary if you pass parameters in a string
+  //
+  PROCMacroExec( macronameS )
+  //
+ ENDIF
+ //
+END
+
+// library: change: convert: block: print: pretty print <description></description> <version control></version control> <version>1.0.0.0.25</version> (filenamemacro=prettse.s) [<Program>] [<Research>] [kn, zoe, we, 13-10-1999 19:06:35]
 PROC PROCBlockChangeConvertPrintPrettyTse( INTEGER bracketSpaceInsertB, INTEGER functionProcedureTypeB )
  // e.g. PROC Main()
  // e.g.  STRING s1[255] = "0" // 1 = add indent spaces around '(' or ')' parentheses // 0 = do not // change this
  // e.g.  STRING s2[255] = "0" // 1 = add indent PROC | FN | B( | S( // 0 = do not // change this
+ // e.g.  PROCMacroRunKeep( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default
  // e.g.  IF ( NOT ( Ask( "change: convert: block: print: pretty print: bracketSpaceInsertB = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) ) RETURN() ENDIF
  // e.g.  //
  // e.g.  PROCBlockChangeConvertPrintPrettyTse( Val( s1 ), Val( s2 ) )
@@ -208,8 +227,8 @@ PROC PROCBlockChangeConvertPrintPrettyTse( INTEGER bracketSpaceInsertB, INTEGER 
  // Idea
  //
  // The basic idea for pretty print would be that:
- //  1. If you find a begin word you move it to the left
- //  2. If you find a corresponding end word you move it to the right
+ //  1. If you find a begin word you move it to the right
+ //  2. If you find a corresponding end word you move it to the left
  //  3. else you do nothing
  //
  // In practice you have a space counting variable that you
@@ -1617,6 +1636,7 @@ PROC PROCWarn( STRING s )
  // e.g.
  // e.g. <F12> Main()
  //
+ PROCMacroRunKeep( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new [kn, ri, fr, 22-05-2020 20:12:39]
  Warn( s )
  //
 END
@@ -1961,7 +1981,7 @@ PROC PROCTextRemoveWordRight()
 END
 
 // library: string: get: mid: string <description></description> <version control>string: get: word: token: middle: return a given integer amount of characters from the a given startposition</version control> <version>1.0.0.0.7</version> (=MID$ in BASIC) <version>1.0.0.0.7</version> (filenamemacro=getstmid.s) [<Program>] [<Research>] [kn, ri, tu, 13-10-1998 20:29:00]
-STRING PROC FNStringGetMidStringS( STRING s, INTEGER beginI, INTEGER totalI               )
+STRING PROC FNStringGetMidStringS( STRING s, INTEGER beginI, INTEGER totalI )
  // e.g. PROC Main()
  // e.g.  STRING s[255] = FNStringGetInitializeNewStringS()
  // e.g.  STRING positionBeginS[255] = FNStringGetInitializeNewStringS()
@@ -2481,7 +2501,7 @@ INTEGER PROC FNFileCheckEditCentralMessageB( STRING filenameS, INTEGER messageB 
  //
  s = CurrFileName()
  //
- PROCMacroRunPurgeParameter( "runprmcn", Format( FNStringGetMachineNameS(), ";", FNStringGetUserNameFirstS(), ";", FNStringGetUserNameLastS(), ";", FNStringGetPortS(), ";", "TSE%3A+File%3A+Load%3A+" + s + "&submit01=Create" ) )
+ PROCMacroRunPurgeParameter( "runprmcn", Format( FNStringGetMachineNameS(), ";", FNStringGetUserNameFirstS(), ";", FNStringGetUserNameLastS(), ";", FNStringGetPortS(), ";", "TSE@3A+File@3A+Load@3A+" + s + "&submit01=Create" ) )
  //
  RETURN( editfileB )
  //
@@ -2871,7 +2891,7 @@ STRING PROC FNStringGetEscapeS()
  //
 END
 
-// library: file: get: ini: default: central <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=getfiidf.s) [<Program>] [<Research>] [kn, ri, we, 31-12-2003 02:17:48]
+// library: file: get: ini: default: central <description></description> <version control></version control> <version>1.0.0.0.6</version> (filenamemacro=getfiidf.s) [<Program>] [<Research>] [kn, ri, we, 31-12-2003 02:17:48]
 STRING PROC FNStringGetFileIniDefaultS( STRING searchS )
  // e.g. PROC Main()
  // e.g.  Message( FNStringGetFileIniDefaultS( "path4dos" ) ) // gives e.g. "c:\4dos"
@@ -2933,6 +2953,15 @@ STRING PROC FNStringGetFileIniDefaultS( STRING searchS )
  //         (e.g. for backwards compatibility purposes)
  //
  // 7. -Using this library, you can then e.g. get the value of your global variable from this file
+ //
+ STRING s[255] = ""
+ //
+ s =FNStringGetFileGetFilenamePathDefaultS( searchS )
+ //
+ IF EquiStr( Trim( s ), "" )
+  PROCMacroRunKeep( "setwiyde" ) // operation: set: window: warn/yesno: position: x: y: default // new
+  Warn( searchS, ":", " ", "Mot found (or found but the value is the empty string). Please check dddpath.ini and adapt file bibdelph.del" )
+ ENDIF
  //
  RETURN( FNStringGetFileGetFilenamePathDefaultS( searchS ) )
  //
