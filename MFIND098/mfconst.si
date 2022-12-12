@@ -1,0 +1,100 @@
+
+#ifndef MAX_STRING
+#define MAX_STRING 255
+#endif
+
+constant MF_FIND          = 1
+constant MF_REPLACE       = 2
+
+constant MF_REPEAT        = 3
+constant MF_ASK           = 4
+
+constant MF_OPTS_B        = 1
+constant MF_OPTS_L        = 2
+constant MF_OPTS_I        = 4
+constant MF_OPTS_W        = 8
+constant MF_OPTS_X        = 16
+constant MF_OPTS_G        = 32
+constant MF_OPTS_C        = 64
+constant MF_OPTS_A        = 128
+constant MF_OPTS_V        = 256
+constant MF_OPTS_DOLLAR   = 512
+constant MF_OPTS_CARAT    = 1024
+constant MF_OPTS_PLUS     = 2048
+constant MF_OPTS_N        = 4096
+constant MF_OPTS_Z        = 8192
+
+
+integer proc opts2bits (string options_string)
+
+    integer i
+    integer bits = 0
+
+    string opts[20] = lower(options_string)
+
+    for i = 1 to Length(opts)
+        case SubStr(opts,i,1)
+
+             when "b"
+                bits = bits | MF_OPTS_B
+             when "l"
+                bits = bits | MF_OPTS_L
+             when "i"
+                bits = bits | MF_OPTS_I
+             when "w"
+                bits = bits | MF_OPTS_W
+             when "x"
+                bits = bits | MF_OPTS_X
+             when "g"
+                bits = bits | MF_OPTS_G
+             when "c"
+                bits = bits | MF_OPTS_C
+             when "a"
+                bits = bits | MF_OPTS_A
+             when "v"
+                bits = bits | MF_OPTS_V
+             when "$"
+                bits = bits | MF_OPTS_DOLLAR
+             when "^"
+                bits = bits | MF_OPTS_CARAT
+             when "+"
+                bits = bits | MF_OPTS_PLUS
+             when "n"
+                bits = bits | MF_OPTS_N
+             when "z"
+                bits = bits | MF_OPTS_Z
+
+        endcase
+    endfor
+
+    return (bits)
+
+end
+
+string proc bits2opts (integer bits)
+   string opts[20] = ''
+
+   if bits & MF_OPTS_B       opts = opts + "b" endif
+   if bits & MF_OPTS_L       opts = opts + "l" endif
+   if bits & MF_OPTS_I       opts = opts + "i" endif
+   if bits & MF_OPTS_W       opts = opts + "w" endif
+   if bits & MF_OPTS_X       opts = opts + "x" endif
+   if bits & MF_OPTS_G       opts = opts + "g" endif
+   if bits & MF_OPTS_C       opts = opts + "c" endif
+   if bits & MF_OPTS_A       opts = opts + "a" endif
+   if bits & MF_OPTS_V       opts = opts + "v" endif
+   if bits & MF_OPTS_N       opts = opts + "n" endif
+   if bits & MF_OPTS_DOLLAR  opts = opts + "$" endif
+   if bits & MF_OPTS_CARAT   opts = opts + "^" endif
+   if bits & MF_OPTS_PLUS    opts = opts + "+" endif
+   if bits & MF_OPTS_Z       opts = opts + "z" endif
+
+   return (opts)
+end
+
+proc mfconst_avoid_warnings ()
+    if 0 and (Length(bits2opts(0)) or opts2bits(''))
+        mfconst_avoid_warnings()
+    endif
+end
+

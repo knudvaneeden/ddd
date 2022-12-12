@@ -1,0 +1,249 @@
+
+/*
+    * Path Utility functions:
+        integer CreateDirectory(string path)
+          - Creates a directory
+
+        integer CreateDirectoryTree(string path)
+          - Creates a directory tree of arbitrary depth
+
+        integer CopyFile(string source, string target)
+          - Copies a file to a file or directory
+
+        integer CopyFileSafe(string source, string target)
+          - Copies a file to a file or directory, failing if the target
+            already exists.
+
+        These functions have been tested on the following platforms
+            TSE 2.5 (DOS)   under Windows 98
+            TSE 3.0 (WIN32) under Windows 98
+
+        The DOS versions of these functions shell out to
+        built-in DOS commands.
+
+        The WIN32 versions of these functions use the native
+        system calls, for maximum efficiency and portability.
+
+    * LFN/SFN Utility functions (DOS Only):
+
+       These functions are available for the DOS version of
+       TSE when it is running under Windows.  They allow you
+       to get the short version of a Long Filename (LFN) or
+       the long version of a Short Filename (SFN).
+
+       Under Win32, they do nothing, returning the original filename.
+
+       string GetLongPathName(string sfn)
+       string GetShortPathName(string lfn)
+
+*/
+
+#ifndef WIN32
+integer PathUtil_in_win = -1
+#endif
+
+string Path_Util_Separator[1]   = '\'
+
+#ifdef WIN32
+
+    dll "<kernel32.dll>"
+        integer proc OS_CopyFile(
+            string source: cstrval,
+            string target: cstrval,
+            integer fail_if_exists
+        ) : "CopyFileA"
+        integer proc OS_CreateDirectory(
+            string path: cstrval,
+            integer security_attributes
+        ) : "CreateDirectoryA"
+    end
+
+    integer proc CreateDirectory(string path)
+        return(OS_CreateDirectory(path, 0))
+    end
+
+    integer proc lCopyFile(string source, string target, integer fail_if_exists)
+        if FileExists(target) & _DIRECTORY_
+            return(OS_CopyFile( source, AddTrailingSlash(target) + SplitPath(source, _NAME_|_EXT_), 0 ))
+        else
+            return(OS_CopyFile( source, target, fail_if_exists ))
+        endif
+        return(0)
+    end
+
+    integer proc CopyFile(string source, string target)
+        return(lCopyFile( source, target, 0 ))
+    end
+    integer proc SafeCopyFile(string source, string target)
+        return(lCopyFile( source, target, 1 ))
+    end
+
+#else
+
+    integer proc CreateDirectory(string path)
+        return(Dos( 'mkdir ' + path, _DONT_CLEAR_))
+    end
+    integer proc CopyFile(string source, string target)
+        return(Dos( 'copy /y ' + source + ' ' + target, _DONT_CLEAR_))
+    end
+    integer proc SafeCopyFile(string source, string target)
+        if FileExists(target)
+            return(0)
+        else
+            // There's a race condition here, between the file check
+            // and the copy.  Hence the /y switch.  Oh well....
+            return(Dos( 'copy /y ' + source + ' ' + target, _DONT_CLEAR_))
+        endif
+        return(0)
+    end
+
+#endif
+
+string proc GetTempFile(string ext)
+    #ifdef WIN32
+        if Length(GetEnvStr('TEMP'))
+            return(MakeTempName(GetEnvStr('TEMP'), ext))
+        elseif Length(GetEnvStr('TMP'))
+            return(MakeTempName(GetEnvStr('TEMP'), ext))
+        else
+            Warn("Can't find System Temp Directory")
+        endif
+        return('')
+    #else
+        return(MakeTempName(Query(SwapPath), ext))
+    #endif
+end
+
+
+#ifdef WIN32
+string proc GetShortPathName( string name )
+     return(name)
+end
+#else
+
+string proc GetShortPathName( string name )
+    register r
+    integer len
+    integer pntr_name, pntr_short
+    string _name[255], _short[255] = ""
+
+    if PathUtil_in_win == -1
+        if Length(GetEnvStr("windir"))
+            PathUtil_in_win = 1
+        else
+            PAthUtil_in_win = 0
+        endif
+    endif
+
+    if PathUtil_in_win == 0
+        return(name)
+    endif
+
+    _name = name + Chr(0)
+    pntr_name = Addr(_name)
+    pntr_short = Addr(_short)
+
+    r.ax = 0x7160                       // Get Short Path Name
+    r.cx = 0x8001                       // subst'ed short path names
+    r.si = LoWord(pntr_name+2)
+    r.ds = HiWord(pntr_name)
+    r.di = LoWord(pntr_short+2)         // this _should_ be shorter than 80
+    r.es = HiWord(pntr_short)
+    Intr(0x21,r)
+
+    PokeByte(pntr_short,255)
+    len = Pos(Chr(0),_short)
+    PokeByte(pntr_short,len-1)
+
+    return(_short)
+end
+
+#endif
+
+#ifdef WIN32
+string proc GetLongPathName( string name )
+    return(name)
+end
+#else
+string proc GetLongPathName( string name )
+    register r
+    integer len
+    integer pntr_name, pntr_full
+    string _name[255], _full[255] = ""
+
+
+    if PathUtil_in_win == -1
+        if Length(GetEnvStr("windir"))
+            PathUtil_in_win = 1
+        else
+            PathUtil_in_win = 0
+        endif
+    endif
+
+    if PathUtil_in_win == 0
+        return(name)
+    endif
+
+    _name = name + Chr(0)
+    pntr_name = Addr(_name)
+    pntr_full = Addr(_full)
+
+    r.ax = 0x7160                       // Get Path Name
+    r.cx = 0x8002                       // long path names
+    r.si = LoWord(pntr_name+2)
+    r.ds = HiWord(pntr_name)
+    r.di = LoWord(pntr_full+2)
+    r.es = HiWord(pntr_full)
+    Intr(0x21,r)
+
+    if r.flags & _flCARRY_
+        _full = ""
+    else
+        PokeByte(pntr_full,255)
+        len = Pos(Chr(0),_full)
+        PokeByte(pntr_full,len-1)
+    endif
+
+    if _full <> ""
+        return(_full)
+    endif
+    return(name)
+end
+#endif
+
+integer proc CreateDirectoryTree(string dir)
+    string path[254]    = ''
+    string element[254] = ''
+    integer i = 1
+    element = GetToken(dir,Path_Util_Separator,i)
+    while element <> ""
+        if i > 1
+            path = path + Path_Util_Separator
+        endif
+        path = path + element
+        if not FileExists(path + Path_Util_Separator)
+            if not CreateDirectory(path)
+                warn('could not make ' + path)
+                return(0)
+            endif
+        endif
+        i = i + 1
+        element = GetToken(dir,Path_Util_Separator,i)
+    endwhile
+    return(1)
+end
+
+proc PathUtilFunctionToAvoidWarnings ()
+    if 0
+        PathUtilFunctionToAvoidWarnings()
+        GetShortPathName('')
+        GetLongPathName('')
+        GetTempFile('')
+        CreateDirectoryTree('')
+        CreateDirectory('')
+        CopyFile('','')
+        SafeCopyFile('','')
+    endif
+end
+
+

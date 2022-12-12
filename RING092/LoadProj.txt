@@ -1,0 +1,191 @@
+
+    LoadProj - Simple Project loader for the Ringlets system
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+    LoadProj is a simple project loader designed to work well with
+    the Ringlets system.
+
+    Basically, you give it a file which contains a list of files,
+    and it will load each of those files into the editor.
+
+    In this way it's similar to the ldflist macro that ships with TSE,
+    except that it has some additional features:
+
+      * lines in the file can contain wildcards (e.g. c:\projects\*.txt)
+         - all matching files in this directory are loaded
+         - if the line begins with the '@' character, then LoadProj will
+           recursively load all matching files in this directory
+           and all of its subdirectories.
+
+      * lines beginning with the semi-colon (;) or the hash (#) are ignored.
+
+      * If the file contains INIfile-style sections in it, then
+        LoadProj will ONLY load files in the [editfiles] section.
+        (This feature allows you to put other information in your
+        project files to be used by other systems)
+
+      * If, in the list of filespecs, there is a line in the form
+        of:
+            ; ring: ring name
+
+        Then that ring becomes current for the files that follow.
+
+      * If the file contains a [rings] section, then this section
+        is used to define the properties of a rings to be used with
+        the project.
+
+    See the EXAMPLES section for some sample LoadProj project files.
+
+    Macro Usage:
+      loadproj -s <filespec>  // loads single filespec (e.g. loadproj *.txt)
+      loadproj <file>         // loads all filespecs listed in <file>
+      loadproj                // loads all filespecs listed in current buffer
+
+    Usage from the command line:
+      c:\tse32\e32.exe -eloadproj -s <filespec>
+      c:\tse32\e32.exe -eloadproj <file>
+
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+    Place loadproj.s, into your macro source directory
+    (e.g. c:\tse32\mac).  Compile it.
+
+    If you want to be able to double-click on project files in Windows
+    Explorer, and have your projects start up in TSE, then you can
+    do the following:
+
+    Edit the LoadProj.reg file included in this distribution.
+    At the end of the file there should be a line that points
+    to the TSE executable on your system.  Make sure that this
+    is correct.
+
+        [HKEY_CLASSES_ROOT\proj_auto_file\shell\open\command]
+        @="C:\\tse32\\e32.exe -eloadproj %1"
+
+    If you installed TSE to a directory containing spaces (e.g.
+    somewhere in C:\Program Files), then you will need to quote
+    that path (Note that the interior quotes are preceded
+    by backslashes):
+
+        [HKEY_CLASSES_ROOT\proj_auto_file\shell\open\command]
+        @="\"C:\Program Files\system\editors\tse32\e32.exe\" -eloadproj %1"
+
+    When you are finished, save the file, and double-click it
+    in Windows Explorer.  Answer that yes, you would like to import
+    these settings into the registry.
+
+    Now navigate to a .proj file in Windows Explorer.  Double-click
+    it (or move the cursor to it and press Enter).  TSE should
+    pop up with a project containing all your files.
+
+    For extra fun, try this with the OnlyOne macro.  The OnlyOne macro
+    forces TSE to keep only a single instance of itself in Windows.
+
+    When you double-click on a .proj file, the single instance of
+    TSE will come to the foreground and load all of your project files
+    into their own protected ring.
+
+    The OnlyOne macro was written by Rick VanNorman, and is maintained
+    by me.  You can get it either on Semware's FTP site:
+
+        http://www.semware.com/html/tseprofiles.html
+
+    or on my TSE macro site:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+    3. EXAMPLES
+    ---------------------------------------------------------------
+
+    a) Project_X.proj: simple list of files (using absolute paths):
+
+        c:\data\projects\Project_X\Readme.txt
+        c:\data\projects\Project_X\Macro_1.s
+        c:\data\projects\Project_X\Macro_2.s
+        c:\data\projects\Project_X\Batchfile.bat
+        c:\data\projects\Project_X\tests\*.*
+        c:\data\projects\Project_X\Changes
+        c:\data\projects\Project_X\Project_X.proj
+
+    b) Project_X.proj: same, but using relative paths:
+
+        Readme.txt
+        Macro_1.s
+        Macro_2.s
+        Batchfile.bat
+        tests\*.*
+        Changes
+        Project_X.proj
+
+    c) Project_X.proj: same, but using a simple recursive filespec:
+
+         @c:\data\projects\Project_X\*.*
+
+    d) Project_Y.proj: all files will be loaded into a ring named "Project Y":
+
+         [editfiles]
+         ; ring: Project Y
+         Readme.txt
+         Macro_1.s
+         Macro_2.s
+         Batchfile.bat
+         tests\*.*
+         Project_Y.proj
+
+    d) Project_Y.proj: same files will be loaded into the "Project X"
+       ring, but we also give some properties to that ring:
+
+         [rings]
+         Project Y=names_only:1,enable_view_plugins:1,use_currext:1,steal:0
+
+         [editfiles]
+         ; ring: Project Y
+         Readme.txt
+         Macro_1.s
+         Macro_2.s
+         Batchfile.bat
+         tests\*.*
+         Project_Y.proj
+
+    d) Project_Z.proj: We use two rings, one for programs one for docs:
+
+         [rings]
+         Project Z Docs and Tests=names_only:1,enable_view_plugins:1,use_currext:1,steal:0
+         Project Z Code=names_only:1,enable_view_plugins:1,use_currext:1,steal:0
+
+         [editfiles]
+         ; ring: Project Z Code
+         Project_X.s
+         Project_Y.s
+         Project_Z.bat
+         ; ring: Project Z Docs and Tests
+         Readme.txt
+         tests\*.*
+         Project_X.proj
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    LoadProj - Simple Project loader for the Ringlets system
+
+    Ringlets v0.9.2 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+

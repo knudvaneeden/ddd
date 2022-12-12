@@ -1,0 +1,237 @@
+
+    Archiver - Replacement save commands allowing for incremental backups
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+
+    The Archiver macro package provides a number of enhancements to
+    the save and backup commands built into TSE.
+
+    Incremental Backups
+    -------------------
+    When you save a file, rather than just saving the previous
+    version as 'filename.bak', Archiver can create numbered backups.
+    So the first backup is saved as 'filename.ext.001', the second as
+    'filename.ext.002' and so on.
+
+    Local or Remote Backups
+    -----------------------
+    You can configure Archiver to make its backups in the same directory
+    as the original file, in a subdirectory off of that directory (this
+    is the default), or in a central backup repository.
+
+    In the case of a central backup repository, the backup files are not just
+    dumped into a single flat directory, but rather their full paths are
+    preserved.  So
+
+        c:\windows\system.ini
+
+    might be saved as:
+
+        c:\backups\c\windows\system.ini.001
+
+    The ability to store copies of every file you've edited in a central
+    repository is very powerful, and is what gives Archiver its name.
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+    NOTE: The Archiver package is not designed to be used as a
+    stand-alone macro.  Instead it is meant to be integrated into your
+    .ui file, so you'll have to be comfortable finding, editing and
+    compiling your .ui file in order to follow these instructions.
+
+    WARNING: Be careful editing your TSE .ui file!  I am not responsible
+    if you damage your TSE installation in any way.
+
+    NOTE: On TSE 2.5 (DOS) You will need to install the Profile
+    package.  See Profile.txt in that package for instructions.
+
+    Place the Archive.s, PathUtil.si, findprof.si, setcache.si
+    files in your macro source directory, then compile Archive.s.
+
+    Place Archive.si in the same directory as your .ui file.
+
+    Edit your .ui file, adding the following line near the top:
+
+        #include ['archiver.si']
+
+    Next you'll have to replace various built in Save and Exit
+    functions (called by your menus and keybindings) with the new
+    functions provided by Archiver:
+
+      Search For              Replace With
+      ==========              ============
+      SaveFile()              ArchSaveFile()
+      SaveAndQuitFile()       ArchSaveAndQuitFile()
+      QuitFile()              ArchQuitFile()
+      SaveAllFiles()          ArchSaveAllFiles()
+      SaveAllandExit()        ArchSaveAllandExit()
+      Exit()                  ArchExit()
+      mCloseFileAndWindow()   ArchCloseFileAndWindow()
+
+    Now compile your .ui, burning the changes into TSE.
+
+    3. CONFIGURATION
+    ---------------------------------------------------------------
+
+    Archiver reads its settings from TSE.INI.  (It searches for this file
+    according to the rules in the FindProf package, but usually it
+    will be found in the same directory that contains e32.exe.)
+
+    All of the settings below should be placed in the [Archiver]
+    section in TSE.INI.
+
+    Backup Mode
+    -----------
+    Archiver determines what kind of backup to perform based on
+    the extension of the current file.  (If the CurrExt macro package
+    is installed, it will use the extension returned by that package, for
+    greater flexibility.)
+
+    There are five backup modes that can be used for a particular
+    file:
+
+    Backup Mode           Description
+    ===========           ===========
+    no_backups            No backups will be created
+
+    standard_backups      The standard TSE backup will be performed:
+                          the backup file will appear in the current
+                          directory, and will have the extension
+                          specified by the editor variable BackupExt.
+
+    local_backups         An incremental backup will be used (see below).
+                          The backup file will be created in the same
+                          directory as the original file.
+
+    local_subdir_backups  An incremental backup will be used (see
+                          below). The backup file will be created in a
+                          subdirectory off of the directory containing
+                          the original file.  This subdirectory defaults
+                          to 'bak', but can be changed by the
+                          'local_backup_subdir' parameter, as indicated
+                          below.
+
+                          So for instance if the original file is:
+
+                              c:\windows\system.ini
+
+                          The first backup file will be:
+
+                              c:\windows\bak\system.ini.000
+
+    global_backups        An incremental backup will be used (see
+                          below).  The backup file will be created
+                          in a central repository (the root of which
+                          is specified in the 'global_backup_dir'
+                          parameter, as indicated below).
+
+                          The filename within this repository is
+                          determined by taking the full path of
+                          the current file, and converting the drive
+                          letter to a subdirectory.  So if
+                          'global_backup_dir' is set to 'd:\backup',
+                          and the original file is:
+
+                              c:\windows\system.ini
+
+                          The first backup file will be:
+
+                              d:\backup\c\windows\system.ini.000
+
+
+    You can specify any number of file extensions for each of
+    these backup modes.  For instance:
+
+    global_backups=.s,.si,.ui
+    standard_backups=.txt
+
+    In this case, all TSE Macro and User Interface files will backed up
+    to the central backup repository, but text files will be backed up
+    using the normal built-in TSE method.
+
+    Normally, local_subdir_backups is the default mode. If you want a
+    different mode to be the default, use the wildcard extension ('.*')
+    as the value of that mode:
+
+    global_backups=.*
+    standard_backups=.txt
+
+    In this case, all files will use the 'global_backups' mode, except
+    text files, which will use the 'standard_backup' mode.
+
+
+
+    General Settings
+    ----------------
+
+    Setting               Description
+    =======               ===========
+    max_backups           the number of backups that Archiver will keep
+                          (up to 1000).  If you set this to 500,
+                          Archiver will create filename.001,
+                          filename.002, all the way up to filename.499,
+                          before starting over.  If you have this set to
+                          50, then Archiver will only count up to
+                          filename.049 before starting over.
+                          See also "Wraparound Settings", below
+
+    global_backup_dir     location of the global backup repository
+                          when in global_backups mode
+
+    local_backup_subdir   name of the subdirectory which should be
+                          created off of the current directory when
+                          creating local_subdir_backups mode.
+                          Defaults to '/bak'
+
+    Wraparound Settings
+    -------------------
+    When a file has been backed up the number of times specified by the
+    'max_backup' parameter, the next file will be saved with a '000'
+    extension.  You can arrange to perform some special processing
+    at this point.  You can run a batch file or a SAL macro.
+
+    Setting               Description
+    =======               ===========
+    wraparound_beep       Beep when max_backups have been reached.
+
+    wraparound_macro      run the specifed macro, passing the current
+                          backup directory as a parameter.  The
+                          current filename will be available as
+                          CurrFileName()
+
+    wraparound_cmd        run the specified command, passing the current
+                          backup directory as the first argument, and
+                          the current filename as the second argument.
+
+
+    4. ADDITIONAL FEATURES AND NOTES
+    ---------------------------------------------------------------
+    When you save TSE.INI, Archiver will run the 'sreload' macro (if it is
+    installed).  This will have the effect of notifying all currently
+    running macros that the settings have changed.
+
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    Archiver - Replacement save commands allowing for incremental backups
+
+    0.9.6 - Aug 9, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+

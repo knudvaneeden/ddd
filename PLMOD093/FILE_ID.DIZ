@@ -1,0 +1,33 @@
+PerlMod v0.9.3 (Jun 19, 2002):
+
+
+Allows you to edit or view the docs for a Perl module by
+name (e.g. Apache::Session, Net::FTP).
+
+The name is picked up from the current line in the
+file you are editing, so all you have to do is move
+the cursor to a 'use' or 'package' statement in your
+Perl program and press a key to edit or view the
+module!
+
+For editing, it will search for the module in
+a list of module directories on your system.
+
+To view the docs for a module it will launch
+your web browser and navigate to the documentation
+on http://www.perldoc.com/ by default, although
+this also can be configured.
+
+Also included is a simple Perl CGI script
+that you can install on your own web server
+to view documentation for the modules you have
+installed on that system.
+
+
+Platform: TSE Pro 2.x/3.x/4.x
+
+Requirements: The DOS version of TSE needs the 'Profile' package.
+
+Author: Michael Graham <magmac@occamstoothbrush.com>
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

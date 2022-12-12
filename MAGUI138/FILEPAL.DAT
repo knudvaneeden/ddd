@@ -1,0 +1,37 @@
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³ Lines with a blank in column 1 are comments, except          ³
+ ³ for Category Titles (FILES, EXTENSIONS, DIRECTORIES, DRIVES) ³
+ ³                 * DO NOT EDIT TITLE LINES *                  ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+ ³ DELIMITER DESCRIPTION:           ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»         ³
+ ³ şA[0]   AutoTrack is ON          º [n]=fixed width º         ³
+ ³ şP      Position: line + row[2]  ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼         ³
+ ³ şI[3]   Insert[1], AutoIndent[1], WordWrap[1]                ³
+ ³ şL      Left margin                                          ³
+ ³ şR      Right margin                                         ³
+ ³ şT[4]   Tab type[1], width[2], expand[1]                     ³
+ ³ şE[2]   EOF type[1], EOL Type[2]                             ³
+ ³ şa      bookmark 'a': line + row[2]   (same for b through z) ³
+ ³ şM      linked macro                                         ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ ùFILESù
+w:\dosemu\bootdir\msdos.sysşP101şE30
+w:\dosemu\autoexec.batşP101şE30
+
+ ùEXTENSIONSù
+.txtşI121şE20
+.plşI120şT2041
+.phpşI120şT2041
+
+ ùDIRECTORIESù
+
+
+ ùDRIVESù
+Y:şE22
+u:şE20
+w:şE20
+
+
+
+

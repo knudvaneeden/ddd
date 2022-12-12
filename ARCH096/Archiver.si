@@ -1,0 +1,93 @@
+
+// Include this file in your UI file.
+
+integer proc Arch_TryExecMacro(STRING macx, STRING cmdline)
+    // string search_result[254]
+
+    if IsMacroLoaded(macx)
+    or Length(SearchPath(macx + ".mac", Query(TSEPath), "mac"))
+    or Length(SearchPath(macx, Query(TSEPath), "mac"))
+
+        if ExecMacro(macx + " " + cmdline)
+            return(1)
+        endif
+
+    endif
+    return(0)
+end
+
+integer proc ArchSaveFile()
+    integer ret = 0
+    ret = Arch_TryExecMacro('archiver', '-s')
+    if not ret
+        ret = SaveFile()
+    endif
+    return(ret)
+end
+
+integer proc ArchSaveAndQuitFile()
+    integer ret = 0
+    ret = Arch_TryExecMacro('archiver', '-sq')
+    if not ret
+        ret = SaveAndQuitFile()
+    endif
+    return(ret)
+end
+
+integer proc ArchQuitFile()
+    integer ret = 0
+    ret = Arch_TryExecMacro('archiver', '-q')
+    if not ret
+        ret = QuitFile()
+    endif
+    return(ret)
+end
+
+proc ArchCloseFileAndWindow()
+    integer ret       = 0
+    integer buffer_id = GetBufferID()
+
+    ret = Arch_TryExecMacro('archiver', '-q')
+    if ret
+        // If the file was actually quit then we will be in a different
+        // buffer now.
+
+        if GetBufferID() <> buffer_id
+            CloseWindow()
+        endif
+    else
+        if QuitFile()
+            CloseWindow()
+        endif
+    endif
+end
+
+integer proc ArchSaveAllFiles()
+    integer ret = 0
+    ret = Arch_TryExecMacro('archiver', '-sa')
+    if not ret
+        ret = SaveAllFiles()
+    endif
+    return(ret)
+end
+
+integer proc ArchSaveAllandExit()
+    integer ret = 0
+    ret = Arch_TryExecMacro('archiver', '-sax')
+    if not ret
+        ret = SaveAllAndExit()
+    endif
+    return(ret)
+end
+
+integer proc ArchExit()
+    integer ret = 0
+    ret = Arch_TryExecMacro('archiver', '-x')
+    if not ret
+        ret = Exit()
+    endif
+    return(ret)
+end
+
+
+

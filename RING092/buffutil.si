@@ -1,0 +1,186 @@
+
+integer proc lFindInBuffer (integer buffer_id, string search_string, string search_options)
+
+    integer line_num
+    PushPosition()
+    GotoBufferId(buffer_id)
+
+    if lFind(search_string, 'g' + search_options)
+        line_num = CurrLine()
+        PopPosition()
+        return(line_num)
+    endif
+    PopPosition()
+    return(0)
+end
+
+string proc GetTextFromBuffer (integer buffer_id, integer line_num, integer start_pos, integer get_len)
+    string line_text[MAXSTRINGLEN]
+
+    PushPosition()
+    GotoBufferId(buffer_id)
+    if line_num
+        GotoLine(line_num)
+    endif
+
+    line_text = GetText(start_pos, get_len)
+
+    PopPosition()
+    return(line_text)
+end
+
+string proc GetLineFromBuffer (integer buffer_id, integer line_num)
+    return(GetTextFromBuffer(buffer_id, line_num, 1, MAXSTRINGLEN))
+end
+
+proc KillLineInBuffer(integer buffer_id, integer line_num)
+    PushPosition()
+    GotoBufferId(buffer_id)
+    if line_num < 0
+        line_num = NumLines() + 1 + line_num
+    endif
+    if GotoLine(line_num)
+        KillLine()
+    endif
+    PopPosition()
+end
+
+proc InsertTextIntoBuffer(integer buffer_id, integer line_num, integer start_pos, string text, integer insert_flag)
+    PushPosition()
+    GotoBufferId(buffer_id)
+    if line_num < 0
+        line_num = NumLines() + 1 + line_num
+    endif
+    if not insert_flag
+        insert_flag = _DEFAULT_
+    endif
+    if GotoLine(line_num) and GotoPos(start_pos)
+        InsertText(text, insert_flag)
+    endif
+
+    PopPosition()
+end
+
+proc InsertLineIntoBuffer(integer buffer_id, integer line_num, string text)
+    PushPosition()
+    GotoBufferId(buffer_id)
+    if line_num < 0
+        line_num = NumLines() + 1 + line_num
+    endif
+    if GotoLine(line_num)
+        InsertLine(text)
+    endif
+    PopPosition()
+end
+
+proc AddLineIntoBufer(integer buffer_id, integer line_num, string text)
+    PushPosition()
+    GotoBufferId(buffer_id)
+    if line_num < 0
+        line_num = NumLines() + 1 + line_num
+    endif
+    if GotoLine(line_num)
+        AddLine(text)
+    endif
+    PopPosition()
+end
+
+proc MoveBufferLine(integer buffer_id, integer line_num, integer line_dest)
+    integer save_insert_line_blocks_above = Set('InsertLineBlocksAbove', ON)
+    PushPosition()
+    if GotoBufferId(buffer_id)
+        // updatedisplay() warn("moving line: " + str(line_num) + "; to: " + str(line_dest))
+
+        if line_num < 0
+            line_num = NumLines() + 1 - line_num
+        endif
+
+        PushBlock()
+        if CurrLine() == line_num or GotoLine(line_num)
+            UnmarkBlock()
+            MarkLine(line_num, line_num)
+            if line_dest < 0
+                line_dest = NumLines() + 1 - line_dest
+            endif
+            if GotoLine(line_dest)
+                if line_dest > line_num
+                    Set('InsertLineBlocksAbove', OFF)
+                endif
+                MoveBlock()
+            endif
+        endif
+        PopBlock()
+    endif
+    PopPosition()
+    Set('InsertLineBlocksAbove', save_insert_line_blocks_above)
+end
+
+proc MoveBufferLineUp(integer buffer_id, integer line_num, integer wrapflag)
+    integer save_insert_line_blocks_above = Set('InsertLineBlocksAbove', ON)
+    PushPosition()
+    if GotoBufferId(buffer_id)
+
+        if line_num < 0
+            line_num = NumLines() + 1 - line_num
+        endif
+        PushBlock()
+        if CurrLine() == line_num or GotoLine(line_num)
+            UnmarkBlock()
+            MarkLine(line_num, line_num)
+            if Up()
+                MoveBlock()
+            elseif wrapflag
+                EndFile()
+                Set('InsertLineBlocksAbove', OFF)
+                MoveBlock()
+            endif
+        endif
+        PopBlock()
+    endif
+    PopPosition()
+    Set('InsertLineBlocksAbove', save_insert_line_blocks_above)
+end
+
+proc MoveBufferLineDown(integer buffer_id, integer line_num, integer wrapflag)
+    integer save_insert_line_blocks_above = Set('InsertLineBlocksAbove', OFF)
+    PushPosition()
+    GotoBufferId(buffer_id)
+    if line_num < 0
+        line_num = NumLines() + 1 - line_num
+    endif
+    PushBlock()
+    if CurrLine() == line_num or GotoLine(line_num)
+        UnmarkBlock()
+        MarkLine(line_num, line_num)
+        // updatedisplay() warn("line_num: " + str(line_num) + "; numlines: " + str(NumLines()))
+        if Down()
+            MoveBlock()
+        elseif wrapflag
+            BegFile()
+            Set('InsertLineBlocksAbove', ON)
+            MoveBlock()
+        endif
+    endif
+    PopBlock()
+    PopPosition()
+    Set('InsertLineBlocksAbove', save_insert_line_blocks_above)
+end
+
+proc Buffutil_Useless_Function_To_Avoid_Warnings()
+    if 0
+        Buffutil_Useless_Function_To_Avoid_Warnings()
+        lFindInBuffer (0,'','')
+        GetTextFromBuffer(0,0,0,0)
+        GetLineFromBuffer(0,0)
+        KillLineInBuffer(0,0)
+        InsertTextIntoBuffer(0,0,0,'',0)
+        InsertLineIntoBuffer(0,0,'')
+        AddLineIntoBufer(0,0,'')
+        MoveBufferLineUp(0,0,0)
+        MoveBufferLineDown(0,0,0)
+        MoveBufferLine(0,0,0)
+    endif
+end
+
+
+

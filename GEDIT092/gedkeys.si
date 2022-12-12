@@ -1,0 +1,105 @@
+
+string LM_FOOTER[] = "{F1}-Help {Enter}-Jump {Alt-E}-Edit {Del}-Delete {F10}-Menu {Esc}-Cancel"
+
+string PICK_FOOTER[] = "{F1}-Help {Enter}-Select {Del}-Delete {F10}-Menu {Esc}-Cancel"
+
+keydef pick_individual_keys
+    <F1>         EndProcess(LM_HELP)
+    <Enter>      EndProcess(LM_SELECT)
+    <Ctrl Enter> EndProcess(LM_SELECT)
+    <F10>        EndProcess(LM_SHOW_MENU)
+    <Del>        EndProcess(LM_DELETE)
+end
+
+helpdef pick_individual_help
+    title = 'Pick Individual Keys'
+    '<F1>                      Help'
+    '<Enter>, <Ctrl Enter>     Select individual'
+    ''
+    '<Del>                     Delete individual'
+    ''
+    '<F10>                     Show Menu'
+end
+
+keydef pick_family_keys
+    <F1>         EndProcess(LM_HELP)
+    <Enter>      EndProcess(LM_SELECT)
+    <Ctrl Enter> EndProcess(LM_SELECT)
+    <F10>        EndProcess(LM_SHOW_MENU)
+    <Del>        EndProcess(LM_DELETE)
+end
+
+helpdef pick_family_help
+    title = 'Pick Family Keys'
+    '<F1>                      Help'
+    '<Enter>, <Ctrl Enter>     Select family'
+    ''
+    '<Del>                     Delete family'
+    ''
+    '<F10>                     Show Menu'
+end
+
+keydef individual_links_menu_keys
+    <F1>         EndProcess(LM_HELP)
+    <Enter>      EndProcess(LM_JUMP)
+    <Ctrl Enter> EndProcess(LM_JUMP)
+    <Alt C>      EndProcess(LM_ADD_CHILD)
+    <Alt S>      EndProcess(LM_ADD_SIBLING)
+    <Alt I>      EndProcess(LM_NEW_INDIVIDUAL)
+    <Alt F>      EndProcess(LM_NEW_FAMILY)
+    <Alt E>      EndProcess(LM_EDIT)
+    <F10>        EndProcess(LM_SHOW_MENU)
+    <Del>        EndProcess(LM_DELETE)
+end
+
+helpdef individual_links_menu_help
+    title = 'Individual Links'
+    '<F1>                      Help'
+    '<Enter>, <Ctrl Enter>     Follow link'
+    '<Alt C>                   Add Child'
+    '<Alt S>                   Add Sibling'
+    ''
+    '<Alt E>                   Edit Link'
+    '<Del>                     Delete Link'
+    ''
+    '<Alt I>                   New Individual'
+    '<Alt F>                   New Family'
+    ''
+    '<F10>                     Show Menu'
+end
+
+keydef family_links_menu_keys
+    <F1>         EndProcess(LM_HELP)
+    <Enter>      EndProcess(LM_JUMP)
+    <Ctrl Enter> EndProcess(LM_JUMP)
+    <Alt C>      EndProcess(LM_ADD_CHILD)
+    <Alt I>      EndProcess(LM_NEW_INDIVIDUAL)
+    <Alt F>      EndProcess(LM_NEW_FAMILY)
+    <Alt E>      EndProcess(LM_EDIT)
+    <F10>        EndProcess(LM_SHOW_MENU)
+    <Del>        EndProcess(LM_DELETE)
+end
+
+helpdef family_links_menu_help
+    title = 'Individual Links'
+    '<F1>                      Help'
+    '<Enter>, <Ctrl Enter>     Follow link'
+    '<Alt C>                   Add Child'
+    ''
+    '<Alt E>                   Edit Link'
+    '<Del>                     Delete Link'
+    ''
+    '<Alt I>                   New Individual'
+    '<Alt F>                   New Family'
+    ''
+    '<F10>                     Show Menu'
+end
+
+keydef gedcom_keybindings
+    <ctrl s><m> current_links_menu()
+    <ctrl s><h> global_function_menu()
+    <ctrl s><f> pick_and_jump_to_individual()
+    <ctrl s><g> pick_and_jump_to_family()
+end
+
+

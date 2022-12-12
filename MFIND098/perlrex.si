@@ -1,0 +1,112 @@
+
+/*
+    perlrex.si
+
+    Contains a function to translate a Perl-like regular expression into
+    a TSE-like regular expression:
+
+        #include ['perlrex.si']
+
+        if lFind(PRex_to_TRex('\d\d\d'), 'x')
+            Warn('found three digits!')
+        endif
+        if lFind(PRex_to_TRex('\w+?'), 'x')
+            Warn('found some word characters!')
+        endif
+
+*/
+
+
+#ifndef MAX_STRING
+#define MAX_STRING 255
+#endif
+
+string Word_Set[] = "A-Za-z_0-9"
+
+string proc PRex_to_TRex (string find_text)
+    string  new_find_text[MAX_STRING] = ''
+    integer backslash_mode = FALSE
+    integer p
+
+    for p = 1 to Length(find_text)
+        if backslash_mode == TRUE
+            case find_text[p]
+                when 's'
+                    new_find_text = new_find_text + '[ \t]'
+                when 'S'
+                    new_find_text = new_find_text + '[~ \t]'
+                when 'd'
+                    new_find_text = new_find_text + '[0-9]'
+                when 'D'
+                    new_find_text = new_find_text + '[~0-9]'
+                when 'w'
+                    new_find_text = new_find_text + '[' + Word_Set + ']'
+                when 'W'
+                    new_find_text = new_find_text + '[~' + Word_Set + ']'
+                when '\'
+                    new_find_text = new_find_text + '\\'
+                otherwise
+                    new_find_text = new_find_text + '\' + find_text[p]
+            endcase
+            backslash_mode = FALSE
+        else
+            case find_text[p]
+                when '\'
+                    backslash_mode = TRUE
+
+                when '['
+                    new_find_text = new_find_text + '['
+                    if p < Length(find_text)
+                        if find_text[p+1] == '^'
+                            new_find_text = new_find_text + '~'
+                            p = p + 1
+                        endif
+                    endif
+
+                when '('
+                    new_find_text = new_find_text + '{'
+
+                when ')'
+                    new_find_text = new_find_text + '}'
+
+                when '*'
+                    if p < Length(find_text)
+                        if find_text[p+1] == '?'
+                            new_find_text = new_find_text + '*'
+                            p = p + 1
+                        else
+                            new_find_text = new_find_text + '@'
+                        endif
+                    else
+                        new_find_text = new_find_text + '@'
+                    endif
+
+                when '+'
+                    if p < Length(find_text)
+                        if find_text[p+1] == '?'
+                            new_find_text = new_find_text + '+'
+                            p = p + 1
+                        else
+                            new_find_text = new_find_text + '#'
+                        endif
+                    else
+                        new_find_text = new_find_text + '#'
+                    endif
+
+                when '@'
+                    new_find_text = new_find_text + '\@'
+
+                when '#'
+                    new_find_text = new_find_text + '\#'
+
+                otherwise
+                    new_find_text = new_find_text + find_text[p]
+
+            endcase
+
+        endif
+    endfor
+    return(new_find_text)
+end
+
+

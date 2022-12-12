@@ -1,0 +1,19 @@
+Archiver 0.9.6 (Aug 9, 2002):
+
+System for creating incremental backups (file.000, file.001,
+etc.).
+
+It will optionally store all backups in a central
+repository, maintaining a complete directory hierarchy
+containing incremental backups of every file you have
+edited, keeping up to 1000 of the most recent versions
+of each file.
+
+
+Platform: TSE Pro 2.x/3.x/4.x
+
+Requirements: The DOS version of TSE needs the 'Profile' package.
+
+Author: Michael Graham <magmac@occamstoothbrush.com> (based on Edgar Payne's save.s)
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

@@ -1,0 +1,69 @@
+Ringlets v0.9.2 (Jun 19, 2002):
+
+
+Ringlets lets you have multiple rings of files in
+TSE. It's like having multiple virtual editors
+inside of a single editing session!
+
+You can use these rings for whatever purpose you
+like. Here are some common uses:
+
+* Load several large multi-file projects, and keep
+them all independent by putting each into a
+separate ring. Unlike using separate instances of
+TSE, files common to both projects will only be
+loaded into TSE once.  A simple project loader
+macro (LoadProj) is included.
+
+* During an editing session you can create a
+temporary ring containing just a couple of
+frequently-used files so you can switch back and
+forth between them easily.
+
+* Newly edited files get filtered into their own
+ring based on file type (this is very powerful
+when used with the OnlyOne macro: for instance you
+could use TSE as your web browser's source viewer,
+and have all these files go into a separate ring).
+
+* You can create an Instant Filter: a new ring which
+contains a subset of files in the current ring,
+based on file type.  For instance, you could
+create an Instant Filter to list all files in the
+current ring which have the extension ".txt".
+
+Some other features:
+
+* Buffer lists can switch between displaying
+filename only, or the full path.  Additionally,
+you can setup plugin macros to display a friendly
+name for certain files (e.g. the <title> of an
+HTML file). Plugins for HTML files and Perl
+modules are included.
+
+* Sort each ring's buffer list alphabetically.
+Tweak the order by moving individual files up and
+down in the list.
+
+* Editing variables (tab type, margins, etc) and the
+current directory are saved separately in each
+ring.
+
+* Files can be in more than one ring at once.  The
+built-in virtual [all] ring contains every loaded
+file. The [unfiled] ring contains files that
+aren't in any other user-defined ring.
+
+* The Find or Replace 'all files' option is now
+limited to search only the files in the current
+ring.  If you want to search every loaded file,
+you can use the [all] ring).
+
+
+Platform: TSE 3.x only
+
+Requirements: none
+
+Author: Michael Graham <magmac@occamstoothbrush.com>
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

@@ -1,0 +1,81 @@
+
+!!!!
+NOTE THAT THIS IS ALPHA-QUALITY SOFTWARE.
+IT IS STILL IN DEVELOPMENT.  IT COMES WITH
+NO WARRANTEE.  IT MAY CHANGE AT ANY MOMENT.
+!!!!
+
+This is the first stab at one solution to the age old question of
+"How do I use TSE as my Unix editor?"
+
+Of course you can't actually run the TSE32 program at the Unix
+console yet, but this macro does allow you to transparently use TSE as
+your Linux/Unix editor.  All you need is a Samba share on your
+Linux/Unix box that is accessible from your Windows box.
+
+Here's how it works:
+
+At your shell prompt on your Unix box (using your Windows telnet/ssh
+program), you run the shell script "e.sh".  This script creates
+some temporary files in a special directory on the Samba share.
+
+Meanwhile, on your Windows box, your primary instance of TSE is running
+a macro in the background which is constantly monitoring this directory
+waiting for new files to appear.  When it finds a file, it loads it, and
+brings TSE to the foreground.
+
+So for example, if you type at your shell prompt:
+
+    $ e /etc/passwd
+
+The following things happen:
+
+    1) The shell script makes a copy in /data/autoedit/passwd.
+    2) TSE notices the file on the windows side (w:\autoedit\passwd)
+    3) TSE loads the file and brings itself to the foreground.
+    4) You edit the file, make some changes, then quit it
+    5) TSE saves the file, then brings your terminal
+       window to the foreground.
+    6) The shell script notices that the file has changed
+       and copies /data/autoedit/passwd to /etc/passwd,
+       (even offering to use the sudo command, if necessary)
+
+It sounds complicated, but it's actually quite easy from the user's
+point of view.
+
+Of course it only really works with one file at a time, and it doesn't
+really handle very well multiple files in different directories with
+the same name.  But it's a start.
+
+Eventually, I want to package this up into a proper macro package,
+and upload it to Semware's FTP site but I wanted to get some feedback
+from the newsgroup first.
+
+So if any of you try this out or have any comments or suggestions
+please let me know.
+
+There are two files in this package:
+
+    e.sh       (unix shell script)
+    autoedit.s (TSE macro)
+
+To use them, you will first have to create a directory in your samba
+share. On my system this is:
+
+     Under Linux         Under Windows
+     -----------         -------------
+     /data/autoedit      w:\autoedit
+
+
+You will then have to edit both autoedit.s and e.sh to point
+to the share.
+
+In autoedit.s search for the line:
+
+    string Watch_Directory[MAX_PATH] = 'w:\autoedit'
+
+And in e.sh, search for the line:
+
+    WATCH_DIR=/data/autoedit
+
+

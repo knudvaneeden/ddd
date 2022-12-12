@@ -1,0 +1,25 @@
+UnixEdit v0.1.5 (Jun 19, 2002):
+
+
+Type "e /etc/passwd" on your Unix system,
+and the file appears in your Windows TSE
+editing session!
+
+This package consists of a shell script on the
+Unix side, and a watcher macro on the TSE side.
+
+For this package to work you will need a
+samba share on the Linux/Unix system, and
+access to this share from the machine
+running TSE.  You do not need to share
+the entire Unix filesystem; just a single
+directory will do.
+
+
+Platform: TSE 3.x only
+
+Requirements: none
+
+Author: Michael Graham <magmac@occamstoothbrush.com>
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

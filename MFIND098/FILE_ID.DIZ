@@ -1,0 +1,19 @@
+MFind v0.9.7 (Jun 19, 2002):
+
+Enhances the built-in find command with the following new features:
+
+* Beeps when returning to the first file in a search through all files,
+
+* Can automatically set find options based on context (e.g. setting
+the 'lg' options when a block is marked in the current file),
+
+* Optional perl-style regular expressions
+
+
+Platform: TSE Pro 2.x/3.x/4.x
+
+Requirements: The DOS version of TSE needs the 'Profile' package.
+
+Author: Michael Graham <magmac@occamstoothbrush.com>
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

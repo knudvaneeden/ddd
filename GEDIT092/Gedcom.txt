@@ -1,0 +1,143 @@
+
+    Gedcom - Edit GEDCOM genealogical databases
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+    The Gedcom macro package is designed to help you edit GEDCOM
+    genealogical databases.
+
+    The Gedcom file format is quite common in the world of
+    genealogical software.  Pretty well every genealogical
+    software program either uses it or can import from it and
+    export to it.
+
+    The format is fairly self-explanatory.  There are individuals:
+
+        0 @I15@ INDI
+        1   NAME Anne Elizabeth Alice /Windsor/
+        1   TITL Princess
+        1   SEX F
+        1   BIRT
+        2     DATE Tuesday, 15th August 1950
+        2     PLAC Clarence House,St. James,,England
+        1   CHR
+        2     DATE Saturday, 21st October 1950
+        2     PLAC ,,,England
+        1   FAMS @F7@
+        1   FAMC @F6@
+        1   RIN 16
+
+    And there are families:
+
+        0 @F7@ FAM
+        1   HUSB @I16@
+        1   WIFE @I15@
+        1   CHIL @I17@
+        1   CHIL @I18@
+        1   DIV N
+        1   MARR
+        2     DATE Wednesday, 14th November 1973
+        2     PLAC Westminster,Abbey,London,England
+        1   RIN 99
+
+    Each section is nested (the number at the beginning of the line
+    indicates the nesting level).  Although they are usually
+    indented, the indenting isn't important.
+
+    An individual's name contains slashes (/) before and after
+    the surname.  In the above example, Anne's surname is Windsor.
+
+    Individuals and families are cross-linked to each other.
+    For instance, in the above example, Anne Windsor (individual I15)
+    is a spouse in the family F7.  Not only does she contain a link
+    to this family (FAMS) but within the family block, she is also
+    listed as WIFE.
+
+    Some common link tags used by the gedcom macro:
+
+        FAMC - Family (as child)
+        FAMS - Family (as spouse)
+        CHIL - Child
+        HUSB - Husband
+        WIFE - Wife
+
+    More information on the GEDCOM format can be found in the official
+    GEDCOM standard (PostScript and WordPerfect formats):
+
+        ftp://ftp.gedcom.org/pub/gedcom/standard/
+
+    An unofficial html translation can be found at:
+
+        http://homepages.rootsweb.com/~pmcbride/gedcom/55gctoc.htm
+
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+    Place the gedcom.s and gedkeys.si files in your macro source
+    directory.  Compile gedcom.s.
+
+    Edit your gedcom database.  Note that it must have
+    the extension ".ged" for the macro to work properly
+
+    The default key definitions are as follows:
+        <Ctrl G>       List individuals
+        <CtrlShift G>  List families
+        <CtrlAlt G>    Link menu
+        <CtrlAlt M>    Global Gedcom Menu
+
+    See the CONFIGURATION section, below, for information on
+    changing these key assignments.
+
+
+    3. USAGE
+    ---------------------------------------------------------------
+    The best way to learn to use this macro is to experiment!
+
+    Every function is available from one of the menus.
+
+    Experiment with adding and deleting individuals, and changing
+    families around by changing the values of the links they contain.
+
+    Note that the macro doesn't perform any kind of sophisticated
+    integrity checking on your file, so it's quite possible to create
+    a situation where your grandfather is married to himself and has you
+    as both his mother and his uncle.  The menus are there for your
+    convenience; they do not constrain your data in any way.
+
+
+    4. CONFIGURATION
+    ---------------------------------------------------------------
+    To change the key bindings used by gedcom.s, edit the gedkeys.si
+    file in your macro directory.
+
+    Note that this keydef will only be active if the extension
+    of the current file is ".ged".
+
+    I designed the "List Individuals" function to be similar to the
+    built in TSE "List Functions" command.  So it is bound by default
+    to <Ctrl G>, which (in TSE.UI) is bound to "List Functions".
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    Gedcom - Edit GEDCOM genealogical databases
+
+    v0.9.2 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+

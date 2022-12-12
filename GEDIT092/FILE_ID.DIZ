@@ -1,0 +1,18 @@
+Gedcom v0.9.2 (Jun 19, 2002):
+
+Macro for editing GEDCOM genealogical
+databases.
+
+Provides menus for browsing and editing individuals
+and families.  You can add, remove and edit
+relations for a given individual or family by
+picking from a list.
+
+
+Platform: TSE Pro 2.x/3.x/4.x
+
+Requirements: none
+
+Author: Michael Graham <magmac@occamstoothbrush.com>
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

@@ -1,0 +1,47 @@
+
+string proc Regex_MatchText(integer match_num)
+    if not match_num
+        return(GetGlobalStr('Regex::Match_All'))
+    endif
+    return(GetGlobalStr('Regex::Match_' + Str(match_num)))
+end
+
+string proc Regex_MatchText_All()
+    return(GetGlobalStr('Regex::Match_All'))
+end
+
+integer proc Regex_Match (string match_string, string match_expr, string match_opts)
+    SetGlobalStr("Regex::String", match_string)
+    SetGlobalStr("Regex::Expr", match_expr)
+    SetGlobalStr("Regex::Opts", match_opts)
+    ExecMacro('regex')
+    return(GetGlobalInt('Regex::Matched'))
+end
+
+integer proc Regex_Subst (var string match_string, string match_expr, string replacement_string, string match_opts)
+    SetGlobalStr("Regex::String", match_string)
+    SetGlobalStr("Regex::Expr", match_expr)
+    SetGlobalStr("Regex::Replacement", replacement_string)
+    SetGlobalStr("Regex::Opts", match_opts)
+
+    ExecMacro('regex -s')
+
+    if GetGlobalInt('Regex::Matched')
+        match_string = GetGlobalStr("Regex::String")
+        return(1)
+    endif
+    return(0)
+end
+
+proc Regex_Avoid_Warnings ()
+    string test[1] = ''
+    if 0
+        Regex_Avoid_Warnings()
+        Regex_MatchText(1)
+        Regex_MatchText_All()
+        Regex_Match ('','','')
+        Regex_Subst (test, '','','')
+    endif
+end
+
+

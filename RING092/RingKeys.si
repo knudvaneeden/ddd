@@ -1,0 +1,138 @@
+
+// Keys for List open rings Picklist
+
+helpdef ListRingsHelp
+    title = 'List Rings Keys'
+
+    ' <Escape>                Cancel '
+    ' <Enter>, <Ctrl Enter>   Change to selected ring '
+    ' <CtrlAlt Enter>         Change to selected ring, but first '
+    '                         puts the current buffer in selected ring '
+    ' <Alt Enter>             Ring Properties '
+    ' <Spacebar>              Toggle whether the current buffer '
+    '                         is in the selected ring '
+    ' <Ins>                   Same as <spacebar>, but moves cursor down '
+    '                         after toggle. '
+    ' <Del>                   Deletes the selected ring '
+    ' <Ctrl M>                Merges the selected ring into another ring '
+    ' <Ctrl C>                Makes a copy of the selected ring '
+    ' <Ctrl CursorUp>         Moves the selected ring up in the list '
+    ' <Ctrl CursorDown>       Moves the selected ring down in the list '
+    ' <F2>                    Renames the selected ring '
+    ' <Ctrl N>                Creates a new ring '
+    ' <Ctrl T>                Toggle Show Empty Rings '
+    ' <Ctrl F>                Run Ring Filters on all Files'
+    ' <F1>                    Shows this help '
+    ' <Alt I>                 Create An Instant Filter Ring'
+end
+
+keydef ListRingsKeys
+    <F1>              EndProcess(LR_HELP)
+    <Enter>           EndProcess(LR_CHANGE_RING)
+    <Ctrl Enter>      EndProcess(LR_CHANGE_RING)
+    <CtrlAlt Enter>   EndProcess(LR_CHANGE_RING_KEEPING_FILE)
+    <Alt Enter>       EndProcess(LR_RING_PROPERTIES)
+    <Spacebar>        EndProcess(LR_TOGGLE_BUFFER_IN_RING)
+    <Ins>             EndProcess(LR_TOGGLE_BUFFER_IN_RING_MOVE_DOWN)
+    <Del>             EndProcess(LR_DEL_RING)
+    <Ctrl M>          EndProcess(LR_MERGE_RING)
+    <Ctrl C>          EndProcess(LR_COPY_RING)
+    <Ctrl CursorUp>   EndProcess(LR_MOVE_RING_UP)
+    <Ctrl CursorDown> EndProcess(LR_MOVE_RING_DOWN)
+    <CtrlShift I>     EndProcess(LR_MOVE_RING_UP)
+    <CtrlShift K>     EndProcess(LR_MOVE_RING_DOWN)
+    <F2>              EndProcess(LR_RENAME_RING)
+    <Ctrl N>          EndProcess(LR_NEW_RING)
+    <Ctrl T>          EndProcess(LR_TOGGLE_SHOW_EMPTY_RINGS)
+    <Ctrl F>          EndProcess(LR_FILTER_ALL_BUFFERS)
+    <Alt I>           EndProcess(LR_CREATE_INSTANT_FILTER)
+end
+
+string LR_FOOTER[] = "{F1}-Help {Enter}-Go {Ins}-Toggle In Ring {Esc}-Cancel"
+
+// Keys for List open buffers Picklist
+
+helpdef ListBuffersHelp
+    title = 'List Buffers Keys'
+
+    ' <F1>                  Help'
+    ' <Enter>, <Ctrl Enter> Go to Buffer'
+    ' <Del>                 Remove buffer from Ring'
+    ' <Ctrl Del>            Quit buffer, removing it from all rings'
+    ' <Ctrl s>              Save Buffer'
+    ' <Ctrl a>              Add Buffers from other Ring(s)'
+    ''
+    ' <Ctrl CursorUp>       Move Buffer up in list'
+    ' <Ctrl CursorDown>     Move Buffer Down in list'
+    ''
+    ' <BackSpace>           Change Current Ring'
+    ' <*>                   Change to All Rings'
+    ' <Alt Enter>           Edit Properties of the Current Ring'
+    ''
+    ' <Ctrl n>              Show names only'
+    ' <Ctrl v>              Enable/Disable Name Plugins'
+    ''
+    ' <Ctrl F>              Run Ring Filters on all Files'
+    ''
+    " <Ctrl O>              Sort this ring's buffer list (alphabetically)"
+    " <CtrlShift O>         Sort this ring's buffer list (more options)"
+    ''
+    '<Alt I>                Create An Instant Filter Ring'
+
+end
+
+helpdef ListBuffersHelpOtherRing
+    title = 'List Buffers Keys'
+
+    '<F1>                  Help'
+    '<Enter>, <Ctrl Enter> Go to Buffer'
+    ''
+    '<Spacebar>, <Ins>     Toggle buffer in ring'
+    '<Grey+>               Put all listed buffers in current ring'
+    '<Grey->               Remove all listed buffers from current ring'
+    '<BackSpace>           Change Current Ring'
+    ''
+    '<Ctrl n>              Show names only'
+    '<Ctrl v>              Enable/Disable Name Plugins'
+
+end
+
+keydef ListBuffersKeys
+    <F1>              EndProcess(LB_HELP)
+    <Enter>           EndProcess(LB_CHANGE_FILE)
+    <Ctrl Enter>      EndProcess(LB_CHANGE_FILE)
+    <Spacebar>        EndProcess(LB_TOGGLE_FILE)
+    <Ins>             EndProcess(LB_TOGGLE_FILE_MOVE_DOWN)
+    <Del>             EndProcess(LB_QUIT_FILE_THIS_RING)
+    <Ctrl Del>        EndProcess(LB_QUIT_FILE_ALL_RINGS)
+    <Ctrl s>          EndProcess(LB_SAVE_FILE)
+    <Ctrl CursorUp>   EndProcess(LB_MOVE_FILE_UP)
+    <Ctrl CursorDown> EndProcess(LB_MOVE_FILE_DOWN)
+    <CtrlShift I>     EndProcess(LB_MOVE_FILE_UP)
+    <CtrlShift K>     EndProcess(LB_MOVE_FILE_DOWN)
+    <Grey+>           EndProcess(LB_SELECT_ALL)
+    <Grey->           EndProcess(LB_SELECT_NONE)
+    <Ctrl n>          EndProcess(LB_TOGGLE_NAME_ONLY)
+    <Ctrl v>          EndProcess(LB_TOGGLE_PLUGINS)
+    <Ctrl a>          EndProcess(LB_ADD_BUFFERS_FROM_OTHER_RING)
+    <BackSpace>       EndProcess(LB_CHANGE_RING)
+    <Ctrl BackSpace>  EndProcess(LB_CHANGE_RING)
+    <*>               EndProcess(LB_CHANGE_RING_TO_ALL)
+    <Ctrl *>          EndProcess(LB_CHANGE_RING_TO_ALL)
+    <Ctrl F>          EndProcess(LB_FILTER_ALL_BUFFERS)
+    <Alt Enter>       EndProcess(LB_CURRENT_RING_PROPERTIES)
+    <Ctrl O>          EndProcess(LB_SORT_BUFFERS_IN_RING)
+    <CtrlShift O>     EndProcess(LB_SORT_BUFFERS_IN_RING_MENU)
+    <Alt I>           EndProcess(LB_CREATE_INSTANT_FILTER)
+end
+
+string LB_FOOTER[] = "{F1}-Help {Enter}-Go {Esc}-Cancel"
+string PB_FOOTER[] = "{Ins/Space}-Toggle Add {+}-Select All {-}-Select None"
+
+// Global Keys
+
+<Alt p>     PrevFileInCurrentRing()
+<Alt n>     NextFileInCurrentRing()
+<Alt 0>     ListBuffers()
+<Ctrl q><r> ChangeToLastRing()
+

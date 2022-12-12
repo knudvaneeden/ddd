@@ -1,0 +1,357 @@
+
+    MFind - Enhanced replacement for the Find built-in
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+
+    The MFind macro package is designed to replace TSE's built in
+    find and replace functions with new versions that are slightly
+    enhanced.
+
+    The main enhancements are:
+
+         * Beeps when returning to the first file in a search through all files
+
+         * Can automatically set find options based on context (e.g. setting
+           the 'lg' options when a block is marked in the current file)
+
+         * Optional perl-style regular expressions.  As an added bonus,
+           you can use the perl-style regular expressions in your
+           own macros.  See "4. PERL-STYLE REGULAR EXPRESSIONS", below.
+
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+
+    NOTE: On TSE 2.5 (DOS) You will need to install the Profile
+    package.  See Profile.txt in that package for instructions.
+
+    Place the MFind.s, mfconst.si, findprof.si and setcache.si files in
+    your macro source directory.  If you want to enable perl-style
+    regular expressions, also place the perlrex.s file in your
+    macro source directory.  Compile MFind.s.
+
+    Note that the findprof.si and setcache.si files may already have
+    been installed from another macro package. If so, you should not
+    need to install them again.  But it's worth taking a quick check
+    to see that you have the latest version of these files.
+
+    To use MFind from within TSE, you will have to edit your User
+    interface file (e.g. TSE.UI) and change your menus and key bindings
+    to point to MFind instead of the built in search features.
+
+    For instance:
+
+        menu SearchMenu()
+        ...
+            "&Find..."      ,   ExecMacro("mfind -f")
+            "&Replace..."   ,   ExecMacro("mfind -r")
+            "&Again"        ,   ExecMacro("mfind -g")
+        ...
+        end
+
+
+        <Ctrl f>                ExecMacro("mfind -f")
+        <Ctrl l>                ExecMacro("mfind -g")
+        <CtrlShift l>           ExecMacro("mfind -1 b -g")
+        <Ctrl r>                ExecMacro("mfind -r")
+
+    For a complete list of all of MFind's command line options,
+    see the section "COMMAND LINE OPTIONS" below.
+
+
+    3. COMMAND LINE OPTIONS
+    ---------------------------------------------------------------
+
+    The following command line option are available to MFind:
+
+    Find, Replace, Again:
+    --------------------
+
+    -f   = perform a Find, asking for Search Text and Options
+    -r   = perform a Replace, asking for Search Text, Replace Text and Options
+    -g   = repeat the last Find or Replace
+
+    Change Find Options:
+    -------------------
+    -a   = set the find options (absolutely)
+    -1   = turn on some find options
+    -0   = turn off other find options
+    -y   = same as -1
+    -n   = same as -0
+
+    Change Sound Options:
+    --------------------
+    -q   = Turn off Sound Effects
+    -s   = Turn on Sound Effects
+
+
+    Examples:
+    --------
+
+    mfind -f       = Simple Find
+    mfind -r       = Simple Replace
+    mfind -g       = Simple Repeat (Find or Replace)
+    mfind -f -1 x  = Find; Regexp option ('x') is on by default
+    mfind -f -1 a  = Find; "All files" option ('a') is on by default
+    mfind -g -s    = Repeat last find, turn on sound effects
+    mfind -1 b -g  = Repeat last find, backwards (by turning on 'b')
+
+
+    4. PERL-STYLE REGULAR EXPRESSIONS
+    ---------------------------------------------------------------
+    [ Note that this feature is disabled by default.  For
+    instructions on how to enable it, see below under CONFIGURATION ]
+
+    When the Perl-style regular expression syntax translator
+    is enabled, you can search using Perl-style regular
+    expressions instead of TSE-Style regular expressions.
+
+    This feature is largely syntactic sugar, for those of us who
+    regularly use Perl (and other Unix software) and find it hard
+    to remember the regex syntax differences from platform to
+    platform.  Not all Perl regex features are supported (of course),
+    but many of the basics are.
+
+    Here are some of the things you can type, and their TSE equivalents:
+
+    Perl-Style  Description                              TSE Equivalent
+    ==========  ===========                              ==============
+    \s          Whitespace character                     [ \t]
+    \S          Non-Whitespace character                 [~ \t]
+
+    \d          Digit                                    [0-9]
+    \D          Non-Digit                                [~0-9]
+
+    \w          Word Character                           [A-Za-z_0-9]
+    \W          Non-Word Character                       [~A-Za-z_0-9]
+
+    \\          Literal Backslash                        \\
+
+    [ ]         Character set                            [ ]
+    [^ ]        Negated character set                    [~ ]
+
+    ( )         Tagged Subpattern group                  { }
+
+    *           0 or more of preceding, max. closure     @
+    *?          0 or more of preceding, min. closure     *
+
+    +           1 or more of preceding, max. closure     #
+    +?          1 or more of preceding, min. closure     +
+
+    @           Literal @ sign                           \@
+    #           Literal # sign                           \#
+
+
+    When Perl-style regular expressions are enabled, they are used
+    any time you use the 'x' search option.  If you want to use
+    TSE-Style regular expressions, use both the 'x' and the 'z'
+    options together (the 'z' option disables all MFind plugins).
+
+    Note that you can use Perl-Style regular expressions in your
+    own macros, too!  The PRex_to_TRex() function in the perlrex.si
+    file will do this:
+
+        #include ['perlrex.si']
+
+        if lFind(PRex_to_TRex('\d\d\d'), 'x')
+            Warn('found three digits!')
+        endif
+        if lFind(PRex_to_TRex('\w+?'), 'x')
+            Warn('found some word characters!')
+        endif
+
+
+    5. CONFIGURATION
+    ---------------------------------------------------------------
+
+    Most of the functionality of MFind can be enabled or disabled
+    by making changes to TSE.INI.  (MFind searches for TSE.INI
+    according to the rules in the FindProf package.)
+
+    All MFind configuration options go under the [mfind]
+    section of TSE.INI.
+
+    Sound Effects
+    -------------
+    When Sound Effects are enabled, MFind will beep when text is not
+    found, and also when returning to the starting file during
+    a multi-file search.
+
+    To enable sound effects, use:
+
+        [mfind]
+        Use_Sound=1
+
+    To disable sound effects, use:
+
+        [mfind]
+        Use_Sound=0
+
+    Sound Effects are on by default.
+
+    Automatic Find Options for Blocks
+    ---------------------------------
+    When this option is set, MFind will automatically set and clear
+    certain search options to make block handling easier.  These
+    settings are added Of course
+    you can override these
+
+    If a block is marked in the current file, MFind will add the 'lg'
+    options (meaning "search within the block, starting at it's
+    beginning").  But, if the 'l' option is already set, the 'g'
+    option will not be added.
+
+    If no block is marked in the current file, MFind will remove
+    from the search options 'l', 'lg', or 'lgn', depending on
+    how many are present in the options string. (Note, however,
+    that it will not remove 'g' or 'gn' if the 'l' option
+    is not already present.)
+
+    To enable Automatic Find Options for Blocks, use:
+
+        [mfind]
+        Auto_Block_Options=1
+
+    To disable Automatic Find Options for Blocks, use:
+
+        [mfind]
+        Auto_Block_Options=0
+
+
+    Perl-style regular expresssions and Translator Plugins
+    ------------------------------------------------------
+    The Perl-style regular expression syntax translator
+    is enabled via a MFind Translator Plugin macro.
+
+    To enable it:
+
+        [mfind]
+        Find_Text_Translator_Plugins=perlrex
+
+    Now you can search using Perl-style regular expressions,
+    simply by specifying the 'x' search option.  To use TSE-style
+    regular expression, use both the 'x' and 'z' options.
+
+    More information on PerlRex can be found in PerlRex.txt,
+    included in this package.
+
+    Normally, when MFind can't find a match for your regular
+    expression, you will get a "not found" message, like
+    "\d+ giant gerbils not found".
+
+    In other words, the failed expression is displayed
+    as you entered it, NOT as how it was translated by the
+    perl-style regular expression plugin.
+
+    If you would prefer to see the expression as it was
+    rendered by perlrex, add the following configuration line:
+
+        [mfind]
+        Show_Translated_Text_On_Error=1
+
+
+    Integration with other macros (advanced)
+    ----------------------------------------
+    To enable integration with macros that override the built in
+    NextFile() and PrevFile() behaviour, MFind can run a macro for those
+    commands instead of calling NextFile() or PrevFile() directly.
+
+    To enable this functionality, specify the name of the
+    macro and any arguments.  For instance:
+
+        [mfind]
+        Next_File_Macro=ringlets -n
+        Prev_File_Macro=ringlets -p
+
+
+    The use of Next and Previous macros to replace NextFile() and
+    PrevFile() is disabled by default.
+
+
+    6. FIND TEXT TRANSLATOR PLUGIN INTERFACE (ADVANCED)
+    ---------------------------------------------------------------
+
+    Just after MFind asks for the Find and/or Replace text, but before
+    it actually starts searching, MFind checks to see if any plugins
+    are enabled.  If any are, MFind hands off the text and options
+    to these plugins, one at a time.
+
+    To register plugins, list them (separated by commas) as the value of
+    the "Find_Text_Translator_Plugins option in the [mfind] section of
+    the TSE.INI file.  For instance to enable a macro called "foo" and a
+    macro called "bar" as text translator plugins, you would use
+
+        [mfind]
+        Find_Text_Translator_Plugins=foo, bar
+
+    MFind executes the macros in the order listed, running each macro's
+    main() procedure.
+
+    It communicates to the macros via the following session-global
+    variables:
+
+        MFind::Find_Text    (String)  - Text that the user is searching for.
+        MFind::Find_Options (String)  - Find Options that the user specified.
+
+        MFind::Replace      (Integer) - Is this a replace (i.e. not a find)?
+        MFind::Replace_Text (String)  - Replace text for the current search
+
+    Within a plugin macro, you can read and change these values using
+    the GetGlobalStr(), SetGlobalStr(), GetGlobalInt(), and SetGlobalInt()
+    functions.
+
+    Some helper routines for decoding the search options are also available
+    in the mfconst.si file.  You can include it with the line:
+
+        #include ['mfconst.si']
+
+    This file provides functions for converting Find_Options to and from
+    a bitmask, making it easy to test for specific options and to toggle
+    options on and off.
+
+    For instance:
+
+        // Load the find options into a bitmask
+        integer find_options = opts2bits(GetGlobalStr('MFind::Find_Options'))
+
+        // Check to see if we are searching through all files.
+        // if so, turn on the global flag ('g'), and turn
+        // off the block local flag ('l')
+
+        if find_options & MF_OPTS_A
+            // Turn on the global flag
+            find_options = find_options | MF_OPTS_G
+
+            // Turn off the block local flag
+            find_options = find_options & ~MF_OPTS_L
+        endif
+
+        // Conver the bit mask back to a string,
+        // then set the global Find_Options variable
+        SetGlobalStr('MFind::Find_Options', bits2opts(find_options))
+
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    MFind - Enhanced replacement for the Find built-in
+
+    v0.9.7 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+

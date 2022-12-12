@@ -1,0 +1,1122 @@
+
+    Ringlets - Allow TSE to maintain more than one ring of files
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+    Ringlets lets you have multiple rings of files in TSE. It's like
+    having multiple virtual editors inside of a single editing session!
+
+    You can use these rings for whatever purpose you like. Here are some
+    common uses:
+
+    * Load several large multi-file projects, and keep them all
+      independent by putting each into a separate ring. Unlike using
+      separate instances of TSE, files common to both projects will only
+      be loaded into TSE once.  A simple project loader macro (LoadProj)
+      is included.
+
+    * During an editing session you can create a temporary ring
+      containing just a couple of frequently-used files so you can
+      switch back and forth between them easily.
+
+    * Newly edited files get filtered into their own ring based on file
+      type (this is very powerful when used with the OnlyOne macro: for
+      instance you could use TSE as your web browser's source viewer,
+      and have all these files go into a separate ring).
+
+    * You can create an Instant Filter: a new ring which contains a
+      subset of files in the current ring, based on file type.  For
+      instance, you could create an Instant Filter to list all files in
+      the current ring which have the extension ".txt".
+
+    Some other features:
+
+    * Buffer lists can switch between displaying filename only, or the
+      full path.  Additionally, you can setup plugin macros to display a
+      friendly name for certain files (e.g. the <title> of an HTML
+      file). Plugins for HTML files and Perl modules are included.
+
+    * Sort each ring's buffer list alphabetically. Tweak the order by
+      moving individual files up and down in the list.
+
+    * Editing variables (tab type, margins, etc) and the current
+      directory are saved separately in each ring.
+
+    * Files can be in more than one ring at once.  The built-in virtual
+      [all] ring contains every loaded file. The [unfiled] ring contains
+      files that aren't in any other user-defined ring.
+
+    * The Find or Replace 'all files' option is now limited to search
+      only the files in the current ring.  If you want to search every
+      loaded file, you can use the [all] ring).
+
+    A full guide to the features in Ringlets is given in section 3,
+    "User Guide", below.
+
+    The OnlyOne macro was written by Rick VanNorman, and is maintained
+    by me.  You can get it either on Semware's FTP site:
+
+        http://www.semware.com/html/tseprofiles.html
+
+    or on my TSE macro site:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+    Place all files ending in .s or .si into your macro source
+    directory (e.g. c:\tse32\mac).
+
+    Note that the findprof.si and setcache.si files may already have
+    been installed from another macro package. If so, you should not
+    need to install them again.  But it's worth taking a quick check
+    to see that you have the latest version of these files.
+
+    Now compile the following files:
+
+        ringlets.s
+        regex.s
+        loadproj.s
+
+    Place ringlets in your AutoLoad list (Macro->AutoLoad List)
+
+    3. USER GUIDE
+    ---------------------------------------------------------------
+
+    Tour of Features
+    ================
+    This is a brief guide designed to give you an idea of how the system
+    works and what features it has.
+
+    * List Buffers *
+    ----------------
+    The first thing to do once Ringlets is installed and running is
+    list the buffers in the current ring. You should see a list of files
+    that are loaded in the editor, much like TSE's built-in "List Open"
+    command.  Note that this tour will be easier to follow if you
+    start with a handful of files open in the editor.
+
+    At the top of this list will be text like:
+
+        5 buffer(s) in Ring "[all]"
+
+    By default, Ringlets acts just like a souped up version of List
+    Open - the [all] ring is a special ring containing every file in
+    the editor.
+
+    Note also that instead of showing the full paths of the files, the
+    list shows only the bare filenames by default.  You can toggle this
+    view by pressing <Ctrl J>.
+
+    To jump to another file, move the cursor up or down to that file
+    and press <Enter>.  To save a file, press <Ctrl s>.  To quit it
+    press <Del>.
+
+    At any time, you can press <F1> to get help on key assignments.
+
+    * Changing The "Current Ring" *
+    -------------------------------
+    At all times when you are running the Ringlets system, there is the
+    notion of the "Current Ring".  Think of changing editor Rings,
+    like you think of changing directories on disk.
+
+    When you first start Ringlets the special [all] ring is the "Current
+    Ring".
+
+    To change rings, list the buffers in the current ring, and press
+    <Backspace> to see the list of rings.  If you're familiar with
+    Windows Explorer (or other file managers like Windows Commander)
+    then this keystroke will feel natural to you.  In these programs,
+    <Backspace> acts moves you to the parent directory.
+
+    In this case, you are stepping up out of the current ring and
+    into the list of rings.
+
+    * The Ring List *
+    -----------------
+    In the ring list you can pick and choose from all of the rings
+    that are currently loaded in the editor.
+
+    When Ringlets first starts, you should see only two rings:
+
+        [all]
+        [unfiled]
+
+    We started in the [all] ring.  We will get to the [unfiled] ring in
+    a moment.
+
+    For now, lets create a ring of our own.
+
+    Press <Ctrl N> to create a new ring.  A new item should appear in
+    the list called something like:
+
+        <Unnamed Ring #1>
+
+    Move the cursor to the ring and press <F2>, to rename it.  Call it
+    anything you like.  For the purposes of this guide, I'm going to
+    assume you called it "Test Ring".
+
+    Now change to "Test Ring" by moving the cursor to it, and pressing
+    <Enter>.
+
+    You should be confronted with an empty list, with the heading:
+
+        0 buffer(s) in Ring "Test Ring"
+
+    You can add new buffers to this ring in one of two ways:
+
+    1) Editing new files while this ring is current:
+       Press <ESC> to close the Buffer List.  Even though you pressed
+       <ESC>, the "Test Ring" is still the Current Ring.  Now edit a
+       file in the usual way, and open up the buffer list again.
+
+    2) Grabbing files from other rings:
+       Press <Ctrl A> (add files to ring).  You will be shown the list
+       of rings.  Choose the [all] ring.  Move the cursor to a file
+       and press <Enter>.
+
+    You should now have a single file in your new ring.
+
+    * Adding more than one file at a time to a Ring *
+    -------------------------------------------------
+    Adding one file at a time to your rings is not very efficient.
+    Fortunately, you can add whole groups of files at once.
+
+    Navigate to your "Test Ring".  You should still see the single file
+    there.
+
+    Press <Ctrl A> to add files to the current ring.
+
+    Navigate to the [all] ring.  Notice that there is now a plus sign
+    next to the file that is already in "Test Ring".
+
+    The plus sign indicates that the listed file is in the Current Ring.
+
+    You can use the <Space> bar to toggle whether or not an individual
+    file is in the current ring.  You can also use the <Ins> key.
+
+    To put all the listed files into the Current Ring, press the Plus
+    key (+) on the Numeric keypad.  To remove all listed files from the
+    Current Ring, press the Minus key (-) on the numeric keypad.
+
+    Note that the selections and deselections that you make have an
+    IMMEDIATE effect on which files are in the Current Ring.  You cannot
+    undo this selection by pressing <Esc> at the end.
+
+    Experiment adding and removing files from the "Test Ring".  Finish
+    by leaving one single file in that ring.
+
+    * The [unfiled] ring *
+    ----------------------
+    At this point it's worthwhile to step back for a moment and look at
+    the [unfiled] ring.
+
+    You should have three rings ([all], [unfiled], and "Test Ring"), and
+    there should be one file in "Test Ring".
+
+    Navigate to the [all] ring.  You should see all files.
+
+    Navigate to the "Test Ring".  You should see only the one file you
+    added.
+
+    Now navigate to the [unfiled] ring.  You should see all files except
+    the one file that is in the "Test Ring".  The [unfiled] ring always
+    shows you the list of files that have not yet been placed in any
+    user-defined ring.  This can be a very useful tool if you have many
+    files in many rings, and you are trying to find orphaned files.
+
+    * Adding files from the [unfiled] ring *
+    ----------------------------------------
+
+    Navigate to the "Test Ring", select <Ctrl A> to add files, and then
+    navigate to the [unfiled] ring.
+
+    Since selections and deselections happen immediately, as soon as you
+    select a file in the [unfiled] ring, it will vanish from the list.
+
+    This can be disconcerting at first, but it does make sense if you
+    think about it: as soon as you select a file, it is placed in "Test
+    Ring".  Once it has been placed in a ring, it is no longer "unfiled".
+
+    * Quitting files *
+    ------------------
+    When you are viewing the file in one of the editor rings you can
+    press <Del> to remove the file from that ring.
+
+    Whether <Del> will actually quit the file Quit the file and remove
+    it from the editor.  For instance, if the file is also in another
+    ring, it will stay loaded.
+
+    If the selected file is not in any other rings, then pressing <Del>
+    will "orphan" it.
+
+    By default, when you "orphan" a file, it will be unloaded from the
+    editor.
+
+    But this setting is governed by the "quit_orphaned_files" setting
+    in TSE.INI (see the CONFIGURATION section, below).  If
+    "quit_orphaned_files" is not true, then "orphaned" files will stay
+    loaded in the editor, and you will be able to find them in the
+    "[all]" and "[unfiled]" rings.
+
+    Note that <Ctrl Del> is a more powerful form of removing a file from
+    a ring.  When you selecting a file in a buffer list and press <Ctrl Del>,
+    the file will be removed from the current ring will be
+    unloaded from the editor.
+
+    * Searching and Replacing *
+    ---------------------------
+    One of the powerful aspects of the Ringlets system is that global
+    searches are limited to the current ring.
+
+    Normally, when you use the 'a' option in a Search or Replace,
+    TSE searches through all files loaded in the editor.
+
+    With the Ringlets system, the 'a' search flag means search all
+    files in the current ring.
+
+    That means that if you wanted to perform a search or replacement in
+    just a subset of loaded files, you could take the following steps:
+
+      * From the ring list, create a new ring and rename it
+        appropriately <Ctrl-N> then <F2>.
+
+      * Add the files you want to search to this ring
+
+      * With this new ring as the current ring, start your
+        search or replace, and specify the 'a' option.
+
+    If you find that you want to search all loaded files, switch
+    to the [all] ring and then start your global search.
+
+    * Using the [all] ring effectively *
+    ------------------------------------
+    Often you want to move to the [all] ring for a while (e.g. to
+    perform a search of all loaded files), and then you want to jump
+    back to the ring you were in last.
+
+    The ChangeToLastRing Command does excatly this.
+
+    Tweaking your Ringlets Environment
+    ==================================
+    When you've become used to the basics of the Ringlets environment,
+    you can start customizing it to work the way you want to.
+
+    * Order of files in Buffer List *
+    ---------------------------------
+    The order of files in a ring's buffer list is completely
+    customizable.
+
+    You can slide a file up in the list by selecting it and pressing
+    <Shift CursorUp>.  You can slide it down by selecting it and
+    pressing <Shift CursorDown>.
+
+    To sort the buffer alphabetically, press <Ctrl O>.  For more sort
+    options, press <CtrlShift 0>.
+
+    Even after you have sorted the files, you can still change the
+    position of individual files in the list.
+
+    * Ring Properties *
+    -------------------
+    Each ring maintains a set of properties, which affect the way it
+    operates.  If you are in the ring list, pressing <Alt Enter> will
+    allow you to edit the properties of the ring under the cursor. If
+    you are in the file list, pressing <Alt Enter> will allow you to
+    edit the properties of the current ring.  In either case, the
+    ring properties menu will appear, with the following options:
+
+    Property                Description
+    --------                -----------
+    Name                    The name of the ring, as it appears in the
+                            ring list
+
+    Names Only              Show filenames only (no path) in buffer list
+
+    Working Directory       The working directory for this ring.
+
+    Persist CWD             Whether the current working directory should
+                            be saved to TSE.INI between sessions
+                            (assuming the ring is also Persistent. See
+                            "Persistent Rings", later in this section.)
+
+
+    View Plugins            A list of macros separated by semi-colons.
+                            When the buffer list for this ring is
+                            displayed, Each of these macros will be
+                            called in turn to have a chance to modify
+                            the displayed names of the buffers.
+
+    Enable Plugins          Allow view_plugins to alter the names in
+                            the buffer list (see "view plugins", later
+                            in this section).
+
+    Include Filter          List of filespecs (separated by semi-colons).
+                            Files matching any of these during filtering
+                            will be accepted by the ring.
+                            See "filtering", later in this section.
+
+    Exclude Filter          List of filespecs (separated by semi-colons).
+                            Files matching any of these during filtering
+                            will be rejected by the ring.
+                            See "filtering", later in this section.
+
+    Steal Filtered          Once a file has been successfully filtered
+                            into this ring, whether this ring should
+                            prevent other rings from trying to filter
+                            it.  See "filtering", later in this section.
+
+    Use Currext             Whether Currext macro should be used to
+                            determine the file extension of files being
+                            filtered.  See "filtering", later in this
+                            section.
+
+    Persistent              Whether the Ring and its properties
+                            should be be saved across editing sessions.
+                            See "Persistent Rings", later in this
+                            section.
+
+
+    * Persistent Rings *
+    --------------------
+    Normally rings only last the duration of an editing session under TSE.
+    When you restart the editor, the rings you created will be gone.
+
+    However, if you make a ring *persistent* (by setting its
+    "Persistent" option to "yes" in its properties menu), then the ring
+    and all of its properties will be saved in TSE.INI between editing
+    sessions.
+
+    When you start the editor, all persistent rings will appear in the
+    ring list.
+
+    If you set "Persist CWD" to "Yes", then the Ring's current directory
+    will be saved to TSE.INI when you exit TSE.  The reason that you
+    might want to make a ring persistent but not make its working
+    directory persistent is that you might want to force a particular
+    ring to use a particualr directory.  To do this, you would set the
+    ring's directory in TSE.INI, and then you would set "Persist CWD" to
+    "No" so that this directory would not be overwritten when you exit
+    the editor.
+
+    In case you are interested, the format used to store the properties
+    of the rings is documented below in the CONFIGURATION section, under
+    the subsection "Rings Persistent Settings Configuration".
+
+    Note that only the rings are persistent, not the files they
+    contained.  Why would you want to load persistent rings that contain
+    no files?  The main reason is that a persistent ring might contain
+    filters that would automatically fill it with files as they are
+    edited.  See "filtering", later in this section.
+
+    If you want to load a ring full of files into the editor, see
+    "Managing Projects" below.
+
+    * View Plugins *
+    ----------------
+    The purpose of view plugins is to make it possible for certain files
+    to have customized names in the buffer lists.
+
+    View plugins are TSE macros which follow a specific interface.
+
+    The Ringlets package currently ships with two plugins:
+
+        r_pm    - For Perl modules, shows the module name rather than
+                  the filename.  For instance, the module name
+                  [File::Find] will be displayed instead for the
+                  filename File/Find.pm if this module is enabled.
+
+        r_html  - For HTML files shows the contents of the
+                  <title></title> tag, rather than the name of the
+                  file.  For instance if the HTML file C:\index.html
+                  contained the text:
+
+                       <html>
+                       <head>
+                       <title>Fred's homepage</title>
+                       </head>
+                       <body>
+                       Welcome to my home page.  I am cool.
+                       </body>
+                       </html>
+
+                  Then, if the r_html view plugin was enabled, this file
+                  would appear in buffer lists as "Fred's homepage"
+                  rather than "C:\index.html"
+
+                  The r_html plugin is most useful for viewing files
+                  in your web browser's cache, where all the files have
+                  horribly cryptic filenames like "opr004QA.htm" or
+                  "index[37].html".
+
+    More view plugins are possible.  If you are interested in developing
+    other view plugins, see "APPENDIX C - Writing new View Plugins"
+
+    You can specify which View Plugins are enabled in the in the
+    property menu for a ring.  These plugins will be run in order.
+    This means that if you have two plugins that want to modify
+    the name of the same file, the first plugin will always win.
+
+    You can also disable all view plugins in one go, by setting
+    "Enable Plugins" to "No" in a ring's property menu.
+
+    * Filtering *
+    -------------
+    Filters make it possible for certain files to be automatically
+    placed in certain rings.
+
+    A filter is simply a file spec associated with a ring.  For
+    instance:
+
+      Filter            Description
+      ------            -----------
+      *.txt             match files ending in .txt
+      *.c??             match files whose extension begins with c
+      c:\windows\*.*    match all files in the Windows directory.
+
+    Whenever you edit a file, Ringlets runs the filters for all the
+    rings to see which rings (if any) the file should be placed into.
+
+    Each ring can have any number of filters associated with it.
+    There are two types of filters:  include and exclude.
+
+    When determining whether a given file should be placed in a given
+    ring, Ringlets uses the following rule:
+
+       If the file matches any of the ring's include filters,
+       and it does not match an of the ring's exclude filters,
+       then place it in the ring.
+
+    You can specify multiple include filters and multiple exclude
+    filters for a ring.  For instance, to match all files named
+    SAL macro source files except files containing the word "ring", you
+    could use the following:
+
+        include: *.s; *.si; *.ui
+        exclude: *ring*.*
+
+    You can also run all filters on all loaded files at any time.
+    Press <Ctrl F> in the buffer list or the ring list.
+
+    * Using the Currext macro *
+    ---------------------------
+    The CurrExt macro lets you determine the type of a given file based
+    on its extension, allowing many actual file extensions to map to the
+    same type.
+
+    For instance, SAL macro files have many extensions (.s, .ui, .si),
+    but are all the same basic type.  The CurrExt macro will make
+    all SAL files appear as type '.s'.
+
+    Ringlets will use the CurrExt macro automatically when it is doing
+    filtering.
+
+    That means that you could use the following include filter
+    to match all SAL macro files:
+
+        include     : *.s
+        Use CurrExt : Yes
+
+    The problem here is:  what if you want a filter to match only
+    certain types of SAL files?  What if you want your user interface
+    files to appear in one ring and your plain SAL macro files to appear
+    in another?
+
+    The answer is to prevent Ringlets from using the CurrExt macro to
+    determine a file's extension during filtering:
+
+        include     : *.ui
+        Use CurrExt : Yes
+
+    With CurrExt disabled, you can filter based on the file's actual
+    extension, rather than the "base type" as reported by CurrExt.
+
+    You can enable CurrExt support for some rings and disable it for
+    others depending on your filtering needs.
+
+    * "Stealing" Filtered Files *
+    -----------------------------
+    Since files can be in more than one ring at once, Ringlets usually
+    attempts to match a file agaings the filters of all rings.
+
+    If you want a file to go into one ring only and not appear in any
+    others, you can set its "Steal Filtered" property to "Yes".
+    When Ringlets successfully filters a file into this ring, it will
+    stop there, and not process any more filters.
+
+    See the subsection "Tip: TSE as your Web Browser's source viewer"
+    below, for a powerful use of filters and stealing filtered files.
+
+    * Instant Filtering *
+    ---------------------
+    Another powerful use of filters is to create an "Instant Filter"
+    ring.
+
+    Simply type in an include filter (or a list of include filters),
+    and Ringlets will do the following:
+
+      * Create a ring named according to your search
+      * Set the include filter of this ring
+      * Immediately filter files into this ring.
+      * If you execute this command from within an existing ring,
+        then it will also only include files that are already in
+        that ring.
+
+    For instance, suppose you have a ring named "Project X" which
+    containing the following files:
+
+        Project_X.ini
+        Project_X.s
+        Project_X.txt
+        Readme.txt
+
+    Now suppose you want to create a ring containing just the
+    documentation files for "Project X".
+
+    From the buffer list of this ring, press <Alt I>, and type in
+    the following into the form:
+
+        Include Filter(s)   : *.txt
+        Exclude Filter(s)   :
+        Use CurrExt         : Yes
+        This Ring/All Rings : This Ring
+        Move or Copy        : Move
+
+    When you are done, press <Esc> to leave the form and create the
+    instant filter.  (If you press <Esc> without specifying any filters
+    then nothing will happen.)
+
+    Ringlets will create a ring called "Project X : *.txt" and place
+    the following files in it:
+
+        Project_X.txt
+        Readme.txt
+
+    This ring will also now be made the current ring.
+
+    Additionally, because we answered "Move" to the question "Move or
+    Copy", the files that matched the filter will have been removed
+    from the original "Project X" ring.  It will now only contain two
+    files:
+
+        Project_X.ini
+        Project_X.s
+
+    If you had answered "Copy" to the question "Move or Copy",
+    then the filtered files would have been placed in the new
+    "Project X : *.txt" ring, and they would have also remained in the
+    original "Project X" ring.
+
+    If you had answered "All Rings" to the question "This Ring/All Rings",
+    then all loaded files in the editor would have been filtered.
+    Specifying "All Rings" and "Move" would have potentially removed
+    matching files from other rings into the new search ring.
+
+    If you run the Instant Filter from the ring list (also via <Alt I>),
+    you will get the same form.  However, in this case the value "This Ring"
+    refers to the currently selected ring.
+
+    Managing Projects
+    =================
+    Normally when you edit a file, it gets placed in the current ring.
+
+    The same is true if you edit a bunch of files (e.g. *.txt).
+    These get placed into the current ring.
+
+    So if you are working on a project on a daily basis, you might
+    create a ring for that project.  You might even make it persistent.
+    Then every morning, you load all the files into the project and
+    place it into your project ring.
+
+    To help make this process smoother, Ringlets includes the LoadProj
+    macro.
+
+    LoadProj is a simple project loader designed to integrate with
+    Ringlets.
+
+    Basically, you give it a file which contains a list of files,
+    optionally indicating which ring(s) these files should go into.
+    LoadProj loads the files, and puts them in the appropriate ring(s).
+
+    For more information, see the documentation for LoadProj in the file
+    LoadProj.txt
+
+    Integration with OnlyOne
+    ========================
+    Suppose you are in the middle of a TSE editing session and you want
+    to find a file and you've forgotten where you put it.
+
+    You could use TSE's open dialog to find the file, but for whatever
+    reason, you find it easier to use your Windows File Manager instead.
+    So you switch to your file manager, and find the file.
+
+    In the old days you would have had two options.  You could have
+    opened the file right there in a separate instance of TSE.  Or,
+    if it was important for you to edit the file along with the rest of
+    hte files you were already editing, you could have first copied the
+    path to the file, then switched back to TSE, and finally pasted the
+    name of the file into TSE's open dialog.
+
+    Now there's a handy solution to all that drudgery.
+
+    OnlyOne is a macro which forces TSE to keep only a single instance
+    of itself running.  With OnlyOne is enabled, when you edit a file
+    from outside the editor, the file won't open up a separate copy of
+    TSE.  Instead, it will appear in TSE's primary instance.
+
+    Now when you find that file in your Windows File Manager, you can
+    open it in TSE, and it will come up in your primary editing session
+    alongside all the other files you are editing.
+
+    This is a great solution if you are only editing a couple of files,
+    and the file you are editing from Windows belongs with those files.
+
+    But the situation gets more complicated when you deal with large
+    multi-file projects.
+
+    Suppose now that you are editing a project ("Project X") containing
+    50 files.
+
+    Now suppose you are in your Windows file manager and you decide
+    to load another large project ("Project Y") into the editor.
+
+    In the old days, you would have loaded Project Y into it's own
+    instance of TSE.  In fact, at first glance, that seems to be a good
+    solution, because you don't want all of Project Y's files mixed up
+    with those of Project X.
+
+    But what if Project X and Project Y shared some common files?  In
+    the old days this would have been a really sticky situation.  You
+    could very easily edited one of these common files from within one
+    instance of TSE.  Then later, after switching to the other instance
+    of TSE, you could edit the same file and try to save it, only to be
+    warned that the "File has changed on disk.  Save Anyway?"  Now you
+    have the fun of trying to sort out which changes you made in each
+    version.
+
+    This is a situation where OnlyOne, Ringlets and LoadProj can
+    really help.
+
+    Assuming that both OnlyOne and Ringlets are loaded and working,
+    and that you've configured LoadProj to load up projects directly
+    from Windows Explorer, all you have to do now is set up project
+    files for each of your projects:
+
+        Project_X.proj
+        --------------
+        ; ring: Project X
+        c:\data\projects\project_x\*.*
+        c:\data\projects\common\*.h
+
+        Project_Y.proj
+        --------------
+        ; ring: Project Y
+        c:\data\projects\project_y\*.*
+        c:\data\projects\common\*.h
+
+    Now you can load Project X by double-clicking on it in Windows Explorer.
+    TSE starts up (or comes to the foreground if it was already
+    running), creates the ring "Project X", and loads all the Project X
+    files (and the common files) into that ring.
+
+    Now if you later go back to your Windows File Manager and select
+    Project_Y.proj, TSE will come to the foreground, create the "Project Y"
+    ring, and load all of the Project Y files (and the common files)
+    into that ring.
+
+    You now have two independent projects inside of TSE, each within its
+    own ring.  For most purposes, you can just pretend that the two
+    rings are separate instances of TSE.  But now you can fearlessly
+    edit one of the project common files.  The changes will still be
+    there when you switch to the other the other project, because
+    the file is only actually loaded into the editor once.
+
+    The OnlyOne macro was written by Rick VanNorman, and is maintained
+    by me.  You can get it either on Semware's FTP site:
+
+        http://www.semware.com/html/tseprofiles.html
+
+    or on my TSE macro site:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+    Tip: TSE as your Web Browser's source viewer
+    ============================================
+    Another powerful use for OnlyOne in conjunction with Ringlets
+    is to is to maintain a persistent ring for special files
+    that come from outside the editor.
+
+    For instance, the Opera Web Browser allows you to use TSE as your
+    source viewer.  I have a persistent ring called "Opera Cache", with
+    the following properties:
+
+        Name             : "Opera Cache"
+        View Plugins     : r_html
+        Plugins Enabled  : yes
+        Include Filter   : e:\caches\opera4\opr*.htm
+        Steal Filtered   : yes
+        Persistent       : yes
+
+    When I view the source of a web page in Opera, Opera passes the file
+    on to TSE.  Because I have the OnlyOne macro running, TSE doesn't
+    open up a separate instance.  Instead the primary instance of TSE
+    comes to the foreground and loads the file.
+
+    Because its filename matches the include filter of the "Opera Cache"
+    ring, it moves to that ring.  Because the "Opera Cache" ring is set
+    to "steal" filtered files, the file does not appear in any other
+    rings.
+
+    Because the "Opera Cache" ring uses the r_html view plugin, when I
+    view this ring's buffer list, I see a list of web page titles
+    instead of the cryptic filenames used by Opera's cache mechanism.
+
+
+    4. CONFIGURATION
+    ---------------------------------------------------------------
+
+    Keyboard Configuration
+    ----------------------
+    All of the keybindings used by Ringlets are stored in the file
+    ringlets.si.  This should make it fairly easy to customize
+    the Ringlets keyboard to your taste.
+
+    Keybindings for the picklists, like the buffer list
+    have 'keydefs' attached to them:
+
+        keydef ListBuffersKeys
+            <F1>              EndProcess(LB_HELP)
+            <Enter>           EndProcess(LB_CHANGE_FILE)
+            <Ctrl Enter>      EndProcess(LB_CHANGE_FILE)
+            ...
+        end
+
+    The keystroke is on the left, and the (rather cryptic) function
+    is on the right.  Each of the picklists also has its own 'helpdef':
+
+        helpdef ListBuffersHelp
+            title = 'List Buffers Keys'
+
+            ' <F1>                  Help'
+            ' <Enter>, <Ctrl Enter> Go to Buffer'
+            ...
+        endif
+
+    If you can't tell what a function does from it's LB_* code,
+    you can usually tell by crossreferencing it with it's entry
+    in the corresponding helpdef.
+
+    Note that when you make a change to one of the keybindings in
+    ringkeys.si you will have to recompile the main macro file
+    (ringlets.s) in order for your changes to take hold.
+
+    When you recompile ringlets.s during an editing session,
+    you will lose all of the rings that you have loaded currently.
+
+    General Settings
+    ----------------
+    Ringlets reads various settings from TSE.INI.  (It searches for this
+    file according to the rules in the FindProf package, but usually it
+    will be found in the same directory that contains e32.exe.) Ringlets
+    uses the [ringlets] section of TSE.INI for its settings and for the
+    default properties of rings.  For instance:
+
+        [ringlets]
+        quitfile_macro=archiver -q
+        default_view_plugins=r_pm
+        default_include_filter=
+        default_exclude_filter=
+        default_ring_properties=use_currext:1, names_only:1, enable_view_plugins:1
+
+    Ringlets will use the SetCache package if you have it installed.
+    This means you can tell it to reload its settings without exiting it
+    and restarting.  To do so, Edit TSE.INI, and then run the SReload
+    macro.
+
+    A list of the available settings follows:
+
+        Parameter                      Description
+        ---------                      -----------
+        quitfile_macro                 Optional macro command line to be
+                                       called instead of QuitFile().
+                                       This feature is designed to allow
+                                       Macro packages like Archiver
+                                       to override the built in Save/Quit
+                                       functionality.
+
+        save_macro                     Optional macro command line to be
+                                       called instead of Save().
+                                       This feature is designed to allow
+                                       Macro packages like Archiver
+                                       to override the built in Save/Quit
+                                       functionality.
+
+        show_empty_rings               Whether or not rings containing no
+                                       buffers should appear in the ring
+                                       list.
+
+        show_names_only                Whether (by default) buffer lists
+                                       should show only the bare
+                                       filename instead of path+filename
+
+        enable_view_plugins            Whether (by default) view plugins
+                                       should be allowed to modify the
+                                       names of buffers in the buffer list
+
+        quit_orphaned_files            If this is set to 1 (true), then when a
+                                       file is removed from a ring, and
+                                       it is not in of any other ring,
+                                       it is removed from the editor.
+                                       The default is 1.
+
+        prompt_to_quit_orphaned_files  If this is set to 1 (true), then
+                                       when a file is removed from a
+                                       ring, and it is not in of any
+                                       other ring, the user is asked to
+                                       decide whether or not the file
+                                       should be removed from the
+                                       editor. The default is 0.
+
+
+
+    Ring Defaults
+    -------------
+    The [ringlets] section also contains the defaults for ring
+    properties.  A list of the available parameters follows.  These
+    defaults are used for the 'special' rings ('[all]' and '[unfiled]'),
+    and are also used by ordinary rings which do not override those
+    settings.
+
+        default_view_plugins           A list of View Plugin macros that
+                                       will be used by default.
+
+        default_include_filter         A list of filespecs to be used
+                                       as the include filter list by
+                                       default.
+
+        default_exclude_filter         A list of filespecs to be used
+                                       as the exclude filter list by
+                                       default.
+
+        default_ring_properties        This list will be parsed for its
+                                       flags, which will be used as the
+                                       default ring flags.
+
+
+    [ TODO: there seems to be some overlap in some of the settings.
+    These should be rationalized ]
+
+    Rings Plugins Configuration
+    ---------------------------
+    Each ringlets view plugin reads its configuration information from
+    TSE.INI, in a section beginning with 'ringlets_plugin' and ending
+    with the name of the plugin.  For instance, the r_pm plugin gets its
+    defaults fromt the [ringlets_plugin_pm] section.
+
+    For details on the settings available for each plugin, see the
+    documentation or source code for that plugin.
+
+    Rings Persistent Settings Configuration
+    ---------------------------------------
+    Rings that are flagged as persistent store their properties in the
+    [rings] section of TSE.INI.  Normally you don't need to know how the
+    rings are stored; this section is mostly a reference, in case you
+    want to modify the properties of a persisent ring via its entry in
+    TSE.INI.
+
+    Each ring is listed in the [rings] section using the format of:
+
+        <name>=<property list>
+
+    Where <name> is the name of the persistent ring, and <property list>
+    is a list of properties for the ring.  For a description of the
+    format of the property list, see "APPENDIX B - Ring Property Lists".
+
+    Here is example of a persistent ring called "Perl Modules"
+    setting a single property in TSE.INI:
+
+        [rings]
+        Perl Modules=view_plugins:r_pm
+
+    APPENDIX A - Command Line Interface Reference
+    ---------------------------------------------------------------
+    Ringlets makes certain of its features available via a command-line
+    interface, so that you can .  You can use this interface in your own macros.  For
+    an example, the LoadProj macro changes rings
+
+
+    Command                           Description
+    -------                           -----------
+    ringlets -c <ring name>           Create a Ring called <ring name>
+
+    ringlets -n                       Jump to next File In Ring
+
+    ringlets -p                       Jump to previous File In Ring
+
+    ringlets -r <ring name>           Change to the ring named <ring name>
+
+    ringlets -R <ring name>           Change to ring <ring name>,
+                                      creating it if it doesn't
+                                      already exist.
+
+    ringlets -s <property string>     Set the Properties of Current Ring.
+                                      See "Appendix B - Ring Property
+                                      Lists Reference" for the format of this
+                                      string.
+
+    ringlets -a <buffer id>           Add Buffer with the id of
+                                      <buffer id> to the Current Ring
+
+    ringlets -l                       Displays the name of the Current Ring
+
+
+    APPENDIX B - Ring Property Lists Reference
+    ---------------------------------------------------------------
+    Property lists are used to store the properties of rings in TSE.INI
+    and also to set the properties of rings via the -s command line
+    switch.
+
+    The format of the list is a set of name:value pairs, separated by
+    commas.  For instance,
+
+        use_currext:0, steal:1
+
+    This property list sets the property "use_currext" to 0, and the
+    property "steal" to 1. If a property is absent from the list, then
+    the ring keeps the value it already had for that property (which is
+    usually the default value for that property).
+
+    Here is the list of valid properties and their values:
+
+    Property            Type        Default    Description
+    --------            ------      -------    -----------
+    names_only          boolean     1          Show filenames only (no
+                                               path) in buffer list
+
+    enable_view_plugins boolean     1          Allow view_plugins to
+                                               filter the names in the
+                                               buffer list
+
+    use_currext         boolean     1          Whether Currext macro
+                                               should be used on the
+                                               each file when it is
+                                               being matched against a
+                                               filter.
+
+    steal               boolean     0          Once a buffer has been
+                                               successfully filtered
+                                               into this ring, whether
+                                               filtering should stop
+                                               here (since the buffer
+                                               won't appear in any other
+                                               rings, this ring will
+                                               have "stolen" the buffer)
+
+    persist_cwd         boolean     0          Whether the current
+                                               working directory should
+                                               be saved to TSE.INI
+                                               between sessions
+
+    include             spec list              List of filespecs,
+                                               separated by semi-colons.
+                                               When a buffer matches one
+                                               of these specs during
+                                               filtering, the buffer
+                                               will be added to this
+                                               ring unless it also
+                                               matches one of the
+                                               filespecs in the exclude
+                                               spec list.
+
+    exclude             spec list              List of filespecs,
+                                               separated by semi-colons.
+                                               When a buffer matches one
+                                               of these specs during
+                                               filtering, the buffer
+                                               will be *not* be added to
+                                               this ring, even if it
+                                               matched one of the
+                                               filespecs in the include
+                                               spec list.
+
+    cwd                 path                   The working directory
+                                               for this ring
+
+    view_plugins        macro list             A list of macros separated
+                                               by semi-colons. When the
+                                               buffer list for this ring
+                                               is displayed, Each of
+                                               these macros will be
+                                               called in turn to have a
+                                               chance to modify the
+                                               displayed names of the
+                                               buffers.
+
+    APPENDIX C - Writing new View Plugins
+    ---------------------------------------------------------------
+    The purpose of a view plugin is to provide different display names
+    for some or all of the files in the buffer list.
+
+    Before plugins are run, the list of buffers in this ring is set
+    up.  Two temporary buffers are set up:
+
+        temp_ids_buffer   => This buffer contains a list of the buffers
+                             in the ring.  The buffers are listed by their
+                             id number, not by their name.
+
+        temp_names_buffer => This buffer contains a list of the buffers
+                             listed by name.  Some lines (or even all of
+                             them) in this buffer may be blank.
+
+    The two buffers are parallel data structures representing the same
+    list.
+
+    Each plugin must go through each line of temp_ids_buffer and, if it
+    finds a file for which it wants to handle the name, it should fill
+    in the name on the same line in temp_name_buffer.  However, if there
+    is already a name in the temp_names_buffer on that line, it should
+    NOT overwrite it.
+
+    This is because view plugins run in a user-selected order, and they
+    should respect the decisions made by previous plugins in the chain.
+    At the end of the chain, any remaining blank lines are filled in by
+    the ringlets macro itself, either with the full path to the file or
+    with the bare filename, depending on the user's preference for this
+    ring.
+
+    For examples of view plugin code, see the following plugins:
+
+        r_pm.s    - Translates Perl modules from Foo/Bar.pm to Foo::Bar
+        r_html.s  - Displays the <title> of HTML files
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    Ringlets - Allow TSE to maintain more than one ring of files
+
+    v0.9.2 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+
+
+
+
+
+

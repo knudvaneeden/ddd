@@ -1,0 +1,271 @@
+
+    PerlMod - TSE Support for Perl modules (view module docs, edit modules by name)
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+    The PerlMod macro allows you to edit or view the docs for a Perl
+    module by name (e.g. Apache::Session, Net::FTP).
+
+    The name is picked up from the current line in the file you are
+    editing, so all you have to do is move the cursor to a 'use' or
+    'package' statement in your Perl program and press a key to edit or
+    view the module!
+
+    For editing, it will search for the module in a list of module
+    directories on your system.
+
+    To view the docs for a module it will launch your web browser and
+    navigate to the documentation on http://www.perldoc.com/ by default,
+    although this also can be configured.
+
+    Also included is a simple Perl CGI script that you can install on
+    your own web server to view documentation for the modules you have
+    installed on that system.
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+    Place perlmod.s, findprof.si, and setcache.si into your macro
+    source directory (e.g. c:\tse32\mac).
+
+    Note that the findprof.si and setcache.si files may already have
+    been installed from another macro package. If so, you should not
+    need to install them again.  But it's worth taking a quick check
+    to see that you have the latest version of these files.
+
+    At the end of perlmod.s are some key definitions:
+
+        <ctrl m><m> AskViewModulePod()
+        <ctrl m><n> AskEditModule()
+
+    Change these bindings to whatever you like.
+
+    The first (AskViewModulePod) is the command for viewing the
+    documentation for a Perl module.  A prompt will come up asking
+    which module docs you want to view.  The default will be either
+    the module name under the cursor (if the cursor is on the name of
+    a module), or the last module that you edited or viewed.
+
+    The second (AskEditModule) is the command for editing a
+    Perl module in TSE.  A prompt will come up asking
+    which module you want to edit.  The default will be either
+    the module name under the cursor (if the cursor is on the name of
+    a module), or the last module that you edited or viewed.
+
+    Next, compile perlmod.s.
+
+    Finally, place perlmod in your AutoLoad list (Macro->AutoLoad List)
+
+    3. CONFIGURATION
+    ---------------------------------------------------------------
+    PerlMod reads its settings from TSE.INI.  (It searches for this file
+    according to the rules in the FindProf package, but usually it
+    will be found in the same directory that contains e32.exe.)  PerlMod
+    uses the [PerlMod] section in TSE.INI.
+
+    Editing modules - configuring your module paths
+    -----------------------------------------------
+    When you ask PerlMod to edit a named something like File::Find, it
+    knows that it will eventually end up with the file "File/Find.pm".
+
+    But where will this file be found on your system?
+
+    The default location for Perl module changes from system to system.
+    On Windows, it is:
+
+        c:\perl\lib              - modules installed along with Perl
+        c:\perl\site\lib         - user-installed modules
+
+    On RedHat Linux, it is:
+
+        /usr/lib/perl5           - modules installed along with Perl
+        /usr/lib/perl5/site_perl - user-installed modules
+
+    Additionally, you may maintain your own private module directories.
+    On my system I keep a private Perl Module directory in:
+
+        w:\lib\perl
+
+    You can add as many module paths as you need to TSE.INI, and
+    PerlMod will search through all of them until it finds the
+    module you have asked for:
+
+        [PerlMod]
+        Module_Search_Path=w:\lib\perl;c:\perl\lib;c:\perl\site\lib
+
+    Editing modules - configuring your CPAN development module paths
+    ----------------------------------------------------------------
+    (If you do not develop modules using the MakeMaker tools, you
+    can skip this section)
+
+    If you are a CPAN developer, you may use the h2xs tool to create
+    working directories for your module projects.
+
+    Unfortunately, the layout used by h2xs is slightly different from
+    a standard module tree.  For example, with the module 'File::Find'
+    the h2xs utility creates the module in 'File/Find/Find.pm' instead
+    of just 'File/Find.pm'.
+
+    PerlMod can still find your modules in your CPAN development area if
+    you have one.  Just point to this area with the 'Devel_Module_Search_Path'
+    parameter in TSE.INI:
+
+        [PerlMod]
+        Devel_Module_Search_Path=w:\path\to\my\cpan\modules
+
+    The 'Devel_Module_Search_Path' will always get searched before the
+    ordinary 'Module_Search_Path'.
+
+    As an aside, I highly recommend Marcel Grünauer's Devel::SearchINC
+    module:
+
+         http://search.cpan.org/search?dist=Devel-SearchINC
+
+    It allows you to use modules in your CPAN development tree
+    as if they were installed on your system.
+
+    In fact, by setting the environment variable PERL5OPT, you can
+    accomplish this automatically:
+
+        PERL5OPT=-MDevel::SearchINC=/path/to/my/cpan/modules
+
+
+    Configuring your module viewer
+    ------------------------------
+    By default, when you ask to view the docs for a module, PerlMod will
+    launch your web browser and point it to the relevant document on
+    http://perldoc.com.  This is good for most purposes, but you won't
+    always find documentation for every single module there, nor will you
+    find documentation for unpublished modules, or for your own modules.
+
+    So you could use the built-in pod viewer that comes with perl:
+
+        [PerlMod]
+        viewcmd=c:\perl\bin\perldoc.bat $n
+        viewcmd_dos_flags=_DEFAULT_|_START_MAXIMIZED_|_RUN_DETACHED_
+
+    With this setup, PerlMod will launch the batchfile perldoc.bat,
+    passing the name of the requested module.
+
+    Note that in order for this to be useful, you will have to configure
+    your Console window so that it does not "Close on Exit".
+
+    Within the 'viewcmd', you can use the following parameters:
+
+        Param   Expands To
+        -----   ----------
+        $n      Module name (e.g. File::Find)
+        $s      Module name with forward slashes (e.g. File/Find)
+        $b      Module name with backslashes (e.g. File\Find)
+        $f      Module filename w. backslashes (e.g. c:\perl\lib\File\Find.pm)
+        $$      Dollar sign ($)
+
+    The default view command is:
+
+        start http://perldoc.com/cpan/$s.html
+
+    which, in the case of File::Find, expands to:
+
+        start http://perldoc.com/cpan/File/Find.html
+
+    PerlMod runs this command via TSE's Dos() function.
+
+    Here, the 'start' command is simply sending an URL to your web
+    browser.  It can happily do this invisibly in the background,
+    without popping up an unsightly console window.
+
+    So in order to launch the 'start' command in the background,
+    PerlMod uses the following flags Dos() flags by default:
+
+        _DONT_CLEAR_|_RUN_DETACHED_|_START_HIDDEN_
+
+    The full set of flags supported are:
+
+        Flag               Description
+        ----               -----------
+        _DEFAULT_          Launch program in normal window
+
+        _DONT_PROMPT_      Don't ask the user to "press any key" after
+                           the program finishes.
+
+        _DONT_CLEAR_       Don't clear the editor screen before running
+        _RUN_DETACHED_     Run the program in a separate window
+        _START_HIDDEN_     Start the program in a completely hidden window
+        _START_MAXIMIZED_  Start the program in a maximized window
+        _START_MINIMIZED_  Start the program in a minimized window
+
+
+    You can specify a combination of these parameters in TSE.INI,
+    separating them with pipe characters (|).  For instance,
+    the following will run the viewcmd in a separate, maximized window.
+
+        viewcmd_dos_flags=_START_MAXIMIZED_|_RUN_DETACHED_
+
+    Using podview.cgi
+    -----------------
+    If you have a webserver running on a UNIX server of some sort, and
+    you've also installed your perl modules on this machine, you can use
+    the included CGI script, 'podview.cgi' to view the perl
+    documentation on that machine.
+
+    To configure podview.cgi, do the following:
+
+      * place it in your webserver's cgi-bin directory
+
+      * change its attributes to be executable (mode 755)
+
+      * edit the first line in the script (#!/usr/bin/perl),
+        making sure that it points to a valid perl interpreter
+        on your machine.
+
+      * If you have any private module directories or development
+        module directories, add them to @libs and @dev_libs,
+        respectively.  There's a place to do this near the
+        top of the script:
+
+            my @libs = (
+               '/data/lib/perl',
+            );
+
+            my @dev_libs = (
+               '/data/projects/perlmod',
+            );
+
+    You can test podview.cgi by using your web browser to navigate
+    directly to it.  Try something like:
+
+        http://www.example.com/cgi-bin/podview.cgi/File/Find
+
+    If you see the docs for File::Find, then all is well. If you
+    get a server error, then there's something amiss.
+
+    After setting up podview.cgi and verifying that it works,
+    you can access it via PerlMod by editing TSE.INI:
+
+        [PerlMod]
+        viewcmd=http://www.example.com/cgi-bin/podview.cgi/$s
+
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    PerlMod - TSE Support for Perl modules (view module docs, edit modules by name)
+
+    v0.9.3 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+

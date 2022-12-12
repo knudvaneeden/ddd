@@ -1,0 +1,172 @@
+
+    PerlRex - Perl-Style Regular Expressions inside TSE
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+
+    perlrex.s is a macro for translating from Perl's regular expression
+    syntax into TSE's regular expression syntax.
+
+    If you are like me, you use many regular expression packages,
+    and these packages all have slightly different syntaxes.  Switching
+    from one system to another is a real pain, often forcing you
+    to check the manual for basic things like the operators
+    for minimum/maximum closure.
+
+    Perlrex helps to simplify things, by letting you search for text
+    inside of TSE using the perl-style regular expression syntax.
+
+    For instance, you can now use "\d*" to search for zero or more
+    digits in a row with maximum closure.
+
+    Only a small subset of Perl regular expression operators
+    are supported, but it should be enough to make Unix and Perl
+    hackers feel reasonably at home.
+
+    The following transformations are made:
+
+        From (perl style)        To (TSE style)
+        =================        ==============
+        \s                       [ \t]
+        \S                       [~ \t]
+        \d                       [0-9]
+        \D                       [~0-9]
+
+        \w                       [A-Za-z_0-9]  (configurable -- see below)
+        \w                       [~A-Za-z_0-9] (configurable -- see below)
+
+        [^...]                   [~...]
+        (...)                    {...}
+
+        *                        @             (0 or more, maximum closure)
+        *?                       *             (0 or more, minimum closure)
+        +                        #             (1 or more, maximum closure)
+        +?                       +             (1 or more, minimum closure)
+
+        @, #                     \@, \#
+
+    This macro is designed to run as a plugin for the MFind.s macro.
+
+    However, if you want to have a look at how it will transform a given
+    regular expression, you can run it directly, specifying the regular
+    expression on the command line.  From the 'Macro' menu in TSE choose
+    'Execute'.  Then type 'perlrex', followed by the regular expression.
+    For instance:
+
+        perlrex Telephone:\s*(\(?\d+\)?)\s*(\d+)-(\d+)
+
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+
+    NOTE: On TSE 2.5 (DOS) You will need to install the Profile
+    package.  See Profile.txt in that package for instructions.
+
+    It is designed as a plugin for MFind.s.  So you will need
+    to install that macro as well.  See the docs in MFind.txt
+    for how to do that.
+
+    Place mfconst.si and perlrex.s in your TSE Macro directory.
+    Then compile perlrex.s.
+
+    Note that the findprof.si and setcache.si files may already have
+    been installed from another macro package. If so, you should not
+    need to install them again.  But it's worth taking a quick check
+    to see that you have the latest version of these files.
+
+    Add the following line to your TSE.INI file in the [mfind]
+    section:
+
+        translator_plugins=perlrex
+
+
+    3 CONFIGURATION - Showing translated text on error
+    ---------------------------------------------------------------
+
+    When MFind.s can't find your regular expression, it will
+    show something like "\d+ giant gerbils not found".
+
+    The failed expression is displayed as you entered it.
+
+    If you would prefer to see the expression as it was
+    rendered by perlrex, add the following line to TSE.INI
+    in the [mfind] section:
+
+        show_translated_text_on_error=1
+
+    4 CONFIGURATION - Changing the default wordset (\w)
+    ---------------------------------------------------------------
+
+    Normally, the \w escape sequence translates directly to
+    [A-Za-z0-9_].  You can change this by setting the value of wordset
+    in the [perlrex] section of your TSE.INI file.  For instance, to
+    allow only letters:
+
+        [perlrex]
+        wordset=A-Za-z
+
+    5. CAVEATS
+    ---------------------------------------------------------------
+
+    There is a limit to the number of character classes that TSE can
+    include in a single regular expression.
+
+    In perlrex, each use of \d, \w, \s, etc. counts as a character
+    class.
+
+    For instance, the expression "\d\d\d\d" actually expands to
+    "[0-9][0-9][0-9][0-9]", which uses up four character classes.
+
+    If you get the error "Too many classes", after a search,
+    you will have to reduce the number of these escape sequences.
+
+    For instance, instead of using "\d\d\d\d" (four digits in a row),
+    you could use "\d+" (at least one digit in a row).  This translates
+    to "[0-9]#".  It's not as accurate, but it may suffice.
+
+    6. USING PERLREX IN YOUR OWN MACROS
+    ---------------------------------------------------------------
+
+    If you want to use perlrex from your own macros, you can
+    use the same interface that MFind.s uses.
+
+    Set the Global Find_Text and Find_Options strings,
+    run perlrex.s then retrieve those variables.  For example:
+
+        string find_string[255] = 'some expression'
+
+        SetGlobalStr('MFind::Find_Text', find_string)
+        SetGlobalStr('MFind::Find_Options', 'x')
+
+        ExecMacro('perlrex')
+
+        find_string = SetGlobalStr('MFind::Find_Text')
+
+    To debug your regular expressions, you can invoke this macro directly,
+    specifying the regular expression to transform on its command line.
+
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    MFind - Enhanced replacement for the Find built-in
+
+    v0.9.7 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+
+
