@@ -1,0 +1,170 @@
+
+Files           Huffman.txt
+                Huffman.s
+                Huffman_Encode.s
+                Huffman_Encode.inc
+                Huffman_Decode.s
+                Huffman_Decode.inc
+                Huffman_Common.inc
+
+Author          Carlo Hogeveen
+Website         ecarlo.nl/tse
+Compatibility   Windows TSE Pro v4.0 upwards
+                Linux TSE Beta v4.41.41 upwards
+Version         v1.0   5 Apr 2021
+
+
+FUNCTIONALITY
+
+  Encode (compress) or decode (decompress) the current TSE buffer.
+
+
+INSTALLATION
+
+  Copy the above files to TSE's "mac" folder, and compile all the ".s" files,
+  for instance by opening each of them in TSE and applying the Macro Compile
+  menu.
+
+
+GENERAL USAGE INFO
+
+  There are 4 ways to use this tool, all of which require the content to be
+  encoded or decoded from the editor's current buffer, creating a new buffer.
+
+  This tool does not load or save files.
+  It requires a current buffer and create a new current buffer.
+  How you get the input current buffer and what happens to a newly created
+  current buffer is totally up to you.
+
+  This tool does not change the old current buffer in any way. It creates a
+  new buffer with the encoded or decoded content of the old buffer.
+
+  Encoding always creates a binary buffer. Decoding default creates a normal
+  buffer, but will create a binary buffer if you supply a parameter for it.
+
+  Encoding a normal buffer encodes each newline as a line feed character.
+
+  Encoding and decoding will show a message with a progress percentage if their
+  input buffer contains 10,000 or more lines.
+
+
+USAGE 1
+
+  Execute the macro command line:
+    huffman [test|encode|decode] [normal|binary]
+
+  Using "test" or no action first encodes the current buffer to a new buffer,
+  and then decodes that buffer to yet another new buffer.
+
+  A benefit of usage 1 is, that it is a quick way to test that encoding plus
+  decoding results in a copy of the original buffer.
+
+
+USAGE 2
+
+  Execute the macro command line:
+    huffman_encode|huffman_decode [binary]
+
+  A benefit of usage 2 is for me, this tool's author, in that it makes the
+  compiler check, that procedures are correctly placed among the files.
+
+
+USAGE 3
+  To call the huffman_encode() function directly from your own macro, add these
+  lines in your own macro, somewhere above the call and outside a proc:
+    #Include ['Huffman_Common.inc']
+    #Include ['Huffman_Encode.inc']
+
+  To call the huffman_decode(TRUE|FALSE) function directly from your own macro,
+  add these lines to your own macro, somewhere above the call and outside a
+  proc:
+    #Include ['Huffman_Common.inc']
+    #Include ['Huffman_Decode.inc']
+
+    TRUE|FALSE indicates whether decoding should create a binary buffer.
+
+  The benefit of usages 1 through 3 is a simpler upgrade when I publish a new
+  version of the Huffman tool.
+
+
+USAGE 4
+  To call the huffman_encode() function directly in your own macro, copy the
+  content of these files to your own macro, placing the copied content
+  somewhere above the call and outside a proc:
+    Huffman_Common.inc
+    Huffman_Encode.inc
+
+  To call the huffman_decode(TRUE|FALSE) function directly from your own macro,
+  copy the content of these files to your own macro, placing them somewhere
+  above the call and outside a proc:
+    Huffman_Common.inc
+    Huffman_Decode.inc
+
+    The TRUE or FALSE parameter indicates whether decoding shuld create a
+    binary buffer.
+
+  The benefit of usage 4 is a simpler and safer distribution of your own macro,
+  because it does not depend on distributing separate files that have to be
+  of versions that match with each other and with your macro.
+
+
+KNOWN ERRORS
+
+  Currently none. Please let me know if you find a bug.
+
+
+NOTES
+
+  In 1951 David A. Huffman discouvered a simple yet efficient way to compress
+  files, which is now widely used and available in file compression tools.
+
+  This TSE tool uses one implementation of the basic Huffman method: It is not
+  compatible with other compression tools that use the Huffman method too,
+  because it leaves room for implementation choices and can be augmented with
+  additional compression techniques.
+
+  Background info:
+    https://en.wikipedia.org/wiki/Huffman_coding
+
+  The capabilities of this TSE tool are intentionally limited to benefit from
+  TSE's strengths, i.e. these limitations simplified coding the Huffman
+  algorithm a lot:
+    The used method uses an "alphabet" of 1-byte "characters".
+    A buffer cannot be larger than 2,147,483,647 characters (2 GB).
+
+  Why use this TSE tool when other, better compression tools are widely and
+  freely available?
+  Most of the time the right answer is to use one of the other tools.
+  However, sometimes the answer is that you want a TSE-specific solution
+  - that is independent of a third party tool,
+  - that seamlessly integrates with TSE,
+  - that supports one TSE macro implementation across Windows and Linux.
+
+
+HISTORY
+  v0.2   27 Mar 2021
+    First beta release.
+
+  v1.0   5 Apr 2021
+    Changed:
+      After an encoding or decoding error the tool no longer produces a new
+      buffer.
+    Changed:
+      Calling the "Huffman" macro (usage 1) no longer names the new buffer it
+      creates, which pulls its behaviour in line with the other three usages.
+    Added:
+      If their input buffer is 10,000 or more lines, then encoding and decoding
+      show a progress message.
+    Fixed:
+      Encoding plus decoding added an empty line to the end of a non-binary
+      buffer.
+    Fixed:
+      No error was given for the fact that the tool cannot encode a buffer with
+      less than two different characters.
+    Fixed:
+      No errors were given if the number of encoded and decoded/decodable
+      characters did not match.
+    And:
+      Various small tweaks.
+
+

@@ -1,0 +1,1450 @@
+<EHELP>
+
+<META>
+<DOC>
+  Place for free-format documentation about this document.
+
+  Currently this document contains short, non-useful comments by eCarlo.
+  Their purpose is to distiguish these help pages from TSE's ones.
+
+  Be aware, that GUI TSE displays non-ASCII, non-drawing characters as a space.
+  This happens since GUI TSE beta v4.40.98 or v4.40.99, which according to
+  the read.me is between 13 Sep 2017 and 28 Apr 2018.
+  In TSE's own Help this means the bullet character is no longer shown.
+  In our Help this means, e.g., that we cannot or should not use diacritics.
+
+  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÍÍÍ¸
+  ³ I feel boxed in. ³
+  ÀÄÄÄÄÄÍÍÍÍÍÍÍÍÍÍÍÍÍ¾
+
+  Only single-line drawing characters are supported by all three TSE variants,
+  and even so, Linux TSE is missing a few, as its Table of Contents shows,
+  which we  will just have to ignore.
+  Windows GUI TSE shows double-line drawing characters as single-line drawing
+  characters.
+
+  For all three TSE variants the Help shows these OEM drawing characters:
+    OEM character 176 is shown as ° (a light shade).
+    OEM character 219 is shown as Û (a solid block).
+  Only the Console and GUI variants of TSE show this OEM drawing character:
+    OEM character 177 is shown as ± (a medium shade).
+  Only the Console variant of TSE shows this OEM drawing character:
+    OEM character 178 is shown as   (a dark shade).
+  We can use the TSE menu Util -> ASCII Chart to insert a character by its
+  number instead of how it looks there.
+
+</DOC>
+</META>
+
+<REDIRECTS>
+<REDIRECT>Operator Precedence^Precedence and Order of Evaluation in Expressions</REDIRECT>
+<REDIRECT>StringAlong^statements;string expressions</REDIRECT>
+<REDIRECT>String Along^StringAlong</REDIRECT>
+<REDIRECT>See explanation^See explanation 1</REDIRECT>
+<REDIRECT>See explanation 3^See explanation 4</REDIRECT>
+<REDIRECT>See explanation 1^See explanation 2</REDIRECT>
+<REDIRECT>See explanation 2^See explanation 3</REDIRECT>
+<REDIRECT>See explanation 4^See explanation 5</REDIRECT>
+<REDIRECT>See explanation 5^See explanation 6</REDIRECT>
+<REDIRECT>See explanation 6^See explanation 7</REDIRECT>
+<REDIRECT>See explanation 7^See explanation 8</REDIRECT>
+<REDIRECT>See explanation 8^See explanation 9</REDIRECT>
+<REDIRECT>See explanation 9^See explanation</REDIRECT>
+</REDIRECTS>
+
+<TOPICS>
+
+<TOPIC>AbandonEditor</TOPIC>
+<TEXT>
+
+No, no, no!
+
+Do not abandon this editor!
+It will be all alone, with no one to edit with.
+
+See Also:   <LINK>SaveAllFiles</LINK>(), <LINK>SaveAllAndExit</LINK>(), <LINK>Exit</LINK>()
+
+</TEXT>
+
+
+
+<TOPIC>Statements</TOPIC>
+<TEXT>
+
+Statements are the building blocks of procedures, and hence, macros.  SAL
+features a rich assortment of statements, to make macro writing as productive
+as possible.
+
+Statement types are:  variable assignments, control structures, and function
+calls.  Function calls are calls to menus, user-definable commands, and native
+commands.  Variable assignments, control structures, and function calls are
+composed from expressions.
+
+Unless specified otherwise by a control statement, statements are executed
+sequentially as they appear in the macro.
+
+
+<BOLD><SUBTOPIC>Variable Assignment Statements</SUBTOPIC></BOLD>
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Variable assignment statements are used to change, or set, a variable to a
+specified value.  They take the form:
+
+    <ITALIC>variable_name</ITALIC> = <ITALIC>expression</ITALIC>
+
+This can be read as:
+
+    "<ITALIC>variable_name</ITALIC> is assigned the value of <ITALIC>expression</ITALIC>", or
+
+    "set <ITALIC>variable_name</ITALIC> to <ITALIC>expression</ITALIC>".
+
+where:
+
+    ù <ITALIC>variable_name</ITALIC> is the name of a previously declared variable.
+
+    ù <ITALIC>expression</ITALIC> is composed of variables and optional operators.  After
+      being evaluated, <ITALIC>expression</ITALIC> is assigned to <ITALIC>variable_name</ITALIC>.  The
+      expression must be of the same type as the variable.  Integer
+      expressions are assigned to integers, and string expressions are
+      assigned to strings.
+
+After the assignment statement, <ITALIC>variable_name</ITALIC> has the value of <ITALIC>expression</ITALIC>.
+
+Some simple examples of assignment statements are:
+
+    integer line
+    string word[10]
+
+    line = 10               // line has the value 10
+
+    line = line + 5         // line has the value 15
+
+    word = "foo"            // word has the value "foo"
+
+    word = word + "bar"     // word has the value "foobar"
+
+    word = str(line) + " " +
+           word + "s"       // word has the value "15 foobars"
+
+    word = "1000"           // word has the value "1000"
+
+    line = val(word) * 2    // line has the value 2000
+
+
+<BOLD><SUBTOPIC>Expressions</SUBTOPIC></BOLD>
+ÄÄÄÄÄÄÄÄÄÄÄ
+
+Expressions are the building blocks of statements, and are composed of one or
+more variables, constants, or functions separated by operators.  A function is
+either a user-defined command, menu, or native command.
+
+For a given integer procedure foo() and integers m and n, a simple expression
+would be:
+
+    n * foo() / m
+
+But an even simpler expression is:
+
+    foo()
+
+or just:
+
+    n
+
+Expressions themselves may be enclosed within parentheses, and are commonly
+called sub-expressions.  An expression can consist of one or more
+sub-expressions.
+
+For the expression:
+
+    (n + m) / ( 2 * foo())
+
+(n + m) and (2 * foo()) are both sub-expressions comprising the full
+expression (n + m) / (2 * foo()).  This expression may be used as a
+sub-expression within a larger expression.  For example:
+
+    45 + ( (n + m) / (2 * foo()) ) mod 89
+
+Thus, expressions and sub-expressions are basically interchangeable.
+
+Expression evaluation is based on operator precedence.  The operators with
+higher precedence are evaluated before those of lower precedence.
+
+For example, multiplication has a higher precedence than subtraction.  Given
+three functions, Alpha(), Beta(), and Gamma(), the expression:
+
+    Alpha() * Beta() - Gamma()
+
+will multiply the results of Alpha() and Beta() before subtracting Gamma().
+
+Note, however, that while the expression is evaluated based on operator
+precedence, the ORDER of evaluation is not specified.  In the example above,
+there is no guarantee that Alpha() is called first, Beta() second, and Gamma()
+third.  The only guarantee is that the results of Alpha() and Beta() will be
+multiplied before the result of Gamma() is subtracted.  The only exception to
+this rule is "short-circuit" boolean expressions discussed in
+"<LINK>Logical Operators</LINK>" under "<LINK>Numeric Expressions</LINK>" below.
+
+To avoid ambiguity in the order of evaluation of expressions, it is
+recommended that parentheses be used to enclose any sub-expressions which
+should be evaluated before others.  For instance, if we rewrite the above
+example as:
+
+    Alpha() * (Beta() - Gamma())
+
+then Gamma() is subtracted from Beta() before it is multiplied by Alpha().
+
+There are two classes of expressions:  numeric and string expressions.  These
+two types of expressions, along with their associated operators, are discussed
+below.
+
+
+<BOLD><SUBTOPIC>String Expressions</SUBTOPIC></BOLD>
+
+String expressions are composed of one or more string variables, string
+functions, or string sub-expressions separated by zero or more string
+operators.  A function is either a user-defined command, menu, or native
+command.
+
+eCarlo says: string along now!
+
+String operators are divided into four categories:  concatenation, indexing,
+string slices, and relational.
+
+
+                          <BOLD><SUBTOPIC>Concatenation Operators</SUBTOPIC></BOLD>
+
+Concatenation is used to join two or more strings into a single string.
+
+The concatenation operator is the "+" symbol.
+
+For example, given:
+
+    string first[15], last[15], fullname[40], initials[3]
+
+then:
+
+    first = "John"                      // assigns "John" to first
+    last = "Smith"                      // assigns "Smith" to last
+    fullname = first + " " + last       // assigns "John Smith" to
+                                        //  fullname
+
+Concatenation is performed after string indexing (discussed below), but before
+string relational operations (also discussed below).
+
+The result of string concatenation is a string.
+
+(For more information and a complete list of operators and their precedence,
+see "<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+
+                            <BOLD><SUBTOPIC>Indexing Operators</SUBTOPIC></BOLD>
+
+Indexing is used to reference a character at a specified offset within a
+string variable.
+
+To get the nth character in a string variable, follow the variable name with
+[n], where n is a numeric variable or constant between 1 and 255.
+
+From the previous example:
+
+    initials = first[1] + last[1]   // assigns "JS" to initials
+
+The result of indexing is a string of length 1.
+
+(For more information and a complete list of operators and their precedence,
+see "<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+
+                               <BOLD><SUBTOPIC>String Slices</SUBTOPIC></BOLD>
+
+String slices allow a string variable to be manipulated by specifying a
+substring of characters within the string.
+
+To reference the desired substring, follow the variable name with
+[<ITALIC>notation</ITALIC>], where <ITALIC>notation</ITALIC> indicates the desired starting and ending
+positions (as numeric expressions) in the format:
+
+    <ITALIC>s</ITALIC>[<ITALIC>start_position</ITALIC>..<ITALIC>end_position</ITALIC>]
+
+or where <ITALIC>notation</ITALIC> indicates the desired starting position and length (as
+numeric expressions) in the format:
+
+    <ITALIC>s</ITALIC>[<ITALIC>start_position</ITALIC>:<ITALIC>length</ITALIC>]
+
+String slices may be used in expressions and/or assignments.
+
+For example, given:
+
+    string s[50] = "StarTrek Next Generation DeepSpace 9 Voyager"
+    string s1[40], s2[40], s3[40], s4[40]
+
+then:
+
+    s1 = s[1:8]     // s1 = "StarTrek"
+    s2 = s[1..24]   // s2 = "StarTrek Next Generation"
+    s3 = s[26:11]   // s3 = "DeepSpace 9"
+    s4 = s[38:7]    // s4 = "Voyager"
+
+
+Or given:
+
+    string s[30]  = "Captain  Kirk"
+    string s1[10] = "James T."
+
+then:
+
+    s[1:Length(s1)] = s1    // s = "James T. Kirk"
+
+
+                <BOLD><SUBTOPIC>Relational Operators for String Expressions</SUBTOPIC></BOLD>
+
+Relational operators are used to compare the relation between string
+expressions.
+
+The relational operators for string expressions are:
+
+    <BOLD><</BOLD>         less than
+
+    <BOLD><=</BOLD>        less than or equal to
+
+    <BOLD>></BOLD>         greater than
+
+    <BOLD>>=</BOLD>        greater than or equal to
+
+    <BOLD>==</BOLD>        equal to
+
+    <BOLD><></BOLD>        not equal to
+
+
+Note that "==" is used to compare equality, while "=" is used to assign
+variables.
+
+Strings are compared by comparing the individual characters of the strings
+from left to right.  Character comparison continues until the end of either
+string is encountered.  When comparing individual characters, their ASCII
+values are used to determine if any one character is greater than, equal to,
+or less than any other character.
+
+In equality comparisons, strings are considered different if their lengths
+differ.
+
+For example, given:
+
+    string s1[10] = "TEST", s2[10] = "TESTY", s3[10] = "test"
+
+then:
+
+    s1 < s2   // is TRUE because s2 has extra character.
+
+    s1 == s3  // is FALSE since case of letters is different.
+
+    s1 == s2  // is FALSE since the lengths are different.
+
+    s1 < s3   // is TRUE since ASCII value of "T" (84) is less
+              // than ASCII value of "t" (116).
+
+The relational string operators have the lowest precedence of the string
+operators.
+
+The result of a relational string expression is a boolean (numeric) expression
+and has a value of TRUE or FALSE.  (See "<LINK>Boolean Expressions</LINK>" below.)
+
+(For more information and a complete list of operators and their precedence,
+see "<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+
+<BOLD><SUBTOPIC>Numeric Expressions</SUBTOPIC></BOLD>
+
+Numeric expressions are composed of one or more numeric variables, constants,
+numeric functions, or numeric sub-expressions separated by zero or more
+numeric operators.  A function is either a user-defined command, menu, or
+native command.
+
+As noted under "<LINK>String Expressions</LINK>" (above), string expressions composed with
+the Relational operator are also numeric expressions.
+
+Numeric operators are divided into four categories:  arithmetic, relational,
+logical, and bitwise.
+
+
+                           <BOLD><SUBTOPIC>Arithmetic Operators</SUBTOPIC></BOLD>
+
+Arithmetic operators are used to mathematically combine two or more
+expressions.
+
+The arithmetic operators are:
+
+    <BOLD>*</BOLD>         multiplication
+
+    <BOLD>/</BOLD>         division
+
+    <BOLD><SUBTOPIC>mod</SUBTOPIC></BOLD>       modulus
+
+    <BOLD>+</BOLD>         addition
+
+    <BOLD>-</BOLD>         subtraction
+
+
+Since integers are whole numbers, integer division truncates any fractional
+part.
+
+The mod operator yields the remainder of integer division.  It is zero when
+there is no remainder.
+
+These operators group left to right, with *, /, and mod having higher
+precedence than + and -.  If you want to force a different precedence, use
+parentheses.
+
+For example, given:
+
+    integer line
+
+then:
+
+    line = 4 * 10 + 5 * 6   // the result is (4 * 10) + (5 * 6) = 70
+
+    line = 4 * (10 + 5) * 6     // the result is 360
+
+The result of an arithmetic expression is always an integer between <LINK>MININT</LINK> and
+<LINK>MAXINT</LINK> (editor constants defined under "<LINK>Numbers</LINK>" earlier in this chapter).
+
+(For more information and a complete list of operators and their precedence
+see "<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+
+                <BOLD><SUBTOPIC>Relational Operators for Numeric Expressions</SUBTOPIC></BOLD>
+
+Relational operators are used to compare the relation between numeric
+expressions.
+
+The relational operators for numeric expressions are:
+
+    <BOLD><</BOLD>         less than
+
+    <BOLD><=</BOLD>        less than or equal to
+
+    <BOLD>></BOLD>         greater than
+
+    <BOLD>>=</BOLD>        greater than or equal to
+
+    <BOLD>==</BOLD>        equal to
+
+    <BOLD><></BOLD>        not equal to
+
+
+Note that "==" is used for equality comparison, while "=" is used for variable
+assignment.
+
+Relational operators have lower precedence than arithmetic operators.  Because
+of this, an expression such as:
+
+    i < limit - 1
+
+is equivalent to:
+
+    i < (limit - 1)
+
+
+The result of a relational expression is a boolean expression and has a value
+of TRUE or FALSE.  (See "<LINK>Boolean Expressions</LINK>" below.)
+
+For example, given:
+
+    integer m = 5, n = 10
+
+then:
+
+    m < n       // is TRUE
+
+    m > n       // is FALSE
+
+    m <> n      // is TRUE
+
+    m == n      // is FALSE
+
+
+(For more information on string expressions involving relational operators,
+see "<LINK>Relational Operators for String Expressions</LINK>" under "<LINK>String Expressions</LINK>"
+above.  For a complete list of operators and their precedence see
+"<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+                            <BOLD><SUBTOPIC>Logical Operators</SUBTOPIC></BOLD>
+
+Logical operators are used to test whether expressions are zero or nonzero.
+Logical operators are commonly used to generate boolean expressions.  (See
+"<LINK>Boolean Expressions</LINK>" later in this chapter.)
+
+The logical operators are:
+
+    <BOLD><SUBTOPIC>and</SUBTOPIC></BOLD>       TRUE if two compared expressions are both nonzero
+
+    <BOLD><SUBTOPIC>or</SUBTOPIC></BOLD>        TRUE if either or both of two compared expressions are nonzero
+
+    <BOLD><SUBTOPIC>not</SUBTOPIC></BOLD>       TRUE if expression is FALSE; FALSE if expression is TRUE
+
+    <LINK>in</LINK>        TRUE if expression is TRUE; FALSE if expression is FALSE
+
+
+
+For example, to determine if Insert is ON and WordWrap is ON:
+
+    Query(Insert) and Query(WordWrap)
+
+To determine if either Insert is ON or Wordwrap is ON:
+
+    Query(Insert) or Query(WordWrap)
+
+To determine if Insert is ON and Wordwrap is OFF:
+
+    Query(Insert) and (not Query(WordWrap))
+
+To determine if a variable-width tab is set:
+
+    Query(TabType) in _SMART_, _VARIABLE_
+
+
+The logical operators "and," "or," and "in" have lower precedence than the
+arithmetic operators and relational operators.  But the logical operator
+"not" has higher precedence than arithmetic, relational, and bitwise.
+
+As a result, an expression such as:
+
+    Alpha() and not Beta() or Gamma()
+
+is equivalent to:
+
+    (Alpha() and (not Beta())) or Gamma()
+
+Unlike arithmetic, relational, and bitwise expressions, the order of
+evaluation of logical expressions IS specified.  Logical expressions are
+evaluated left-to-right.
+
+Therefore, in the expression:
+
+    Alpha() or Beta()
+
+Alpha() is called before Beta().
+
+This is done to employ what is known as "short-circuit evaluation."
+Short-circuit evaluation allows an expression to be evaluated without
+executing the entire expression.  Once the result of a logical expression or
+sub-expression is known, the evaluation stops.
+
+The expression:
+
+    Alpha() or Beta()
+
+is TRUE if either Alpha() or Beta() returns TRUE.  First, Alpha() is called.
+If it returns a nonzero value, the expression is TRUE and Beta() is not
+called.  If Alpha() is zero, then Beta() is called to determine if the
+expression is TRUE or FALSE.
+
+Similarly, in the expression:
+
+    Alpha() and Beta()
+
+Alpha() is called first.  If Alpha() is FALSE, Beta() is not called since its
+return value is inconsequential.  But if Alpha() is nonzero, Beta() is called.
+If Beta() is also TRUE, the entire expression is TRUE; otherwise, the
+expression is FALSE.
+
+Thus, once the value of a logical expression or sub-expression is known,
+evaluation of that expression or sub-expression stops.
+
+The result of a logical expression is a boolean expression and has a value of
+TRUE or FALSE.  (See "<LINK>Boolean Expressions</LINK>" later in this chapter.)
+
+(For more information and a complete list of operators and their precedence,
+see "<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+The "<BOLD><SUBTOPIC>in</SUBTOPIC></BOLD>" operator serves as a convenient tool for checking to see if an
+expression is within a range of values or within a group of ranges (set
+inclusion).  It can be used in place of the "and" and "or" operators to
+simplify such operations.
+
+The format of the "in" operator is:
+
+    <ITALIC>expression</ITALIC> <BOLD>in</BOLD> <ITALIC>expression_list</ITALIC>
+
+In this format, <ITALIC>expression_list</ITALIC> is a list of expressions, separated by
+commas, in either the form:
+
+    <ITALIC>expression1</ITALIC>
+
+where <ITALIC>expression1</ITALIC> is any expression; or the form
+
+    <ITALIC>expression2</ITALIC>..<ITALIC>expression3</ITALIC>
+
+where <ITALIC>expression2</ITALIC>..<ITALIC>expression3</ITALIC> indicates a range extending from <ITALIC>expression2</ITALIC>
+to <ITALIC>expression3</ITALIC>, inclusively.
+
+The type (string or integer) of the expressions in <ITALIC>expression_list</ITALIC> must
+match that of <ITALIC>expression</ITALIC>.
+
+For example, without the "in" operator, you would use code similar to the
+following to determine if a character, represented as s[1], is alphabetic:
+
+    if s[1] >= 'a' and s[1] <= 'z' or s[1] >= 'A' and s[1] <= 'Z'
+        // s[1] is alphabetic
+    endif
+
+The code can be simplified using the "in" operator as:
+
+    if s[1] in 'a'..'z', 'A'..'Z'
+        // s[1] is alphabetic
+    endif
+
+With the "in" operator, you can easily make an isAlpha function:
+
+    integer proc isAlpha(string s)
+        return (s[1] in 'a'..'z', 'A'..'Z')
+    end
+
+or an isDrawingChar function (the PC graphic drawing characters):
+
+    integer proc isDrawingChar(string s)
+        return (Asc(s[1]) in 176..223)
+    end
+
+
+                        <BOLD><SUBTOPIC>Bitwise Logical Operators</SUBTOPIC></BOLD>
+
+Bitwise operators are used to manipulate individual bits of numeric
+expressions.
+
+The bitwise operators are:
+
+    <BOLD><SUBTOPIC>shr</SUBTOPIC></BOLD>       shifts bits right
+
+    <BOLD><SUBTOPIC>shl</SUBTOPIC></BOLD>       shifts bits left
+
+    <BOLD>&</BOLD>         bitwise AND
+
+    <BOLD>^</BOLD>         bitwise XOR
+
+    <BOLD>|</BOLD>         bitwise OR
+
+    <BOLD>~</BOLD>         bitwise NOT
+
+
+For integer m and n:
+
+    m shr n     // shifts the bits comprising m, n positions to
+                // the right.  Zeros fill the high bits as the
+                // low bits are shifted out.
+
+    m shl n     // shifts the bits comprising m, n positions to
+                // the left.  Zeros fill the low bits as the high
+                // bits are shifted out.
+
+For individual bits b1 and b2:
+
+    b1 & b2     // returns 1 if and only if b1 == 1 and b2 == 1.
+
+    b1 | b2     // returns 1 if either b1 == 1 or b2 == 1.
+
+    b1 ^ b2     // returns 1 if and only if b1 <> b2.
+
+    ~b1         // returns 1 if b1 is 0 returns 0 if b1 is 1.
+
+When using &, ^, and | on integers m and n, each bit position of m acts on the
+corresponding bit position in n.
+
+For example, given:
+
+    integer a =   1111b
+    integer b = 100001b
+
+then:
+
+    a shl 2     // is 111100b since 1111b is shifted left two bits
+                // and zeros fill the low bits.
+
+    b shr 2     // is 1000b since 100001b is shifted right two
+                // bits and zeros fill the high bits.
+
+    a           // is   1111b      (15 decimal)
+
+    a shl 2     // is 111100b      (60 decimal)
+
+    a & b       // is 1, because:
+                //
+                //                a      001111b     (15 decimal)
+                //                b      100001b     (33 decimal)
+                //              _____    _______     ____________
+                //              a & b    000001b     ( 1 decimal)
+
+    a | b       // is 47, because:
+                //
+                //                a      001111b     (15 decimal)
+                //                b      100001b     (33 decimal)
+                //              _____    _______     ____________
+                //              a | b    101111b     (47 decimal)
+
+    a ^ b       // is 46, because:
+                //
+                //                a      001111b     (15 decimal)
+                //                b      100001b     (33 decimal)
+                //              _____    _______     ____________
+                //              a ^ b    101110b     (46 decimal)
+
+    ~a      // is -16, because:
+            //
+            //   a  00000000000000000000000000001111b  (15 decimal)
+            //  __  _________________________________  _____________
+            //  ~a  11111111111111111111111111110000b  (-16 decimal)
+            //
+            // Note that ~a is negative because sign bit (highest
+            // bit) changed from 0 (positive) to 1 (negative).
+
+Given the following:
+
+    constant KEYWORD = 1, GLOBAL = 2, LOCAL = 4
+    integer flags
+
+common bitwise operator idioms are:
+
+    flags = flags | (KEYWORD | GLOBAL)      // turns on KEYWORD
+                                            // and GLOBAL flag bits
+
+    flags = flags & ~(KEYWORD | GLOBAL)     // turns off KEYWORD
+                                            // and GLOBAL flag bits
+
+    if (flags & (KEYWORD | GLOBAL)) <> 0    // is nonzero if either
+                                            // KEYWORD or GLOBAL
+                                            // flag bits are set
+
+The result of a bitwise expression is a bitwise expression and has a value
+between <LINK>MININT</LINK> and <LINK>MAXINT</LINK> (editor constants defined under "<LINK>Numbers</LINK>" earlier in
+this chapter).
+
+(For more information and a complete list of operators and their precedence,
+see "<LINK>Precedence and Order of Evaluation in Expressions</LINK>" later in this chapter.)
+
+
+<BOLD><SUBTOPIC>Boolean Expressions</SUBTOPIC></BOLD>
+
+Boolean expressions are a subset of numeric expressions.  Boolean expressions
+are numeric expressions which are comprised of a boolean function and/or
+utilize relational and logical operators.  The main difference is that numeric
+expressions yield a result between <LINK>MININT</LINK> and <LINK>MAXINT</LINK>, while boolean
+expressions always yield a boolean result of TRUE or FALSE.
+
+
+<BOLD><SUBTOPIC>Constant Expressions</SUBTOPIC></BOLD>
+
+A constant expression is an expression that contains no variables.  All
+elements of a constant expression must have constant values.
+
+A constant expression can consist of any combination of constant numbers,
+constant strings, editor constants, user-defined constants, the SizeOf()
+command, and, if constants are passed to them, the Chr(), Asc(), and Length()
+commands.
+
+For example, given:
+
+    constant a = 5
+
+    integer b = 10
+
+    string name[8]="Jeniffer"
+
+    string middle[10]="Nicolle"
+
+then the following are constant expressions:
+
+    "THIS IS A CONSTANT EXPRESSION"
+
+    "part a" + "part b"
+
+    12 + 56 + 123
+
+    12 + a
+
+    Chr(64) + " " + "Book"
+
+    Asc("A") + a + Length("ORANGE") + SizeOf(name)
+
+
+but the following are NOT constant expressions:
+
+    "String 1" + name       // name is not constant
+
+    5 + b + 25              // b is not constant
+
+    a + b                   // b is not constant
+
+    middle                  // middle is not a constant
+
+    length(name)            // name is not a constant
+
+
+<BOLD><SUBTOPIC>Precedence and Order of Evaluation in Expressions</SUBTOPIC></BOLD>
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+SAL supports <SUBTOPIC>15 levels of precedence for expressions</SUBTOPIC>.  The following table
+identifies these levels, from the highest level down to the lowest.
+
+
+    Level   Operator           Operation
+    _____   ________    ______________________________
+
+      1.      ()        Function call
+              []        Array subscript, string slices
+
+      2.      not       Logical negation
+              ~         Bitwise not
+              +         Unary plus
+              -         Unary minus
+
+      3.      *         Multiply
+              /         Divide
+              mod       Remainder (modulus)
+
+      4.      +         Binary plus
+              +         String concatenation
+              -         Binary minus
+
+      5.      shr       Bitwise shift right
+              shl       Bitwise shift left
+
+      6.      <         Less than
+              <=        Less than or equal to
+              >         Greater than
+              >=        Greater than or equal to
+
+      7.      ==        Equal to
+              <>        Not equal to
+
+      8.      &         Bitwise AND
+
+      9.      ^         Bitwise XOR
+
+     10.      |         Bitwise OR
+
+     11.      and       Logical AND
+
+     12.      or        Logical OR
+
+     13.      in        Set inclusion
+
+     14.      =         Assign
+
+     15.      ,         Evaluate
+
+The order of evaluation is left-to-right for expressions involving logical
+"and" and logical "or," and utilizes "short-circuit boolean evaluation."  (For
+more information, see "<LINK>Logical Operators</LINK>" under "<LINK>Numeric Expressions</LINK>" above.)
+
+
+<BOLD><SUBTOPIC>Type Conversions within Expressions</SUBTOPIC></BOLD>
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+To convert from string to integer, or from integer to string, within an
+expression, the following commands are available:
+
+    ù Val() converts a string to an integer.
+
+    ù Str() converts an integer to a string.
+
+    ù Chr() converts an integer value to a string of length 1 (a single
+      character).
+
+    ù Asc() converts a single character to an integer.
+
+For example, given:
+
+    integer i = 10
+    string s[10]
+
+then:
+
+    s = Str(i)      // s has the value "10"
+
+    s = "35"        // s has the value "35"
+
+    i = Val(s)      // i has the value 35
+
+    s = chr(i)      // s has the value "#"
+
+    i = asc("+")    // i has the value 43
+
+
+<BOLD><SUBTOPIC>Control Statements</SUBTOPIC></BOLD>
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+The control statements of a language specify the order in which language
+statements are executed.  Among the features of the macro language is its
+rich set of statements that control the flow of execution. The macro language
+includes the following types of control statements:
+
+    <LINK>if</LINK>, <LINK>elseif</LINK>, <LINK>else</LINK>, <LINK>endif</LINK>
+
+    <LINK>iif</LINK>           (used as an expression)
+
+    <LINK>case</LINK>, <LINK>when</LINK>, <LINK>otherwise</LINK>, <LINK>endcase</LINK>
+
+    <LINK>while</LINK>, <LINK>endwhile</LINK>
+
+    <LINK>repeat</LINK>, <LINK>until</LINK>
+
+    <LINK>for</LINK>, <LINK>endfor</LINK>
+
+    <LINK>do</LINK>, <LINK>enddo</LINK>
+
+    <LINK>loop</LINK>, <LINK>endloop</LINK>
+
+    ®L Statements;break statement¯break®/L¯
+
+    <LINK>return</LINK>
+
+    <LINK>halt</LINK>
+
+    <LINK>goto</LINK>
+
+
+<BOLD><SUBTOPIC>Expressions in Control Statements</SUBTOPIC></BOLD>
+
+Control statements are governed by expressions.  With the exception of the
+"case" statement, all control statements require numeric expressions.
+
+These numeric expressions are evaluated for zero and nonzero values.  If the
+result of the expression is nonzero, the statements within the control
+structure are executed.  If the expression is zero, control is passed to the
+statement following the end of that control structure; or in the case of "if,"
+to the following "else" or "elseif" statement.  Since the results of the
+expressions are checked for zero or nonzero, any numeric expression is valid.
+Also, with the exception of the "case" statement, strings must be used within
+relational string expressions which yield a numeric expression.
+
+In the following control statement syntax declarations, <ITALIC>numeric_expression</ITALIC>
+is any numeric expression.  <ITALIC>statements</ITALIC> are any statements as specified in
+the "<LINK>Statements</LINK>" section.
+
+
+<BOLD><SUBTOPIC>Conditional Execution ... if and iif</SUBTOPIC></BOLD>
+
+To execute a group of statements when a condition (expression) is nonzero,
+use the "<BOLD><SUBTOPIC>if</SUBTOPIC></BOLD>" statement.  The format is:
+
+    <BOLD>if</BOLD> <ITALIC>numeric_expression</ITALIC>
+        <ITALIC>statements</ITALIC>
+    <BOLD>elseif</BOLD> <ITALIC>numeric_expression</ITALIC>
+        <ITALIC>statements</ITALIC>
+    <BOLD>elseif</BOLD> <ITALIC>numeric_expression</ITALIC>
+        <ITALIC>statements</ITALIC>
+    <BOLD>else</BOLD>
+        <ITALIC>statements</ITALIC>
+    <BOLD>endif</BOLD>
+
+The "elseif" and the "else" portions are optional.
+
+The "<BOLD><SUBTOPIC>elseif</SUBTOPIC></BOLD>" statement may be used as many times as desired within an "if"
+construct, but only one "<BOLD><SUBTOPIC>else</SUBTOPIC></BOLD>" statement may be used.
+
+The <ITALIC>numeric_expressions</ITALIC> are evaluated until one is encountered whose value
+is nonzero (that is, the condition is TRUE).  Once a nonzero numeric
+expression is found, the statements following the expression are executed
+until "elseif", "else", or "endif" is encountered.  At that point, control is
+passed to the statement following "endif".
+
+If a nonzero <ITALIC>numeric_expression</ITALIC> is NOT found, control is passed to the first
+statement following "else".  The statements following "else" are executed
+until "<BOLD><SUBTOPIC>endif</SUBTOPIC></BOLD>" is encountered.  Control is then passed to the statement
+following "endif".
+
+If a nonzero <ITALIC>numeric_expression</ITALIC> is NOT found and no "else" condition is
+specified, control immediately passes to the statement following "endif".
+
+Conditional statements may also be nested.
+
+The following example demonstrates "short-circuit boolean evaluation."
+
+Given the procedures Alpha() and Beta():
+
+    if Alpha() and Beta()
+        <ITALIC>statements</ITALIC>
+    endif
+
+could also be written:
+
+    if Alpha()
+        if Beta()
+            <ITALIC>statements</ITALIC>
+        endif
+    endif
+
+
+A special case of the "if" statement is the "inline if", "<BOLD><SUBTOPIC>iif</SUBTOPIC></BOLD>".  The "inline
+if" allows an "if" statement to be nested within an expression.
+
+The "iif" statement syntax is:
+
+    <BOLD>iif</BOLD>(<ITALIC>expression1</ITALIC>, <ITALIC>expression2</ITALIC>, <ITALIC>expression3</ITALIC>)
+
+If <ITALIC>expression1</ITALIC> is nonzero, "iif" returns <ITALIC>expression2</ITALIC>.  Otherwise, "iif"
+returns <ITALIC>expression3</ITALIC>.
+
+For example:
+
+    proc OnOff(integer n)
+        if n <> 0
+            Message("On")
+        else
+            Message("Off")
+        endif
+    end
+
+could also be written more concisely as:
+
+    proc OnOff(integer n)
+        Message(iif(n <> 0, "On", "Off"))
+    end
+
+<ITALIC>expression1</ITALIC> must be a numeric expression.  <ITALIC>expression2</ITALIC> and <ITALIC>expression3</ITALIC>
+may be either string or numeric expressions.  However, they must both be of
+the same type.
+
+Since "iif" is an expression (whereas "if", "else", and "endif" are a series
+of statements), it can be used in cases where an expression is allowed, but
+where statements are not allowed.
+
+For example:
+
+    <BOLD>while</BOLD> <BOLD>iif</BOLD>(<ITALIC>expr1</ITALIC>, <ITALIC>expr2</ITALIC>, <ITALIC>expr3</ITALIC>)
+        ...
+        ...
+    <BOLD>endwhile</BOLD>
+
+The "while" statement requires a <ITALIC>boolean_expression</ITALIC> which the "iif" will
+satisfy.
+
+If <ITALIC>expr1</ITALIC> returns nonzero, then <ITALIC>expr2</ITALIC> is evaluated.  If <ITALIC>expr2</ITALIC> is nonzero,
+then the statements within the "while" loop will be repeated; otherwise,
+control passes to the statements after the "endwhile".
+
+If <ITALIC>expr1</ITALIC> returns zero, then <ITALIC>expr3</ITALIC> is evaluated.  If <ITALIC>expr3</ITALIC> is nonzero,
+then the statements within the "while" loop will be repeated; otherwise,
+control passes to the statements after the "endwhile".
+
+Continuation of the "while" loop depends on the outcome of <ITALIC>expr2</ITALIC> or <ITALIC>expr3</ITALIC>
+as determined by <ITALIC>expr1</ITALIC>.
+
+The "iif" statement should only be used to assign a variable, or as part of an
+expression.  It is not intended that "iif" be used as a stand-alone statement.
+
+
+<BOLD><SUBTOPIC>Mega-Conditional Statement ... case</SUBTOPIC></BOLD>
+
+The "<BOLD><SUBTOPIC>case</SUBTOPIC></BOLD>" statement is used as a mega-conditional statement.  It compares the
+results of an expression to many other expressions without the need to
+re-evaluate the original expression multiple times.
+
+The "case" statement syntax is:
+
+    <BOLD>case</BOLD> <ITALIC>case_expression</ITALIC>
+        <BOLD>when</BOLD> <ITALIC>when_expression1</ITALIC>
+            <ITALIC>statements</ITALIC>
+        <BOLD>when</BOLD> <ITALIC>when_expression2</ITALIC>
+            <ITALIC>statements</ITALIC>
+        <BOLD>when</BOLD> <ITALIC>when_expression3</ITALIC>
+            <ITALIC>statements</ITALIC>
+        ...
+        <BOLD>otherwise</BOLD>
+            <ITALIC>statements</ITALIC>
+    <BOLD>endcase</BOLD>
+
+The "case" statement is used when a single expression is to be tested for
+multiple values.  Note that a "case" statement can always be expressed as an
+"if" statement; however, it is sometimes more convenient and clearer to use
+the "case" statement.  The <ITALIC>case_expression</ITALIC> and the <ITALIC>when_expression</ITALIC>(s) must
+be the same type.  Thus, the <ITALIC>case_expression</ITALIC> may be either an integer or a
+string.
+
+The "<BOLD><SUBTOPIC>when</SUBTOPIC></BOLD>" and "<BOLD><SUBTOPIC>otherwise</SUBTOPIC></BOLD>" portions are optional, but it really does not make
+much sense to have a case without at least a few "when" clauses!
+
+Within a "case" statement, once a <ITALIC>when_expression</ITALIC> is true and the statements
+assigned to the "when" are executed, processing proceeds directly to
+"<BOLD><SUBTOPIC>endcase</SUBTOPIC></BOLD>".  The processing does not "fall through" to the next "case"
+statement.
+
+Example:
+
+    string fruit_name[10]
+            ...
+        <ITALIC>statements</ITALIC>
+            ...
+    Upper(fruit_name)
+
+    case fruit_name
+
+        when "APPLE"
+            Fruit(1)    // After Fruit(1) is executed, control
+                        // passes to statements after endcase
+        when "ORANGE"
+            Fruit(2)
+
+        when "PEAR"
+            Fruit(3)
+
+        when "MELONS", "HONEYDEW"
+            Fruit(4)
+
+        otherwise
+            Fruit(0)    // Fruit(0) is executed if none of the
+                        // previous cases match.
+    endcase
+
+"When" expressions can have a range of values (the beginning and ending values
+being separated by ".."), or a group of values separated by commas.  For
+example:
+
+    integer a
+
+    case a
+        when 1..10          // if the value of a is in the range
+                            // of 1 to 10
+            <ITALIC>statements</ITALIC>
+        when 15, 20, 25     // if the value of a is 15, 20, or 25
+            <ITALIC>statements</ITALIC>
+    endcase
+
+
+<BOLD><SUBTOPIC>Iterative Statements ... while, repeat, for, do, and loop</SUBTOPIC></BOLD>
+
+Iterative statements are used when a statement needs to be repeatedly executed
+as long as a condition (expression) is nonzero.  SAL offers five types of
+iterative statements:  while/endwhile, repeat/until, for/endfor, do/enddo, and
+loop/endloop.
+
+The "<BOLD><SUBTOPIC>while</SUBTOPIC></BOLD>" statement executes a sequence of statements as long as the
+specified expression is nonzero.
+
+The "while" statement syntax is:
+
+    <BOLD>while</BOLD> <ITALIC>numeric_expression</ITALIC>
+        <ITALIC>statements</ITALIC>
+    <BOLD>endwhile</BOLD>
+
+Statements are repeatedly executed while <ITALIC>numeric_expression</ITALIC> is nonzero.  If
+<ITALIC>numeric_expression</ITALIC> is zero when first encountered, no statements within
+"while...endwhile" are executed.  Thus, to ensure that statements are executed
+at least once, <ITALIC>numeric_expression</ITALIC> must be nonzero when first evaluated.
+
+Once <ITALIC>numeric_expression</ITALIC> evaluates to zero, control passes to the statement
+following "<BOLD><SUBTOPIC>endwhile</SUBTOPIC></BOLD>".
+
+The "<BOLD><SUBTOPIC>repeat</SUBTOPIC></BOLD>" statement executes a sequence of statements at least once and
+continues to repeatedly execute these statements until <ITALIC>numeric_expression</ITALIC> is
+nonzero.
+
+The "repeat" statement syntax is:
+
+    <BOLD>repeat</BOLD>
+        <ITALIC>statements</ITALIC>
+    <BOLD>until</BOLD> <ITALIC>numeric_expression</ITALIC>
+
+When "repeat" is encountered, the statements which follow are immediately
+executed.  When "<BOLD><SUBTOPIC>until</SUBTOPIC></BOLD>" is encountered, <ITALIC>numeric_expression</ITALIC> is evaluated.  If
+nonzero, control passes to the statement following "until".  Otherwise, as
+long as <ITALIC>numeric_expression</ITALIC> is zero, control is passed back to "repeat" and
+the statements are executed again until a nonzero <ITALIC>numeric_expression</ITALIC> is
+encountered.
+
+The "for" and "do" loops offer another method of control when executing a
+loop, by allowing you to explicitly indicate the number of times a loop is to
+be repeated.
+
+The "<BOLD><SUBTOPIC>for</SUBTOPIC></BOLD>" statement executes a sequence of statements a selected number of
+times, as indicated by a range specified as <ITALIC>numeric_expression</ITALIC> through
+<ITALIC>numeric_expression2</ITALIC>.
+
+eCarlo says: I am all for it!
+
+The "for" statement syntax is:
+
+    <BOLD>for</BOLD> <ITALIC>integer_variable</ITALIC> <BOLD>=</BOLD> <ITALIC>numeric_expression</ITALIC> <BOLD>to</BOLD>/<BOLD>downto</BOLD>
+            <ITALIC>numeric_expresssion2</ITALIC> [<BOLD>by</BOLD> <ITALIC>numeric_expression3</ITALIC>]
+
+        <ITALIC>statements</ITALIC>
+    <BOLD>endfor</BOLD>
+
+Specify "to" or "downto" to indicate whether the value of <ITALIC>numeric_expression</ITALIC>
+is to be incremented ("<BOLD><SUBTOPIC>to</SUBTOPIC></BOLD>") or decremented ("<BOLD><SUBTOPIC>downto</SUBTOPIC></BOLD>") until it reaches
+(inclusive) the value of <ITALIC>numeric_expression2</ITALIC>.  The value will be
+incremented/decremented by 1, unless you specify an alternate "<BOLD><SUBTOPIC>by</SUBTOPIC></BOLD>"
+<ITALIC>numeric_expression3</ITALIC> value.
+
+Once the "for" loop terminates, control passes to the statement following
+"<BOLD><SUBTOPIC>endfor</SUBTOPIC></BOLD>".
+
+For example:
+
+    integer i
+
+    for i = 1 to NumFiles()
+        NextFile()
+    endfor
+
+In this example (above), the statements inside the "for" loop are executed the
+value of NumFiles() times.  "i" will range in value from 1 through the value
+of NumFiles(), inclusive.
+
+The above "for" loop may also be written as:
+
+    integer i
+
+    for i = NumFiles() downto 1
+        NextFile()
+    endfor
+
+If written this way, the statements inside the "for" loop will still be
+executed the value of NumFiles() times, with "i" ranging in value from the
+value of NumFiles() through 1, inclusive.  Note the use of "downto" instead
+of "to".  "downto" is used whenever the loop index variable should be
+decremented rather than incremented.
+
+In the following example, the statements inside the "for" loop are not
+executed, because the initial value of "i" (9) is greater than the
+controlling expression of the "for" loop (8, which is the length of "s").
+
+    integer i
+    string s[20]
+
+    s = "StarTrek"
+    for i = 9 to Length(s)
+        Warn("Processing char:", s[i])
+    endfor
+
+"for" loops are actually a specialized form of the "while" loop.  Any "for"
+loop can be rewritten as a "while" loop.  (The converse is not necessarily
+true.)  The "for" loop, when used correctly, can help make macros more
+understandable.
+
+For example, the following code, written as a "while" loop:
+
+    integer i
+    string s[20]
+
+    s = "StarTrek"
+    i = 1
+    while i <= Length(s)
+        Warn("Processing char:", s[i])
+        i = i + 1
+    endwhile
+
+can be rewritten as a "for" loop:
+
+    integer i
+    string s[20]
+
+    s = "StarTrek"
+    for i = 1 to Length(s)
+        Warn("Processing char:", s[i])
+    endfor
+
+Both of these code samples produce the same results.  However, the "for" loop
+version is clearer as to the objective:  do something for all the characters
+in "s".
+
+The "<BOLD><SUBTOPIC>do</SUBTOPIC></BOLD>" statement executes a sequence of statements a specified number of
+<BOLD><SUBTOPIC>times</SUBTOPIC></BOLD>, as indicated by the value of <ITALIC>numeric_expression</ITALIC>.
+
+The "do" statement syntax is:
+
+    <BOLD>do</BOLD> <ITALIC>numeric_expression</ITALIC> <BOLD>times</BOLD>
+        <ITALIC>statements</ITALIC>
+    <BOLD>enddo</BOLD>
+
+Once the "do" loop terminates, control passes to the statement following
+"<BOLD><SUBTOPIC>enddo</SUBTOPIC></BOLD>".
+
+In the following example, the statements inside the "do" loop are executed 8
+times:
+
+    string s[20]
+
+    s = "StarTrek"
+    do Length(s) times
+        // do something here
+    enddo
+
+In the next example, the statements inside the "do" loop are not executed,
+because "i" is 0 (zero):
+
+    integer i
+
+    i = 0
+    do i times
+        // do something here
+    enddo
+
+The "do" loop is a specialized form of the "for" statement.  Any "do" loop
+can be rewritten as a "for" statement.  (The converse is not true.)  The "do"
+loop should be used when a group of statements are to be executed
+<ITALIC>numeric_expression</ITALIC> times, but there is no need to know the current
+iteration number or count of the loop.
+
+The "<BOLD><SUBTOPIC>loop</SUBTOPIC></BOLD>" statement repeatedly executes statements until "break", "return",
+or "halt" is encountered.
+
+The "loop" statement syntax is:
+
+    <BOLD>loop</BOLD>
+        <ITALIC>statements</ITALIC>
+    <BOLD>endloop</BOLD>
+
+Because there is no <ITALIC>numeric_expression</ITALIC> evaluated to determine when to pass
+control to the statement after "<BOLD><SUBTOPIC>endloop</SUBTOPIC></BOLD>", it is imperative that "break,"
+"return," or "halt" be used to terminate the "loop" instruction.  (See
+"<LINK>Termination Statements ... break, return, and halt</LINK>" below.)
+
+In summary, the statements in a "while-endwhile" loop are repeated 0 or more
+times, while the controlling condition is nonzero.  The statements in a
+"repeat-until" loop are repeated 1 or more times, until the controlling
+condition is nonzero.  The statements in a "for-endfor" loop are repeated a
+specific number of times, based on a range of values.  The statements in a
+"do-enddo" loop are repeated a specified number of times, as indicated by the
+value of a numeric expression.  Finally, the statements in a "loop-endloop"
+loop are repeated until terminated by either the "break," "return," or "halt"
+statements.
+
+
+<BOLD><SUBTOPIC>Termination Statements ... break, return, and halt</SUBTOPIC></BOLD>
+
+Termination statements are used to forcefully change the flow control of
+statements.
+
+There are three termination statements:  break, return, and halt.
+
+The <BOLD><SUBTOPIC>break statement</SUBTOPIC></BOLD> is used to pass control to the statement following the
+end of the iterative control structure.
+
+The "break" statement syntax is:
+
+    <BOLD>break</BOLD>
+
+The "break" statement immediately terminates execution of looping statements.
+It is generally intended for use with the "loop" statement, but can also be
+used to terminate "while", "repeat", "for", and "do" loops.
+
+The "<BOLD><SUBTOPIC>return</SUBTOPIC></BOLD>" statement is used to terminate a procedure.
+
+The "return" statement syntax is:
+
+    <BOLD>return</BOLD>()
+
+The "return" statement immediately terminates not only the execution of
+looping statements, but also the currently executing macro procedure, and
+returns control to the caller, which could be another macro.  If the procedure
+from which to return is a string procedure, the parameters passed to "return"
+must be a string value.  Similarly, to return from an "integer" procedure,
+pass an integer value to "return".  If no return type is specified for a
+macro, simply use "return()".
+
+Example:
+
+    integer proc Multiply(integer a, integer b)
+        return(a * b)
+    end
+        ...
+
+    string first[] = "Victoria"
+    string last[] = "Lee"
+
+    string proc FullName()
+        return(first + " " + last)
+    end
+        ...
+
+    proc Test(integer valid)
+        if not valid
+            return()
+        endif
+        Message(valid, " is valid")
+    end
+
+The "<BOLD><SUBTOPIC>halt</SUBTOPIC></BOLD>" statement terminates all macros and passes control back to the
+editor.  "Halt" is intended for use only while debugging macros.
+
+The "halt" statement syntax is:
+
+    <BOLD>halt</BOLD>
+
+The "halt" statement immediately terminates not only the execution of the
+current macro, but ALL macros.  And because all macro control is terminated,
+the state of the editor is unknown.  As a result, it should only be used when
+debugging macros.  Any macro to be given to another user should not use "halt"
+as a method of termination.
+
+
+<BOLD><SUBTOPIC>Jump Statement ... goto</SUBTOPIC></BOLD>
+
+To direct flow which does not easily fit into a construct mentioned above, the
+"<BOLD><SUBTOPIC>goto</SUBTOPIC></BOLD>" statement can be used.  It is recommended that the "goto" statement be
+used sparingly, as it can make debugging macros more difficult.
+
+The syntax of the "goto" statement is:
+
+    <BOLD>goto</BOLD> <ITALIC>label</ITALIC>
+
+where:
+
+    ù <ITALIC>label</ITALIC> is defined as an identifier that ends with a colon (":").
+
+Control is passed immediately to the statement following the <ITALIC>label</ITALIC> specified
+in the "goto" statement.
+
+For example:
+
+    some_label:
+
+        <ITALIC>statements</ITALIC>
+
+    goto some_label
+
+
+<BOLD><SUBTOPIC>Function Call Statements</SUBTOPIC></BOLD>
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+The function call statement is one of the most often used statements in the
+language.  The format is:
+
+    <ITALIC>function_name</ITALIC>()
+
+Control is passed to the named function (which can be a native command, a
+macro procedure, or a menu).  When the called function is complete, control
+returns to the statement immediately following the function call statement.
+
+The editor features over 400 native commands that can be called to give
+macros the ability to perform extensive text manipulation.  You can also
+define your own commands or menus within macros, and call them just as the
+native commands are called.
+
+Functions may also return values:
+
+    <ITALIC>variable_name</ITALIC> = <ITALIC>function_name</ITALIC>()
+
+Functions that return values may be used in expressions.  For example, the
+native command CurrLine() returns the line number of the current line.  To
+determine if the cursor is positioned at the first line of the current file,
+you could use a format such as the following:
+
+    if CurrLine() == 1
+        <ITALIC>statements</ITALIC>
+    endif
+
+The function call statement can occur anywhere that any other statement can
+occur.
+
+(For more information and descriptions of the native editor commands, see the
+chapter on "<LINK>Editor Commands</LINK>.")
+
+</TEXT>
+
+
+
+</TOPICS>
+</EHELP>

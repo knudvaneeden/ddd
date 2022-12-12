@@ -1,0 +1,7 @@
+EolType 5.1 for TSE Pro 2.5e upwards.
+Eoltype.s - Save files with a unix/microsoft
+end-of-file-type based on substrings that
+do/don't occur in their full filenames.
+Possibly handy when working with a Samba drive,
+Total Commander, WinSCP and other such tools.
+Author: carlo.hogeveen@xs4all.nl.

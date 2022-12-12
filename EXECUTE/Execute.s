@@ -1,424 +1,312 @@
 /*
-  Macro          Execute
-  Author         Carlo Hogeveen
-  Website        eCarlo.nl/tse
-  Compatability  TSE Pro 2.5e upwards, all TSE variants
-  Version        v2   10 Oct 2022
+   Macro          Execute
+   Author         Carlo.Hogeveen@xs4all.nl
+   Date           24 oct 2006.
+   Version        1.00
+   Date           25 oct 2006.
+   Compatability  TSE Pro 2.5e upwards.
 
-  This tool can interactively run a TSE command or a whole line of TSE commands
-  without you having to program a macro for it.
+   Purpose: Dynamically run a line of TSE's built-in commands
+            without having to program a macro for it.
 
+   This macro can be called
+   -  From the Macro Execute menu: just run built-in commands interactively!
+   -  From the Dos commandline (AFTER any filenames): also interactively!
+   -  From the Potpourri menu: with no parameters it gives Help
+                               by opening this sourcefile.
+   -  From another macro.
 
-  INSTALLATION
+   TO USE THIS MACRO FROM THE COMMANDLINE,
+   FIRST ADD IT TO THE TOP OF THE MACRO AUTOLOAD LIST.
 
-  Just copy this file to TSE's "mac" directory, and compile it there, for
-  example by opening it there in TSE and applying the MAcro Compile menu.
+   When not added to the top, it has been known to be disrupted by other
+   autoload macros.
 
+   You can change the name of the macro without disrupting it.
+   TSE 2.5 users must not make the macroname longer than 7 characters.
+   Don't forget to delete the old name from the Macro AutoLoad List,
+   and to add the new name to the top of the Macro AutoLoad List.
 
-  USAGE
+   The macro generates a helper-macro named "macroname_" in the same
+   directory as itself. You needn't know that, but you might notice it.
 
-  This "Execute" macro can be executed
-  - From the Potpourri menu: It prompts for TSE commands to execute.
-  - From the Macro Execute menu, optionally followed by TSE commands
-    to execute. Without TSE commands it prompts for them.
+   Dos commandline syntax:
+      editorcommand filename ... { -e macroname | -emacroname | -x }
+                    ["] TSE-statement ... ["]
 
-  Syntax when executed from TSE's Macro Execute menu:
-    execute [TSE macro statement] ...
+   Macro commandline syntax:
+      execute TSE-statement ...
 
-  Syntax when Execute has been executed without parameters:
-    [TSE macro statement] ...
+   Editorcommand can be e, e32, g, g32, depending on your editor version.
 
-  When executed without parameters and when started from the Potpourri menu,
-  you are prompted for a (sequence of) TSE command(s).
+   Filename is your regular TSE file, optionally preceded with TSE-options,
+   optionally containing wildcards, and there may be more than one filename.
 
-  This prompt has its own Execute history, and does not need (room for)
-  the "execute " command, letting us view a longer part of long commands.
+   For this macro the -e macroname option or -x option must come AFTER the
+   filename(s). The option may NOT be quoted. You can use one of these
+   options only once per commandline.
 
-  TSE macro statements:
-    Technically: whatever TSE would allow as the body of a Main() proc.
-    You may enter a sequence of such statements, and they may be nested.
-    You are limited to either the macro command line length, which was 128
-    up to TSE 4.41.08 and is 255 from that version onwards, or to the macro's
-    prompt length, which is 255 for all TSE versions.
+   The -x option is the handiest one, but it might in theory overlap one
+   day with another macro or a new TSE version: removing it from this macro
+   would consist of removing one line of code.
 
-  If the (sequnce of) TSE-statement(s) is not compilable,
-  then the compilation's error message is returned:
-  - For TSE 2.5 and TSE 2.8 as a one line warning.
-  - For TSE 3 upwards as a window with the command, a pointer to the error's
-    position, and the error message.
+   TSE-statements can be anything within these two limits:
+   -  The line "proc Main() tse-statements end" must be compileable.
+      If it is not, the compile-error is returned as a warning.
+   -  After the editorcommand and the spaces after it, the remainder of the
+      line may not be longer than 128 characters.
 
+   Windows says an opening quote doesn't need to be closed if at the end of a
+   line. A closing quote must of course have been opened.
 
-  EXAMPLES
+   Dos commandline examples:
 
-  Macro Execute menu examples:
-    execute
-    execute Warn('Hello World!')
-    execute Warn("Hello World!")
+      g32 -x Warn('Hello World!')
+      g32 -x "Warn('Hello World!')"
+      g32 -x"Warn('Hello World!')"
+      g32 -x"Warn('Hello World!')
+      g32 cats.txt -x "Warn('Hello World!')"
+      g32 cats.txt dogs.txt -x "Warn('Hello World!')"
+      g32 -a *.txt -x "Warn('Hello World!')"
+      // Illegally over three lines for readability:
+      g32 cats.txt -x "BegFile() while lFind('cat','iw')
+                       lReplace('cat','dog','inw1') Right(3)
+                       InsertText('()',_INSERT_) endwhile"
+      // The same properly in one line:
+      g32 cats.txt -x "BegFile() while lFind('cat','iw') lReplace('cat','dog','inw1') Right(3) InsertText('()',_INSERT_) endwhile"
 
-  Prompt examples for after executing macro "Execute" without parameters:
-    Warn('Hello World!')
-    Warn("Hello World!")
-    message('Hi') if (GetTime() mod 2) Warn('Odd') else Warn('Even') endif
-    integer i for i=10 downto 0 Message(i;"...") Delay(18) endfor
+      The double quotes keep Windows from turning commas into spaces. (It
+      happens even before the commandline reaches the editor: I didn't see
+      that one coming.)
 
-  Executing "Execute" from another macro examples:
-    ExecMacro("execute Warn('Hello World!')")
-    ExecMacro('execute Warn("Hello World!")')
+      The last example should be one line, and is only 8 characters below the
+      maximum.
 
+   Macro commandline examples:
 
-  HISTORY
-
-  25-10-2006, v1.00
-    Initial release.
-
-  25-10-2006, v1.01
-    Improved compile error reporting.
-    Documented common user errors.
-
-  26-10-2006, v1.02
-    Improved compile error reporting and the documentation a bit.
-
-
-  10 Oct 2022   v2
-    Breaking change:
-      Removed the Dos command line capability. I never used it, and it added a
-      lot of complexity, not just internally to the program, but also to the
-      user-facing documentation, so I decided to simplify all around and remove
-      it.
-    Fixed:
-      Now also works if TSELOADDIR is set and the original load directory is
-      not writable, perhaps because it is on an a write-protected network
-      drive.
-    New:
-      Added a prompt with its own history list.
-        This prompt is shown when Execute is started without parameters.
-      For compilation errors a fancy error window was added for TSE v3 upwards.
-      Rewrote the source code and documentation.
+      // After opening TSE's Macro Execute menu:
+      execute Warn('Hello World!')
+      execute Warn("Hello World!")
+      // From another macro:
+      execmacro("execute Warn('Hello World!')")
+      execmacro('execute Warn("Hello World!")')
 
 */
 
-
-
-
-
-// Start of compatibility restrictions and mitigations
-
-
 // The following determines the editor version at compile-time.
 #ifdef EDITOR_VERSION
-  // From TSE 3.0 upwards the built-in constant EDITOR_VERSION exists.
+   // From TSE 3.0 upwards the built-in constant EDITOR_VERSION exists.
 #else
-  #ifdef WIN32
-    // From TSE 2.6 upwards the built-in constant WIN32 exists.
-    #define EDITOR_VERSION 2800h
-
-    // TSE < 2.5e and TSE 2.6 are not supported by this macro.
-    // TSE 2.5e (the Dos version of TSE) has existed so long, that almost
-    // every Dos user has upgraded to it, so supporting older versions is
-    // no longer worth the effort. Due to a bug in TSE 2.5c (and presumably
-    // lower versions, which is one of the reasons for not supporting them)
-    // the line below is syntax-checked despite the lack of WIN32 in those
-    // versions, and generates a desired compiler error for TSE <= 2.5c.
-    //
-    // TSE 2.6 was a buggy intermediate 32-bits version from which anyone
-    // could freely upgrade to TSE 2.8. The parameter constant _MFSKIP_
-    // exists since TSE 2.8, so the line below will also generate a
-    // desired compiler error for TSE 2.6.
-    #define UNSUPPORTED_TSE_VERSION _MFSKIP_
-  #else
-    // Since other TSE versions were excluded, this is assumed to be TSE 2.5e.
-    #define EDITOR_VERSION 2500h
-  #endif
+   #ifdef WIN32
+      // From TSE 2.6 upwards the built-in constant WIN32 exists.
+      #define EDITOR_VERSION 0x2800
+      // TSE < 2.5e and TSE 2.6 are not supported by this macro.
+      // TSE 2.5e (the Dos version of TSE) has existed so long, that almost
+      // every Dos user has upgraded to it, so supporting older versions is
+      // no longer worth the effort. Due to a bug in TSE 2.5c (and presumably
+      // lower versions, which is one of the reasons for not supporting them)
+      // the line below is syntax-checked despite the lack of WIN32 in those
+      // versions, and generates a desired compiler error.
+      // TSE 2.6 was an intermediate 32-bits version from which anyone could
+      // freely upgrade to TSE 2.8. The parameter constant _MFSKIP_ exists
+      // since TSE 2.8, so the line below will also generate a desired
+      // compiler error for TSE 2.6.
+      #define UNSUPPORTED_TSE_VERSION _MFSKIP_
+   #else
+      // Since all other TSE versions were excluded, this must be TSE 2.5e.
+      #define EDITOR_VERSION 0x2500
+   #endif
 #endif
 
-
-#if EDITOR_VERSION == 2500h
-  #define MAXSTRINGLEN 255
+#if EDITOR_VERSION == 0x2500
+   #define MAXSTRINGLEN 255
 #endif
 
+string  macroname    [MAXSTRINGLEN] = ""
+string  error1       [MAXSTRINGLEN] = ""
+string  error2       [MAXSTRINGLEN] = ""
+integer started_from_commandline    = FALSE
+integer macro_id                    = 0
+integer wait_for_files_to_be_loaded = FALSE
+integer wait_for_files_time         = 0
 
-#ifdef LINUX
-  string SLASH [1] = '/'
-#else
-  string SLASH [1] = '\'
-#endif
+string proc mTrim(string doublespaced_text)
+   string result [MAXSTRINGLEN] = Trim(doublespaced_text)
+   while Pos("  ", result)
+      result = SubStr(result, 1, Pos("  ", result) - 1)
+             + SubStr(result, Pos("  ", result) + 1, MAXSTRINGLEN)
+   endwhile
+   return(result)
+end
 
-
-#if EDITOR_VERSION >= 3000h
-#else
-  // Trims outer spaces completely and inner consecutive spaces to one space.
-  string proc multi_trim(string multi_spaced_text)
-    string result [MAXSTRINGLEN] = Trim(multi_spaced_text)
-    while Pos('  ', result)
-      result = SubStr(result, 1, Pos('  ', result) - 1)
-             + SubStr(result, Pos('  ', result) + 1, MAXSTRINGLEN)
-    endwhile
-    return(result)
-  end multi_trim
-#endif
-
-
-proc buffer_video()
-  #if EDITOR_VERSION > 2500h
-    BufferVideo()
-  #endif
-end buffer_video
-
-
-proc unbuffer_video()
-  #if EDITOR_VERSION > 2500h
-    UnBufferVideo()
-  #else
-    UpdateDisplay()
-  #endif
-end unbuffer_video
-
-
-integer proc edit_this_file(string filename, integer edit_flags)
-  #if EDITOR_VERSION >= 4200h
-    return(EditThisFile(filename, edit_flags))
-  #else
-    return(EditFile(filename, edit_flags))
-  #endif
-end edit_this_file
-
-
-integer proc key_pressed()
-  // Compensate for a bug that was fixed in TSE v4.40.81.
-  // The next TSE version we can test for is v4.41.44,
-  // which finally introduced INTERNAL_VERSION.
-  #ifdef INTERNAL_VERSION
-    return(KeyPressed())
-  #else
-    return(KeyPressed() or KeyPressed())
-  #endif
-end key_pressed
-
-
-integer proc save_as(string filename, integer option)
-  #if EDITOR_VERSION >= 3000h
-    return(SaveAs(filename, option))
-  #else
-    // In TSE < v3 FileChanged() erroneously remains the same after a
-    // successful SaveAs().
-    integer result = SaveAs(filename, option)
-    if result
-      FileChanged(FALSE)
-    endif
-    return(result)
-  #endif
-end save_as
-
-
-// End of compatibility restrictions and mitigations
-
-
-
-
-
-// Global constants and semi-constants
-
-string MACRO_NAME     [MAXSTRINGLEN] = ''
-string TMP_DIR        [MAXSTRINGLEN] = ''
-string TMP_MACRO_MAC  [MAXSTRINGLEN] = ''
-string TMP_MACRO_NAME [MAXSTRINGLEN] = ''
-string TMP_MACRO_S    [MAXSTRINGLEN] = ''
-
-
-string proc get_tmp_dir()
-  string result [MAXSTRINGLEN] = ''
-  result = GetEnvStr('TMP')
-  if not (FileExists(result) & _DIRECTORY_)
-    result = GetEnvStr('TEMP')
-    if not (FileExists(result) & _DIRECTORY_)
-      #ifdef LINUX
-        result = '/tmp'
-        if not (FileExists(result) & _DIRECTORY_)
-          result = ''
-        endif
-      #else
-        result = ''
-      #endif
-    endif
-  endif
-  return(result)
-end get_tmp_dir
-
-
-proc WhenLoaded()
-  MACRO_NAME     = SplitPath(CurrMacroFilename(), _NAME_)
-  TMP_DIR        = get_tmp_dir()
-  TMP_MACRO_NAME = MACRO_NAME                       + '_'
-  TMP_MACRO_S    = TMP_DIR + SLASH + TMP_MACRO_NAME + '.s'
-  TMP_MACRO_MAC  = TMP_DIR + SLASH + TMP_MACRO_NAME + '.mac'
-
-  if TMP_DIR == ''
-    Warn('No tmp dir.')
-    PurgeMacro(MACRO_NAME)
-  endif
-end WhenLoaded
-
-
-integer proc get_cmd(var string cmd)
-  cmd = Trim(Query(MacroCmdLine))
-  if cmd == ''
-    if Ask(Format('Enter a (sequence of) TSE macro command(s) to execute:'),
-           cmd,
-           GetFreeHistory(MACRO_NAME + ':cmd'))
-      cmd = Trim(cmd)
-    endif
-  endif
-  return(cmd <> '')
-end get_cmd
-
-
-integer proc create_tmp_macro(string cmd, var integer tmp_macro_id)
-  string  erroneous_action [4] = ''
-  integer org_id               = GetBufferId()
-
-  buffer_video()
-  tmp_macro_id = edit_this_file(TMP_MACRO_S, _DONT_PROMPT_)
-
-  if tmp_macro_id
-    EmptyBuffer()
-    InsertText(cmd)
-    BegLine()
-    InsertText('proc Main() ', _INSERT_)
-    EndLine()
-    InsertText(' end'        , _INSERT_)
-    if save_as(CurrFilename(), _DONT_PROMPT_|_OVERWRITE_)
-      GotoBufferId(org_id)
-    else
-      erroneous_action = 'save'
-      GotoBufferId(org_id)
-      AbandonFile(tmp_macro_id)
-      tmp_macro_id = 0
-    endif
-  else
-    erroneous_action = 'open'
-  endif
-
-  unbuffer_video()
-
-  if erroneous_action <> ''
-    Warn('Could not ', erroneous_action, ' tmp file "' + TMP_MACRO_S + '".')
-  endif
-
-  return(tmp_macro_id)
-end create_tmp_macro
-
-
-integer proc compile_tmp_macro(string cmd, integer tmp_macro_id)
-  integer compilation_ok = FALSE
-  integer org_id         = GetBufferId()
-
-  #if EDITOR_VERSION >= 3000h
-    integer errors_id             = 0
-    integer error_pos             = 0
-  #else
-    string  dont_need_cmd     [1] = cmd
-    string  error1 [MAXSTRINGLEN] = ''
-    string  error2 [MAXSTRINGLEN] = ''
-
-    dont_need_cmd = dont_need_cmd  // Pacify the compiler.
-  #endif
-
-  while key_pressed() // Discard human interference. Sigh, humans.
-    GetKey()
-  endwhile
-
-  buffer_video()
-  GotoBufferId(tmp_macro_id)
-
-  // Start of pushed keys part: When debugging you cannot step through here.
-  PushKey(<Enter>)
-  PushKey(<c>)
-  //   Macro must be both current and a parameter to get the response windows we
-  //   want for a successful and not successful compilation in all TSE versions.
-  ExecMacro('compile ' + CurrFilename())
-  if  key_pressed()
-  and GetKey() == <Enter>
-    compilation_ok = TRUE
-  endif
-  // End of pushed keys part: Debug breakpoint could be put hereafter.
-
-  if compilation_ok
-    GotoBufferId(org_id)
-    UpdateDisplay()
-    unbuffer_video()
-  else
-    NextWindow()
-    #if EDITOR_VERSION >= 3000h
-      // Show fancy error window.
-      PushBlock()
-      MarkLine(1,NumLines())
-      Copy()
-      errors_id = CreateTempBuffer()
-      Paste()
-      if lFind('^Error #[0-9]# #([0-9]#,\c[0-9]#)', 'gx')
-        MarkWord()
-        error_pos = Val(GetMarkedText())
-        // Subtract 12 for "proc Main() ".
-        if error_pos > 12
-          error_pos = error_pos - 12
-          KillBlock()
-          InsertText(Str(error_pos), _INSERT_)
-        endif
-      endif
-      PopBlock()
-      BegFile()
-      InsertLine()
-      InsertLine(cmd)
-      if error_pos
-        // Necessary empty devider line, which avoids MsgBoxBuff()
-        // unpredictably messing with the position of "^".
-        AddLine()
-        AddLine(Format('^': error_pos))
-      endif
-      GotoBufferId(org_id)
-      OneWindow()
+proc execute_already()
+   if error1 == ""
+      ExecMacro(SplitPath(CurrMacroFilename(),
+                          _DRIVE_|_PATH_|_NAME_)
+                + "_.mac")
       UpdateDisplay()
-      unbuffer_video()
-      MsgBoxBuff(MACRO_NAME + ' errors', _OK_, errors_id)
-      AbandonFile(errors_id)
-    #else
-      // Show the on-line source, the error window, and our own basic warning.
+   else
+      Warn(macroname, ": ", mTrim(error1), " ", mTrim(error2))
+   endif
+   PurgeMacro(macroname)
+   PurgeMacro(macroname + "_")
+end
+
+proc compilation(var string error1, var string error2)
+   integer compilation_ok = FALSE
+   error1 = ""
+   error2 = ""
+   SaveFile()
+   while KeyPressed() // Discard extraneus key-presses.
+       GetKey()
+   endwhile
+   // Remember: you cannot debug macro-parts that use pushed keys.
+   PushKey(<enter>)
+   PushKey(<c>)
+   ExecMacro("compile " + CurrFilename())
+   if  KeyPressed()
+   and GetKey()== <enter>
+      compilation_ok = TRUE
+   endif
+   // End of pushed keys part: debug breakpoint could be put hereafter.
+   if not compilation_ok
+      NextWindow()
       error1 = GetText(1,CurrLineLen())
       if Down()
-        error2 = GetText(1,CurrLineLen())
+         error2 = GetText(1,CurrLineLen())
       endif
-      unbuffer_video()
-      // multi_trim() also compresses spaces to show more of the error message.
-      Warn(MACRO_NAME, ':'; multi_trim(error1); multi_trim(error2))
-      GotoBufferId(org_id)
+      PrevWindow()
       OneWindow()
+   endif
+end
+
+proc xecute(string cmdline)
+   integer org_id                       = GetBufferId()
+   string  macroname_s   [MAXSTRINGLEN] = SplitPath(CurrMacroFilename(),
+                                                    _DRIVE_|_PATH_|_NAME_)
+                                          + "_.s"
+   #if EDITOR_VERSION > 0x2500
+      BufferVideo()
+   #endif
+   macro_id = EditFile(macroname_s, _DONT_PROMPT_)
+   if macro_id
+      EmptyBuffer()
+      if Trim(cmdline) == ""
+         InsertText('EditFile("'
+                    + SplitPath(CurrMacroFilename(), _DRIVE_|_PATH_|_NAME_)
+                    + '.s")')
+      else
+         InsertText(cmdline)
+      endif
+      BegLine()
+      InsertText("proc Main() ", _INSERT_)
+      EndLine()
+      InsertText(" end"   , _INSERT_)
+      compilation(error1, error2)
+      GotoBufferId(org_id)
+      AbandonFile(macro_id)
       UpdateDisplay()
-    #endif
-  endif
+      #if EDITOR_VERSION > 0x2500
+         UnBufferVideo()
+      #endif
+      if started_from_commandline
+         wait_for_files_to_be_loaded = TRUE
+         wait_for_files_time         = 0
+      else
+         execute_already()
+      endif
+   else
+      #if EDITOR_VERSION > 0x2500
+         UnBufferVideo()
+      #endif
+      PurgeMacro(macroname)
+      PurgeMacro(macroname + "_")
+   endif
+end
 
-  EraseDiskFile(TMP_MACRO_S)
+integer proc check_doscmdline(string xecutable)
+   integer x_position = 0
+   integer x_length   = 0
+   integer x_quoted   = 0
+   string  cmdline [MAXSTRINGLEN] = ""
 
-  return(compilation_ok)
-end compile_tmp_macro
+   if     Pos(      Lower(xecutable) + ' "', Lower(Query(DosCmdLine))) == 1
+      x_position = 1
+      x_length   = Length(xecutable) + 2
+      x_quoted   = TRUE
+   elseif Pos(      Lower(xecutable) + '"' , Lower(Query(DosCmdLine))) == 1
+      x_position = 1
+      x_length   = Length(xecutable) + 1
+      x_quoted   = TRUE
+   elseif Pos(      Lower(xecutable) + " " , Lower(Query(DosCmdLine))) == 1
+      x_position = 1
+      x_length   = Length(xecutable) + 1
+      x_quoted   = FALSE
+   elseif Pos(" " + Lower(xecutable) + ' "', Lower(Query(DosCmdLine)))
+      x_position = Pos(" " + Lower(xecutable), Lower(Query(DosCmdLine)))
+      x_length   = Length(xecutable) + 3
+      x_quoted   = TRUE
+   elseif Pos(" " + Lower(xecutable) + '"', Lower(Query(DosCmdLine)))
+      x_position = Pos(" " + Lower(xecutable), Lower(Query(DosCmdLine)))
+      x_length   = Length(xecutable) + 2
+      x_quoted   = TRUE
+   elseif Pos(" " + Lower(xecutable) + " ", Lower(Query(DosCmdLine)))
+      x_position = Pos(" " + Lower(xecutable), Lower(Query(DosCmdLine)))
+      x_length   = Length(xecutable) + 2
+      x_quoted   = FALSE
+   endif
+   if x_position
+      started_from_commandline = TRUE
+      cmdline = SubStr(Query(DosCmdLine),
+                       x_position + x_length,
+                       MAXSTRINGLEN)
+      if  x_quoted
+      and SubStr(cmdline, Length(cmdline), 1) == '"'
+         cmdline = SubStr(cmdline, 1, Length(cmdline) - 1)
+      endif
+      xecute(cmdline)
+      Set(DosCmdLine,
+             SubStr(Query(DosCmdLine),
+                    1,
+                    x_position - 1))
+      if Query(DosCmdLine) == ""
+         NewFile()
+      endif
+   endif
+   return(x_position)
+end
 
+proc idle()
+   if wait_for_files_to_be_loaded
+      if wait_for_files_time > 0
+         wait_for_files_time = wait_for_files_time - 1
+      else
+         wait_for_files_to_be_loaded = FALSE
+         execute_already()
+         UnHook(idle)
+         if  NumFiles() <= 1
+         and Pos("unnamed", Lower(CurrFilename()))
+            AbandonEditor()
+         endif
+      endif
+   endif
+end
+
+proc WhenLoaded()
+//   Warn("doscmdline=", Query(DosCmdLine), ".")
+   macroname = SplitPath(CurrMacroFilename(), _NAME_)
+   Hook(_IDLE_, idle)
+   if check_doscmdline("-e"  + macroname)
+   or check_doscmdline("-e " + macroname)
+   or check_doscmdline("-x"             )
+      macroname = macroname
+   endif
+end
 
 proc Main()
-  string  cmd [MAXSTRINGLEN] = ''
-  integer tmp_macro_id       = 0
-
-  if TMP_DIR <> ''
-    if get_cmd(cmd)
-      if create_tmp_macro(cmd, tmp_macro_id)
-        if compile_tmp_macro(cmd, tmp_macro_id)
-          ExecMacro(TMP_MACRO_MAC)
-          PurgeMacro(TMP_MACRO_MAC)
-          EraseDiskFile(TMP_MACRO_MAC)
-        endif
-        AbandonFile(tmp_macro_id)
-      endif
-    endif
-  endif
-
-  PurgeMacro(MACRO_NAME)
-end Main
+   if not started_from_commandline
+      xecute(Query(MacroCmdLine))
+   endif
+   PurgeMacro(macroname)
+end
 

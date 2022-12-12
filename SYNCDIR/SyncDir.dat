@@ -1,0 +1,41 @@
+#  Note: A line with a "#" on column 1 is considered a comment.
+#  Note: The file must end with an empty line.
+#  Note: It is absolutely forbidden to transfer the same file(s) both
+#        ways between directories. Because files are also transferred
+#        based on a difference in size, there would be no way to tell
+#        which way a file would be transferred. On the plus side, also
+#        basing file transfers on size makes sure that partially
+#        created or transferred files are transferred again.
+#  Note: It is allowed and efficient to transfer different files in
+#        opposite ways between the "from" and the "to" directory.
+#        Hereto an optional "filespec_back" directive is available.
+#  Note: The "pause" and "log_file" directives are optinal and global,
+#        and need not be repeated for the other directories.
+#        The defaults are "10" seconds and file "c:\tseftp.log".
+#  Note: An end_pause of 0 seconds signifies "no loop": do syncdir only once.
+
+middle_pause   5
+end_pause      0
+log_file       e:\backup\SyncDir.log
+user           hyphen
+
+dir_from       e:\Web\hyphen\WWW
+dir_to         ftp.xs4all.nl:WWW
+filespec       .@
+
+dir_from       e:\Web\hyphen\WWW\tse
+dir_to         ftp.xs4all.nl:WWW/tse
+filespec       .@
+
+dir_from       e:\Web\hyphen\WWW\tse\files
+dir_to         ftp.xs4all.nl:WWW/tse/files
+filespec       .@
+
+dir_from       e:\Web\hyphen\WWW\chinese
+dir_to         ftp.xs4all.nl:WWW/chinese
+filespec       .@
+
+dir_from       e:\Web\hyphen\WWW\chinees
+dir_to         ftp.xs4all.nl:WWW/chinees
+filespec       .@
+

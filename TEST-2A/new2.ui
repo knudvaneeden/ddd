@@ -1,0 +1,189 @@
+string SC32_EXE[] = "sc32.exe"
+string CLASSIC[] = "Classic"
+
+string dms_global[] = "default_menu_style"
+string dkb_global[] = "default_key_bindings"
+string user_interface[] = "user-interface"
+
+string default_menu_style[255]
+string default_key_bindings[255]
+string sc32[255]
+
+integer proc check_changed(string global_str, var string local_str)
+    string s[255]
+
+    s = GetGlobalStr(global_str)
+    if s <> local_str
+        local_str = s
+        SetGlobalStr(global_str, s)
+        return (1)
+    endif
+    return (0)
+end
+
+proc after_command()
+    integer changed, id
+    string mac_fn[255] = user_interface + ".s"
+
+    UnHook(after_command)
+    changed = check_changed(dms_global, default_menu_style)
+    changed = changed + check_changed(dkb_global, default_key_bindings)
+
+    if changed
+        PurgeMacro(user_interface)
+
+        PushBlock()
+        PushPosition()
+        id = EditBuffer(default_menu_style + "-menus.s")
+        EndFile()
+        AddLine()
+        InsertFile(default_key_bindings + "-keys.s")
+        lReplace("menu_id_eyecatcher", '"'+default_menu_style+'"', "gwn")
+        lReplace("keyboard_id_eyecatcher", '"'+default_key_bindings+'"', "gwn")
+        SaveAs(mac_fn, _OVERWRITE_|_DONT_PROMPT_)
+        PopPosition()
+        PopBlock()
+        AbandonFile(id)
+
+        EraseDiskFile(user_interface + ".mac")
+        lDos(sc32, mac_fn, _START_HIDDEN_)
+        LoadMacro(user_interface)
+    endif
+end
+
+proc set_menu_key(string s, string global_str)
+    if s <> "" and s <> "Cancel"
+        SetGlobalStr(global_str, s)
+        Hook(_AFTER_COMMAND_, after_command)
+    endif
+end
+
+string proc capitalize(string s)
+   string result [255] = s
+   result [1] = Upper(result[1])
+   return(result)
+end
+
+string proc set_ui(string ui_part)
+   integer org_id = GetBufferId()
+   integer mnu_id = EditFile(LoadDir() + ui_part + "_menu.s", _DONT_PROMPT_)
+   integer handle = 0
+   integer free_letter_found = FALSE
+   string result [255] = ""
+   string extension [8] = iif(ui_part == "menu_style", "-menus.s", "-keys.s")
+   if mnu_id
+      EmptyBuffer()
+      handle = FindFirstFile(LoadDir() + "*" + extension, -1)
+      if handle == -1
+         Warn("Error opening ", LoadDir(), "*" + extension)
+      else
+         // Create the menu options.
+         repeat
+            AddLine(Format('   "',
+                           capitalize(SubStr(FFName(),
+                                             1,
+                                             Length(FFName())
+                                                - Length(extension))),
+                           '",, _MF_CLOSE_AFTER_'))
+         until not FindNextFile(handle, -1)
+         FindFileClose(handle)
+         // Sort the menu options.
+         PushBlock()
+         MarkLine(1,NumLines())
+         Sort(_IGNORE_CASE_)
+         PopBlock()
+         // Add the Cancel option as the last one.
+         EndFile()
+         AddLine('   "Cancel",, _MF_CLOSE_AFTER_')
+         // Add ampersands.
+         BegFile()
+         repeat
+            if lFind('"\c', "cgx")
+               free_letter_found = FALSE
+               repeat
+                  if GetText(CurrPos(), 1) in "A" .. "Z", "a" .. "z"
+                     PushPosition()
+                     if lFind("&" + GetText(CurrPos(), 1), "gi")
+                        PopPosition()
+                     else
+                        KillPosition()
+                        InsertText("&", _INSERT_)
+                        free_letter_found = TRUE
+                     endif
+                  endif
+                  Right()
+               until free_letter_found
+                  or GetText(CurrPos(), 1) == '"'
+            endif
+         until not Down()
+         // Finish the menu macro.
+         BegFile()
+         InsertLine('menu ' + ui_part + '()')
+         AddLine('   history')
+         EndFile()
+         AddLine('end')
+         AddLine('proc main()')
+         AddLine('   ' + ui_part + '()')
+         AddLine('   Set(MacroCmdLine, MenuStr(' + ui_part +
+                 ', MenuOption()))')
+         AddLine('end')
+         // Save, compile, and execute the menu macro.
+         SaveAs(CurrFilename(), _OVERWRITE_)
+         lDos(sc32, CurrFilename(), _START_HIDDEN_)
+         ExecMacro(SplitPath(CurrFilename(), _DRIVE_|_PATH_|_NAME_))
+         // Collect the string containing the menu choice.
+         result = Query(MacroCmdLine)
+      endif
+   else
+      Warn("Error opening ", LoadDir(), ui_part, "_menu.s")
+   endif
+   GotoBufferId(org_id)
+   AbandonFile(mnu_id)
+   return(result)
+end
+
+public proc set_menu_style()
+    set_menu_key(set_ui("menu_style"), dms_global)
+end
+
+public proc set_key_bindings()
+    set_menu_key(set_ui("key_bindings"), dkb_global)
+end
+
+proc WhenLoaded()
+    string cmdline[255]
+    integer msg_level
+
+    if sc32 == ""
+        if FileExists(SC32_EXE)
+            sc32 = SC32_EXE
+        elseif FileExists(LoadDir() + SC32_EXE)
+            sc32 = LoadDir() + SC32_EXE
+        else
+            Warn(SC32_EXE + " not found in current or TSE-Pro load directory")
+            return ()
+        endif
+    endif
+    msg_level = Set(MsgLevel, _NONE_)
+    if not LoadMacro(user_interface)
+        Set(MsgLevel, msg_level)
+        SetGlobalStr(dms_global, CLASSIC)
+        SetGlobalStr(dkb_global, CLASSIC)
+        after_command()
+    else
+        Set(MsgLevel, msg_level)
+    endif
+    default_menu_style   = GetGlobalStr(dms_global)
+    default_key_bindings = GetGlobalStr(dkb_global)
+
+    cmdline = Query(DOSCmdLine)
+    if cmdline == ""
+        EditFile()
+    else
+        EditFile(cmdline)
+    endif
+    Set(ShowMainMenu, On)
+    Set(ShowHelpLine, Off)
+    Set(DisplayBoxed, 0)
+end
+

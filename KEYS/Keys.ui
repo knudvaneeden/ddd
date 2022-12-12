@@ -1,0 +1,182 @@
+/*
+  Here you can define actions for FAST typed sequences of keys and clicks.
+
+  By executing the extension you can configure the key time-out, which
+  determines the trade-off between how fast/slow you have to type versus
+  a fast/slow keyboard response time.
+
+  Just saving this file recompiles and installs it if its macro is (auto)loaded.
+
+  This is NOT a regular TSE .ui file:
+    You cannot compile this file with Macro Compile.
+    Keys you define here do not appear in TSE's menus.
+    Anything before the first key definition is ignored.
+    All statements after a key definition are local to that key, so you
+    cannot use "proc", "menu" and "forward" or declare global variables.
+
+  Execute or view the same-named macro to access the full documentation.
+
+  The example key definitions are for versions of TSE that are ANSI enabled,
+  like the Windows GUI version of TSE with an ANSI font like Courier New,
+  or like Linux TSE v4.41.31 upwards.
+  The example definitions are in ANSI code order.
+
+  About the main ANSI diacrital characters (accented characters).
+  In Windows you can type a ' followed by an e to produce an é.
+  If you configured an "… international" keyboard then Windows does that,
+  otherwise these key definitions do that.
+  In Linux you might either have to type a ' plus a space plus an e, or you
+  might have to type ' plus an e plus any third character to do the same.
+  There it also depends on whether you have a keyboard with "dead keys"
+  configured: This extension produces accented characters in TSE when Linux
+  does not. Note that the Linux keyboard configuration that in combination with
+  the Keys extension works optimal for TSE (not international, no dead keys)
+  might work worse for other applications.
+
+  ANSI == Windows 1252 == CP1252 references:
+    http://www.alanwood.net/demos/ansi.html
+    https://en.wikipedia.org/wiki/Windows-1252
+
+  For other OS/TSE/font versions you can define your own keys for those
+  characters that your system does support. Use the ShowKey macro in TSE's
+  Potpourri menu to discover key names and characters on your system.
+*/
+
+
+
+This file must not be compiled with the Macro Compile menu!
+The above line of uncompilable text is there to guard against that!
+You cannot and should not compile this file as a macro!
+Instead it will be compiled automatically by the Keys macro extension.
+
+
+
+<e><e><e>     PushKey(KeyCode('€')) // Euro sign
+<,><,><,>     PushKey(KeyCode('‚')) // Single low quotation mark
+<f><f><f>     PushKey(KeyCode('ƒ')) // Small letter f hook
+<,><,><,><,>  PushKey(KeyCode('„')) // Double low quotation mark
+<.><.><.>     PushKey(KeyCode('…')) // Ellipsis
+<+><+><+>     PushKey(KeyCode('†')) // Dagger
+<+><+><+><+>  PushKey(KeyCode('†')) // Double dagger
+<^><^><^>     PushKey(KeyCode('ˆ')) // Circumflex accent
+<%><%><%>     PushKey(KeyCode('‰')) // Per mille sign
+<^><S>        PushKey(KeyCode('Š')) // Capital S caron
+// Todo       PushKey(KeyCode('‹')) // Single left-pointing angle quotation Mark
+<O><O><E><E>  PushKey(KeyCode('Œ')) // Capital ligature OE
+<^><Z>        PushKey(KeyCode('Ž')) // Capital Z caron
+// Todo       PushKey(KeyCode('‘')) // Left single quotation Mark
+// Todo       PushKey(KeyCode('’')) // Right single quotation Mark
+// Todo       PushKey(KeyCode('“')) // Left double quotation Mark
+// Todo       PushKey(KeyCode('”')) // Right double quotation Mark
+<B><B><B>     PushKey(KeyCode('•')) // Bullet       (Enter three CAPITAL B's.)
+<n><n><d><d>  PushKey(KeyCode('–')) // En dash
+<n><n><-><->  PushKey(KeyCode('–')) // En dash
+<m><m><d><d>  PushKey(KeyCode('—')) // Em dash
+<m><m><-><->  PushKey(KeyCode('—')) // Em dash
+<t><t><t>     PushKey(KeyCode('™')) // Trademark sign
+<t><t><m><m>  PushKey(KeyCode('™')) // Trademark sign
+<^><s>        PushKey(KeyCode('š')) // Small s caron
+// Todo       PushKey(KeyCode('›')) // Single right-pointing angle quotation Mark
+<o><o><e><e>  PushKey(KeyCode('œ')) // Small ligature oe
+<^><z>        PushKey(KeyCode('ž')) // Small z caron
+<"><Y>        PushKey(KeyCode('Ÿ')) // Capital Y diaeresis
+// Todo       PushKey(KeyCode(' ')) // No-break space
+<!><!><!>     PushKey(KeyCode('¡')) // Inverted exclamation mark
+</></><c><c>  PushKey(KeyCode('¢')) // Cent sign
+<-><-><L><L>  PushKey(KeyCode('£')) // Pound sign
+<-><-><l><l>  PushKey(KeyCode('£')) // Pound sign
+<p><p><p>     PushKey(KeyCode('£')) // Pound sign   (Enter three SMALL p's.)
+<x><x><o><o>  PushKey(KeyCode('¤')) // Currency sign
+<o><o><x><x>  PushKey(KeyCode('¤')) // Currency sign
+<y><y><y>     PushKey(KeyCode('¥')) // Yen sign
+<=><=><y><y>  PushKey(KeyCode('¥')) // Yen sign
+<|><|><|>     PushKey(KeyCode('¦')) // Broken bar
+<S><S><S>     PushKey(KeyCode('§')) // Section sign (Enter three CAPITAL S's.)
+<"><"><">     PushKey(KeyCode('¨')) // Diaeresis accent
+<c><c><c>     PushKey(KeyCode('©')) // Copyright sign
+<^><^><a><a>  PushKey(KeyCode('ª')) // Feminine ordinal indicator
+// Todo       PushKey(KeyCode('¬')) // The not sign
+// Todo       PushKey(KeyCode('­')) // Soft hyphen
+<r><r><r>     PushKey(KeyCode('®')) // Registered sign
+<^><^><_><_>  PushKey(KeyCode('¯')) // Macron
+<o><o><o>     PushKey(KeyCode('°')) // Degree sign
+<+><->        PushKey(KeyCode('±')) // Plus minus sign
+<^><2>        PushKey(KeyCode('²')) // Superscript 2
+<^><3>        PushKey(KeyCode('³')) // Superscript 3
+<'><'><'>     PushKey(KeyCode('´')) // Acute accent
+<m><m><m>     PushKey(KeyCode('µ')) // Micro sign
+<P><P><P>     PushKey(KeyCode('¶')) // Pilcrow sign (Enter three CAPITAL P's.)
+<b><b><b>     PushKey(KeyCode('·')) // Middle dot   (Enter three SMALL b's.)
+<,><,><c><c>  PushKey(KeyCode('¸')) // Cedilla
+<^><1>        PushKey(KeyCode('¹')) // Superscript 1
+<^><^><o><o>  PushKey(KeyCode('º')) // Masculine ordinal indicator
+// Todo       PushKey(KeyCode('»')) // Right-pointing double angle quotation Mark
+<1></><4>     PushKey(KeyCode('¼')) // Fraction one quarter
+<1></><2>     PushKey(KeyCode('½')) // Fraction one half
+<3></><4>     PushKey(KeyCode('¾')) // Fraction three quarters
+<?><?><?>     PushKey(KeyCode('¿')) // Inverted question mark
+<`><A>        PushKey(KeyCode('À')) // Capital A grave
+<'><A>        PushKey(KeyCode("Á")) // Capital A acute
+<^><A>        PushKey(KeyCode('Â')) // Capital A circonflex
+<~><A>        PushKey(KeyCode('Ã')) // Capital A tilde
+<"><A>        PushKey(KeyCode('Ä')) // Capital A diaeresis
+<O><O><A><A>  PushKey(KeyCode('Å')) // Capital A ring above
+<A><A><E><E>  PushKey(KeyCode('Æ')) // Capital ligature AE
+<'><C>        PushKey(KeyCode('Ç')) // Capital C cedilla
+<`><E>        PushKey(KeyCode('È')) // Capital E grave
+<'><E>        PushKey(KeyCode("É")) // Capital E acute
+<^><E>        PushKey(KeyCode('Ê')) // Capital E circonflex
+<"><E>        PushKey(KeyCode('Ë')) // Capital E diaeresis
+<`><I>        PushKey(KeyCode('Ì')) // Capital I grave
+<'><I>        PushKey(KeyCode("Í")) // Capital I acute
+<^><I>        PushKey(KeyCode('Î')) // Capital I circonflex
+<"><I>        PushKey(KeyCode('Ï')) // Capital I diaeresis
+<-><-><D><D>  PushKey(KeyCode('Ð')) // Capital Eth
+<~><N>        PushKey(KeyCode('Ñ')) // Capital N tilde
+<`><O>        PushKey(KeyCode('Ò')) // Capital O grave
+<'><O>        PushKey(KeyCode("Ó")) // Capital O acute
+<^><O>        PushKey(KeyCode('Ô')) // Capital O circonflex
+<~><O>        PushKey(KeyCode('Õ')) // Capital O tilde
+<"><O>        PushKey(KeyCode('Ö')) // Capital O diaeresis
+<x><x><x>     PushKey(KeyCode('×')) // Multiplication sign
+</></><O><O>  PushKey(KeyCode('Ø')) // Capital O slash
+<`><U>        PushKey(KeyCode('Ù')) // Capital U grave
+<'><U>        PushKey(KeyCode("Ú")) // Capital U acute
+<^><U>        PushKey(KeyCode('Û')) // Capital U circonflex
+<"><U>        PushKey(KeyCode('Ü')) // Capital U diaeresis
+<'><Y>        PushKey(KeyCode("Ý")) // Capital Y acute
+<T><H><T><H>  PushKey(KeyCode("Þ")) // Capital Thorn
+<s><s><s>     PushKey(KeyCode("ß")) // Sharp s      (Enter three SMALL s's.)
+<`><a>        PushKey(KeyCode('à')) // Small a grave
+<'><a>        PushKey(KeyCode("á")) // Small a acute
+<^><a>        PushKey(KeyCode('â')) // Small a circonflex
+<~><a>        PushKey(KeyCode('ã')) // Small a tilde
+<"><a>        PushKey(KeyCode('ä')) // Small a diaeresis
+<o><o><a><a>  PushKey(KeyCode('å')) // Small a ring above
+<a><a><e><e>  PushKey(KeyCode('æ')) // Small ligature ae
+<'><c>        PushKey(KeyCode("ç")) // Small c cedilla
+<`><e>        PushKey(KeyCode('è')) // Small e grave
+<'><e>        PushKey(KeyCode("é")) // Small e acute
+<^><e>        PushKey(KeyCode('ê')) // Small e circonflex
+<"><e>        PushKey(KeyCode('ë')) // Small e diaeresis
+<`><i>        PushKey(KeyCode('ì')) // Small i grave
+<'><i>        PushKey(KeyCode("í")) // Small i acute
+<^><i>        PushKey(KeyCode('î')) // Small i circonflex
+<"><i>        PushKey(KeyCode('ï')) // Small i diaeresis
+<-><-><d><d>  PushKey(KeyCode('ð')) // Small eth
+<~><n>        PushKey(KeyCode('ñ')) // Small n tilde
+<`><o>        PushKey(KeyCode('ò')) // Small o grave
+<'><o>        PushKey(KeyCode("ó")) // Small o acute
+<^><o>        PushKey(KeyCode('ô')) // Small o circonflex
+<~><o>        PushKey(KeyCode('õ')) // Small o tilde
+<"><o>        PushKey(KeyCode('ö')) // Small o diaeresis
+</></></>     PushKey(KeyCode('÷')) // Division sign
+</></><o><o>  PushKey(KeyCode('ø')) // Small o slash
+<`><u>        PushKey(KeyCode('ù')) // Small u grave
+<'><u>        PushKey(KeyCode("ú")) // Small u acute
+<^><u>        PushKey(KeyCode('û')) // Small u circonflex
+<"><u>        PushKey(KeyCode('ü')) // Small u diaeresis
+<'><y>        PushKey(KeyCode("ý")) // Small y acute
+<t><h><t><h>  PushKey(KeyCode('þ')) // Small thorn
+<"><y>        PushKey(KeyCode('ÿ')) // Small y diaeresis
+

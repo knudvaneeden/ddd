@@ -1,0 +1,16 @@
+
+bindhelp.si is part of TSE's Help system.
+
+It cannot not be compiled by itself.
+
+bindhelp.si is included for Semware's use, because it needed a tiny improvement
+to make TSE's Help's history work properly with external help systems.
+
+Without bindhelp.si being applied by Semware, eHelp will work, except for the
+<Alt B> key, which will not (properly) work for external help systems.
+
+The included bindhelp.si and eHelp.s work with each other.
+
+Given that the included eHelp is in an unfinished state, the same might apply
+to the included bindhelp.si.
+
