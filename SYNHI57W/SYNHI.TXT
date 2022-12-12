@@ -1,0 +1,827 @@
+
+                           Syntax Highlighter
+                           ------------------
+                             Bruce  Riggins
+                             Copyright 1994
+
+
+Version:  0.57
+Date   :  09/25/94
+
+------------------------------------------------------------------------
+
+                                CONTENTS
+
+    SYNHI
+        General
+        Files included
+        Unfortunate but necessary disclaimer
+        Configuration File
+        Color definition
+        Commenting the configuration file
+        Reserved characters
+        Case sensitivity of configuration file
+        Order of words in configuration file
+        SYNHI system parameters
+        Default values of system parameters
+        Key definitions
+        Technical information
+        Contact and Bug Reports
+
+    SHCOM
+
+    SHCFG
+        Purpose
+        Menu Options
+        Color Selection
+        Key Assignments
+        History
+
+
+------------------------------------------------------------------------
+
+General:
+--------
+        SYNHI.MAC is designed as a color syntax highlighter for The
+        Semware Editor.  It currently works with version 2.50a.
+
+        SYNHI.MAC requires that data be compiled into a configuration
+        file, SYNHI.DAT, found in the TSEPATH or the MAC\ subdirectory.
+        This file is created by compiling your information file (current
+        example is SYNHI.CFG) using SHCOM.MAC.
+
+        For examples and descriptions of how to set up the
+        initialization file, look at SYNHI.CFG.
+
+        SYNHI.MAC allows highlighting of both CR-delimited and character
+        delimited comments.  Directives, such as found in the C language
+        are also supported, along with line continuation characters.
+        Quotations can be configured for highlighting, with any set of
+        single characters as delimiters.  The cursor line can be
+        highlighted if desired, and a marker can be drawn on the side
+        box if a window is boxed.  Both color and monochrome are
+        supported. Any number of lines or columns are supported, only
+        limited by TSE's ability to detect them. Different colors may be
+        globally assigned to different types of data (comments,
+        directives, reserved words, tokens, constants) as well as to
+        specific words in the list.
+
+        Word sets are now implemented, allowing words to include
+        combinations of characters other than the normal alphanumeric
+        ones. See the SYNHI.CFG file for examples of word set
+        definition.
+
+        To start highlighting, simply load the macro, "synhi.mac".
+
+Files included:
+--------------
+        SYNHI.MAC
+        SHCOM.MAC
+        SHCFG.MAC
+        GETCOLOR.MAC
+        SYNHI.DAT
+        SYNHI.CFG
+        SHCFG.HLP
+        SYNHI.TXT
+        SYNHIREG.TXT
+
+Unfortunate but necessary disclaimer:
+-------------------------------------
+        Bruce Riggins hereby disclaims all warranties relating to this
+        software, whether expressed or implied, including without
+        limitation any implied warranties of merchantability or fitness
+        for a particular purpose. Bruce Riggins will not be liable for
+        any special, incidental, consequential, indirect or similar
+        damages due to loss of data or any other reason, even if Bruce
+        Riggins or an agent of Bruce Riggins has been advised of the
+        possibility of such damages.  In no event shall Bruce Riggins'
+        liability for any damages ever exceed the price paid for the
+        license to use this software, regardless of the form of the
+        claim. The person using the software bears all risk as to the
+        quality and performance of the software.
+
+Configuration File:
+------------------
+        Each word list begins with a list of extensions it applies to.
+        The extension list is of the format:
+
+          [.ext.ext.ext.]
+
+        where ext is any extension, including the beginning dot, and
+        including an ending dot, in order to delimit it.  (Otherwise .p
+        would find a match at .prg)  The "[" must be the first non-white
+        character on the line.
+
+        Example:
+
+          [.c.h.cpp.hpp.]
+
+        This is for the extensions:
+              .c
+              .h
+              .cpp
+              .hpp
+
+Color definition:
+----------------
+        Colors for each item, whether word or variable, are defined with
+        statements, as shown below.  Each word found in the word list
+        may have it's own color. If no specific color is defined, then
+        the value of ReservedColor is used by SYNHI. (See default for
+        ReservedColor if this is not defined.)  Colors for the alternate
+        color set may be placed after the normal color by placing a
+        slash (/) between them, with no spaces.
+
+        eg.:
+
+          color_variable_name = 15/112
+
+          word_to_highlight   15/112    ; Both colors defined.
+          word_to_highlight   15        ; Only _COLOR_ color defined.
+          word_to_highlight     /112    ; Only _MONO_ (alternate) color
+                                        ;   defined.
+
+        The color must start with a digit, and is in decimal.
+
+Commenting the configuration file:
+---------------------------------
+        Comments are delimited by a semi-colon.  To include a semi-colon
+        in the data, place the escape character (\) before it.
+
+        Lines which start with a semi-colon are comments and are ignored.
+
+Reserved characters:
+-------------------
+        The following characters, when found in words or variable values,
+        must be preceeded by the escape character (\):
+
+          ;  (semi-colon)             Include as \;
+          =  (equal sign)             Include as \=
+          [  (left square bracket)    Include as \[
+          \  (back slash)             Include as \\
+
+Case sensitivity of configuration file:
+--------------------------------------
+        The parameter names are not case sensitive (eg. TokenColor is
+        the same as TOKENCOLOR).
+
+        Word set case sensitivity is based on the setting of the
+        Case_Sensitive value.  This affects the following variables:
+
+          BegOfWordSet
+          WordSet
+          BegOfNumSet
+          NumSet
+
+
+Order of words in configuration file:
+------------------------------------
+        All words for a given extension should be placed in alphabetic
+        order.
+
+        When Case_Sensitive = TRUE, the case of the words given is
+        considered; when FALSE, all words are translated to upper case
+        internally.  In other words, if your extension list is case
+        sensitive, be sure that the order of the words expresses that.
+
+        For example:
+
+          Case sensitive list:
+
+            for
+            while
+            AND
+            OR
+
+          Non-case sensitive list:
+
+            AND
+            for
+            OR
+            while
+
+        If escape characters are used, do not consider them in the order
+        of the words.  For instance, if you wish to highlight the
+        character "\" (backslash), include it as follows, with the order
+        as per the example:
+
+          ; This list is case sensitive
+          ZEBRA   15/112
+          ^       28/112
+          \\      28/112
+          and
+
+        This file must be found in the TSEPATH, or a ./MAC subdirectory
+        in that path.
+
+SYNHI system parameters:
+------------------------
+        Word sets parameters:
+
+          BegOfWordSet
+
+            These are the characters which define the beginning of a
+            word, for those words which are not in the word list.  This
+            is for continuation considerations.  If the word begins with
+            these characters, then the WordSet characters are used to
+            continue to the end of the word.  The first character not
+            found in WordSet marks the end of the word. These are then
+            colored with the TokenColor value.
+
+          WordSet
+
+            These are the characters which define a word after the first
+            character.
+
+          BegOfNumSet
+
+            These are the characters which define the beginning of a
+            number, if the beginning character is not defined in the
+            word list as a reserved word.  The NumSet then defines which
+            characters are recognized as a part of the number.
+
+          NumSet
+
+            These are the characters which define a number after the
+            first character.
+
+          To include the - (dash) character, make it the last character
+          in the list. There are complexities with trying to define it
+          with the escape character (\), since the string is actually
+          processed twice internally.  Placing it last takes care of
+          this.
+
+          To include the \ (back slash) character, simply use it twice
+          (ie. \\).
+
+        Case_Sensitive
+          Are the words in the list case sensitive?
+          The C language is case sensitive.  Pascal is not.  Neither is
+          the Semware Macro Language.
+
+        ConstantColor
+
+          Color to highlight constants with.  This includes all words
+          which start with a character defined in BegOfNumSet, and
+          continue with characters found in NumSet.
+
+          Also included are sections which are delimited by quotes (if
+          no QuoteColor is specified).
+
+          See Quote_Beg, BegOfNumSet, NumSet.
+
+        CursorLineColor
+
+          Color to highlight the cursor line, when:
+
+            Highlight_CursorLine = FALSE
+
+          This allows different colors to be defined for each language
+          extension you use, as well as the choice of colors which
+          contrast with the highlighting colors surrounding it.
+
+          See Highlight_CursorLine, Side_Marker_Char, Side_Marker_Color
+
+        DelimCommentColor
+
+          Color to highlight delimited comments with.
+
+          See Delim_Comment_Start, Delim_Comment_End.
+
+        Delim_Comment_End
+
+          String which identifies the end of a delimited comment.
+          eg. */ for C.  To set this, use the following command:
+
+            Delim_Comment_End = */
+
+          If blank, and Delim_Comment_Start is not blank, Delimited
+          comments are handled like Line Comments.
+
+          See Line_Comment_Delim.
+
+        Delim_Comment_Start
+
+          String which identifies the beginning of a delimited comment.
+          eg. /* for C.  To set this, use the following command:
+
+            Delim_Comment_Start = /*
+
+          If blank, delimited comments are not processed, and
+          Delim_Comment_End would be ignored.
+
+        DirectiveColor
+
+          Color to highlight directives.
+
+          See Directive_Start.
+
+        Directive_Start
+
+          The string which identifies the beginning of a directive.
+          Directives are basically line-continuable commands, which
+          start in the first non-white position.
+
+          eg. in C the following is a directive:
+
+            #define THIS that
+
+          The character '#' is the delimiter.  The command to set is
+          would be:
+
+            Directive_Start = #
+
+          To use continued lines, set Line_Cont_Char.  For example, in
+          C, lines are continued with the backslash ("\") character.
+          This would be setup as follows:
+
+            Line_Cont_Char = \\
+            Directive_Start = #
+
+          The line of C code would look like the following:
+
+            #define THIS that /* This delimited comment is possible */ \
+                         and that                                      \
+                         and the other thing
+
+          In this, all three lines would be highlighted with the
+          DirectiveColor color, and the internal comment would be
+          highlighted with the DelimCommentColor color.
+
+          Directives could be used either for their specific purpose, or
+          as a kind of line comment, when two different line comment
+          definitions are desired.
+
+        Highlight_CursorLine
+
+          Set to TRUE if you wish to also syntax highlight the cursor
+          line.
+
+          When set to FALSE, the cursor line is highlighted with the
+          CursorLineColor color.  In either case, it is syntactically
+          processed.
+
+        LineCommentColor
+
+          Color to highlight line comments with.
+
+          See Line_Comment_Delim.
+
+        Line_Comment_Delim
+
+          The string which identifies the beginning of a CR-delimited
+          comment.  From this point, to the end of the line, is
+          considered a comment, and is highlighted with the
+          LineCommentColor color.
+
+          eg. in C, this would be set as:
+
+          Line_Comment_Delim = //
+
+          See LineCommentColor.
+
+        Line_Cont_Char
+
+          The character which identifies that a directive continues on
+          to the next line.  This continues the use of DirectiveColor.
+
+          eg. in C this would be as follows:
+
+          Line_Cont_Char = \\
+
+          See DirectiveColor, Directive_Start.
+
+        OperatorColor
+
+          The color to highlight operators.  Operators are all
+          characters which are not found in BegOfWordSet (or WordSet,
+          if already in a word), and do not start a comment or
+          directive.  ie. anything which has not been identified as a
+          comment, directive, word, or constant.
+
+        QuoteColor
+
+          The color to highlight quotes.
+
+          Quotes are delimited by the matching position values of
+          Quote_Beg and Quote_End.
+
+        Quote_Beg
+
+          A string of single characters, any ONE of which identifies the
+          start of a quotation.  The corresponding position in Quote_End
+          denotes the matching ending delimiter.
+
+          For C, this would be defined as:
+
+          Quote_Beg = "'
+          Quote_End = "'
+
+          For FoxPro, this would be:
+
+          Quote_Beg = ["'
+          Quote_End = ]"'
+
+          Notice the [] pair for FoxPro.  The pairs are position
+          sensitive and there should be the same number of characters in
+          Quote_End as there is in Quote_Beg.
+
+          See also Quote_End.
+
+        Quote_End
+
+          A string of single characters which matches the characters in
+          Quote_Beg and identifies the end of a quotation.
+
+          For C, this would be defined as:
+
+          Quote_Beg = "'
+
+          For FoxPro, this would be:
+
+          Quote_Beg = ]"'
+
+          See Quote_Beg.
+
+        ReservedColor
+
+          The default color to highlight reserved words.  Any word which
+          you do not specify the color for in the word list will be
+          highlighted with this color.
+
+        Side_Cursor_Markers
+
+          Should a marker be placed on the left side of a boxed window
+          on the cursor line?
+
+          This is to help identify the cursor line when
+          Highlight_CursorLine is TRUE.
+
+          Side markers are only shown if there is a border on the
+          current window.
+
+          See also Side_Marker_Color and Side_Marker_Char.
+
+        Side_Marker_Char
+
+          The character to use on the side as a marker, if
+          Side_Cursor_Markers is TRUE.
+
+          See Side_Cursor_Markers.
+
+        Side_Marker_Color
+
+          The color to highlight the side marker if Side_Cursor_Markers
+          is TRUE.
+
+          See Side_Cursor_Markers.
+
+        TokenColor
+
+          The color to highlight non-reserved words.  These are all the
+          words which do not exist in the word list and begin with a
+          member of BegOfWordSet.
+
+          The word itself is identified by the characters found in
+          WordSet.  When a character is found which is not in this set,
+          or the end of the line is reached, that is also the end of the
+          word.
+
+          See BegOfWordSet.
+
+
+Default values of system parameters:
+------------------------------------
+        BegOfNumSet           = 0-9
+        BegOfWordSet          = A-Za-z_
+        WordSet               = A-Za-z0-9_
+        NumSet                = 0-9.
+
+        Case_Sensitive        = TRUE
+        Highlight_CursorLine  = FALSE
+        Side_Cursor_Markers   = FALSE
+
+        Delim_Comment_End     =
+        Delim_Comment_Start   =
+        Directive_Start       =
+        Line_Comment_Delim    =
+        Line_Cont_Char        =
+        Quote_Beg             = "'
+        Quote_End             = "'
+        Side_Marker_Char      = 
+
+        ConstantColor         = [TSE TextAttr]
+        CursorLineColor       = [TSE CursorAttr]
+        DelimCommentColor     = [TSE TextAttr]
+        DirectiveColor        = [TSE TextAttr]
+        LineCommentColor      = [TSE TextAttr]
+        OperatorColor         = [TSE TextAttr]
+        QuoteColor            = [TSE TextAttr]
+        ReservedColor         = [TSE TextAttr]
+        Side_Marker_Color     = [TSE CurrWinBorderAttr]
+        TokenColor            = [TSE TextAttr]
+
+
+Key definitions:
+----------------
+        The following keys are defined:
+
+          (none in this version)
+
+Technical information:
+----------------------
+        The binary was written using Borland C++ 3.1 and Turbo
+        Assembler.
+
+        The information for multiple extensions will be loaded in the
+        buffer, as long as there is room.  If the buffer is full, SYNHI
+        will automatically empty the buffer and reload information for
+        the current extension.  Because the information is compiled,
+        this happens very fast.
+
+        Buffer Size:  7500
+        Performance:  Averages 20 milli-seconds per 50 line screen on a
+                      33 MHz 486DX.
+
+Contact and Bug Reports:
+------------------------
+        Please direct all comments to Bruce Riggins.  I will be happy to
+        get any bug reports or ideas.
+
+        Contact locations:
+
+          Internet, at rigginbe@ix.netcom.com
+
+
+        Have fun.
+
+========================================================================
+
+                                 SHCOM
+
+This is the compiler for SYNHI.  The output is SYNHI.DAT, and will be
+found in the same path as the file which is compiled.  For instance,
+if the configuration file has the name:
+
+  C:\TSE\SYNHI.CFG
+
+the output file would be named:
+
+  C:\TSE\SYNHI.DAT
+
+To compile SYNHI configuration information, execute SHCOM when in the
+buffer containing the configuration information.  From a TSE macro, this
+would look like the following:
+
+  // Load and compile SYNHI configuration information.
+  // The input and output files would be found in the current directory.
+  proc Main()
+    EditFile("SYNHI.CFG")       // Load the configuration file.
+    ExecMacro("SHCOM.MAC")      // Compile the configuration file.
+  end
+
+
+========================================================================
+
+                                 SHCFG
+
+Purpose:
+--------
+        Interactively configures extension information for a SYNHI
+        configuration file.
+
+Menu Options:
+-------------
+        The following menu options are available:
+
+        Menu Option        Action
+        -------------      ---------------------------------------------
+          File             File related options.
+
+            Open           Open a configuration file.
+
+            Save           Save the currently open configuration file.
+
+            Compile        Compile the current configuration file.  This
+                           also allows the reloading of SYNHI, since
+                           SHCOM automatically presents this option.
+                           Thus, results are immediately visible.
+
+            Select         Select an extension list.  Only one extension
+                           from the list needs to be input.  If not
+                           found, the list will be created when Save
+                           List is selected.
+
+            Add            Add a list.  If the list already exists, it
+                           will not be added.
+
+            Delete         Delete a list.
+                           The deleted contents are appended to a file
+                           with the same path and name as the
+                           configuration file, with the extension,
+                           ".CUT".  The allows for restoring the
+                           contents manually, if the need should arise.
+
+            Save           Save the edited variables for the currently
+                           selected extension list.  If the list does
+                           not yet exist, it will be added.
+
+            Exit           Exits the SHCFG menu.
+
+          Edit             Edit the selected extension list.
+
+            Syntax         Edit the syntax parsing information for the
+                           currently selected list.
+
+                           Strings should not include the escape
+                           character ("\") before reserved characters.
+                           SHCFG will take care of this for you.
+
+            Colors         Edit the syntax highlighting colors for the
+                           currently selected list.
+
+                           See Color Selection.
+
+          Word             Edit/Add the chosen word in the current list.
+                           This both adds the word and edits the color
+                           associated with that word.
+
+                           See Color Selection.
+
+            Update         Updates a word in the current list.
+                           If found in the currently selected extension
+                           list, the word is edited; if not, the word is
+                           added at the proper location.
+
+              Input        Input a word or select from a list and edit
+                           its colors.  If input, and the word does not
+                           exist in the list, it will be added.
+                           Pressing <Enter> on a blank word presents a
+                           list of words from the currently selected
+                           extension list.
+
+              Screen       Grabs a word from the current cursor
+                           location, a allows editing of colors for that
+                           word.
+
+                           If the cursor is in a highlighted block, all
+                           words (one per line) in the block will be
+                           edited, on at a time.  After the first word,
+                           you can select to edit all the words with the
+                           colors of the current word and without
+                           further prompting, except in the case of
+                           words which already exist in the list.  This
+                           allows the addition of whole lists of words
+                           at once.
+
+            Delete         Deletes a word from the current list.
+                           If the word is not found, no action is taken
+                           and you are informed that the word was not
+                           deleted.
+
+              Input        Input a word, or select from a list, and
+                           delete it from the currently selected
+                           extension list.
+                           Pressing <Enter> on a blank word presents a
+                           list of words from the currently selected
+                           extension list.
+
+              Screen       Grabs a word from the current cursor location
+                           and deletes it from the current extension
+                           list.
+
+                           If the cursor is in a highlighted block, all
+                           words (one per line) in the block will be
+                           deleted, with confirmation for each one.
+                           This allows the deletion of whole lists of
+                           words at once.
+
+          Help
+
+            Help           Help information for SHCFG.
+
+
+Color Selection:
+----------------
+
+        Menu Option     Key     Action
+        -------------  ------   ---------------------------------------
+
+        OK               O      Exits, keeping the information.
+
+        Color            C      Allows editing of the color for _COLOR_
+                                mode.
+
+        Mono             M      Allows editing of the color for _MONO_
+                                (alternate) mode.
+
+        Default          D      Changes colors to the defaults.  In the
+                                configuration file, these show as no
+                                color at all for either mode.
+
+        Cancel           A      Exits, with no changes.
+
+        All Items        I      Only available when adding multiple
+                                items.  Signals the calling macro that
+                                all further items can use the same
+                                values as the current item.
+
+        Move             V      Allows the user to move the color
+                                selection window, until Escape or Enter
+                                is pressed.
+
+                                Holding down the left button on the
+                                mouse on the top line of the window will
+                                also select this.  When released, the
+                                move is stopped.
+
+                       Space    Moves the menu cursor to the next item.
+
+                       Up       Moves the menu cursor to the item
+                                directly above the current item.
+
+                       Down     Moves the menu cursor to the item
+                                directly below the current item.
+
+                       Right    Moves the menu cursor to the item to the
+                                right of the current item.
+
+                       Left     Moves the menu cursor to the item to the
+                                left of the current item.
+
+        Any of the above selection can also be chosen by clicking the
+        left button of the mouse on the chosen menu item.
+
+
+        When in the color editing mode, the following is available:
+
+        Menu Option     Key     Action
+        -------------  ------   ---------------------------------------
+
+                       Escape   Exits the color selection with no
+                                changes.
+
+                       Enter    Exits the color selection, with the
+                                currently selected color.
+
+                       Up       Moves the cursor in the direction
+                       Down     chosen.
+                       Left
+                       Right    Clicking the left mouse button on the
+                                color desired will move the cursor to
+                                that location, selecting that color.
+
+                       Home     Goes to the left column of colors.
+
+                       End      Goes to the right column of colors.
+
+                       PgUp     Goes to the top row of colors.
+
+                       PgDn     Goes to the bottom row of colors.
+
+                       B        Toggles color values to/from blinking.
+                                Can also be chosen by clicking the left
+                                mouse button on the Blinking ON/OFF
+                                message.
+
+                       D        Selects the default colors for both
+                                Color and Mono (alternate) color
+                                modes.
+
+        OK             Left mouse button on the OK menu selection.
+
+        Cancel         Left mouse button on the Cancel menu selection.
+
+
+Key Assignments:
+----------------
+        <CtrlShift Del>  Delete word from screen
+        <CtrlShift Ins>  Update word from screen
+
+------------------------------------------------------------------------
+
+History:
+--------
+	Changes in 0.57
+	  Update for TSE v.2.5
+        Changes in 0.55
+          Extension recognition bug fixed.
+          Compiled for TSE v.2.00.
+
+        Changes in 0.54
+          SYNHI.INI now named SYNHI.CFG.
+          SYNHI.DOC updated to new standards.  Includes documentation
+            for new support macros.
+          Bug fixes.
+          Word sets recognize case sensitivity. (ie. non-case sensitive
+            extension setups need only define A-Z0-9_ instead of
+            A-Za-z0-9_.)
+          SHCFG.MAC
+            Automates the set up of extension information, including
+            general highlighting colors, adding and deletion of words,
+            and addition and deletion of whole extension areas.
+
+        Changes in 0.53
+          Word sets.  See documentation.
+
+

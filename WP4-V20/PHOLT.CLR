@@ -1,0 +1,123 @@
+PH>// Attributes
+
+PH>CurrWinBorderAttr       = Color(Bright White on Magenta)
+  >OtherWinBorderAttr      = Color(Cyan on Black)
+  >MenuTextAttr            = Color(Blue on Cyan)
+  >MenuTextLtrAttr         = Color(Bright Yellow on Cyan)
+  >MenuBorderAttr          = Color(Bright Cyan on Cyan)
+  >MenuSelectAttr          = Color(Bright Cyan on Blue)
+  >MenuSelectLtrAttr       = Color(Bright Yellow on Blue)
+  >BlockAttr               = Color(Bright White on Blue)
+  >CursorInBlockAttr       = Color(Bright Yellow on blue)
+  >CursorAttr              = Color(Bright Yellow on White)
+  >HiLiteAttr              = Color(Bright Cyan on Blue)
+  >TextAttr                = Color(Blue on White)
+  >EofMarkerAttr           = Color(Bright Green on White)
+  >MsgAttr                 = Color(Blue on Cyan)
+  >StatusLineAttr          = Color(Bright Yellow on Blue)
+
+PH>// contents of prgcolor.tse
+
+PH>* 70 TSE
+  >*/ 70 DTb
+  >/* 70 DTE
+  >// 70 TE
+  >&& 70 dte
+
+PH>@ 75
+  >" 76 stq
+  >" 7a x
+  >' 76 stq
+  >' 7a x
+  >{ 7B st
+  >} 7b
+  >| 76 st
+  >| 7e x
+  >! 7c ST
+  >( 74 STPQ
+  >( 7E X
+  >( 7f Y
+  >) 7F ST
+
+PH>[ 7a STPQ
+  >[ 79 X
+  >[ 7f Y
+
+PH>+ 7b
+  >< 7b
+  >> 7b
+  >= 7b
+  >:= 7b d
+  >, 7b
+  >; 7c
+
+PH>_ 71
+  >-> 74 dtpW
+  ># 7B SE
+
+PH>alias 7e N
+  >Alias 7e N
+  >ALIAS 7e N
+
+PH>break 75
+  >case 7B
+
+PH>continue 75
+  >DEFAULT 7B
+
+PH>do 7B
+  >Do 7B
+  >DO 7B
+
+PH>else 7B
+  >end 7B
+  >endcase 7B
+  >enddo 7C
+  >endif 7B
+  >exit 75
+  >extern 7B
+
+PH>Else 7B
+  >ELSE 7B
+  >End 7B
+  >END 7B
+  >Endcase 7B
+  >ENDCASE 7B
+  >Enddo 7C
+  >ENDDO 7C
+  >Endif 7B
+  >ENDIF 7B
+  >Exit 75
+  >EXIT 75
+
+PH>for 7B
+  >function 79
+  >Function 79
+  >FUNCTION 79
+
+PH>if 7B
+  >index 76
+  >Index 76
+  >INDEX 76
+
+PH>local 7B
+  >loop 75
+
+PH>Local 7B
+  >LOCAL 7B
+  >Loop 75
+  >LOOP 75
+
+PH>memvar 7B
+  >next 7B
+
+PH>on 31
+  >otherwise 7B
+  >On 31
+  >ON 31
+
+PH>para 7B
+  >parameter 7B
+  >private 7B
+  >proc 79
+

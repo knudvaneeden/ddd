@@ -1,0 +1,960 @@
+                   *--*  01-17-95  -  19:06:18  *--*
+                        ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                        ³Conference 4 TSE files³
+                        ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+Scanning Directory 1  (TSE Macros and Related files)
+
+1LINER2.ZIP      4272  10-18-94  1LINER is a TSE v2.00 macro that converts
+                                 paragraphs into long single lines for input
+                                 to word processors.  Do your writing with
+                                 TSE, then run 1LINER on them and transfer
+                                 them to your word processor for formatting
+                                 and printing.
+                                 Uploaded by: Jack Hazlehurst
+ABREV.ZIP        1005  06-05-93  An abbreviation macro for inputting
+                                 control structures
+                                 Uploaded by: Sammy Mitchell
+ACCENT14.ZIP     3784  07-30-93  Macros for TSE (The Semware Editor) enabling
+                                 easy entry of foreign-language and other
+                                 special characters.  Menu selection of
+                                 character set: French, German, Spanish &
+                                 currency symbols.  Easily modified to suit
+                                 your preference (Greek, math, graphic
+                                 symbols, etc.)  Minor fixes: variable name
+                                 conflict, French terminology.
+                                 Uploaded by: David Mayerovitch
+ARCHIVE7.ZIP     1636  07-30-93  This is another improvment over previous
+                                 archivers that I uploaded.  This one gives
+                                 you the option to archive a file either as a
+                                 single file or add it to another archive.
+                                 Uploaded by John Barbee.
+                                 Uploaded by: John Barbee
+AXENTS.ZIP        736  09-04-94  A new TSE accents macro.  Uses dead keys.
+                                 Uploaded by: Luigi Bianchi
+BFINDR.ZIP       1639  11-21-94  Find/Replace engine - file driven
+                                 Uploaded by: Brian Abbott
+BITSET.ZIP      21096  07-19-93  BITSET.ZIP contains routines for converting
+                                 TSE bit sets "VarTabs" and "WordSet" to ASCII
+                                 strings and back, making it possible to edit
+                                 and modify them dynamically from within TSE
+                                 macros.
+                                 Uploaded by: Jack Hazlehurst
+BLK_1.ZIP        2428  07-30-93  Replaces Copy/Cut/Paste/CopyBlock/MoveBlock
+                                 to reduce the number of key bindings needed
+                                 to fully use these commands functionality,
+                                 while removing the necessity of remember
+                                 which keys overwrite, insert, or append text.
+                                 These commands also handle the differences
+                                 which occur when column blocks are involved.
+                                 Thanks to David Marcus for helping with the
+                                 Paste replacement macro.
+                                 Uploaded by: Ray Asbury
+BOOKMRK3.ZIP     3918  06-01-93  Visual BookMark macros v3. This set of macros
+                                 give one-key bookmark placement and selection
+                                 of bookmarks from a visual buffer. The buffer
+                                 is dynamically generated when needed, showing
+                                 bookmark letter, filename, line# and first 56
+                                 chars from the mark line.  New: Deletion of a
+                                 selected bookmark, small optimizations, and a
+                                 selected set of menu calls.
+                                 Uploaded by: Steve Kraus
+BOXIT11.ZIP      8918  11-28-94  BoxIt 0.11 -- 11/23/94.  This is a minor
+                                 revision of BoxIt to support TSE 2.0. No new
+                                 features have been added.  This macro allows
+                                 the user to draw a box around a section of
+                                 text marked with a column block.  Changes in
+                                 this version: help removed, key assignments
+                                 change to not conflict with TSE 2.0's help
+                                 system, documentation updated.
+                                 Uploaded by: George de Bruin
+BROWSE13.ZIP    17726  12-17-94  Browse v1.3 - TSE (v2) macro, makes the
+                                 editor a brawny clone of Vern Buerg's LIST
+                                 Plus. Switch between Browse and edit modes
+                                 instantaneously. By DDA. New: fixed mouse
+                                 problem, added LINE WRAP & phone dialer.
+                                 Uploaded by: David Daniel Anderson
+BTMCOLOR.ZIP     2488  10-18-94  TSE "Colors" macro template file for 4DOS
+                                 batch files -- updated for new 4DOS version
+                                 5.50.
+                                 Uploaded by: Tom Bowden
+BYTBIT.ZIP       3692  11-30-94  This group of macros allows you convert bytes
+                                 into bit-strings, and vice-versa. For example
+                                 "Todd" = ".x.x.x...xx.xxxx.xx..x...xx..x.."
+                                 Great for editing little bit-maps in the
+                                 editors, shifting entire strings, seeing the
+                                 graphic nature of data - A Million And One
+                                 Uses! <g>
+CALC_SRC.ZIP    37636  08-23-93  The source to 4 calculator macros.
+                                 Uploaded by: Louis Vonderscheer
+CALDAVE.ZIP      2306  10-25-93  A pop-up calendar for TSE.  Converted from
+                                 Richard Hendricks original code, this uses
+                                 getkey() for the key handling and optionally
+                                 inserts the specified date into your
+                                 document.  Source code only.
+                                 Uploaded by: Dave Navarro
+CALENDUS.ZIP     3506  12-08-94  TSE macro popup Calender with US Holidays
+                                 Uploaded by: Egon Bosved
+CAPSNUMS.ZIP     1066  03-07-94  Enables to user to control the CAPS_LOCK and
+                                 NUM_LOCK keys.
+                                 Uploaded by: Peter Granaldi
+CHDIR.ZIP        1068  11-30-94  CHDIR is a TSE macro that allows you to chang
+                                 the default directory, device or both for the
+                                 duration of the session or until you change i
+                                 again.
+
+                                 When CHDIR asks for a new directory, enter a
+                                 path, partial path, or device or any
+                                 combination and CHDIR will change the default
+                                 path accordingly and also display a list of
+                                 files in the new path. Uploaded by author.
+                                 Freeware.
+CJCONFIG.ZIP    34765  09-24-93  A collection of modifications to TSE macros,
+                                 including an improved JUSTIFY, and mMatch(),
+                                 and how to have several files with custom
+                                 settings loaded at one time.
+                                 Uploaded by: Jack Hazlehurst
+CJJSTFY3.ZIP     3782  10-18-94  Improved Full-Justify macro for TSE 2.00 to
+                                 replace the one that comes with TSE. This
+                                 version removes spaces added by previous
+                                 justify before rewrapping and rejustifying a
+                                 paragraph.  It is used as a substitute for
+                                 TSE's WrapPara() function.  Installation
+                                 instructions are given as comments in the
+                                 macro code.
+                                 Uploaded by: Jack Hazlehurst
+CLBLKREP.ZIP     1411  04-10-93  Replacement macros for Replace(), which
+                                 enforces column block boundaries.
+                                 PKzip 2.0x file.
+                                 Uploaded by: Ray Asbury
+                                
+CLIPCMP2.ZIP      835  06-01-93  Compile Clipper source and be able to go to
+                                 the line.column of Erros/Warnings with the
+                                 Errors/Warnings in a window.  This works but
+                                 is mostly for an example.
+                                 Uploaded by: Peter Birch
+CLIPMAC.ZIP      1797  04-06-94  TSE macro for Clipper programmers.
+                                 No comments in macro.  Sorry!
+                                 Uploaded by: Joe Robinson
+CLIST_41.ZIP    11102  09-28-94  Simple source analyzer for SAL & ANSI C.
+                                 Fixed a counting problem in previous version.
+                                 For TSE 2.0. Zipped with PKZip 2.04g.
+                                 Uploaded by: Ray Asbury
+CMDLINE3.ZIP     6186  10-25-93  CmdLine version 3: Two helper macros to
+                                 facilitate user-created command line options.
+                                 Makes it easy!! File includes complete
+                                 instructions for creating your own TSE
+                                 command line options or reinter- preting
+                                 standard options. Examples include an option
+                                 for going to line,column of the first file
+                                 loaded and one for printing files from the
+                                 command line.
+                                 Uploaded by: David Marcus
+CNTWRP.ZIP       7053  11-30-94  "Continuous" WrapPara() macros and key
+                                 definitions.  When activated, provides wrappi
+                                 at every cursor movement, cut, paste or copy
+                                 operation. See enclosed ".DOC" file for
+                                 details.  Also includes "Push/PopAbsPos()"
+                                 macros to save and restore absolute screen
+                                 position, and "Begin/EndPara()" functions to 
+                                 to the start or end of the current paragraph.
+COLOR.ZIP         879  11-30-94  COLOR.S is a macro to display a simple color
+                                 chart with DEC and HEX values.
+                                
+                                 BLOCK.S will count the rows and columns in a
+                                 highlighted block. Both of these macros have
+                                 been very helpful for me when programming.
+COMMENT5.ZIP     5498  06-26-93  TSE macro Commenter v0.05 6-25-93 to add
+                                 comment characters to the beginning of marked
+                                 lines. e.g. adds '// ', ';  ','REM' plus
+                                 several others. Works on any Block type or
+                                 current line with no block marking required,
+                                 Uploaded by: Tom Klein
+COMPARE4.ZIP     2449  04-03-93  Compare Macro. Check 2 files for differences
+                                 No matter what column the diference starts,
+                                 the highlight starts there!
+                                 Uploaded by: Mel Hulse
+                                
+COMPMAC.ZIP      1849  05-02-93  Generic compile macros to support syntax
+                                 check compiles of .s, .c, .h, .cpp, .hpp
+                                 (currently setup for TurboC++ but may be
+                                 modified to whatever). Designed to be easily
+                                 expandable to support other compilers, etc.
+                                 Uploaded by: Lynn Lively
+COPYPART.ZIP     5912  06-12-93  TSE macro to copy between two files.
+                                 When BlockEnd is marked the block is copied.
+                                 Excellent shortcut of operation that most
+                                 users do very often.  Author Bob Campbell
+                                 Uploaded by: Tom Klein
+COPYWORD.ZIP      256  05-01-93  Simple (but useful!) macro to copy the
+                                 current word to the clipboard.
+                                 Uploaded by: Clark Bremer
+C_SJPMAC.ZIP     2745  10-02-94  Macro in TSE for QBasic Compiler.
+                                 Uploaded by S.J-P. ALSUNARD (FRANCE)
+                                 Uploaded by: Serge Alsunard
+DBEDIT2.ZIP      3043  12-08-94  edit dBase compat databases with this ALL
+                                 SAL macro
+                                 Uploaded by: Peter Birch
+DTMENU.ZIP       3915  11-30-94  DTMenu lets you to insert a variety of date a
+                                 time strings into your text files. Use the
+                                 "User Defined" work-area to create your own
+                                 formats. Includes commented SAL source code s
+                                 you can make your own versions. 12/24 am/pm
+                                 formats, century+year, 0-padded or unpadded
+                                 single digits, day and month names and number
+                                 possibilities of nearly plethoric proportion!
+                                
+                                 EG : p/l/t = 10/04/1994  c:f:h = 20:48:55
+                                 l-s-v = 04-Oct-94 (ala CIS) IE :
+                                 InsertText(DTFormat("p/l/t c:f:h"))
+E.ICO             766  06-07-93  A Windows icon for The SemWare Editor
+                                 Uploaded by: Andy Kahl
+E2.ICO            766  06-24-93  A new Windows icon for The SemWare Editor
+                                 Uploaded by: Andy Kahl
+EXECCMD.ZIP      4537  12-07-93  exeacute almost any TSE command from a prompt
+                                 Uploaded by: Peter Birch
+EXPAND.ZIP       5260  08-26-93  A macro to expand a just-typed abbreviation
+                                 by offering choices of words (a) from an ab-
+                                 breviation list or (b) found in the current
+                                 document, whose beginning matches the abbre-
+                                 viation. 1 keystroke calls up the expansion,
+                                 then 'N' see other possibilities or any other
+                                 keystroke to insert it (and use that key-
+                                 stroke in your file.) For instance, type
+                                 'key<expandkey>s' right here and 'keystrokes'
+                                 would be in your file. Very inobtrusive!
+                                 Uploaded by: David Marcus
+FILEFIN2.ZIP     7473  08-18-94  A file find the will search the current drive
+                                 including zip files. All source.  Works with
+                                 directories nested up to 7 deep.
+                                 Uploaded by: Peter Birch
+FINDPACK.ZIP     1452  04-30-93  Enhanced Find commands for TSE
+                                 Uploaded by: Sammy Mitchell
+FINFO_32.ZIP    12366  09-19-94  FileInfo 3.2 provides one-key pop-up of the
+                                 current file's attributes, size, time, and
+                                 date, as well as allowing you to change the
+                                 file's attributes.  For TSE 2.0 & zipped with
+                                 2.04g
+                                 Uploaded by: Ray Asbury
+FL.ZIP           6298  11-09-94  Simple filemanager, written in TSE macro
+                                 language.  By Richard Blackburn.
+                                 Additions and fixes by:
+                                        James Coffer
+                                        Dave Gwillim
+FOLD131U.ZIP    14675  12-21-94  Implements a folding editor with TSE
+                                 (outliner). Very simple, US-version of
+                                 FOLD131.ZIP. Nested folds not yet possible.
+                                 Menu-driven configuration, improved handling
+                                 when closing folds (this is now possible from
+                                 ANYWHERE within the fold). For TSE2.
+                                 Uploaded by: Manfred Luft
+FRUMRD.ZIP      10514  12-01-94  Title   : vmForumReader-- TSE macro
+                                            to read CIS forum msg.s
+                                 Keywords: TSE MACRO PROCEDURE COMPUSERVE CIS
+                                           FORUM READING EDITING CAPTURE FILE
+                                
+                                 vmForumReader is a very specialized tool for
+                                 people like you, who capture CompuServe forum
+                                 messages to a file, and then read them
+                                 off-line.  Features 19 task-relevant tools
+                                 including: prev and next msg., find reply, fi
+                                 parent, find ultimate origin, complete thread
+                                 tracing, delete msg., reply off-line, a help
+                                 screen, and nine useful compressed views.  TS
+                                 editor remains fully functional (only one key
+                                 taken).  Full source code with instructions,
+                                 text.
+                                
+                                 by Volker Multhopp;   Rev 1.1.
+FSORTM13.ZIP     3891  07-15-93  TSE Macro mSort v1.3. Uses external sort
+                                 program FSORT10.ZIP to sort large files.
+                                 Integrates with TSE's internal sort for
+                                 automatic or menu selection of internal or
+                                 external sort. Uses TSE's case and ascending/
+                                 descending parameters. Also provides decimal
+                                 sort and duplicate entry elimination.
+                                 Uploaded by: Mel Hulse
+FSORTM14.ZIP     8102  09-14-93  TSE macro update v1.4 to FSORTM13.ZIP
+                                 uploaded by Mel Hulse on 07-15-93.  Update
+                                 allows the user to specify multiple "sort
+                                 keys" (up to ten) for the sort to act upon.
+                                 The sort key types may be mixed within a
+                                 single sort.  Two methods for the user to
+                                 specify the sort keys are provided: the user
+                                 may specify by column number; or use the
+                                 "Point And Shoot" method where they position
+                                 the cursor to select starting and ending
+                                 columns for the keys.  Try it, you will like
+                                 it!
+                                 Uploaded by: Joe Baechtel
+GCMACRO.ZIP      7032  05-11-93  SE Macros
+                                 Uploaded by: Grafton Cole
+GENERATE.ZIP     2867  10-12-93  GENERATE MULTIPLIES A BLOCK WITH A COUPLE OF
+                                 NUMBERS IN IT. these numbers rise in a way
+                                 that resembles a for loop
+                                 Uploaded by: Hans Dewit
+GETWORD3.ZIP     1081  06-20-93  TSE Macro. GetWord3.  Word completion from
+                                 your text.  Type the begining of a word.
+                                 Touch the key for GetWord. The full word is
+                                 displayed.  if acceptable, <Enter> expands
+                                 the word you typed with the last word with
+                                 the same begining.
+                                 Uploaded by: Mel Hulse
+HE.ZIP           4343  06-01-93  Hexadecimal Editor Macro
+                                      A TSE Macro to allow hexadecimal
+                                 editting of any binary file.  Includes,
+                                 HEXEDIT.S, HEXEDIT.MAC, and H.BAT, bat file
+                                 to invoke editor in hexadecimal load.
+                                 Uploaded by author...Frank Villafane
+                                 Uploaded by: Frank Villafane
+HEX.ZIP           512  05-01-93  Macro to view the hex value of the current
+                                 character.  The value can optionally be
+                                 edited in hex, and re-inserted into the file.
+                                 Useful for tweaking binaries, etc.
+                                 Uploaded by: Clark Bremer
+INCBAK21.ZIP     2931  10-18-94  Incrementing Backup File Names Macro v2.1 for
+                                 TSE v2.0
+                                 Uploaded by: Tom Kellen
+INCSEA.ZIP       2611  12-23-94  Title   : Improved Incremental Search Macro
+                                 Keywords: TSE MACRO INCREMENTAL SEARCH
+                                
+                                 An improved incremental search macro for TSE.
+                                 This version contains all of the capibilities
+                                 of the existing mIncrementalSearch, but adds
+                                 much more.  Toggle (ON/OFF) case-sensitivity,
+                                 regular expression, whole-word, begin-line,
+                                 end-line matching with a single key stroke.
+                                 See code for installation  instructions.
+                                
+INITCAPS.ZIP     1440  05-07-93  A macro to change text to Initial Capitals
+                                 Letters Only. Includes instruction for
+                                 integrating into the standard TSE interface &
+                                 menus, allowing it to be used on the current
+                                 word, line or block.
+                                 Uploaded by: David Marcus
+INTENSE2.ZIP     4508  07-23-93  Be able to set the blinking or intense
+                                 backgound colors.  also be able to set the
+                                 VGA overscan color.
+                                 Uploaded by: Peter Birch
+INTR.ZIP         3565  04-20-94  Fancy inline SAL interrupt package
+INVADERS.ZIP     3106  12-06-94  Space Invaders game for TSE 2.0
+ISDIR.ZIP        2143  11-30-94  TSE function IsDIR(sDirName).  Determines if
+                                 directory exists.  Written in assembly (MASM
+                                 6.00).  Source, Bin, and dox included.  Free 
+                                 charge!
+ISQRT.ZIP         389  12-30-93  integer square root for TSE
+                                 Uploaded by: Luca Salvini
+I_CMMT10.ZIP    16384  11-21-94  The "intelligent commenting" macro package
+                                 for TSE.  Performs a variety of context-
+                                 sensitive and user-configurable program
+                                 commenting chores.
+                                 Re-sent version of I_CMMT1.ZIP.  Now compiles
+                                 under both beta and pre-release.
+                                 Uploaded by: John Goodman
+JUSTIWS.ZIP      4995  06-06-94  JustiWS justifies paragraphs
+                                 (almost) like WordStar's Ctrl-B:
+                                 Deletes multiple SPACEs. Offers the
+                                 possibility to hyphenate long words.
+                                 Justifies too short lines by including
+                                 spaces (at first: behind .!?:,);
+                                 after this: behind every word)
+LINEPR.ZIP       2765  11-10-94  TSE 2.0 MACRO MULTI-FUNCTION LINE PROCESSOR
+                                 Processes text from cursor to EOL, or
+                                 within a marked block. Has ten
+                                 functions, selected from a menu: delete
+                                 blank lines, delete duplicate lines,
+                                 delete lines containing a string, or
+                                 NOT containing a string, double space
+                                 lines, insert string at cursor, append
+                                 string at EOL, squeeze spaces, flush
+                                 lines to cursor position, and number
+                                 lines.
+LINESWAP.ZIP     2310  11-21-94  Macro to swap lines in a commpressed
+                                 view-like buffer with the corresponding lines
+                                 in the original file.
+                                 Uploaded by: Truls Thirud
+LISTLOAD.S       1789  04-27-93  Macro to load files from a text list
+                                 Uploaded by: Gerald Fay
+LLIST_32.ZIP     2432  09-19-94  LoadList 3.2 allows you to list files to edit
+                                 edit (and SKIP) in a text file, then load
+                                 them quickly and easily.  Supports DOS
+                                 wildcard conventions.  For TSE 2.0 & zipped
+                                 with 2.04g
+                                 Uploaded by: Ray Asbury
+LOADLIST.ZIP     2029  09-01-94  Load filespecs specified in a seperate file
+                                 using a single command line switch, eg
+                                 E -pfilelist.txt
+                                 Uploaded by: Ian Brown
+LOGI612.ZIP     42772  10-15-93  logitech mouse driver v6.12
+                                 allows up to 132x44
+                                 Uploaded by: Eberhart Adam
+LOPENFIX.ZIP     2173  07-29-93  Macros to cause a "beep" whenever NextFile or
+                                 PrevFile move you to the first file opened.
+                                 Also, a fix for ListOpenFiles which causes
+                                 the first file loaded to always be at the top
+                                 of the list -- instead of the current file
+                                 NOTE:  not stand-alone, to be included in
+                                 your User-Interface Macro file.
+                                 Uploaded by: Wayne King
+LOWLEVEL.ZIP     1753  08-11-94  A set of low-level DOS file functions
+                                 read/seek/open/close for SAL because I don't
+                                 always want to load the whole stinking file
+                                 into a buffer for just a few bytes on header
+                                 information
+                                 Uploaded by: Peter Birch
+MACRO.ZIP       19863  09-14-93  TSE macro to easy the creation of macroes by
+                                 providing a "picklist" driven macro editor.
+                                 Saves typing keystokes, speeds macro
+                                 development, eliminates systax errors.
+                                 Uploaded by: Joe Baechtel
+MAILIND1.ZIP     1760  05-12-93  Mail indexing proc prepares index of saved
+                                 mail at the top of a file providing a one-
+                                 line index of the message subject, date,
+                                 from/to, conference, and number. Based on Tom
+                                 Hogshead's TSE Jr. mail indexing macro.
+                                 Also one-key access to message from index.
+                                 Preliminary, but working code.
+                                 Uploaded by: Steve Kraus
+MAKECSV1.ZIP     3668  10-16-94  MAKECSV. v1.1  A TSE macro that converts a
+                                 datafile with positionally oriented records
+                                 to a Comma Separated Value (.CSV) file.
+                                 Features:  o   Can include a header line. o
+                                 Use any part or all of of the source file. o
+                                  Output fields in a different order than the
+                                 source file. o   Does not change the source
+                                 file.
+                                 Uploaded by: Mel Hulse
+MATCH2.ZIP       1286  10-22-93  Extended language matching macro.
+                                 Matches xBase language control words such as
+                                 if-else-elseif-endif  do case-case-otherwise-
+                                 endcase do while-enddo, etc.
+                                 Uploaded by: Peter Birch
+MFFIND46.ZIP    19735  01-13-95  New version of Multi-File Find/Replace
+                                 includes menu-driven configuration as well as
+                                 severl other new features.  For TSE 2.00
+                                 PKZip 2.04g
+                                 Uploaded by: Ray Asbury
+MLTTAB.ZIP       5040  12-05-94  Title   : Maintain separate tab width/type
+                                           settings per file
+                                
+                                 Keywords: TAB MULTITAB TSE 2.0
+                                
+                                 MultiTab keeps separate tab with/type
+                                 settings etc. for every file edited.
+                                 This is my first attempt at writing TSE
+                                 macros, so I've probably made a few
+                                 mistakes Author: Ge Weijers
+MOVE_1.ZIP       3662  06-30-93  Enhanced version of MOVEMENT.ZIP  Now
+                                 includes the ability to go to a location
+                                 using line and/or column offsets!!!
+                                 Uploaded by: Ray Asbury
+MPGP20.ZIP       7328  08-26-94  This is an update to my MPGP TSE/PGP user
+                                 interface. I have added a few features to
+                                 make it easier to use.
+                                 ***for Beta Testers ONLY***
+                                 Uploaded by: Steve Schwartz
+MULTI1.ZIP       2637  11-30-94  A minor upgrade to MULTI.S fixing various
+                                 problems.
+                                
+                                 MULTI.S contains extensions of find, replace,
+                                 and count to the TSE  editor version 1.0,
+                                 permitting searches and replacements across
+                                 buffers.   Version 1.1.
+MULTIPRT.ZIP     3305  11-21-94  A macro to add support for Multiple Printer
+                                 Settings to TSE. Version 1.
+                                 Uploaded by: David Marcus
+NAMCLDOC.ZIP     5065  10-15-93  Documentation file for named clipboards
+                                 (NAMECLIP.ZIP),\.
+                                 Uploaded by: David Marcus
+NAMECLIP.ZIP    13728  10-12-93  Use NAMED CLIPBOARDS w/picklists for all TSE
+                                 clipboard functions. Includes enhanced Paste-
+                                 Over for all block types, and Cut&BlankFill.
+                                 CBs can be viewed, edited, printed, renamed,
+                                 deleted and saved to or read from disk. You
+                                 can find a string in a clipboard and Repeat-
+                                 Find. You can set: IncludeTextOnPicklists
+                                 AutoNaming, BackupCB Y/N/Additive, UnMark
+                                 After Copy, UnMark After Paste, Delete After
+                                 Paste and Position After Paste BEGIN/END.
+                                 Version 5.0.1
+                                 Uploaded by: David Marcus
+NEWCOLOR.ZIP    13176  10-13-94  Free collection of color template files for
+                                 The SemWare Editor 2.0.  Enables color syntax
+                                 highlighting of many files using TSE's
+                                 "Colors" macro.
+                                 Uploaded by: Tom Bowden
+NEWSRCH.ZIP      2204  11-21-94  Ray Ashbury's search slightly modified.
+                                 Uses system buffers and hides numeric info.
+                                 Uploaded by: Stuart Warren
+NEXTERR2.ZIP     2635  08-07-93  Enhencement to the TSE COMPILE Macro,
+                                 NextErr/PreviousErr Jumps to the NextError or
+                                 to the Previous error. If the error happend
+                                 in an include file, the file is loaded.  NOT
+                                 a stanalone macro but an enhencement to user
+                                 interface file. READ INSTRUCTION.
+                                 Uploaded by: Manfred Luft
+PCTAGS.S         4558  04-22-93  Macro Proc to use PC-Tags
+                                 Uploaded by: Ron Hockemeier
+PGP032.ZIP       7874  10-18-94  TSE 2.00 macro to interface with the PGP
+                                 encryption program. Will encrypt by block or
+                                 file; clear text sign, get a Public key,
+                                 insert you Public key, and en-ecrypt the
+                                 current file.  10-18-94 version 0.032 Also
+                                 contains untested TSE Jr. macros for PGP
+                                 Uploaded by: Tom Klein
+PICKLIST.ZIP     1727  05-06-93  A helper macro, picklist() lets you display
+                                 any file as a picklist from within your
+                                 macro. If the use selects a line, its
+                                 contents can be used by your macro. If [esc]
+                                 is pressed, your macro will know it.
+                                 Uploaded by: David Marcus
+PRGNAV.ZIP       1633  11-30-94  vmProgNav is a procedure for vertically movin
+                                 through programs, outlines, and other
+                                 structured texts.  Hard to describe quickly,
+                                 very easy to use, it makes clever guesses abo
+                                 whether you need to go to a higher, the same,
+                                 or even a lower level. Ignores blank lines.
+                                 Needs only two keys (an up and a down). Only
+                                 329 bytes compiled.  Perfect for traversing
+                                 "if... else... endif", "while... endwhile", a
+                                 all similar constructs. Full source code.
+PRINTER.ZIP      2304  06-10-93  Set of printer macros, including a binary
+                                 proc that uses a BIOS call to check the
+                                 printer port.  Also contains replacements for
+                                 some internal commands to take advantage of
+                                 the hardware port check.  Uploaded by
+                                 Ray Waters.
+                                 Uploaded by: Ray Waters
+PRN_CODE.ZIP     1627  01-28-94  Selected Epson Printer Codes
+                                 Uploaded by: Arnold Hennig
+PROTOTY1.ZIP     1647  06-27-93  Macro to copy functions to a prototyping area
+                                 at the top of a C program.
+                                 Uploaded by: Gregg Conklin
+PRWHITE1.ZIP     2094  07-28-93  PRint WHITE - Version 1.0 - Allows for the
+                                 including of private notes, comments,
+                                 concerns within a document. BUT when the
+                                 document is printed only the public
+                                 (non-secret) sections are printed. Macro for
+                                 the The Semware Editor (TSE) Version 1.0.
+                                 Uploaded by: Richard Hendricks
+Q2TSE.ZIP       13053  10-18-94  TSE 2.0 macro that will "read" the
+                                 configuration options and keyboard
+                                 assignments from TSE Jr. versions 2.07 or
+                                 greater.  Creates TSE compatiable
+                                 configuration files from the respective Q.EXE
+                                 and QCONFIG.DAT files.
+QKEYS097.ZIP     7471  07-18-94  Keyboard Accelerator for TSE
+                                 Uploaded by: Ian Campbell
+QUOTE11.ZIP      2407  10-22-94  QUOTE v1.1.  The Semware Editor (TSE) macro
+                                 for use with BBS message readers. Places a
+                                 first line quote giving incoming message
+                                 sender, addressee, date, and subject.  Can be
+                                 a called macro or can operate automagically
+                                 when a message is loaded into TSE.  This
+                                 macro is intended as a template for
+                                 customization.  Feel free to make it your
+                                 own.
+                                 Uploaded by: Mel Hulse
+R2QB01.ZIP      78842  11-21-94  TSE 2.0 (The Semware Editor) macros. You must
+                                 have TSE 2.0 to use these. Reformat recipes
+                                 in files exported from Fido-style message
+                                 readers to "QBook" format. Add keywords to
+                                 recipes formatted for the "QBook" recipe
+                                 database program by Bob Butler. Tested with
+                                 "Blue Wave" and GoldED.
+                                 Uploaded by: Sallie Krebs
+RAND.ZIP          665  11-30-94  random number generator for TSE
+RDFILE11.ZIP     1521  11-21-94  ReadFile() is a substitute for TSE's
+                                 InsertFile command. The differences are: * It
+                                 inserts the file as a line block. * It uses
+                                 default extensions. Prompts for file name if
+                                 file name not used as an argument. Updated
+                                 for 1.52b.
+                                 Uploaded by: David Marcus
+READONLY.ZIP     1497  05-13-93  Emulates TSE Jr.'s 'file is read-only' message
+                                 for TSE
+                                 Uploaded by: Sammy Mitchell
+REMIND10.ZIP     4100  07-28-93  REMIND - Version 1.0 - REMINDer or ToDo
+                                 Macro. This macro searches for a range of
+                                 dates. Macro for the The Semware Editor (TSE)
+                                 Version 1.0.
+                                 Uploaded by: Richard Hendricks
+RENUMBER.ZIP     5313  06-12-93     vmReNumber is a TSE procedure for
+                                 automatic text re-numbering, useful for
+                                 preparing outlines, questionnaires, etc.
+                                 Features:  numerical numbering and
+                                 alphabetical numbering in the form--
+                                 A,B,C,...,Y,Z,AA,AB,...etc, in caps and
+                                 lower case.  Supports any starting values,
+                                 multiple independent numbering sequences,
+                                 sequence reinitialization, increment
+                                 suspension.  By Volker Multhopp
+                                 Uploaded by: Volker Multhopp
+RETEST.ZIP       2884  07-26-93  An easy-to-use menu-driven regular expression
+                                 tester, this macro shows you the results of a
+                                 regular expression search (and/or replace).
+                                 It lets you quickly tro different
+                                 combinations of characters, options, etc so
+                                 you can painlessly (ha!) see how regular
+                                 expressions works. Includes online help for
+                                 all regular expression characters.
+                                 Uploaded by: David Marcus
+RHMACROS.ZIP    40667  01-05-95  Updated macros by Rob Howse.  There are
+                                 several handy macros included to box text,
+                                 delete blank lines, blank the screen, along
+                                 with some macros to assist your keyboard
+                                 macros.  New macros include updated FOLDING
+                                 macro, and incremental backup.
+RPNEXPR.ZIP      1458  04-23-93  RPN expression evaluator for TSE.  Syntax
+                                 similar to FORTH or an HP calculator.
+                                 Uploaded by author: Rick VanNorman
+                                 Uploaded by: Rick Vannorman
+RULER.ZIP        1000  11-30-94  This is a TSE 2.0 macro to display a movable
+                                 ruler on the screen. Helpful for counting
+                                 spaces, positioning text, etc.
+RULER21.ZIP      2140  10-16-94  mRULER.  V2.1 This macro will give a virtual
+                                 ruler on the line below the current cursor
+                                 line.  Features: *   Places ruler under line
+                                 of interest. *   Works when screen is
+                                 horizontally scrolled. *   Supports offset
+                                 starting column. *   Default offset column is
+                                 cursor column. *   User can shift screen
+                                 while retaining ruler by cursoring, tabbing,
+                                 rolling, and Home/End. *   Allows user
+                                 configured ruler attribute
+                                 Uploaded by: Mel Hulse
+SAVE101.ZIP      3269  08-21-94  New save macro implementing local, global and
+                                 incremental saves.  Re-upload of SAVE.ZIP.
+                                 It had a last minute bug that this upload
+                                 corrects.
+                                 Uploaded by: Edgar Payne
+SAVEBLK.ZIP       879  09-23-94  A replacement SaveBlock command for TSE, for
+                                 those who prefer the menu order of
+                                 OVERLAY/APPEND as in v1.0.  (v2 order is
+                                 APPEND/OVERLAY)
+                                 Uploaded by: Sammy Mitchell
+SAVER1.ZIP       1791  04-21-93  New version of the SAVER macro set, using the
+                                 editor variable DosCmdLine (documented in the
+                                 READ.ME file (I can't believe I didn't read
+                                 it!)).  Uploaded by author: Rick VanNorman
+                                 Uploaded by: Rick Vannorman
+SB.ZIP           1553  03-21-94  play notes with sound blaster & TSE
+                                 Uploaded by: Luca Salvini
+SEARCH.ZIP       4045  11-30-94  These macros allow the user to search a user
+                                 provided filespec for a specified expression
+                                 and displays matches in a list box (similar t
+                                 mCompressView).  The initial state of the
+                                 file-ring is restored after the search.
+SELHLP07.ZIP    11072  10-15-94  SelectHelpMenu() version 0.07 for TSE 2.00
+                                 Provides six(6) QuickHelp() type help screens
+                                 You can either modify the information
+                                 provided or you can use your own screens
+                                 entirely.
+                                 Uploaded by: Tom Klein
+SLIDE.ZIP        1425  10-05-93  Terry Cox's "Slide" Macros.  These macros
+                                 work by "grabbing" a line, character, or
+                                 block, and then causing that item to move
+                                 along with the cursor, effectively "sliding"
+                                 it around surrounding text.  Though simple,
+                                 I'm sure if you get into the habit of having
+                                 this feature in your editor, you'll be hooked
+                                 for life.  Any comments on function and usage
+                                 appreciated.
+                                 Uploaded by: Terry Cox
+SLIDER.ZIP       1569  11-10-94  Macro to slide a block across surrounding tex
+                                 Slide a column block over existing
+                                 text. When it reaches its destination,
+                                 ENTER to paste it in place. The sliding
+                                 block doesn't affect the layout of text
+                                 around it, making this macro well
+                                 suited for modifying cloumnar data such
+                                 as menus and tables.
+SLINE_10.ZIP     1325  08-02-94  Modifies the statusline using 2.0's hooks
+                                 to display the current buffer's file's
+                                 attributes and the current character's ASCII
+                                 code in hex and decimal (almost exactly like
+                                 that in TSE Jr./TSR 3.0).  It also uses
+                                 Windows-like parsing to shorten the filename
+                                 if it is too long to display.  (Zipped with
+                                 2.04g)
+                                 Uploaded by: Ray Asbury
+SOKO.ZIP        12380  12-01-94  Title   : The SOKOBAN game for TSE as a macro
+                                 Keywords: SOKOBAN GAME TSE SAL MACRO
+                                
+                                 Here's the SAL version of SOKOBAN - in the fo
+                                 of a TSE macro. This archive contains SOKO.S,
+                                 50 level files named LEVEL.01 to LEVEL.50 and
+                                 documentation file SOKO.DOC.
+                                
+                                 Author Gilles Kohl. Enjoy !
+SOL.ZIP          6285  05-22-93  /Source and .MAC file for Klondike Solitaire,
+                                 written in TSE macro language
+                                 Uploaded by: David Goodenough
+SOL1.ZIP         3991  05-23-93  A slightly enhanced version of the Klondike
+                                 Solitaire macro, source only.  Includes Help
+                                 so you can see how to enter commands.
+                                 Uploaded by: Mel Hulse
+SOL2.ZIP         3866  12-21-94  This is a revised version of the Klondike
+                                 Solitaire game by David Goodenough.
+                                 Revised to work with TSE version 2.0.
+                                 Uploaded by: David Rife
+SPELLCHK.ZIP     3519  10-11-94  New (Sep 22, 1994) spellckk macro for TSEv2.
+                                 This version fixes a problem that occurs when
+                                 spellchk is run on a file that is on a LAN
+                                 drive.
+SRCHDSTY.S       9573  08-22-94  TSE Macro to Delete Blank lines, or a
+                                 specified string... becomes part of the
+                                 "MacroMenu"
+                                 Uploaded by: Jiggs Beam
+SSTAR.ZIP        3012  11-21-94  nice screen saver for TSE beta
+                                 Uploaded by: Luca Salvini
+STCLOCK.ZIP       517  12-01-94  Title   : Clock on Status Line for TSE 2.0
+                                 Keywords: TSE SEMWARE EDITOR MACRO CLOCK STAT
+                                           LINE SOURCE
+                                
+                                 TSE 2.0 macro to disply a running clock on th
+                                 status line.  Configures itself for your
+                                 placement of the status line in the setup and
+                                 is aware of your line and column settings on
+                                 EGA/VGA systems.  Public Domain by Dave
+                                 Navarro, Jr
+STRSTUFF.ZIP    11516  07-19-93  STRSTUFF.ZIP contains routine that support
+                                 general TSE bit sets, allowing setting,
+                                 clearing, testing, etc. of individual
+                                 bits..There is also a routine that will
+                                 replace individual characters in a string
+                                 without using substrings.
+                                 Uploaded by: Jack Hazlehurst
+SYMBOL.ZIP        700  08-23-93  a very strange charset
+                                 Uploaded by: Luca Salvini
+SYNHI55W.ZIP    76977  09-25-94  SYNHI 0.55. compiled for TSE 2.00. Syntax
+                                 highlighter, interactive configuration,
+                                 real-data parsing.
+                                 Uploaded by: Bruce Riggins
+TABOLAT.ZIP     50489  07-19-93  TABOLATE.ZIP contains a set of routines for
+                                 en-tabbing text files in TSE.  You can set up
+                                 its rules by programming its state machine.
+                                 It's faster than the EnTab() macro that comes
+                                 with TSE in the file TABUTILS.S.
+                                 Uploaded by: Jack Hazlehurst
+TCD11.ZIP        5231  06-05-93  TCD11.ZIP -- Change Directory/Drive macro for
+                                 The SemWare Editor (TSE) -- Version 1.1 --
+                                 Easily move between drives and paths (DOS 5
+                                 DIR switches used to create directory
+                                 reference file) (ZIPped with PKZIP Version
+                                 2.04)
+                                 Uploaded by: Richard Hendricks
+TICKTIMR.ZIP     3462  09-10-94  TickTimr is a set of timing routines based on
+                                 the PC system tick timer.  Written entirely
+                                 in SAL using the INTR routines.
+                                 Uploaded by: Mike Chambers
+TIMDAT02.ZIP     3209  11-09-93  TSE macros for seven(7) different forms of
+                                 time, time and date implemented as PUBLIC
+                                 macros.  Sequel to the original 'timedate.s'
+                                 Uploaded by: Tom Klein
+TIME12.ZIP        972  04-23-93  TIME12 - TSE macro - returns time in 12 hour
+                                 format - may be added to TIMEDATE.S macro by
+                                 Tom Klein or used separately - Jim Fouch.
+                                 Uploaded by: Jim Fouch
+TIMESV.ZIP       1380  11-30-94  This macro will save all currently changed
+                                 files with the SaveAllFiles() command, based 
+                                 a user-defined save interval. Every time the
+                                 space bar is pressed, the interval is checked
+                                 If elapsed, SaveAllFiles() is executed. SAL
+                                 source code, zipped with PKZIP 2.04g.
+TS.ZIP           1379  11-11-94  this tse 2.0 macro saves your work every
+                                 5 minutes or so
+                                 Uploaded by: Ton Teuns
+TSE.ICO           766  07-31-93  Another TSE icon for windows.  The credit
+                                 goes to TSE Registered user Jim Knoble of
+                                 Chapel Hill, NC.  I just saw it and he gave
+                                 me permission to upload it here.
+                                 Uploaded by: P. Holt
+TSE2.ICO          766  10-18-94  Windows 3.1 icon for TSE
+                                 Uploaded by: Larry Ottersbach
+TSE2ICON.ZIP      334  10-18-94  Windows 3.1 Icon for TSE v2.0
+                                 Uploaded by: Tom Kellen
+TSE2_ICO.ZIP      786  09-24-94  SEMWARE.ICO.  An OS/2 icon for the Semware
+                                 Editor, Version 2.  Reflects the cover design
+                                 of the new manuals.  Replaces my Tessie
+                                 Monster icon showing how I am getting used to
+                                 the every day power of this great text
+                                 editor!
+                                 Uploaded by: Mel Hulse
+TSE3DICO.ZIP      802  08-06-94  A 3d TSE v.2 OS/2 icon.  Time has passed and
+                                 the old, flat icons are passe.  Here is an
+                                 update to the Tessie monster icon I posted so
+                                 long ago. I hope all of you, including
+                                 Richard B., like it! You don't use OS/2?  For
+                                 shame! To SemWare, permission granted to
+                                 include it with TSE, if you wish.
+                                 Uploaded by: Mel Hulse
+TSECAL20.ZIP     5139  04-16-94  *********************************************
+                                 TSE-Cal.  TSE Macro v2.0.  Floating point
+                                 arithmetic macro to work on text in The
+                                 SemWare Editor.  Add, subtract, multiply,
+                                 divide, and percent plus column tabulate and
+                                 average. Paste the results at the cursor.
+                                 Supercedes the April 1994 version. Includes
+                                 upgrades to Curtis Repen's math macro by Mel
+                                 Hulse. Now works with comma delimited numbers
+                                 and dollar signs.  More error checking and
+                                 comments.  Still has a few problems with
+                                 Uploaded by: Mel Hulse
+TSELOG.ZIP       1048  12-01-94  Title   : Extension to TSE.S to log editing
+                                            activity
+                                 Keywords: TSE SEMWARE EDITOR LOG LOGGING
+                                
+                                 This is a self-extracting archive of an
+                                 addition to TSE.S to cause The SemWare Editor
+                                 to log each file edited to a log file on the
+                                 hard disk
+TSEVID.ZIP       3708  11-30-94  Now you can use 132 column text modes with TS
+                                 if your video card supports it. This macro
+                                 addon makes it possible to toggle between you
+                                 big screen video mode and whatever convention
+                                 mode you started in simply by pressing (say)
+                                 F12. The source is all here (TASM Ideal mode 
+                                 SAL)./EXIT
+TSE_ANSI.ZIP     5361  10-06-94  ANSI.S Version 1.1 - This is an attempt at
+                                 programming an inter- preter or viewer for
+                                 ANSI files for TSE. Version 1.1 corrects some
+                                 problems with cursor positioning contained in
+                                 the previous posting. (Text output did not
+                                 move the cursor proper- ly, default parameter
+                                 values were improperly interpreted as 0
+                                 instead of 1, newlines did not wrap to column
+                                 1.) There's still the line length limitation
+                                 to 255 characters maximum.
+                                 Uploaded by: Manfred Luft
+TSE_COMP.ZIP    24336  03-07-94  This is a complete replacement for the
+                                 SEMWARE mCompile() routine.  It supports
+                                 multiple compilers and on-the-fly setup
+                                 without
+                                 having to re-burn E.EXE.  All you should have
+                                 to do is supply the error search criteria and
+                                 basic compiler commands, and it will
+                                 automatically adjust for a variety of error
+                                 message output.    I think you might want to
+                                 include something like this in your
+                                 distribution...      H. Johnson  70144,2650
+                                 Uploaded by: Hilliard Johnson
+TSE_TIP1.ZIP    46484  05-27-94  The Semware Editor Tips, 11/93 Small Macros,
+                                 hints, and other snippets. Compiled from
+                                 messages about TSE. From May 1993 thru
+                                 October 1993 Also see 'tse_tip2.zip' for
+                                 continuation of tips and hints.
+                                 Uploaded by: Tom Klein
+TSE_TIP2.ZIP    17751  05-11-94  'tse_tip2.zip' 05/94 for TSE 1.00a The
+                                 Semware Editor Tips, Macros, and other
+                                 snippets of information Compiled by Tom Klein
+                                 from messages on several different networks.
+                                 Period covered 10/93 to 03/94.
+                                 Uploaded by: Tom Klein
+TSE_TIP3.ZIP    15233  10-13-94  'tse_tip3' TSE (The SemWare Editor) Tips and
+                                 macros collected from messages and notes.
+                                 Updated and checked for TSE 2.00 Covering the
+                                 period of 3-8-94 to 9-27-94
+                                 Uploaded by: Tom Klein
+TSE_TIP4.ZIP    17597  11-06-94  'tse_tip4' Macros and Tips for TSE (The
+                                 SemWare Editor) version 2.00 macros collected
+                                 from messages and notes. Covering the period
+                                 of 9-27-94 to 11-06-94 In addition 4 'OLD but
+                                 GOLD' macros. Continuing series of tips and
+                                 macros.
+                                 Uploaded by: Tom Klein
+TSGREP6.ZIP     52871  06-27-94  TSGREP reads files, prepares a list of lines
+                                 that have a search string, and lets you go
+                                 back and forth between the list and files.
+                                 Includes across_line_search, use of -or- and
+                                 -and- operators, recursive search of sub-
+                                 directories. Regular expressions optional.
+                                 Can include up to 9 lines around each find.
+                                 Can exclude files by date or extension. This
+                                 is a fast and powerful GREP utility that
+                                 uses and extends TSE's regular expression
+                                 searching. Menu or command line driven.
+                                 Uploaded by: David Marcus
+TSTSE10.ZIP     31709  12-03-94  SAL macros by Prof. Timo Salmi, the
+                                 University of Vaasa, Finland, to enhance the
+                                 SemWare Editor.
+                                 Uploaded by: Manfred Luft
+TVIEW_14.ZIP     8869  09-19-94  TView 1.4 is an emulation of LIST.COM.  For
+                                 TSE 2.0 & zipped with 2.04g
+                                 Uploaded by: Ray Asbury
+TWIDDLE.ZIP       865  05-01-93  Simple macro to exchange the two characters
+                                 immediately to the left of the cursor.
+                                 Uploaded by: Luigi Bianchi
+VDIFF05.ZIP      4971  04-05-93  A "Visual" diff utility for TSE, highlights
+                                 all diff at once
+                                 Uploaded by: Jim Susoy
+                                
+VESA.ZIP         6706  09-20-94  VGA VESA macro for The Semware Editor Allows
+                                 to switch the editor to any text mode that
+                                 your VGA graphics card supports, requires
+                                 VESA compatible card
+                                 Uploaded by: Manfred Luft
+VMFILL.ZIP       2334  11-30-94  vmFill() is a strong replacement for
+                                 FillBlock(), but just as easy to use.  Fills
+                                 any type block with a string, not just one
+                                 character.  String can either be wrapped
+                                 line-to-line or aligned in character columns.
+                                 Recognizes left margins if in use.  Source
+                                 file.
+VMRNGF.ZIP       1233  11-30-94  vmRingFind() is a modest but very serviceable
+                                 search- all- files- in- ring macro.  You real
+                                 need something like this burned in with your
+                                 TSE editor.  Source file.
+VMWRAP.ZIP       7935  11-30-94  vmWrapPara 1.1 is a straight replacement for
+                                 TSE's WrapPara, for writers who at times need
+                                 to retain trailing white space (or use  two
+                                 spaces to mark sentence ends).  Ca. 690 bytes
+                                 compiled.   Extensive source code includes
+                                 chitchat on paragraph end styles,
+                                 enhancements, and plenty of opportunities for
+                                 personalizing paragraph reformatting.
+WORDS10.ZIP      2615  11-01-93  A word counter macro for TSE (The Semware
+                                 Editor), pre-release version 1.0.  If a block
+                                 is marked, words in the block are counted; if
+                                 no block is marked, words in the file are
+                                 counted.  Macro version: 1.0
+                                 Uploaded by: David Mayerovitch
+WP.ZIP          16222  10-18-94  Updated WP.UI flle.
+                                 Uploaded by: Richard Blackburn
+WP4-V20.ZIP     62369  10-02-94  WordPerfect For Programmers user interface
+                                 for TSE v2.0. Interface uses WP keystrokes
+                                 wherever possible and adds in most of the
+                                 neat TSE functions for programmers! Release
+                                 v2.0 10/1/94
+                                 Uploaded by: Mike Hammer
+WSPLUS12.ZIP    33277  09-11-93  This set of routines enhances your
+                                 productivity by adding the following features
+                                 to sem-edit:
+                                    o Stores last position in a saved file
+                                    o Be able to load files with only partial
+                                      filnames (even multiple filename)
+                                    o Search files for text fragments, load
+                                      the files and goto first occurances.
+                                 There are others but this is worth taking a
+                                 look at.  The front end service can also be
+                                 used with other program (like 4print).
+                                 Uploaded by: Doug Joseph
+WZ9U.ZIP          717  11-30-94  A (small) collection of TSEv1 SAL
+                                 macros that enhance existing functions, or
+                                 implement functions not migrated from TSE Jr.
+                                 v2.15.  For this upload, only the following
+                                 exist:
+
+                                  mEOL()          // A "smart" EndLine()
+                                  mBegLine()      // A "smart" BegLine()
+
+                                  mHalfPgDn()     // Missing from TSEv1!
+                                  mHalfPgUp()     //      Ditto!
+
+
+                        ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                        ³Conference 4 TSE files³
+                        ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+                   *--*  01-17-95  -  19:06:18  *--*
+
+

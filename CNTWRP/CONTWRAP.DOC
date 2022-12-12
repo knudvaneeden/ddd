@@ -1,0 +1,97 @@
+Date:		April 26, 1993
+Author: 	Peter J. Farley III
+CSERVE Id:	72341,1063
+
+Description:	TSE Continuous WrapPara Macros and Key Definitions
+
+Enclosed are a set of macros for "continuous" WrapPara in TSE.  These
+macros were motivated by the likes of more fully functional word
+processing programs like WordPerfect.
+
+Once toggled "on" (using macro "ToggleContWrap()"), every cursor
+movement (Up, Down, Left, Right, Home, End, PgUp, PgDn, etc.) invokes
+the "WrapPara()" function for the current and all "moved-through"
+paragraph(s).  This gives the appearance of an "active" word-processor
+like WordPerfect, in that the text is "constantly" reformatted to stay
+within the defined margins.  "Cut", "Paste" and "Copy" operations are
+also supported, and cause insertion or deletion followed by re-wrap.
+
+Useful in E-mail and other environments that support an external editor
+to guarantee that margin restrictions are not exceeded, WITHOUT
+requiring users to press an additional key sequence.
+
+CAUTIONS:
+
+1.  The paragraph movement functions ASSUME that the definition of a
+    paragraph is text separated by a BLANK LINE.  I may enhance this in
+    the future, but for now it's locked into the code.  See also item 3
+    below.  Note also that the Semware-supplied macro "mWrapPara()"
+    makes this same assumption.
+
+2.  When toggled "on", ALL text is re-wrapped.  This can have bizarre
+    effects on E-mail header lines when you go to the top of the file.
+    You will probably want to modify the "mBegFile()" code to prevent
+    this.  Since each E-mail system is different, I have NOT included
+    the changes I made for my local mail system.  Feel free to "fix" it
+    for yours.
+
+    The place to change is in macro "MarkWrapUp()".  Change the line:
+
+        when zBegFile   BegFile()
+
+    to do something like:
+
+	when zBegFile	BegFile() Down() Down() Down() Down()
+
+    to bypass however many header lines your E-mail system uses.
+
+3.  "Lists" of things that are NOT in paragraph form will also be
+    re-wrapped in bizarre ways.  This is strictly a function of the way
+    the builtin-function "WrapPara()" works.  The only way to avoid it
+    is to toggle "continuous" WrapPara OFF when moving through such
+    text, or to separate each item in the list with a blank line (this
+    being the definition of a paragraph).  See also item 1 above.
+
+Files in archive:
+
+    contwrap.doc    -	This documentation file
+    contwrap.s	    -	The main body of the wrapping code
+    contwrap.key    -	Key definitions for "Continuous Wrap" mode
+    abspos.s	    -	Absolute screen position save and restore
+			macros "PushAbsPos()" and "PopAbsPos()"
+    movepara.s	    -	"NextPara()" and "PrevPara()" macros (previously
+			distributed by Richard Blackburn of SemWare tech
+			support in archive TSEMAC.ZIP) AND two NEW
+			macros, "BeginPara()" and "EndPara()" to move to
+			the beginning and end of the current paragraph
+
+Installation:
+
+1.  Unzip the contents of this archive into your TSE\UI directory.
+
+2.  Include the following line in TSE.S (or any modified copy thereof):
+
+    #include ["contwrap.s"]
+
+    FOLLOWING the definition of the macro "mWrapPara()".  ONLY the
+    multi-line movement macros (PgUp, PgDn, etc) depend on
+    "mWrapPara()".  You can also forward-reference "mWrapPara()" if you
+    prefer that technique.
+
+3.  REPLACE the following line in macro "mWrapPara()":
+
+            until (not WrapPara()) or (not isCursorInBlock())
+
+    with the following line:
+
+	    until (CurrLine() >= Query(BlockEndLine) or not WrapPara())
+
+    This bug causes the paragraph FOLLOWING a marked block to be
+    "wrapped" even though it is NOT in the block.
+
+4.  In the file TSE.KEY (or any modified copy thereof), assign an
+    available key (I use <Alt w>) to macro "ToggleContWrap()":
+
+    <Alt w>	    ToggleContWrap()
+
+5.  Re-"Burn" your copy of TSE usinc "sc -b".

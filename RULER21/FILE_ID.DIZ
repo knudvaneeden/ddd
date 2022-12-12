@@ -1,0 +1,14 @@
+mRULER.  V2.1 This macro will give a virtual
+ruler on the line below the current cursor
+line.
+
+Features:
+*   Places ruler under line of interest.
+*   Works when screen is horizontally
+    scrolled.
+*   Supports offset starting column.
+*   Default offset column is cursor column.
+*   User can shift screen while retaining
+    ruler by cursoring, tabbing, rolling, and
+    Home/End.
+*   Allows user configured ruler attribute

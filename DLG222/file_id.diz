@@ -1,0 +1,6 @@
+The dialog macro package implements CUA style dialog boxes for
+TSE. It features a run time library which implements the basic
+behavior of dialog boxes. It also features ready to use dialogs
+including FileOpen, Find, BufferList and many more. Version 2.22
+fixes bugs and compatibility issues. Works with TSE Pro v2.5 and
+TSE Pro/32 up to and including v4.2.

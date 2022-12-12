@@ -1,0 +1,6 @@
+<06-30-99> - Version 3 - TSE Pro/32 v2.8.
+Scheme macro and ini file for TSE Pro 2.8.
+Lets users (ex)change TSE's color settings
+by loading them from or saving them to an
+expandable set of color scheme's.
+Author: Carlo Hogeveen(hyphen@xs4all.nl).

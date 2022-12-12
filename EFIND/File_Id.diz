@@ -1,0 +1,8 @@
+(Jul 1, 2007) - eFind v2.0.2 for TSE Pro v2.5e upwards.
+This macro allows you to search in a gigantic amount of files.
+TSE lets you open more files than fit in memory, and then this macro can
+search across them without running into the memory limit.
+It can also keep or abandon files which contain a certain string: you can do
+this multiple times to step by step zero in on a selection of files.
+v2.0.2 Improves the warning if too many files were opened.
+Author: Carlo Hogeveen.

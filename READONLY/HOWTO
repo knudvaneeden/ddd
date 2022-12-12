@@ -1,0 +1,73 @@
+
+To get the same read-only behavior as TSE Jr., you'll need to create the
+following .bin file, and change your TSE.S to do something similar to
+the following (note the OnFirstEdit supplied with TSE.S is empty):
+
+constant
+    READONLY  = 01h,
+    HIDDEN    = 02h,
+    SYSTEM    = 04h,
+    ARCHIVE   = 20h
+
+binary "getattr.bin"
+    integer proc GetFileAttr(string path) : 0
+end
+
+proc OnFirstEdit()
+if GetFileAttr(CurrFilename() + Chr(0)) & READONLY
+        Message("File is read-only")
+    endif
+end
+
+-------------------- assembly file getattr.asm -------------------------
+
+        locals
+
+_TEXT   segment
+        assume  cs:_TEXT
+;
+; integer GetFileAttr(string s)
+;
+; attr = GetFileAttr(CurrFilename() + Chr(0))
+;
+; long pascal GetFileAttr(uchar *far string);
+;
+;                       bp+06 seg string
+;                       bp+04 ofs string
+;                       bp+02 seg ret
+;                       bp+00 ofs ret
+;
+GetFileAttr proc far
+        mov     bp, sp
+        lds     dx, [bp+4]              ; ofs string
+        inc     dx                      ; move past the length
+        inc     dx                      ;    word
+        mov     ax, 4300h               ; get file attributes
+        int     21h                     ; dos call
+        mov     ax, cx                  ; assume success
+        jnc     @@exit                  ; if so, go there
+        xor     ax, ax                  ; otherwise, no attributes
+@@exit:
+        cwd                             ; and get answer in dx:ax
+        retf
+GetFileAttr endp
+
+_TEXT   ends
+        end
+------------------------------------------------------------------------
+
+To build the .bin:
+tasm getattr
+tlink getattr
+exe2bin getattr
+
+You can then erase getattr.obj, getattr.exe, and getattr.map.
+
+You should place getattr.bin, and getattr.asm in the same directory as
+TSE.S.
+
+Now, just burnin the new editor (sc -b c:\tse\ui\tse) and you should be
+in business.
+
+
+

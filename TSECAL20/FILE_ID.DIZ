@@ -1,0 +1,15 @@
+*********************************************
+TSE-Cal.  TSE Macro v2.0.  Floating point
+arithmetic macro to work on text in The
+SemWare Editor.  Add, subtract, multiply,
+divide, and percent plus column tabulate and
+average. Paste the results at the cursor.
+Supercedes the April 1994 version. Includes
+upgrades to Curtis Repen's math macro by Mel
+Hulse. Now works with comma delimited numbers
+and dollar signs.  More error checking and
+comments.  Still has a few problems with
+large numbers and negative number division.
+Trys to eliminate most.  Use is documented in
+the macro.
+*********************************************

@@ -1,0 +1,513 @@
+
+                         SPLIT & SCROLL MACRO
+                                 for
+                          The Semware Editor
+
+             Macro      : SAS
+             Name       : Split and Scroll Windows
+             Version    : 3.2
+             Build      : 08
+             Date       : 20.07.1998
+             Author     : Alex S Wilson
+             Parts      : Semware Corporation
+             Environment: TSE Pro/32 version 2.80b
+
+
+  CONTENTS
+
+  1. Introduction
+  2. Disclaimer
+  3. Requirements
+  4. Function
+  5. Packing List
+  6. Installation
+  7. Video Mode
+  8. Operation
+  9. Menu Mode
+  10. TSE.ini File
+  11. Using the Mouse
+  12. Notes on AutoScrolling
+  13. Notes on Compiling
+  14. Known Problems
+  15. Future Developments
+  16. Contact
+  17. Version Details
+
+
+1. INTRODUCTION
+
+
+The following document provides notes on the Split and Scroll Macro.
+I have written and continue to develop the SAS macro as an exercise in
+the use of the Semware Application Language. However it is a functional
+macro which I use daily and have attached to my Autoload list. Hope you
+find it useful for whatever purpose.
+
+To find out whatsnew in this release please refer to the version details
+at the end of this document.
+
+I would also be grateful if you could drop me an e-mail if you have tried
+SAS. Any comments and suggestions for coding or features are very welcome.
+It is also nice to know just where the macro ends up.
+
+See the Contact section of this document for information on how to contact
+me.
+
+
+2. DISCLAIMER
+
+
+Use this macro and associated code entirely at your own risk. The author
+accepts no responsibility for loss or damage resulting from the use of the
+macros and code.
+
+
+3. REQUIREMENTS
+
+
+To use the SAS macro you need the The SemWare Editor Pro/32 v2.8. The
+macro uses commands specific to TSE/32 version 2.8.
+
+SAS version 2.9 and above will only compile using TSE Pro/32 v2.8 and
+SC32.exe.
+
+SAS version 2.6 is available for for TSE Pro/32 v2.6.
+
+SAS version 2.2 was the last public release of the macro which will run
+with TSE v2.5.
+
+4. FUNCTION
+
+
+The SAS macro will horizontally or vertically split the screen into
+windows if more than one file is opened (one window per file). When
+the windows have been split simultaneous vertical or horizontal scrolling
+in each of them is available.
+
+Two modes of scrolling are available, KEY and AUTO;
+
+1. Key Scrolling allows scrolling of multiple windows using the keyboard
+   to control it.
+2. Auto Scrolling allows the the text in multiple windows to be scrolled
+   automatically at variable speeds without having to touch the keyboard
+   - except to stop it.
+   The speed of autoscrolling can be adjusted while scrolling is taking
+   place.
+   Auto Scrolling can also be used in one window.
+
+In addition to the two modes of scrolling, one of three types of scrolling
+can be selected (Scroll, Roll or Page). In Auto mode each type of scroll
+will scroll continuously until the End of File is reached or the user aborts
+it. However, the number of lines or pages to be scrolled at a time can also
+be set. See Operation Section for more information.
+
+SAS has been designed to work best with 2 files at present mainly
+because, if more than two files/windows are open, editing/reading is not
+that easy! However, this can be changed by increasing the variable
+"Maximum Files to Split" in the SAS menu but things can get untidy.
+The macro does make a crude attempt to resize the windows if more than three
+files are split.
+
+Various options can be changed in the SAS menu. These options are written
+to a initialisation file called TSE.ini under the section name of [SAS].
+The TSE.ini file should be located in your TSE32 directory and is created
+on the first "save settings" of SAS if it does not exist.
+
+All items marked [] in the menu are saved to the TSE.ini file.
+
+
+5. PACKING LIST
+
+
+The following files should be included in the SASxyz.zip file;
+Where xyz denotes the version of SAS.
+
+        File_ID.diz     - File Information
+        SAS.s           - Split and Scroll Macro source file.
+        SAS.txt         - This file.
+        SAS.hlp         - Text help file.
+        SAS.mac         - Compiled version of SAS.s for TSE/32
+
+(x = Version, y = Feature revision, z = Build)
+
+
+6. INSTALLATION
+
+
+Copy the SAS.mac file into a location specified in the TSEPath of TSE.
+
+The macro can now be executed from the command line or run from within TSE.
+It can also be added to the Potpourri list.
+
+Optional:
+
+I have included separate help and document files to keep the macro as small
+as possible.
+Both the help and document files can be viewed from the Help menu. To do this
+the sas.hlp and/or sas.txt files should be copied to a location specified in
+the TSEpath of TSE. Please note that SAS will work perfectly well without the
+help or document files installed.
+
+If you choose not to install the help or document files or if they are
+installed in a location other than the TSEPath then the menu options for
+these items will be unavailable.
+
+
+7. VIDEO MODE
+
+If an error is issued indicating the menu is too large when using the macro
+in "Single" menu mode, you can use CtrlAlt M to toggle to the bar menu mode
+in which no such problems are encountered.
+
+The single menu needs the editor to be in 28 line mode or greater.
+
+
+8. OPERATION
+
+
+F11 will call a menu from which the following options can be chosen;
+
+Windows:
+CtrlAlt S               Will Toggle the Split Windows feature.
+Split Type              This toggles horizontal or vertical window splitting.
+                        The macro defaults to the last saved setting.
+
+Maximum Files to Split  This sets the number of files that SAS will attempt
+                        to split when the Split command is issued or when
+                        macro is loaded.
+Minimum Files to Split  This option allows a minimum number of files to
+                        split to be specified. If set to 1 then 1 file can
+                        be split into two windows.
+Split When Loaded       Setting determines if the files are split into
+                        windows when the macro or file is loaded.
+Switch Windows/Files    This option allows you switch between each file or
+                        window that is open. Shift TAB or ALT N can be used.
+                        The ALT N key is normally used to switch between
+                        files and has been enhanced to switch between any
+                        windows that are open.
+
+Scrolling:
+Scroll Type             This option allows you to toggle between
+                        Roll:   uses RollUp(), RollDown(),
+                                     RollRight(), RollLeft()
+                        Scroll: uses ScrollUp(), ScrollDown()
+                                     ScrollRight(), ScrollLeft()
+                        Page:   uses PageUp(), PageDown()
+
+Scroll Lines/Pages      0 will enable continuous scrolling in all modes of
+                        scroll type. Any other value entered equals the
+                        number of lines that will be scrolled before
+                        stopping. If Scroll Type = Page then the number is
+                        equal to the number of pages scrolled.
+
+Reset Scroll Lines      This option is only available when scroll lines is
+                        greater than 0. The option determines if the counter
+                        is reset if the user aborts the autoscrolling. ie if
+                        scrolllines = 20 and the user aborts the scroll at 9,
+                        if reset scroll lines is NO, the next autoscroll
+                        will start from 10. If YES, scrolling will start from
+                        0.
+
+Key Scroll Options:     SubMenu
+
+Shift                  Scroll the text in the windows up simultaneously.
+Shift                  Scroll the text in the windows down simultaneously.
+Shift                  Scroll the text in the windows to the right simultaneously.
+Shift                  Scroll the text in the windows to the left simultaneously.
+
+Auto Scroll Options:    SubMenu
+
+Set AutoScroll Speed    Controls the speed of autoscrolling.
+                        Changes are applicable in current editing session.
+                        The higher the number the faster the scrolling.
+
+Ctrl                   Auto Scroll the text in the current window up.
+Ctrl                   Auto Scroll the text in the current window down.
+Ctrl                   Auto Scroll the text in the current window to the right.
+Ctrl                   Auto Scroll the text in the current window to the left.
+
+Ctrl PgUp               Auto Scroll the text in all windows up.
+Ctrl PgDn               Auto Scroll the text in all windows down.
+Ctrl Alt               Auto Scroll the text in all windows to the right.
+Ctrl Alt               Auto Scroll the text in all windows to the left.
+
+Keys:
+Ctrl Alt K              This is included because Ctrl PgUp and Ctrl PgDn
+                        have other useful standard file navigation
+                        functions in TSE. If the keys are set to OFF the
+                        scrolling functions can still be used from within
+                        the menu.
+General:
+Save Current Settings   This option saves the current settings to the
+                        TSE.ini file which is used everytime SAS is
+                        loaded.
+Save Settings on Exit   Toggle to save the macro settings when the editor is
+                        exited.
+Menu Mode   CtrlAlt M   Use Single or Bar menus.
+Ctrl Alt H              Views help file if installed. See Installation
+View Macro Document     Views the macro document file if installed. The document
+                        file can only be viewed when using the bar menu.
+
+About                   Tells you what you are using and how to contact me.
+                        Pressing the <SpaceBar> to exit from the About window
+                        will display macro settings/debug information.
+
+Other keys:
+
+-                       Reduces the autoscroll speed when autoscrolling is
+                        in progress.
++ or =                  Increases the autoscroll speed when autoscrolling is
+                        in progress.
+Esc                     Interrupt AutoScrolling. (not shown in Menu)
+
+Menu items that have [ ] displayed are showing the current status for that
+option. When these options are changed a message confirming the change is
+issued on the status line. These messages are cleared automatically on the
+next keypress or menu selection.
+
+Note: All items that have [] displayed are saved in TSE.ini which is used
+everytime the macro is loaded.
+
+The above options are available in both the single and bar menu modes. The
+ability to view this document file if installed as above is available from
+the bar menu.
+
+Help for each for menu option is also displayed on the help line when each
+option is highlighted.
+
+
+9. MENU MODE
+
+There are two modes of menu available; single and bar. Both modes give all
+of the options as indicated in the "Operation section" of this document,
+however the bar mode gives the following additional options:
+
+File Menu - Menu Close:
+
+This option allows the menus to close following selection of "toggle" items.
+For example, the Split Type toggles between horizontal or vertical. With
+menu close option set to "No", the menu will remain open for further action.
+If menu close is set to "Yes", the menu will close when the item is toggled.
+
+Only a few menu items are affected by this but it can make the use of the
+macro quicker. The following items are currently affected;
+
+        Split Type
+        Split When Loaded
+        Scroll Keys
+
+The default option is No.
+
+Help Menu - View Macro Document:
+
+If you have installed the macro document as described in the installation,
+it can be viewed using this option. if the document is not installed, the
+menu item will be "grayed" and unavailable.
+
+
+10. TSE.ini FILE
+
+TSE/32 makes use of the tse.ini macro macro which is execellent for
+maintaining macro startup parameters etc. Most of my macros make use of the
+ini file.
+
+
+11. USING THE MOUSE
+
+When using Autoscroll, pressing and holding any mouse key will pause the
+scrolling. While paused, pressing the other mouse button will scroll the
+windows by one line/page at a time.
+Releasing the mouse button will cause the AutoScrolling to continue.
+
+
+12. NOTES ON AUTOSCROLLING
+
+Auto scrolling will stop in all files when the end of the current file is
+reached. The current file is the one with the active cursor.
+The macro checks for the end of file (EOF). When the EOF is reached, auto
+scrolling in both windows stops. Therefore if the current file is smaller
+that the one in the other window or you start autoscrolling at a
+position further into the current file than the other, auto scrolling will
+stop when the end of the current file is reached.
+
+
+13. NOTES ON COMPILING
+
+
+Intentionally left blank.
+
+
+14. KNOWN PROBLEMS
+
+If the Main() proc is used with the WhenLoaded() proc, problems are
+encountered with Disable of SASKeysScroll keydef. ie CtrlAlt K.
+
+Window Resize: version 3.2.04 contains my initial attempt at window
+resizing. It is very crude at the moment but better than the TSE default.
+I will continue to improve this facility. Any comments would be welcomed.
+
+
+15. FUTURE DEVELOPMENTS
+
+        * Fix the Autoscroll stop problem.
+
+
+16. CONTACT
+
+
+I can be contacted as follows;
+
+Internet:       alex.s.wilson@btinternet.com
+
+www:            http://www.btinternet.com/~alex.s.wilson/
+
+
+17. VERSION DETAILS
+
+
+The latest version of this macro can be obtained from my homepage at;
+
+www:            http://www.btinternet.com/~alex.s.wilson/
+
+I will generally post the latest version there before releasing it to the
+Semware ftp site.
+
+
+Version  Date      Details/Comments
+
+3.2     20.07.98   Updated About box with new email.(08)
+                   Internal code changes, not released.(07)
+        02.06.98   Added Save Settings on Exit option.(06)
+                   Revised help and document files.(06)
+
+        22.05.98   Revised Message structure.(05)
+                   Fixed Message bug on split Windows
+                   minimum files.(05)
+
+        26.04.98   Added window resize feature.(04)
+                   Added facility to toggle menu close after
+                   selection of item.(04)
+                   Revised help and document files.(04)
+                   Fixed split windows bug.(03)
+
+        18.04.98   Added Scroll Speed message for dynamic
+                   speed control of scrolling.(02)
+                   Released on homepage.
+
+
+        12.03.98   Fixed mousekey pause function.(01)
+                   Released.
+
+        22.02.98   Build 00 released.
+
+        16.02.98   Fixed macro date in SAS.txt details! Updated
+                   SAS.txt for additional facilities.
+                   Added support for continuous speed control
+                   using "-" and "+" keys during autoscroll.(00)
+                   Enhanced and renamed ScrollAbortCheck() proc to
+                   ScrollCtrlCheck(). (00)
+                   Development release on homepage.
+
+3.1     10.02.98   Fixed set maximum/minimum files bug. Improved
+                   error checking.(05)
+
+        20.12.97   Revised autoscroll delay/speed setting procs,
+                   now ask for speed instead of delay.(04)
+                   Removed integration with IB.mac.(04)
+
+        20.11.97   Updated menus and revised menu flags for
+                   tse.ini backup.(03)
+        17.11.97   Added Flag to integrate macro with IB.mac
+                   which is used to backup the tse.ini file on
+                   every save settings.(02)
+                   Updated Help and Document files.(02)
+                   Posted sas3102.zip as development on Homepage.
+
+         22.09.97  Added Scroll Lines reset option. (01)
+                   Added proc to set menu flags. (01)
+                   Revised menu for GRAYED options. (01)
+                   Updated menus and ScrollAbortCheck. (01)
+                   Update help and Document files. (01)
+                   Fixed keydef bug. (01)
+                   Revised naming convention for help
+                   and doc files. (01)
+                   Added extension variables. (01)
+                   Renamed VarInfo() proc to MPVInfo(). (01)
+         16.09.97  Enhanced Split on Load to work on file
+                   load. (r00)
+                   Updated help and document files. (00)
+                   Replaced Main() with WhenLoaded() proc. (00)
+                   Re-introduced Startup() proc. (r00)
+                   Released (00) on Homepage.
+
+3.0      08.08.97  Added horizontal scrolling support. (r00)
+                   Revised menus for horizontal scrolling. (r00)
+                   Revised single menu. (r00)
+                   Moved AutoScroll Delay option in menu. (r00)
+                   Updated help and document files. (r00)
+                   Released for TSE/32 v2.8 (Homepage/ ftp.semware.com)
+
+2.9      06.08.97  Revised Scroll Type selection menu operation. (r02)
+                   Revised About box. (r02)
+                   Removed StartUp() proc. (r02)
+                   Updated for TSE/32 v2.8 (r02)
+                   Added MenuType toggle key CtrlAlt M. (r02)
+                   Cosmetic Changes. (r01)
+                   Enhanced Scroll Type menu. (r01)
+                   Revised terminology and variable names. (r01)
+                   Improved error checking. (r01)
+                   Released (r02) for TSE/32 v2.8 (On homepage only)
+
+2.8      16.05.97  Fixed about window bug. (r13)
+                   Added Help and Document view options. (r12)
+                   Added number of lines/pages to scroll option. (r11)
+                   Added scroll mode selection option. (r11)
+                   Added direction indicator for rationalisation of
+                   scrolling code. Reduced number of procs. (r10)
+                   Added code to switch between windows or files.
+                   Added bar type menu selection.
+                   Added alternate keys for switching windows.
+                   Enhanced Split on Load option to split on macro and
+                   window load.
+                   Updated help.
+                   Cosmetic Changes.
+                   Released (r12) for TSE/32 only.
+
+2.7      14.12.96  Development version.
+
+2.6      10.11.96  Updated for TSE Pro/32.
+                   Released version.
+
+2.5f     18.06.96  Revised to use INI macro and TSEPro.ini file for
+                   settings. Added key assignment for toggling scroll
+                   keys. Fixed Save Settings bug.
+                   Development version.
+
+2.4      24.02.96  Revised to use a configuration file for startup
+                   values. Not released.
+                   Development version.
+
+2.3      -         Updated for TSE 2.5. Not released.
+                   Development version.
+
+2.2      26.06.95  Added facility to change the type of window split,
+                   horizontal or vertical. Changed key assignments.
+                   Changed Scroll Delay procedure. Added pause facility to
+                   AutoScroll using the mouse. Recoded AutoScroll procs
+                   to check for abort or pause request.
+                   Released version.
+
+2.1      10.06.95  Changed Menu text and added status indicators.
+                   Development version.
+
+2.0      13.05.95  Public Release Version.
+
+
+
+
+                               ษอออออออป
+                               บ  Eck  บ
+                               ศอออออออผ
+
+
+

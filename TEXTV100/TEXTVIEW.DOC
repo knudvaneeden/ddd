@@ -1,0 +1,129 @@
+/* ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ÚÄÙ TSE Structured Text Viewer ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³                                                                          ³
+ ³ SOFTWARE:    TextView.s                                                  ³
+ ³ VERSION:     1.00                                                        ³
+ ³ DATE:        07/11/95 08:22 am                                           ³
+ ³ REV. DATE:   09/16/95 01:58 am                                           ³
+ ³ AUTHOR:      Mike Chambers                                               ³
+ ³ TYPE:        External Macro                                              ³
+ ³                                                                          ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Revision History ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+ ³                                                                          ³
+ ³ REV. HIST:   0.31 Genericized from IntrView.S (0.30)                     ³
+ ³              0.32 Fixed config variable problem in list_width            ³
+ ³              0.33 Various cosmetic changes                               ³
+ ³              0.34 Fixed false hit when keyword in title                  ³
+ ³              0.35 Fixed logic for negative deltatotitle                  ³
+ ³              0.36 Display Topic Name in StatusLine                       ³
+ ³              0.37 Sort resources based on description                    ³
+ ³              0.38 Re-work topic framing logic                            ³
+ ³              0.40 Return to prior topic list added                       ³
+ ³              0.41 Tuning, improved buffer clean-up                       ³
+ ³              0.42 Fixed clean-up on keyword not found condition          ³
+ ³              0.43 Code restructuring for readability                     ³
+ ³              0.44 Added return to last topic in mSearchView(OldSearch)   ³
+ ³              0.45 Added ResourceStatus & CloseResource                   ³
+ ³              0.46 Fixed memory leak due to ViewFindsId bug               ³
+ ³                   Fixed null temp_fn  problem in OpenResource            ³
+ ³                   Added 'All topics' searching                           ³
+ ³              0.47 Added LoadWild for resource specification              ³
+ ³                   Added InsertFiles()                                    ³
+ ³                   Trim statusline topic string                           ³
+ ³                   Added pushblock & popblock in InsertFiles()            ³
+ ³                   Validated with 2.39b                                   ³
+ ³                   Trim Title in list                                     ³
+ ³              1.00 Released for TSE Pro 2.5                               ³
+ ³                                                                          ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Installation & Usage ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+ ³                                                                          ³
+ ³ TextView is a full-text search and retrieval tool for text files which   ³
+ ³ contain a repeated discernible structure.  The tool takes advantage of   ³
+ ³ TSE large file and virtual memory capability to allow rapid access to    ³
+ ³ a user definable set of text resources.  Examples of common text         ³
+ ³ resources include: Ralf Brown's DOS Interrupt List; Tom Klein's          ³
+ ³ TSE Tip files; various *.DOC files;  BBS 'Allfiles' listings, etc.       ³
+ ³                                                                          ³
+ ³ USAGE:  Invoke TextView using  <Ctrl Ins>.  Upon first execution,        ³
+ ³ TextView will prompt you to select the  resource you wish to search.     ³
+ ³ Highlight the desired resource using the cursor keys and press enter.    ³
+ ³ You will then be prompted to supply a search expression and search       ³
+ ³ options.  TextView will produce a list of Titled topics containing       ³
+ ³ the search expression.  Use the cursor keys to select a topic and        ³
+ ³ press enter.  The topic text will be displayed in a work buffer which    ³
+ ³ may be edited freely.  Press escape to return to the topic list and      ³
+ ³ escape from their to return to your original buffer.  The text of the    ³
+ ³ last topic will be stored on your clipboard for easy pasting into your   ³
+ ³ current edit session.                                                    ³
+ ³                                                                          ³
+ ³ The default word will be the word at the cursor location; however,       ³
+ ³ TextView maintains a keyword search history which you may choose from.   ³
+ ³                                                                          ³
+ ³ To see all list of all topics in a resource, press the space bar to      ³
+ ³ answer 'blank' or null to the Search Expression prompt.                  ³
+ ³                                                                          ³
+ ³ You can return to the last topic list by pressing <Shift Ins>            ³
+ ³                                                                          ³
+ ³ Configure TextView using <CtrlAlt Ins>.  Select a resource to Edit,      ³
+ ³ Copy or Delete using the cursor keys. Alt-C will copy the current        ³
+ ³ resource definition to a new entry. <Del> will delete the highlighted    ³
+ ³ entry. Alt-E will allow modification of the highlighted entry.  The      ³
+ ³ config variables are:                                                    ³
+ ³                                                                          ³
+ ³ Tag          A 8 character mnemonic for the resource                     ³
+ ³ FileName     A full path file name (with navigation/completion aids)     ³
+ ³ Description  A description of the resource                               ³
+ ³ Separator    An expression to identify the separation between topics     ³
+ ³ DeltaTitle   Number of lines from the separator to the title line        ³
+ ³ DeltaBottom  Number of lines from the separator to the last line of the  ³
+ ³              previous topic                                              ³
+ ³                                                                          ³
+ ³ If the filename is left blank, you will be prompted to supply a file     ³
+ ³ name each time a search is started for that resource.  This is useful    ³
+ ³ for circumstances where different files of the same format need to       ³
+ ³ be searched.                                                             ³
+ ³                                                                          ³
+ ³ Wildcards (* and ?) can be used in the filename specification.  This     ³
+ ³ is useful when the resource is composed of a series of related files     ³
+ ³ with the same structure (for example, Ralf Brown's Interrupt List,       ³
+ ³ Tom Klein's TSE_TIP files, etc.  To create a resource definition         ³
+ ³ containing a wildcard, enter the pathname (or navigate to it). Enter     ³
+ ³ the appropriate wildcard spec to the end of the path.  TSE will prompt   ³
+ ³ you to select from the list of files matching the wild card -- this      ³
+ ³ gives you an opportunity to verify that the wildcard produces the        ³
+ ³ intended result.  Press escape to return to the prompt box, keeping the  ³
+ ³ specified wildcard specification.                                        ³
+ ³                                                                          ³
+ ³ Configuration data is stored in a file (currMacroFileName()+'.dat').     ³
+ ³ This defaults to TextView.Dat.                                           ³
+ ³                                                                          ³
+ ³ By default, this file  is stored in the same path as the .mac file.      ³
+ ³ However, the file may be kept anywhere on the TsePath.                   ³
+ ³                                                                          ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Notes ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+ ³                                                                          ³
+ ³ TextView is based on IntrView (which is now obsolete) and on code        ³
+ ³ borrowed from SemWare's TSE macros mCompressView (2.0) and Compile.s.    ³
+ ³ The author relinquishes all interest in this work to SemWare, with       ³
+ ³ thanks to Sammy Mitchell (for giving us TSE), Steve Watkins (for the     ³
+ ³ fancy compile macro & the life-saving macro debugger), and George DeBruin³
+ ³ (for valor above and beyond the call of tech support).                   ³
+ ³                                                                          ³
+ ³ Portions of this work are derived from copyrighted material and are      ³
+ ³ used in accordance with the copyright holder provisions outlined below:  ³
+ ³                                                                          ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Copyright Notice ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+ ³                                                                          ³
+ ³ Copyright 1992-1994 SemWare Corporation.  All Rights Reserved Worldwide. ³
+ ³                                                                          ³
+ ³ Use, modification, and distribution of this SAL macro is encouraged by   ³
+ ³ SemWare provided that this statement, including the above copyright      ³
+ ³ notice, is not removed; and provided that no fee or other remuneration   ³
+ ³ is received for distribution.  You may add your own copyright notice     ³
+ ³ to cover new matter you add to the macro, but SemWare Corporation will   ³
+ ³ neither support nor assume legal responsibility for any material added   ³
+ ³ or any changes made to the macro.                                        ³
+ ³                                                                          ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+*/
+

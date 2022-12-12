@@ -1,0 +1,43 @@
+
+// If you incorporate this in a file with other macros, insert the code below
+// BEFORE any other macros or procedures in the file.
+
+-------------------------------------------------------------------------------
+
+binary '??:\tse\ui\wp.bin'     // change the ?? to your TSE drive
+    integer proc _CD(string dir) : 0
+end
+
+integer proc ChgDir(string dir)
+    return (_CD(dir))
+end
+
+
+-----------------------------------------------------------------------------
+proc mChDir()
+
+    string directory[40] = ""
+    string path[40] = ""
+    string device[1] = ""
+
+    integer location = 0
+
+    if Ask("New directory:", path) AND Length(path)
+       location = pos(":",path)
+       if location == 2
+          directory = substr(path,3,length(path)-2)
+          device = substr(path,1,1) + chr(0)
+          LogDrive(device)
+       else
+          directory = path
+       endif
+       location = pos("\",directory)
+       if (location == 1) AND (Length(Directory) > 1)
+          ChgDir ("\"+chr(0))
+          directory = substr(directory,2,length(directory)-1)
+       endif
+
+       ChgDir(directory+chr(0))
+       EditFile()
+    endif
+end

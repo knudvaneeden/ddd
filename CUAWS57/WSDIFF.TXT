@@ -1,0 +1,154 @@
+CUAWS: CUA Macro/WordStar UI for TSE Pro
+(C) 1997-2004 by Bill Stewart (bstewart@iname.com)
+
+Differences Between WORDSTAR.UI and WordStar 7.0
+
+Command           WordStar 7.0                  WORDSTAR.UI
+
+Home              Beginning of window           Beginning of line
+End               End of window                 End of line
+Ctrl-PgUp         Scroll up one line            Roll left one column
+Ctrl-PgDn         Scroll down one line          Roll right one column
+
+F1                Help                          Help Table of Contents
+F2                Undo (undelete)               Save file
+F3                Underline                     Open horizontal window
+F4                Bold                          (nothing)
+F5                Delete line                   Zoom window
+F6                Delete word                   Next window
+F7                Reformat paragraph            (nothing)
+F8                Insert ruler line             Shell
+F9                Save file                     Load macro
+F10               Save and close file           Activate main menu
+
+Shift-F1          Toggle command tags           Help with key assignments
+Shift-F2          Center line                   (nothing)
+Shift-F3          Run spelling checker          Open vertical window
+Shift-F4          Check spelling of word        (nothing)
+Shift-F5          Delete marked block           (nothing)
+Shift-F6          Toggle block display          Previous window
+Shift-F7          Move marked block             (nothing)
+Shift-F8          Copy marked block             (nothing)
+Shift-F9          Mark beginning of block       Compile menu
+Shift-F10         Mark end of block             Pop-up menu
+
+Ctrl-F1           (nothing)                     Help on word at cursor
+Ctrl-F3           (nothing)                     Close duplicate windows
+Ctrl-F5           (nothing)                     Resize window
+Ctrl-F6           (nothing)                     Next file
+Ctrl-F9           (nothing)                     Compile current file
+
+Alt-F1            (nothing)                     Previous help topic
+Alt-F3            (nothing)                     Close window
+Alt-F4            (nothing)                     Exit
+Alt-F5            (nothing)                     Show entry screen
+Alt-F8            (nothing)                     OS command
+Alt-F9            (nothing)                     Execute macro
+
+Ctrl-[            (nothing)                     Shift line/block left
+Ctrl-]            (nothing)                     Shift line/block right
+
+Ctrl-A            Left one word                 (nothing)
+CtrlShift-B       (nothing)                     Wrap/enquote paragraph
+Ctrl-C            Down one line                 Copy to clipboard
+Ctrl-D            Right one character           (nothing)
+Ctrl-E            Up one line                   (nothing)
+Ctrl-Enter        (nothing)                     Execute scrap macro
+Ctrl-F            Right one word                Find
+Ctrl-I            Tab                           Incremental search
+Ctrl-J            Help                          Help index
+
+Ctrl-K.           Sentence case block           Capitalize
+Ctrl-K\           Fax                           (nothing)
+Ctrl-KA           Copy block from other window  Mark paragraph
+Ctrl-KB           Mark beginning of block       Start marking
+Ctrl-KE           Rename a file                 Rename current file
+Ctrl-KF           Execute DOS command           File Manager
+Ctrl-KG           Move block from other window  Change directory
+Ctrl-KH           Toggle block display          Unmark block
+Ctrl-KI           Toggle column replace mode    (same)
+Ctrl-KJ           Delete a file                 (nothing)
+Ctrl-KK           Mark end of block             Stop marking
+Ctrl-KL           Change directory              Fill block
+Ctrl-KM           Block math                    Set bookmark
+Ctrl-KN           Toggle column block mode      (same)
+Ctrl-KO           Copy a file                   Named clipboards
+Ctrl-KT           Save as and close             Save As
+Ctrl-KU           Re-mark previous block        Quote/unquote line(s)
+Ctrl-KX           Save file and exit WordStar   Save all files and exit
+
+CtrlShift-L       (nothing)                     Repeat find (reverse)
+
+Ctrl-M!           Insert time                   Date/time Stamp
+Ctrl-M#           Insert last expression        (nothing)
+Ctrl-M$           Insert last result as $       (nothing)
+Ctrl-M*           Insert filename (w/o path)    (nothing)
+Ctrl-M.           Insert current directory      (nothing)
+Ctrl-M:           Insert current drive          (nothing)
+Ctrl-M=           Insert last result            (nothing)
+Ctrl-M@           Insert date                   (nothing)
+Ctrl-M\           Insert filename (full path)   (nothing)
+Ctrl-MD           Edit or create macro          Save keyboard macros
+Ctrl-ME           Rename a macro                (nothing)
+Ctrl-MO           Copy a macro                  (nothing)
+Ctrl-MP           Play a macro                  (nothing)
+Ctrl-MR           Record a macro                Record keyboard macro
+Ctrl-MS           Play macro step-by-step       (nothing)
+Ctrl-MY           Delete a macro                Purge keyboard macros
+
+Ctrl-O[           (nothing)                     Align left
+Ctrl-O]           Flush right                   Align right
+Ctrl-O#           Set page numbering            (nothing)
+Ctrl-O-           (nothing)                     Toggle line drawing
+Ctrl-O?           Display status                File information
+Ctrl-OA           Toggle auto align             Set autoindent type
+Ctrl-OB           Screen settings/soft spaces   Toggle expand tabs
+Ctrl-OD           Toggle command tags           Hex display toggle
+Ctrl-OE           Insert soft hyphen            Set EOL type
+Ctrl-O Enter      Toggle Enter closes dialogs   (nothing)
+Ctrl-OF           Manage paragraph styles       Function list
+Ctrl-OG           Temporary indent              Go to previous file
+Ctrl-OH           Toggle automatic hyphenation  Toggle syntax highlighting
+Ctrl-OI           Set margins and tabs          Set tab width
+Ctrl-OJ           Toggle right justify          (nothing)
+Ctrl-OL           Set margins and tabs          Set left margin
+Ctrl-ON           Create/edit notes             Go to next file
+Ctrl-OO           Insert ruler line             Compressed view
+Ctrl-OP           Print preview                 Browse mode
+Ctrl-OR           Set margins and tabs          Set right margin
+Ctrl-OS           Set line spacing              Shift block or line
+Ctrl-OT           (nothing)                     Set tab type
+Ctrl-OU           Define columns                Function list
+Ctrl-OV           Center text on page           Center cursor in window
+Ctrl-OW           (nothing)                     Set word wrap mode
+Ctrl-OX           Margin release                Exchange windows
+Ctrl-OY           Set page layout               Toggle sync scrolling
+Ctrl-OZ           Paragraph numbering           Toggle maximized window
+
+Ctrl-P            (print menu)                  Quote next character
+
+Ctrl-Q<           Go to next style marker       (nothing)
+Ctrl-Q=           Go to next font marker        (nothing)
+Ctrl-Q[           (nothing)                     Go to matching pairs
+Ctrl-QI           Go to page                    Go to line/column
+Ctrl-QJ           Thesaurus                     (nothing)
+Ctrl-QM           Calculator                    Go to bookmark
+Ctrl-QN           Check spelling of word        (nothing)
+Ctrl-QO           Spell check typed word        Potpourri
+Ctrl-QQ           Repeat next command           Repeat last command
+Ctrl-QT           Delete to character           (nothing)
+Ctrl-QU           Reformat remaining            Restore cursor line
+Ctrl-QV           Go to last find/replace       View finds
+Ctrl-QW           Continuous scroll up          (nothing)
+Ctrl-QZ           Continuous scroll down        (nothing)
+
+Ctrl-R            Page up                       Replace
+Ctrl-S            Left one character            (nothing)
+Ctrl-V            Toggle insert                 Paste clipboard contents
+Ctrl-X            Down one line                 Cut block to clipboard
+
+Alt-0             (nothing)                     List open files
+Alt-1..9          (nothing)                     Go to window 1 through 9
+
+Alt-Backspace     (nothing)                     Undo
+AltShift-Backspa  (nothing)                     Redo

@@ -1,0 +1,179 @@
+/****************************************************************************
+  This is a replacement for the WordStar/TSE Jr. style block marking 
+  package distributed with TSE 2.0.  This should replace the 
+  corresponding part of your User Interface (e.g., WS.UI, TSE Jr..UI).  
+  The new interface should be compiled and burned in.  This version 
+  was produced by John G. Bennett and is not a product of Semware.  
+  Please direct all questions to John G. Bennett, Compuserve ID
+  72431,1407 or 72431.1407@compuserve.com.
+
+  This version fixes the following problems in the package distributed 
+  with TSE 2.0:
+
+  - When marking a block, with a block marked in another buffer, the 
+    cursor in the other buffer is moved to the beginning or end of the 
+    block there and the _ON_CHANGING_FILES_ event is triggered.
+
+  - The Bookmarks, y and z, that are used to mark the beginning and 
+    ends of blocks are not moved when a block is moved by a copy or 
+    move operation; this can cause the HideBlockToggle operation to 
+    behave incorrectly, among other things.
+
+  - If a block is marked, toggling between regular and column blocks 
+    does not cause the block to change appropriately until it is 
+    marked again.
+
+*************************************************************************
+  A WordStar/TSE Jr. style block marking package for TSE                #001
+  ----------------------------------------------------
+
+  A TSE tip from the SemWare tech support staff (special thanks to Tim Farley
+  for the original code, and to John G. Bennett for some nifty additions!).
+
+  Old habits die hard, and a common request for TSE is how to mark blocks in
+  the same fashion as WordStar.
+
+  Basically, the WordStar style of block marking features a MarkBlockBegin
+  and a MarkBlockEnd command.  Both ends of the block must be marked before
+  any visual indicator appears indicating that the block is marked.
+
+  This package implements that, along with WordStar's column and replace
+  modes, hide/unhide blocks, and uses all the WordStar block key assignments.
+ ****************************************************************************
+  Implement WordStar/TSE Jr. style blocks in TSE.
+
+  Limitations:  Uses PlaceMark()'s "Y" and "Z" to implement the marking,
+  could interfere with users using these same letters.
+
+ ***************************************************************************/
+string  PlaceMarkBegin[1] = "y" // PlaceMark() to use for begin block
+string  PlaceMarkEnd[1]   = "z" // PlaceMark() to use for end block
+integer column_mode
+integer column_replace_mode
+integer WsBlockBeginID, WsBlockEndID
+
+proc ShowMark()
+    integer ws_block_shown = FALSE
+    integer BeginRow, BeginCol, EndRow, EndCol
+
+    // If beginning, end marks not in same file, we're done.
+
+    if WsBlockBeginID <> WsBlockEndID
+      return()
+    endif
+
+    PushPosition()
+
+   // I can't understand why we don't need the test, here, so I added it.
+   // If either place mark is not set, we can return without doing anything.
+    if GotoMark(PlaceMarkBegin)
+        BeginRow = CurrLine()
+        BeginCol = CurrPos()
+    else
+        PopPosition()
+        Return()
+    endif
+
+    if GotoMark(PlaceMarkEnd)
+        EndRow   = CurrLine()
+        EndCol   = CurrPos()
+    else 
+        PopPosition()
+        Return()
+    endif
+
+    // Is end mark somewhere past beginning mark?
+
+    if column_mode
+        ws_block_shown = (EndRow >= BeginRow) AND (EndCol >= BeginCol)
+    else
+         ws_block_shown = ((EndRow > BeginRow) OR 
+                 ((EndRow == BeginRow) AND (EndCol > BeginCol)))
+    endif
+    if ws_block_shown
+        GotoMark(PlaceMarkBegin)
+        if column_mode
+           MarkColumn()
+        else
+            MarkChar()
+        endif
+        GotoMark(PlaceMarkEnd)
+        if column_mode
+           MarkColumn()
+        else
+            MarkChar()
+        endif
+    endif
+    PopPosition()
+end ShowMark
+
+// Reset the marks when block moves
+proc ResetBlockMarks()
+    PushPosition()
+    GotoBlockBegin()
+    PlaceMark( PlaceMarkBegin )
+    WsBlockBeginID = GetBufferID()
+    GotoBlockEnd()
+    PlaceMark( PlaceMarkEnd )
+    WsBlockEndID  = GetBufferID()
+    PopPosition()
+end ResetBlockMarks
+
+// Mark the beginning of a block
+proc mMarkBlockBegin()
+    UnmarkBlock()
+    PlaceMark( PlaceMarkBegin )
+    WsBlockBeginID = GetBufferID()
+    ShowMark()
+end mMarkBlockBegin
+
+// Mark the end of a block
+proc mMarkBlockEnd()
+    UnmarkBlock()
+    PlaceMark( PlaceMarkEnd )
+    WsBlockEndID = GetBufferID()
+    ShowMark()
+end mMarkBlockEnd
+
+// Toggle column marking on/off
+proc mToggleColumnMode()
+    column_mode = column_mode ^ 1
+    if isBlockMarked()
+        UnmarkBlock()
+        ShowMark()
+    endif
+    Message("Column mode turned ", iif(column_mode, "on", "off"))
+end
+
+// Toggle column replace mode on/off
+proc mToggleColumnReplaceMode()
+    column_replace_mode = column_replace_mode ^ 1
+    Message("Column replace mode turned ", iif(column_replace_mode, "on", "off"))
+end
+
+// Move a block
+proc mMoveBlock()
+    if MoveBlock(iif(column_mode and column_replace_mode, _OVERWRITE_,
+            _DEFAULT_))
+       ResetBlockMarks()
+    endif
+end
+
+// Copy a block
+proc mCopyBlock()
+    if CopyBlock(iif(column_mode and column_replace_mode, _OVERWRITE_,
+          _DEFAULT_))
+        ResetBlockMarks()
+    endif
+end
+
+// Toggle the displaying of the block
+proc mToggleHideBlock()
+    if isBlockMarked()
+        UnmarkBlock()
+    else 
+        ShowMark()
+    endif
+
+end
+

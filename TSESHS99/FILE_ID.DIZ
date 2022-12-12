@@ -1,0 +1,18 @@
+TseShell.S
+0.99/15.04.96
+-
+TseShell 0.99 allocates a buffer which
+can be used almost like a normal editing
+buffer, except that every line where the
+"Enter" key is pressed at is interpreted
+as a Dos command to be executed.
+Commands can be "batched" by marking an
+enclosing block and pressing "Enter"
+(the Execute key). Program output will
+end up in the command buffer, where it
+can be edited and reused.
+A help function is provided (an
+adoptation and adaptation of DiK's
+TseSHelp.S macro).
+German and english language versions
+included.

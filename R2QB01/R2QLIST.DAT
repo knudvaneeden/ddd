@@ -1,0 +1,87 @@
+forward         proc    WhenLoaded()
+//forward integer proc    ListSkipDone(integer list_type)
+forward integer proc    ListSkipDone()
+forward integer proc    BuildList(integer listindex, var integer maxlen, var integer width, var integer list_type)
+forward integer proc    GetListLinenum(integer list_type)
+forward integer proc    GetRecFileLinenum(integer list_type, integer linenum)
+forward integer proc    EditRec(integer etype)
+
+//constants
+constant _ABORT =           -1  //means abort macro- fatal error
+constant _FAIL =             0  //means process failed
+constant _SUCCESS =          1  //okay
+constant _SKIP =             6  //mark recipe as skipped
+constant _DONE =             7  //mark recipe as done
+constant _EDIT =             8  //edit the recipe
+constant _NEXT =             2
+constant _EXIT =            99  //exit macro
+
+//file buffers & related variables
+integer curr_id, work_id, msg_id, skipdone_id
+//        tag_id, header_id, words_id
+
+//misc variables
+integer nextitem, list_result
+
+//message variables
+integer StartMsg, EndMsg
+
+//recipe formatting lines
+integer StartRec, EndRec
+
+//header variables
+string  HFirstLine[80]
+
+//KEYS FOR SelectKeys
+constant listESCAPE     =   0,      //abort
+         listENTER      =   1,      //select line
+         listDEL        =   2,      //delete all lines in buffer
+         listTAB        =   3,      //steal taglines to taglines.txt
+         listSHIFTESCAPE=   4       //to go back to main menu- cancel formatting
+
+//keydef SelectKeys
+////    <F1>                    HelpOnListKeys()
+//    <Shift Escape>          EndProcess(listSHIFTESCAPE)
+//    <Escape>                EndProcess(listESCAPE)
+////    <CenterBtn>             EndProcess(listENTER)
+////    <LeftBtn>               EndProcess(listENTER)
+////    <RightBtn>              EndProcess(listENTER)
+//    <Spacebar>              EndProcess(listENTER)
+//    <Enter>                 EndProcess(listENTER)
+//    <GreyEnter>             EndProcess(listENTER)
+//    <Del>                   EndProcess(listDEL)
+//    <Tab>                   EndProcess(listTAB)
+//    <CursorRight>           Right()
+//    <GreyCursorRight>       Right()
+//    <Ctrl CursorRight>      WordRight()
+//    <Ctrl GreyCursorRight>  WordRight()
+//    <CursorLeft>            Left()
+//    <GreyCursorLeft>        Left()
+//    <Ctrl CursorLeft>       WordLeft()
+//    <Ctrl GreyCursorLeft>   WordLeft()
+//    <CursorUp>              Up()
+//    <GreyCursorUp>          Up()
+//    <Ctrl CursorUp>         RollUp()
+//    <Ctrl GreyCursorUp>     RollUp()
+//    <CursorDown>            Down()
+//    <GreyCursorDown>        Down()
+//    <Ctrl CursorDown>       RollDown()
+//    <Ctrl GreyCursorDown>   RollDown()
+//    <Home>                  BegLine()
+//    <GreyHome>              BegWindow()
+//    <Ctrl Home>             BegWindow()
+//    <Ctrl GreyHome>         BegWindow()
+//    <End>                   EndLine()
+//    <GreyEnd>               EndWindow()
+//    <Ctrl End>              EndWindow()
+//    <Ctrl GreyEnd>          EndWindow()
+//    <PgUp>                  PageUp()
+//    <GreyPgUp>              PageUp()
+//    <Ctrl PgUp>             BegFile()
+//    <Ctrl GreyPgUp>         BegFile()
+//    <PgDn>                  PageDown()
+//    <GreyPgDn>              PageDown()
+//    <Ctrl PgDn>             EndFile()
+//    <Ctrl GreyPgDn>         EndFile()
+//end SelectKeys
+

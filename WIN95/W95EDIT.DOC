@@ -1,0 +1,103 @@
+
+1. Overview
+-----------
+
+W95Edit is a Windows 95 replacement for the internal EditFile command. It
+allows you to load and save files using long names while running TSE in a
+DOS session in Windows 95.
+
+
+2. Installation
+---------------
+
+Compile the macro and copy the compiled macro to a place where TSE can find
+it, e.g.
+
+        sc w95edit
+        copy w95edit.mac c:\tse\mac
+
+W95Edit is now ready to use.
+
+If you plan to regularly use W95Edit, it's perhaps best you bind it to your
+burned in UI. If you do this, you have two possibilities: either replace the
+original commands by W95Edit or use new keybindings and/or menu entries.
+To replace the original commands load your UI file into TSE and search and
+replace the following strings:
+
+        search                  replace with
+        ------                  ------------
+        EditFile(@)             ExecMacro("w95edit "+@)
+        SaveAs()                ExecMacro("w95edit -s")
+        InserFile()             ExecMacro("w95edit -i")
+        SaveBlock()             ExecMacro("w95edit -w")
+
+The @ simply means any EditFile argument. Be careful, the UI file includes
+four references to the above mentioned functions you MUST NOT change, since
+these are used to implement low level functionality:
+
+        line    command         function        remark
+        ----    -------         --------        ------
+         605    InsertFile      GotoRecent...   loading recent files list
+         984    SaveAs          WhenPurged      saving recent files list
+        1054    EditFile        WhenLoaded      startup, loading first file
+        1068    EditFile        WhenLoaded      ditto
+
+The line numbers pertain to the original TSE.UI file.
+
+Considering all this and the fact that W95Edit is not fully backward
+compatible you might want to bind W95Edit to a new set of keystrokes. This
+is certainly much easier and less error prone, especially if you're not a
+programmer yourself.
+
+
+3. Using W95Edit
+-----------------
+
+This shouldn't be much of a problem, since W95Edit tries to emulate the
+EditFile command as best as it can. Still there are a couple of differences
+and limitations. The TAB key is non-functional, e.g. filename completion is
+not included. Furthermore, you cannot use multiple filenames both at the
+macro command line and within the filename prompt. The reason is that spaces
+_are_ valid characters within Windows 95 filenames. Finally, the command
+line switches must be passed to W95Edit in the correct order. Any special
+W95Edit switch comes first with any TSE-switches following it. The filename,
+if any, must be the last thing on the command line. The command line
+switches of W95Edit do the following
+
+        none    EditFile
+        -s      SaveAs
+        -i      InsertBlock
+        -w      SaveBlock
+
+
+4. Dos Mode
+-----------
+
+What happens, if you use TSE in DOS mode? Well, nothing you have to concern
+yourself about. W95Edit detects DOS mode (and old DOS versions) and
+automatically calls the correct internal command as a replacement instead.
+
+
+5. Limitations
+--------------
+
+W95Edit uses SAL strings to store path names, e.g. the longest path it can
+handle is 254 characters long. On the other hand, Windows 95 allows path
+names which are up to 260 characters long. This means that you MUST NOT use
+path names which exceed the limit imposed by W95Edit or the macro will fail
+utterly most probably hanging TSE.
+
+Well, I guess that in real life this isn't a limit at all, since nobody
+actually will use filenames _that_ long.
+
+If you should find something buggy, have suggestions on what is missing or
+just wanted to say hello, please contact me. My name is Dieter K”ssl and my
+e-mail address is 100517.1221@compuserve.com.
+
+
+6. Copyright and Disclaimer
+---------------------------
+
+This program is thereby donated to the public domain. Use it or even alter
+it as you see fit, but ENTER AT YOUR OWN RISK!
+

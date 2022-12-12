@@ -1,0 +1,398 @@
+1. Synopsis
+-----------
+
+The enclosed SAL macros allow you to edit your TSE-Pro (v2.5) and TSE
+Pro-32 (v2.8, v3.0) keyboard macros. DeComp reads a binary keyboard
+macro file and produces a readable key listing. This listing can be
+altered and recompiled to binary format using ReComp. EditKbd can be
+used to change the currently defined key macros on the fly.
+
+
+3. Using DeComp and ReComp
+--------------------------
+
+Using DeComp and ReComp is simple and straight forward. If you made a
+few typing errors while recording a keyboard macro, just save your work
+on disk and execute DeComp. You are asked for the filename of the macro
+file which should be decompiled. Enter the filename or press return and
+choose it from the pick list. Now DeComp decompiles the binary file and
+produces a readable list of the embedded macros and their respective
+keystrokes. The list is automatically saved on disk and has the same
+name as the binary file, but the extension kbd is replaced by k. The
+keystrokes are dumped in the same format that SAL and the ShowKey macro
+use. The decompiled macro contains one line per hotkey immediately
+followed by the keystrokes (again one line per key). The keystrokes are
+(and must be) indented.
+
+After changing your typos you are ready to recompile the k-file. Just
+run ReComp. If your current file has the extension k, ReComp assumes
+that it is a macro listing and tries to compile it. Otherwise you are
+prompted for a filename. If ReComp is satisfied with your listing, e.g.,
+it did not find any format errors or unknown key codes, it saves the
+binary file on disk. It also asks, whether it should immediately load the
+embedded macro(s).
+
+Both DeComp and ReComp display a progress report at the status line and
+can be interrupted at any time by pressing the escape key.
+
+
+3. Using EditKbd
+----------------
+
+EditKbd is even more convenient to use. It allows you to change the
+currently defined key macros interactively and on the fly.
+
+Execute EditKbd and it will decompile the currently defined key macros.
+Next, it will present a list of keys which have key macros bound to
+themselves. Using this list you can change a key <F2>, delete a macro
+<Del> or add an all new macro <Ins>. Moreover, you can change the keys
+of any macro you have previously recorded. Press <Enter> and a new list
+will pop up which enumerates the recorded keys. Again you can delete
+<Del> and insert <Ins> keys. To change a key press <Enter>. This opens a
+prompt box which reads the new key.
+
+Note:
+The scrap macro is bound to the Enter key (c.f. section 4). Thus, if you
+want to change the scrap macro, edit the <Enter> macro. If you want to
+create an all new scrap macro, insert a macro and bind it to the Enter
+key. This is due to the way key macros are stored on disk and has
+nothing to do with the key that replays the scrap macro (<Ctrl Enter> in
+the default key binding). By the way, you cannot assign a key macro to
+<Enter> or <GreyEnter> anyway, which is due to the way the scrap macro
+is recorded.
+
+TSE Pro-32 only:
+To change a key simply press the new key on your keyboard. This works
+for almost any key or key combination. Exceptions are the basic list
+navigation keys and the command keys. In this case you must explicitly
+enter editing mode using <Enter>.
+
+TSE Pro-32 v3.0 only:
+Changes can be undone <Ctrl Z> and redone <Ctrl Y>. This works for both
+the list of assigned keys and the list of recorded keys.
+
+To finish editing a key macro press <Escape>. EditKbd asks, whether it
+should save the changes you made and returns to the list of macro keys.
+To quit the program press <Escape> a second time. EditKbd asks, whether
+it should save the changes. Only if you answer yes, it will recompile
+and load the changed key macros.
+
+
+4. Key listing format
+---------------------
+
+A freshly decompiled key listing contains nothing but hotkeys, keystrokes
+and a few blank lines to optically separate the macros. Yet a revised
+listing ready for recompile may contain additional comments, to make your
+work more productive. Blank lines and lines starting with a ";" are
+ignored. Furthermore, ReComp also skips everything that follows the
+closing angle bracket of a keystroke.
+
+As already mentioned, hotkeys and keystrokes are listed in the SAL format.
+This is the format which is used in the SAL language to assign macros and
+commands to keys. The Appendix D of the TSE user's guide lists all the
+possible key codes. If you wish to assign a macro to a key which SAL does
+not recognize, you always can use the hexadecimal key code instead of its
+textual representation. But be warned, ReComp checks only, if the key code
+is within the range of 0 to 65535. It does not check, however, if the code
+corresponds to a real key on your keyboard. You should use the ShowKey
+macro to check for key codes and their names used in SAL.
+
+There is one important exception to the these rules. This is the hotkey
+of the scrap macro, which is always listed as <Enter> or <GreyEnter>.
+The Enter and GreyEnter keys are the only choices you have to initiate
+the recording of this macro. One final comment about the scrap macro.
+This macro will always be listed last in the output of DeComp, due to
+its position in the binary macro file. During a recompile, however, its
+position is immaterial, because ReComp will put it in the correct place
+anyway.
+
+Each macro is terminated by a key you did not record. In the standard
+user interface this key will be <Ctrl M>, which is used to start and
+stop macro recording. Please heed the advice, which is included on these
+lines of the DeComp output, and do not alter these lines. The reason is,
+that the keystroke used to terminate macro recording _is_ included in
+the binary macro file, but it is _not_ replayed. You could safely delete
+these lines, however, because TSE will not miss them after you have
+recompiled the macros. But for compatibility's sake just leave them as
+they are, because only the key to which the RecordKeyMacro command is
+bound will be ignored by TSE. DeComp and ReComp cannot handle this issue
+by themselves, as there is no way to determine which key is bound to the
+RecordKeyMacro command from within a SAL macro.
+
+Here is a more formal description of what a key listing may contain.
+
+    þ Blank line
+        ù These lines are ignored.
+    þ Comment line
+        ù Each line beginning with a ";" is a comment line.
+        ù These lines are ignored
+    þ Inline comments
+        ù Each key definition may be followed by arbitrary
+          characters (the comment).
+        ù These characters are ignored.
+    þ HotKey
+        ù This is a valid TSE key definition, which must have
+          its opening angle bracket placed in the first column
+          of a line.
+        ù This line initiates the compilation of a macro and
+          terminates the previous macro.
+        ù A hotkey must be followed by at least one key stroke.
+    þ KeyStroke
+        ù This is a valid TSE key definition, which must be
+          indented by one or more spaces.
+        ù This key definition is appended as key stroke to
+          the current macro.
+    þ Termination Key (optional)
+        ù This is a valid TSE key definition, which must be
+          indented by one or more spaces.
+        ù This must be the key to which the RecordKeyMacro
+          command is bound.
+        ù This key is the last key of a macro, e.g., the key
+          definition immediately prior to a hotkey definition,
+          and will not be replayed during execution of the macro.
+
+
+5.) Error Messages
+------------------
+
+a) EditKbd
+    þ No key macros defined!
+        You can't edit key macros unless you have recorded
+        at least one of them.
+    þ Duplicate macro hot key
+        The hot key of macro must be unique. Retry and
+        choose another hot key.
+    þ Maximum macro capacity reached!
+        You cannot define more than 20 key macros.
+    þ Cannot execute macro
+        EditKbd was unable to find DeComp or ReComp
+    þ Error while decompiling key macros.
+        Something went wrong while DeComp was executing.
+        Save your key macro and try to manually decompile
+        them using DeComp to see what's amiss.
+    þ Cannot find key macro! Key list is invalid!
+        You tried to edit a k-file which isn't actually a
+        key listing or managed to damage the key listing.
+        Try using ReComp to zoom in on the error.
+
+b) DeComp
+    þ Invalid macro file format
+        There is either a version conflict or the file is not a
+        TSE macro file at all.
+    þ Terminated by user
+        You interrupted DeComp by pressing the <Escape> key.
+
+c) ReComp
+    þ Macro is empty
+        A macro must contain at least one keystroke. Probably you
+        forgot to intend one or more of the keystroke definitions.
+    þ Scrap macro defined more than once
+        Each macro file can store only one scrap macro, because
+        you can have only one scrap macro defined at a time.
+        Delete the surplus definitions.
+    þ Too many macros
+        A macro file can store up to twenty macros (not counting
+        the scrap macro). Move some of the macros to another file.
+    þ Invalid key code
+        ReComp does not recognize what is inside the angle brackets
+        of a key definition. Most probably there is a typo in the
+        key name.
+    þ Invalid macro format
+        The current line is neither blank nor a comment nor does
+        it contain a key definition. Most probably you forgot to
+        type the comment character (;) or you misspelled one of the
+        angle brackets of the key definition. This is also triggered,
+        if your first macro misses the hotkey.
+    þ Terminated by user
+        You interrupted ReComp by pressing the <Escape> key.
+
+There are some more error messages, but you probably will never see
+them, because they handle buffer allocation errors and thus will be
+triggered only, if there is a severe shortage of memory.
+
+
+6.) National Keyboards
+----------------------
+
+(This section applies to TSE v2.5 only. These macros do not need and do
+not use a translation table when compiled for the 32-bit versions of the
+editor.)
+
+DeComp and ReComp will work fine with the US keyboard layout. But if
+you are a non-US resident, you will sometimes find odd numbers instead
+of key names in the output of DeComp. This is not an error, but is due
+to the different keyboard layout you are using (compared to the US-
+keyboard). By the way, the ShowKey macro will also refuse to produce the
+correct key names. This is perfectly o.k., however, because ShowKey is
+intended to show the names of the keys as TSE recognizes them.
+
+But when you are using DeComp and ReComp, you want to see the names of
+the keys you actually typed and not some odd numbers, which TSE thinks
+you used. The macros use a table to translate numerical key codes to key
+names and vice versa. This table is stored in the file keytable.dat and
+is only correct for the US-keyboard. Well, I am German and use a German
+keyboard, of course. Therefore, DeComp would produce one of those odd
+numbers every once and awhile for myself, if I had not adapted the
+aforementioned translation table to the German keyboard layout. This is
+good news for all German users of TSE, because the only thing they have
+to do, is to copy the file keytable.049 over keytable.dat, and every-
+thing will work just fine.
+
+I am sorry, that I cannot provide any other translation tables, because
+I do not own any foreign keyboards, which are essential in producing
+these tables. But perhaps there are a few people out there, who
+volunteer for this tedious work and who are willing to share it with
+their compatriots.
+
+
+7.) Some Historical and Technical Details
+-----------------------------------------
+
+As a long time user of TSE Jr. (no, not anymore, I am now using TSE
+instead), I always appreciated that TSE Jr. feature which allowed you to
+decompile and edit your keyboard macros. I terribly missed this one in
+TSE. So quite a while ago I decided to have a closer look at the
+keyboard macro files which TSE produces. It did not take too long to
+figure out most of the file format and I was able to write preliminary
+versions of the programs you are now reading about. As these macros use
+undocumented information, which I admittedly have hacked, I decided to
+first privately ask the people at SemWare about their opinion on this
+project. Sammy Mitchell's answer was not only encouraging, but he also
+filled in some of the information about the keyboard macro format I had
+missed. Now here is, what I currently know about TSE's keyboard macros.
+
+TSE keyboard macros are stored in a system buffer. Since lines of a
+buffer have a finite length and since keyboard macros may be larger than
+that, a single macro can span multiple lines. This fact is reflected in
+the way macros are stored in a file. A keyboard macro file consists of a
+file header and the stored macros. The file header includes, among other
+things, the hot keys, the total number of macros stored and the number
+of lines occupied by the macros. The specific format is as follows.
+
+    a) "Magic Header" (18 bytes)
+        This part of the macro file is constant. It is presumably used
+        to check, if the loaded file really is a keyboard macro file.
+        The forth word (offset 7) seems to be the version number of TSE.
+        DeComp checks on this, before it tries to decompile a file.
+
+    b) "??????" (24 bytes or 32 bytes)
+        This is the part of the macro file header, I was unable and
+        unwilling to figure out, after I had realized that I could fill
+        in some information extracted from a "real" macro file and
+        everything worked fine. Moreover it is not necessary to know
+        what is in there, to successfully decompile a macro file.
+
+    c) Hotkeys (42 bytes)
+        This is an array of 21 words, which contains the hotkeys of the
+        macros or NULL's for the unused slots. The last word is reserved
+        for the scrap macro.
+
+    d) Line Pointers (42 bytes)
+        This is an array of 21 words, which contains 'pointers' to the
+        macros or NULL's for the unused slots. These pointer are in fact
+        the line numbers of the first line of each macro. Again, the
+        last word is reserved for the scrap macro.
+
+    e) Macro Count (2 bytes)
+        This is the total count of the macros stored in the macro file.
+        (Does not include the scrap macro.)
+
+    f) Line Count (2 bytes)
+        This is the total count of the lines used to store the macros.
+        (Includes continuation lines and the scrap macro.)
+
+The keystrokes of the macros are stored immediately following the file
+header. There is one entry per line used to store the macros in the
+system buffer, in which they are loaded. This means one entry for short
+macros and multiple entries for macros which exceed MaxLineLen
+characters. The format of each entry is as follows.
+
+    a) Size of Entry N (2 bytes)
+        This is the size of the current line in bytes. N includes the
+        continuation flag, but not the size word itself. Its values are
+        in the range 4..MaxLineLen and are even numbers, of course.
+    b) Continuation Flag (2 bytes)
+        This flag indicates, if the macro is continued on the following
+        line. The coding is as follows
+                0x0000  this is the last or only line
+                0xFFFF  one or more continuation lines follow
+    c) The Keystrokes (N-2 bytes)
+        Keystrokes are stored in hex format. The low byte is the ascii
+        code and the high byte is the scan code. Usually the last key of
+        a macro will be the key used to terminate recording (<Ctrl M> in
+        the standard user interface). This key will not be replayed, if
+        (and only if) it is the RecordKeyMacro command.
+
+Finally, you should notice that all this information is version
+dependent. Which means, that things might change with future versions
+of TSE.
+
+
+8.) Acknowledgment
+------------------
+
+I have to thank Sammy Mitchell of SemWare Co. for pointing out some
+important details of the macro file format, which have not been handled
+correctly in earlier versions of these programs.
+
+
+9.) History
+-----------
+
+Version 4.00
+------------
+Added EditKbd
+ þ  edit key macros on the fly
+ þ  added command switches to DeComp and ReComp
+ þ  fixed .k file bug
+ þ  changed the format of the scrap key
+
+Version 3.40
+------------
+Adaption to TSE v3.0.
+ þ  Works for TSE v2.5, v2.6, 2.8 3.0.
+ þ  removed CurrLinePtr :-(.
+
+Version 3.31
+------------
+Bug fix
+ þ  ReComp only, broken ">" key issue
+
+Version 3.30
+------------
+Adaption to TSE v2.8.
+ þ  Works for TSE v2.5, v2.6 and 2.8.
+ þ  made version checking more flexible
+
+Version 3.20
+------------
+Adaption to TSE v2.6.
+ þ  Works both for TSE v2.5 and v2.6.
+ þ  Uses dialogs, if the library is present.
+
+Version 3.10
+------------
+Adaption to TSE v2.5.
+ þ  No fundamental changes.
+
+Version 3.00
+------------
+First version available to the public.
+
+
+9.) Disclaimer
+-------------
+
+These programs are thereby donated to the public domain. Use them or
+even alter them as you see fit, but ENTER AT YOUR OWN RISK!
+
+Again, the information used to write these programs is VERSION DEPENDANT,
+which means that they work with the current versions of TSE (v2.5, v2.6,
+v2.8 and v3.0) and that there is no guarantee, that they will also work
+with future releases of the editor.
+
+If you should find any bug or just wanted to say hello, feel free to
+contact me. My name is Dieter K”ssl and my e-mail address is
+DieterKoessl@compuserve.com.
+

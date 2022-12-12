@@ -1,0 +1,135 @@
+
+
+
+                                BROWSE v2.2
+            TSE macro: makes TSE Pro a brawny "LIST Plus" clone
+                 Public Domain, last updated April 4, 1997
+                                     by
+                           David Daniel Anderson
+
+
+
+BROWSE makes The SemWare Editor a brawny clone of Vern Buerg's text reader
+"LIST Plus".  You can switch between BROWSE and edit modes instantaneously.
+
+
+Installation:
+~~~~~~~~~~~~~
+
+   *** If updating from a previous version, see following section. ***
+
+   The size of this macro (almost 16k when compiled with the supplied help
+   and keys) almost demands that it be loaded and executed as an *external*
+   macro, and I have written it with that method of use in mind.
+
+   1) Place the following files in your user macro (or TSE macro) directory:
+
+       a) browse.s
+       b) browse.ini
+       c) browse.key
+       d) browse.hlp
+
+   2) Compile BROWSE.S with SC (from DOS or from within TSE).
+
+      After compiling, you only need BROWSE.MAC and BROWSE.INI to run
+      BROWSE.  You can delete BROWSE.S, BROWSE.KEY and BROWSE.HLP.
+
+   3) To run BROWSE from the command line, use either of these methods:
+
+      a) e -eBROWSE
+      b) e filename -eBROWSE
+
+   4) If you also want to bind BROWSE to a keystroke, you have two options:
+
+      a) Put something like the following line in your key assignments:
+
+         <Ctrl b>   ExecMacro('browse')  // View file - don't edit it!
+
+      b) If you want a prompt to confirm switching to BROWSE mode, then:
+
+        i) Copy the "BROWSE.SI" file to your TSE\UI directory.
+
+        ii) Put the following line in your .UI file, before your key
+           assignments:
+
+           #include ["browse.si"]      // Macro to prompt for BROWSE mode
+
+        iii) Edit the key assignment in "browse.si" if desired.
+
+   5) If you have made any changes to your UI file, then burn the changes
+      into your editor (Example: sc -b c:\tse\ui\tse.ui).
+
+
+Updating from a previous version:
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   1) Rename your current BROWSE.INI to BROWSEold.INI.
+
+   2) Extract the necessary BROWSE.* files to your preferred directory,
+      as explained above.
+
+   3) Edit the variable settings in the new BROWSE.INI to match
+      your previous settings.  Delete BROWSEold.INI.
+
+   4) Follow steps 2 through 5 under "Installation" above.
+
+   5) Start BROWSE, and then press <Ctrl O> to verify your options.
+
+
+Background:
+~~~~~~~~~~~
+
+   The key assignments are nearly 100% identical to those in LIST, both in
+   function and behavior.  Use the online help (F1) for QuickHelp().
+
+   My comments in BROWSE.S are not extensive, but between the LIST docs and
+   the brief notes in the QuickHelp(), I hope that the documentation is, at
+   least, adequate.
+
+   Although I didn't even attempt a file-manager mode of BROWSE, the only
+   view-mode functions of LIST that I did not duplicate are the various text
+   filters, and a couple of things which are either irrelevant in TSE or
+   which TSE handles automatically (e.g. preloading & keyahead).
+
+
+Technical concerns:
+~~~~~~~~~~~~~~~~~~~
+
+   I've tried to avoid changing colors when the COLORS macro is loaded, but
+   I do apologize if I missed something.  Please tell me if I erred!
+
+   Up to four Hook()'s may be active at one time.  If there is no available
+   Hook(), a warning is given, but processing continues. Since most Hook()'s
+   are just used for screen settings, I don't feel BROWSE mode should be
+   aborted upon a Hook() error.
+
+   Cursor position is maintained at the upper left corner of the window to
+   best maintain functional compatibility with LIST -and- to have some easy
+   way of knowing where it will be when a command is issued.
+
+
+Contacting the author:
+~~~~~~~~~~~~~~~~~~~~~~
+
+   Internet: ddanders@win.bright.net, or the TSE Pro mailing list.
+
+   ILink and RIME BBS networks: the "SemWare" (aka "QEdit") conferences.
+
+   US Mail:  DAVID DANIEL ANDERSON
+             241 N MADISON ST
+             ST. CROIX FALLS, WI  54024-9135
+
+
+Credits:
+~~~~~~~~
+
+   Most of this is my own work, other than the bContinuousScrolling() proc,
+   which is based on AutoScroll by George De Bruin, Richard Blackburn, and
+   Steve Watkins.
+
+   However, I would not have been able to complete this without help from
+   the friendly SemWare staff, Beta testers, and all of the generous TSE
+   users who have shared their SAL code publicly.
+
+   TSE is a registered trademark of The SemWare Corporation.
+

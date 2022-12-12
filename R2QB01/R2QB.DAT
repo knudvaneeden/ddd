@@ -1,0 +1,278 @@
+//can do forward menu and forward keydef here too (probably forward helpdef)
+//GENERAL PROCEDURES
+forward integer proc    GetExclWordList()
+forward         proc    FixTitle()
+forward integer proc    FindWordInList(string word)
+forward integer proc    StealTagline()
+forward integer proc    NotWorking()
+forward integer proc    ProcMsgs()
+forward integer proc    AddHeader()
+forward integer proc    GetDataFile()
+forward integer proc    GetNewHeader()
+forward integer proc    GetHeaderVariables()
+forward integer proc    ExitFixrec()
+forward         proc    MemError()
+forward integer proc    uInsertFile(string fn)
+forward integer proc    R2QB()
+forward integer proc    ProcRecs()
+forward integer proc    FindNextMsg()
+forward         proc    GetHeaderStrings()
+forward integer proc    CheckSkipDone()
+forward integer proc    CheckFMT(var string fmt)
+forward integer proc    FormatRec()
+forward integer proc    FixKey()
+forward integer proc    Check4More()
+forward integer proc    PromptUser()
+forward integer proc    ListStartup()
+forward         proc    HelpHook()
+forward         proc    HelpOnListKeys()
+forward integer proc    uSaveFile(string fn, integer how)
+//MENU PROCEDURES
+forward integer proc    AbortRec()
+forward integer proc    SkipOrDoneRec()
+forward integer proc    MoveRec()
+//MENUS
+forward         menu    ProcessRecipeMenu()
+forward         menu    SkipRecipeMenu()
+//forward         menu    SaveRecipeMenu()
+forward         keydef  SelectKeys
+forward         keydef  HSelectKeys
+forward         datadef CapsExcludeWords
+//misc
+forward         proc    WhenLoaded()
+forward         proc    WhenPurged()
+//forward integer proc    EditRec(integer e_type)//Edit recipe or message
+//for list function:
+forward integer proc    RList(integer list_type)
+//forward integer proc    BuildList(var integer maxlen, var integer width, var integer list_type)
+//forward integer proc    ListSkipDone(integer list_type)
+//forward integer proc    GetListLinenum(integer list_type)
+//forward integer proc    GetRecFileLinenum(integer list_type, integer linenum)
+//forward integer proc    EditRec(integer etype)
+
+//constants for menu and other returns; misc constants
+constant _DELETED =         -3  //means message deleted
+constant _MEMERR =          -2  //means abort macro- fatal error
+constant _ABORT =           -1  //means abort macro- fatal error
+constant _FAIL =             0  //means process failed
+constant _SUCCESS =          1  //okay
+constant _CONTINUE =         2  //means retry
+constant _CANCEL  =          3  //cancel operation
+constant _NO_HEADERS_FOUND = 4  //FindNextRec return if headers not recognized
+constant _NOT_WORKING =      5  //function not implemented yet
+constant _EXIT =            99  //exit macro
+
+constant _SKIP =             6  //mark recipe as skipped
+constant _DONE =             7  //mark recipe as done
+constant _EDIT =             8  //edit the recipe
+constant _CAPSEXCLUDE =     1
+constant _KEYLIST =         2
+
+//file buffers & related variables
+integer curr_id, work_id, tag_id, header_id, msg_id, skipdone_id, words_id
+integer IndexLine   //either StartMsg, or StartRec
+
+//message variables:
+integer StartMsg, EndMsg, LastMsg
+string FromStr[80], SubjStr[40], ToStr[40]
+
+//recipe format variables:  default=0, only one should = 1
+//integer MMFmt, CCFmt, QBFmt, MCFmt, KAFmt, TXFmt
+string RecFMT[6]
+
+//recipe formatting lines:
+integer StartRec, EndRec, TitleLine, KeyLine, ServLine, FromLine
+
+//header variables
+string  HFirstLine[80]
+integer HLastOffset,
+        HAreaOffset, HAreaSpos, HAreaEpos,
+        HFromOffset, HFromSpos, HFromEpos,
+        HToOffset, HToSpos, HToEpos,
+        HSubjOffset, HSubjSpos, HSubjEpos,
+        HDateOffset, HDateSpos, HDateEpos
+
+//misc
+string  lList_str[40]       //name to pass to lList for WindowFooter
+string  CurrTag[20] = ""
+integer shift_escape        //indicates user abort of recipe processing
+integer steal_tags          //return from PromptUser=0, set steal_tags-
+                            //need to re-process end of message
+integer WordsLoaded, DeleteOK
+//        nextitem
+
+//KEYS FOR SelectKeys
+constant listESCAPE     =   0,      //abort
+         listENTER      =   1,      //select line
+         listDEL        =   2,      //delete all lines in buffer
+         listTAB        =   3,      //steal taglines to taglines.txt
+         listSHIFTESCAPE=   4       //to go back to main menu- cancel formatting
+
+keydef SelectKeys
+    <F1>                    HelpOnListKeys()
+    <Shift Escape>          EndProcess(listSHIFTESCAPE)
+    <Escape>                EndProcess(listESCAPE)
+//    <CenterBtn>             EndProcess(listENTER)
+//    <LeftBtn>               EndProcess(listENTER)
+//    <RightBtn>              EndProcess(listENTER)
+    <Spacebar>              EndProcess(listENTER)
+    <Enter>                 EndProcess(listENTER)
+    <GreyEnter>             EndProcess(listENTER)
+    <Del>                   EndProcess(listDEL)
+    <Tab>                   EndProcess(listTAB)
+    <CursorRight>           Right()
+    <GreyCursorRight>       Right()
+    <Ctrl CursorRight>      WordRight()
+    <Ctrl GreyCursorRight>  WordRight()
+    <CursorLeft>            Left()
+    <GreyCursorLeft>        Left()
+    <Ctrl CursorLeft>       WordLeft()
+    <Ctrl GreyCursorLeft>   WordLeft()
+    <CursorUp>              Up()
+    <GreyCursorUp>          Up()
+    <Ctrl CursorUp>         RollUp()
+    <Ctrl GreyCursorUp>     RollUp()
+    <CursorDown>            Down()
+    <GreyCursorDown>        Down()
+    <Ctrl CursorDown>       RollDown()
+    <Ctrl GreyCursorDown>   RollDown()
+    <Home>                  BegLine()
+    <GreyHome>              BegWindow()
+    <Ctrl Home>             BegWindow()
+    <Ctrl GreyHome>         BegWindow()
+    <End>                   EndLine()
+    <GreyEnd>               EndWindow()
+    <Ctrl End>              EndWindow()
+    <Ctrl GreyEnd>          EndWindow()
+    <PgUp>                  PageUp()
+    <GreyPgUp>              PageUp()
+    <Ctrl PgUp>             BegFile()
+    <Ctrl GreyPgUp>         BegFile()
+    <PgDn>                  PageDown()
+    <GreyPgDn>              PageDown()
+    <Ctrl PgDn>             EndFile()
+    <Ctrl GreyPgDn>         EndFile()
+end SelectKeys
+
+keydef HSelectKeys
+    <GreyEnter>         EndProcess(listENTER)
+    <Enter>             EndProcess(listENTER)
+    <Escape>            EndProcess(listESCAPE)
+//    <CenterBtn>         EndProcess(listENTER)
+//    <LeftBtn>           EndProcess(listENTER)
+//    <RightBtn>          EndProcess(listENTER)
+    <CursorUp>          Up()
+    <GreyCursorUp>      Up()
+    <CursorDown>        Down()
+    <GreyCursorDown>    Down()
+    <Home>              BegWindow()
+    <GreyHome>          BegWindow()
+    <End>               EndWindow()
+    <GreyEnd>           EndWindow()
+    <PgDn>              PageDown()
+    <GreyPgDn>          PageDown()
+    <PgUp>              PageUp()
+    <GreyPgUp>          PageUp()
+    <Ctrl PgDn>         EndFile()
+    <Ctrl PgUp>         BegFile()
+end HSelectKeys
+
+helpdef SelectHelp
+    title       = "  Select Line Help- PgUp/PgDn to view  "
+        ""
+        "A line needed for recipe formatting could not be found.      "
+        "Place the cursor on the proper line and press <Enter> or     "
+        "<Spacebar> to select it. If the line doesn't exist, place    "
+        "the cursor on a blank (or unneeded) line in the approximate  "
+        "location of the requested line. The selected line (if it the "
+        "header or footer line) will be ERASED by this macro during   "
+        "recipe formatting. The 'Subject:' line may be used as a      "
+        "'Title:' line, if the recipe doesn't have a title. You will  "
+        "need to manually edit the title later in this case.          "
+        "NOTE: Only message lines between what you choose for the     "
+        "'Header' and 'Footer' lines will be included in the final    "
+        "recipe. Lines outside the recipe will be left in the original"
+        "file (after the 'Move Recipes' function is executed).        "
+        "Also, if <Escape> is pressed in response to a prompt         "
+        "for the recipe header, footer, or title lines (during display"
+        "of a whole message only- see notes below) recipe formatting  "
+        "will be aborted and you will return to the 'Main Menu'.      "
+        ""
+        "While in the 'Select Line' window, you can abort further     "
+        "processing by pressing <Shift Escape> (if you have TSE's     "
+        "extended keyboard driver enabled). You will be returned to   "
+        "to the 'Main Menu'.                                          "
+        ""
+        "The method for searching for multiple recipes within a single"
+        "message causes lines between the end of a recipe and the end "
+        "of the message to be displayed. Pressing <Escape> will cancel"
+        "the search within the current message and proceed to the next"
+        "message. Pressing <Delete> will cause these lines to be      "
+        "deleted from the file. CAUTION: Pressing <Delete> will cause "
+        "all of the lines in the listbox to be deleted. If a whole    "
+        "message is being displayed, the whole message will be deleted"
+        "(not just the lines at the end). This 'feature' makes the    "
+        "macro usable as a limited message reader with a 'delete      "
+        "message' feature. As a safety feature, I've only enabled this"
+        "delete function in the listboxes which prompt for the recipe "
+        "header and footer lines. Elsewhere, nothing will be deleted. "
+        ""
+        "While in the listbox displaying the lines between the end of "
+        "the recipe and the end of the message, positioning the cursor"
+        "on a line and pressing the 'Tab' key will 'steal' the tagline"
+        "(ie: write it to a file. No formatting will be done, and     "
+        "currently the filename is not user configurable. A file named"
+        "'TAGLINES.TXT will be created/appended to in the current     "
+        "directory.                                                   "
+        ""
+        "One of the following line-types which will be prompted for   "
+        "should be selected. Those marked as *required* must be       "
+        "selected or recipe formatting (for this message) will be     "
+        "aborted. You will then have a choice of marking the message  "
+        "as 'skipped' or aborting recipe formatting. Choosing 'Abort' "
+        "will return you to the 'Main Menu'.                          "
+        ""
+        "HEADER:        *required*                                    "
+        "the 'start of recipe' line, for example:                     "
+        "-Begin Recipe Export-   for QBook format                     "
+        "NOTE: This line mus be placed *before* all other lines to be "
+        "included in the recipe.                                      "
+        ""
+        "TITLE:         *required*                                    "
+        "the recipe 'Title:' line.                                    "
+        "Hint: if there is no title for the recipe, select either the "
+        "'Subject:' line, or any other line within the message. You   "
+        "will need to edit the title later.                           "
+        ""
+        "CATEGORY/KEYWORD:      *optional*                            "
+        "the recipe 'Keywords:' or 'Category:' line                   "
+        ""
+        "FOOTER:        *required*                                    "
+        "the recipe 'end of recipe' marker line. NOTE: this line must "
+        "be placed *after* all other lines to be included in the      "
+        "recipe.                                                      "
+        ""
+end SelectHelp
+
+datadef CapsExcludeWords
+    "a"
+    "alla"
+    "an"
+    "and"
+    "at"
+    "au"
+    "con"
+    "de"
+    "di"
+    "en"
+    "et"
+    "for"
+    "from"
+    "la"
+    "le"
+    "of"
+    "or"
+    "the"
+    "with"
+end CapsExcludeWords
+

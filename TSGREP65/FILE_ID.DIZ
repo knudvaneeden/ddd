@@ -1,0 +1,12 @@
+TSGREP reads files, prepares a list of lines
+that have a search string, and lets you go
+back and forth between the list and files.
+Includes across_line_search, use of -or- and
+-and- in searh, recursive search of sub-
+directories. Regular expressions *optional*.
+Can include up to 9 lines around each find.
+Can exclude files by date or extension. This
+is a fast and powerful GREP utility that
+extends TSE's regular expression searching.
+Menu or command line driven.
+     v6.5 ... faster ... for TSE 2.5.

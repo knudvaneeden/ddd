@@ -1,0 +1,92 @@
+*****************************************************************************
+
+               WordPerfect For Programmers User Interface for
+                          The SemWare Editor V1.0
+        The Semware Editor Copyright 1991-1993 SemWare Corporation.
+                       All Rights Reserved Worldwide.
+
+                   WordPerfect for Programmers Interface
+                        composed by Mike Hammer 4/93
+                               revised 10/93
+
+*****************************************************************************
+
+
+What Is This???
+
+This package contains a highly customized user interface for the new Semware
+Editor (TSE or "Tessie"). Tessie is my idea of the ideal text editor,
+providing more functionality than I can use, but with all the features I
+need. And Tessie offers the ability to design their own interface ("which
+keys do what"). So this interface offers one possible way to set up Tessie's
+keyboard assignments. I've been working with this since April '93 and I like
+it better all the time. It offers all the flashy features I need at work
+with enough left over to satisfy my home use and occasional leap into the
+unknown.
+
+I use the editor extensively at work, where I am a software technical
+support manager. I manage to get into my share of C code (at home only) and
+I do some custom database programming on the side. For programming I
+use Tessie exclusively on my own machines; I'll use whatever I have to at a
+client site. Sometimes a client's machine doesn't have anything other than
+DOS' edit, or even edlin!. Tessie is much better than any other DOS-based
+editor I've seen. The programmer's functions make it as good at programming
+tasks as vi and emacs
+
+As an example of how good Tessie is, I used it to program itself! (In
+computer lingo this is called "bootstrapping", something Windows programmers
+understand far too little about.) Try _that_ with edlin...
+
+
+History of the "WP4Prog" Interface
+
+It usually helps to understand where a program comes from to figure out how
+to use it. Here's some background on the wp4prog interface.
+
+I can get very easily confused.
+
+When I started using TSE Jr. I was in the midst of a huge project involving
+WordPerfect 4.something and Microsoft's terrible internal QuickBASIC editor.
+I installed the WordPerfect emulation package supplied with TSE Jr.. It was
+reasonably close, was a whole lot faster than the QB editor, and had more
+usable functions. I liked TSE Jr. a lot more than WP in several areas, and
+still do, namely the file selection lists and how it handles the
+block/mark/copy/move/etc functions.
+
+That TSE Jr./WP emulator was written by Randy Brook, to whom I owe much
+thanks. It is very confusing to go from WP to anything else, but his
+emulation was close enough to make the jump. To date, I have written two
+full length books, complete software documentation, dozens of brochures,
+newsletters and pamphlets, hundreds of letters, many class outlines, and so
+forth on WordPerfect 4 & 5. I have also written or worked on hundreds of
+code files in at least five languages in TSE Jr.. Without Randy's WP enulator
+for TSE Jr. I would at best be a hopelessly confused person by now; at worst a
+blithering idiot.
+
+The DOS version of TSE Jr. has several flaws that affected me from the start,
+all of which are resolved in Tessie. First, TSE Jr. is limited to the size of
+conventional available memory. There are times when I run out of memory
+because of the size of the files I have to use. Second, TSE Jr. lacks several
+key functions that seem very necessary (at least, once you get used to them
+somewhere else). Third, TSE Jr.'s macro language is a bit limited. But, even
+with these things considered, it is so good that I bought it and used it
+over all other choices, including not spending any more money.
+
+I like WP primarily because I am used to it. I'm used to it because I have
+to use it at work, and I bought it for simple home typesetting tasks as
+well. It is not a perfect program by any stretch -- in fact, if I don't
+crash it once a week I don't feel like I'm working hard enough. It can be a
+buggy, temperamental monster at times, but it is the largest word processor
+on the market judging by number of units sold. In other words, if you go
+into a company they will probably use WordPerfect 4 or 5, so if you are a
+consultant you better know how to use it.
+
+I don't get confused (much) any more. The WP4Prog interface allows me to use
+the major WP function keys and throws in a whole lot more. In my opinion,
+Tessie is as close to perfect as software gets. My gratitude goes to Sammy
+Mitchell and his hardworking crew.
+
+Mike Hammer
+original April 23, 1993
+revised December 19, 1993
+

@@ -1,0 +1,9 @@
+QUOTE v1.1.  The Semware Editor (TSE) macro
+for use with BBS message readers. Places a
+first line quote giving incoming message
+sender, addressee, date, and subject.  Can be
+a called macro or can operate automagically
+when a message is loaded into TSE.  This
+macro is intended as a template for
+customization.  Feel free to make it your
+own.

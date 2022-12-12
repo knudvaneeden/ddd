@@ -1,0 +1,36 @@
+'KEYWORD.MAC' is a macro for TSE v1.0 (The Semware Editor) which will
+add keywords to recipes which are formatted for import into the QBook
+recipe database program. By default, the macro is assigned to the <Alt
+Tab> key. You can change this by editing the source file and
+recompiling. Place the KEYWORD.MAC and KEYWORD.DAT files in a directory
+in your TSEPath. KEYWORD.DAT contains an extensive list of keywords
+which you can use. The macro includes a function for adding and deleting
+keywords, or you can delete the KEYWORD.DAT file I included, and a very
+basic 'default' one will be created. The macro really needs no further
+documentation. Load a file of QBook format recipes, and press <Alt Tab>.
+Online help is available.
+
+This is my first macro for TSE. If you have any suggestions for
+improvements, I can be found lurking about the FidoNet Cooking Echo,
+Home Cooking Echo, QBook Echo, or on the TSE support board.
+
+Sallie Krebs
+
+Credits:
+
+QBook Recipe Manager, Version 1.00
+Copyright (C) 1989-1994 by:
+Robert J. Butler
+2023 38th Street NW
+Rochester, MN  55901
+
+The SemWare(R) Editor
+   SemWare Corporation
+   4343 Shallowford Road, Suite C3A
+   Marietta, GA  30062-5022  USA
+CompuServe (GO SEMWARE, Section 6)
+Email:
+CIS         75300,2710
+InterNet    sales@semware.com
+            tech.support@semware.com
+Fax: (770) 640-6213

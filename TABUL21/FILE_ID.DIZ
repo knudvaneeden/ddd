@@ -1,0 +1,10 @@
+TABUL21  Shows, Sets, and Resets VarTabs
+Version 2.1   09/28/1995   by Paul Lenz
+TABUL21.S contains:
+SetTabulator()  sets variable tabs
+ClrTabulator()  clears variable tabs
+ShowTabs()  displays tabstops, margins,
+and the cursor position like this line:
+같캪같별故같같같갰같별같갰같같별같캲같�
+cursor--^        ^--^--variable tabs
+Uploaded by: proppi@sampo.han.de

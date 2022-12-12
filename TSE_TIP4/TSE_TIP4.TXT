@@ -1,0 +1,1656 @@
+                       ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                       ³TSE Tips and Mini-Macros³
+                       ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                        ThisFile:  \tse_tip4.txt
+
+         Compiled by Tom Klein from Personal Notes and Slips of
+                     Paper used for Memory Joggers
+
+               and covers the dates 09/27/94 to 11/06/94
+       although some tips/macros may be outside these two dates.
+
+  TIPS4 contains several 'OLD but GOLD' macros from the past:
+
+        Convert Graphics Box to ASCII  06-23-93
+        Temporary Change of Margin     09-29-93
+        Syncronized Windows Scroll     10-25-93
+        Re-Wrap Quoted Text in replies 07-05-94
+          while retaining initials.
+
+  TIPS are intended to be a continuing series of hints and tips and each
+  subsequent release will be in-addition-to the previous versions.  That
+  is TIP4 will not contain any of the information in TIP3.  The one
+  exception is that grievous errors from a previous edition will be
+  corrected in the next release.
+
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³Public Releases:³  'tsetip3.zip', 'tsetip4.zip'
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+  If you have any problems or find errors please let me know [Tom Klein]
+  so that they may be fixed in the next version.
+
+  Contact me in any conference on the SemWare BBS or via RIME #330
+  (SemWare) or via Internet at either of the addresses below.
+
+          tom.klein@chrbbs.sccsi.com  OR tom.klein@lunatic.com
+
+  In general all macros start with this:
+
+/**************************************************************************
+
+  If you clip the macro area from that line to the end of the macro you
+  should be able to compile the clip.  Include the above ' /** ' because
+  it is the first part of a comment area.
+
+  Macro generally end with:
+
+//*************************************************************************
+//             Comment Here Indicating What Macro  <DATE>
+//*************************************************************************
+
+  and you could mark the ' /** .... '  as the start of a block and then
+  search for ' //***... ' for the end of each macro.  At least that is
+  how it worked when I tested it ;-).
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³REVISION HISTORY³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+10/21/94:  Start TIP4 with forgotten macros in the original public
+           release.
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+//***********************  Start Comment Area *****************************
+/**************************************************************************
+
+===========================================================================
+                Date: 06-22-93  From: RICHARD HENDRICKS
+                    Subj: Convert:Grphic Box 2 Text
+---------------------------------------------------------------------------
+
+  'grp2txt.s'  OLD one but a GOLD one
+
+  Sometimes I need to convert all the Extended ASCII graphics characters to
+  more printable or e-mailable characters. Here is a macro that I wrote that
+  does that.
+
+  WARNING:  Do NOT execute this macro on the source file ('grp2txt.s')
+            or all of the graphic characters that are used for searching
+            purposes will be converted and thereafter the source file
+            will be corrupt.
+
+                                                  ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+For example -- the file contains boxes like:      ÌÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¹
+                                                  º                      º
+                                                  º                      º
+                                                  ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+  run GRP2TXT and you will now have:              +----------------------+
+                                                  +----------------------+
+                                                  |                      |
+                                                  |                      |
+                                                  +----------------------+
+
+  Richard // Saturday June 19, 1993 at 14:56:34 EST
+
+//*********************** END of MAIN Comment Area *************************
+***************************************************************************/
+
+// grp2txt.S  03/27/1992  12/09/1992
+// by Richard Hendricks
+
+// Suggests by STEVE WATKINS, SemWare & RICHARD BLACKBURN, SemWare
+
+proc Main()
+    pushposition()
+    begfile()
+    replace('[´µ¶·¸¹»¼½¾¿ÀÁÂÃÅÆÇÈÉÊËÌÎÏĞÑÒÓÔÕÖ×ØÙÚÛ]','+','qxnq')
+    // replace('[´-¹»-ÃÅ-ÌÎ-Ú]','+','gxnq') --- shorter but less
+    // readable form of line above
+    begfile()
+    replace('[º³°±²İŞ]', '|', 'gxnq')
+    begfile()
+    replace('[ÄÍÜß]', '-', 'gxnq')
+    popposition()
+end main
+
+// end-of-message
+//*************************************************************************
+//             Convert boxes to text characters 06/22/93
+//*************************************************************************
+
+===========================================================================
+                 Date: 09-29-93  From: GEORGE DE BRUIN
+                   Subj: Temporarily changing margin
+---------------------------------------------------------------------------
+
+  If you just want to change the setting for the right margin while the
+  mWrapPara() command is being executed, you could write a short macro:
+
+proc mWrap()
+    integer rm = Set(RightMargin, 55)  // Find the current right margin
+                                       // Set new right margin, save old
+
+    mWrapPara()                        // Wrap the paragraph
+    Set(RightMargin, rm)               // Set the right margin back to
+                                       // the old value
+end
+
+  This temporarily changes the margin for wrapping but would keep the
+  right margin set the way it normally is, but allow you to have it at a
+  different setting for wrapping.  This macro would need to be inserted in
+  your TSE.S file. The best place for the macro would be right above the
+  lines:
+
+/****************************************************************************
+  Macro to wrap text in a column block, without distrubing the surrounding
+  text.
+  If a column isn't marked, the normal WrapPara() is called.
+ ***************************************************************************/
+proc mWrapPara()
+.
+.
+
+//*************************************************************************
+                  Temporarily Change Margin  09/30/93
+//*************************************************************************
+
+//***********************  Start Comment Area *****************************
+/**************************************************************************
+
+===========================================================================
+                Date: 10-25-93  From: RICHARD BLACKBURN
+                Subj: Synchronized Windows Macro!! v.02
+---------------------------------------------------------------------------
+
+The following macro will scroll all windows together.  You need to assign
+ScrollWindows() to a key.  When you want to lock the windows together press
+the key you have assigned to ScrollWindows().  When you want to stop
+scrolling the windows press <Escape>.  Works with Horoz. or Vert. windows.
+
+The following macro should fix the problem:  (Original had a minor glitch)
+
+//*********************** END of MAIN Comment Area *************************
+***************************************************************************/
+
+constant    cLEFT        = 1,
+            cRIGHT       = 2,
+            cUP          = 3,
+            cDOWN        = 4,
+            cPAGEUP      = 5,
+            cPAGEDOWN    = 6,
+            cBEGLINE     = 7,
+            cBEGFILE     = 8,
+            cENDLINE     = 9,
+            cENDFILE     = 10
+
+proc Scroll(integer direction)
+    case direction
+        when cLEFT           Left()
+        when cRIGHT          Right()
+        when cUP             Up()
+        when cDOWN           Down()
+        when cPAGEUP         PageUp()
+        when cPAGEDOWN       PageDown()
+        when cBEGLINE        BegLine()
+        when cBEGFILE        BegFile()
+        when cENDLINE        EndLine()
+        when cENDFILE        EndFile()
+    endcase
+end
+
+proc mScrollWindows(integer direction)
+    integer winid = WindowId(), num = 1
+
+    while num < 10
+        if GotoWindow(num)
+            Scroll(direction)
+        endif
+        num = num + 1
+    endwhile
+    GotoWindow(winid)
+    if winid == 1
+        Scroll(direction)
+    endif
+end
+
+keydef ScrollKeys
+<CursorLeft>        mScrollWindows(cLEFT)
+<CursorRight>       mScrollWindows(cRIGHT)
+<CursorUp>          mScrollWindows(cUP)
+<CursorDown>        mScrollWindows(cDOWN)
+<PgUp>              mScrollWindows(cPAGEUP)
+<PgDn>              mScrollWindows(cPAGEDOWN)
+<Home>              mScrollWindows(cBEGLINE)
+<Ctrl PgUp>         mScrollWindows(cBEGFILE)
+<End>               mScrollWindows(cENDLINE)
+<Ctrl PgDn>         mScrollWindows(cENDFILE)
+<Escape>            EndProcess()
+end
+
+proc ScrollWindows()
+    Enable(ScrollKeys)
+    Process()
+    Disable(ScrollKeys)
+end
+
+<CtrlAlt S> ScrollWindows()
+
+/**************************************************************************
+===========================================================================
+                 Date: 01-05-94  From: DAVID GOODENOUGH
+            Subj: Quote Reformatting / Wrap Quoted Paragraph
+---------------------------------------------------------------------------
+
+> I'd really like to be able to re-format a quoted paragraph (like with
+> the Wrap Paragraph command) but keep the initials "AB>" in the left hand
+> column (I believe some message editors do this, so I assume TSE can!).
+
+  mWrapQPara() is the one that you bind to a key.
+
+  To activate it, take a paragraph like:
+
+AB> This is some text that is quoted and it would be really nice if it
+could be
+AB> re-formatted quickly and easily.
+
+  and sit on the 'T' of "This". Then invoke the macro, and this is
+  what you wind up with:
+
+AB> This is some text that is quoted and it would be really nice if it
+AB> could be re-formatted quickly and easily.
+
+TAKnote:  This macro wraps from the cursor location to the end of a
+          paragraph.  It is useful, therefore for partial wrap paragraph
+          from the cursor.
+
+***************************************************************************/
+
+integer proc mKillQuote(string quotetext, integer numch)
+    integer i
+
+    BegLine()
+    if GetText(1, numch) == quotetext
+        i = 0
+        while numch <> i
+            DelChar()
+            i = i + 1
+        endwhile
+    endif
+    return (iif(CurrChar() >= 0, 1, 0))
+end
+proc mWrapQPara()
+    string quotetext[20]
+    integer numch
+    integer i
+
+    UnMarkBlock()
+    MarkChar()
+    BegLine()
+    MarkChar()
+    quotetext = GetMarkedText()
+    numch = Length(quotetext)
+    UnMarkBlock()
+    if numch <> 0
+        MarkLine()
+        repeat
+            i = mKillQuote(quotetext, numch)
+        until not i or not Down()
+        if not i
+            Up()
+        endif
+        MarkLine()
+        GotoBlockBegin()
+        WrapPara()              //changed from mWrapPara()  10/21/94 tak
+        GotoBlockBegin()
+        i = 1
+        while i and isCursorInBlock()
+            Begline()
+            InsertText(quotetext, _INSERT_)
+            i = Down()
+        endwhile
+        UnMarkBlock()
+    endif
+end mWrapQPara
+
+<CtrlAlt J>  mWrapQPara()         //Change to suit your setup
+
+//*************************************************************************
+//        Quote Reformatting / Wrap Quoted Paragraph  01/05/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 09-28-94  From: GEORGE DE BRUIN
+                       Subj: Up() & Down() Alarm
+---------------------------------------------------------------------------
+
+  /---------------------------------------
+  |What I'd like to do is have TSE beep (such as the beep that sounds on
+  |failed searches) whenever the Down(), and Up(), reaches the bottom and
+  |top limits!
+  \---------------------------------------
+
+No problem!  Just modify your key assignments as follows:
+
+    <Up>    if not Up() then Alarm() endif
+    <Down>  if not Down() then Alarm() endif
+
+Then burn-in your new configuration, and you should be set.
+
+//*************************************************************************
+//*************************************************************************
+===========================================================================
+                 Date: 10-04-94  From: GEORGE DE BRUIN
+                 Subj: Adding KeyBinding to Calendar()
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³Hi George. I loaded the Calendar, and executed the compiled macro from
+  ³the menu. What is the pop-up hot key for that calendar screen? Looks
+  ³otherwise pretty nice. Thanks Semware for a nice feature included. :-)
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  There isn't a specific key to pop-up the calendar.  The macro is set up
+  to be executed from the Potpourri menu.  If you wanted to assign it to a
+  key in your standard user interface, you would have to modify the macro
+  itself.
+
+  Add the following to the end of the CALENDAR.S file, and recompile
+  (using <CTRL F9>).  This will allow you to pop-up the calendar using
+  <CtrlShift C>:
+
+      proc ShowCal()
+
+        Enable( CalKeys, _EXCLUSIVE_ )
+        DisplayCalendar()
+
+      End
+
+      <CtrlShift C>   ShowCal()
+
+//*************************************************************************
+               Adding KeyBinding to Calendar()  10/04/94
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                    Date: 10-11-94  From: RAY ASBURY
+                   Subj: ASCII display on Status Line
+---------------------------------------------------------------------------
+
+  ÚÄÄÄ<<<             >>>ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+  ³Seriously, I was wondering if anyone has a macro to display the      ³
+  ³ASCII/Hex value of the character above the cursor on the status line?³
+  ³This could make my life complete...  :-)                             ³
+  ÀÄÄÄ>>>     <<<ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+  ADD THE FOLLOW STUFF SOMEWHERE NEAR THE BEGINNING OF YOUR *.UI FILE
+
+***************************************************************************/
+
+    FORWARD         PROC pnShowSpecialStats()
+    FORWARD INTEGER PROC piShortenFileName()
+
+    STRING      fsBuf[250],
+                fsCFName[250]
+
+    INTEGER              fiLastCurrChar
+
+    PROC WhenLoaded()
+
+        // ADD THESE THREE LINES TO YOUR EXISTING STUFF IN *.UI
+
+        Hook(_IDLE_, pnShowSpecialStats)
+        Hook(_AFTER_UPDATE_STATUSLINE_, pnShowSpecialStats)
+        SetGlobalInt("giShowSpecialStats", TRUE)
+    END WhenLoaded
+
+    // ADD THE FOLLOWING TWO MACROS TO YOUR *.UI FILE
+
+    PROC pnShowSpecialStats()
+
+        STRING  lsStr[15]   = ""
+
+        INTEGER liAttr,
+                liCurrChr,
+                liAttribs,
+                liLineLoc   = 1
+
+        IF (NOT GetGlobalInt("giShowSpecialStats"))
+            IF (GetGlobalInt("giSpecStatsUpdateStatLine"))
+                SetGlobalInt("giSpecStatsUpdateStatLine", FALSE)
+                UpdateDisplay(_STATUSLINE_REFRESH_)
+            ENDIF
+            Return()
+        ENDIF
+
+        IF (Query(StatusLineAtTop) == FALSE)
+            liLineLoc = Query(ScreenRows)
+        ENDIF
+
+  /* GET CURRENT FILE'S ATTRIBUTES ************************************/
+
+        liAttribs = FileExists(CurrFileName())
+        IF (liAttribs & _READONLY_)
+            lsStr = lsStr + "R"
+        ELSE
+            lsStr = lsStr + Chr(Query(StatusLineFillChar))
+        ENDIF
+        IF (liAttribs & _ARCHIVE_)
+            lsStr = lsStr + "A"
+        ELSE
+            lsStr = lsStr + Chr(Query(StatusLineFillChar))
+        ENDIF
+        IF (liAttribs & _SYSTEM_)
+            lsStr = lsStr + "S"
+        ELSE
+            lsStr = lsStr + Chr(Query(StatusLineFillChar))
+        ENDIF
+        IF (liAttribs & _HIDDEN_)
+            lsStr = lsStr + "H"
+        ELSE
+            lsStr = lsStr + Chr(Query(StatusLineFillChar))
+        ENDIF
+
+ /* GET CURR CHAR ASCII CODES ****************************************/
+
+        liCurrChr = CurrChar()
+        IF (liCurrChr < 0)
+            lsStr = Format(lsStr, Chr(Query(StatusLineFillChar)),
+                            "<AT_EOL>":-8:Chr(Query(StatusLineFillChar)))
+        ELSE
+            fiLastCurrChar = liCurrChr
+            lsStr = Format(lsStr, Chr(Query(StatusLineFillChar)),
+                            fiLastCurrChar:2:"0":16, "h,",
+                            fiLastCurrChar:3:"0", "d")
+        ENDIF
+        liAttr = Set(Attr, Query(StatusLineAttr))
+        IF (piShortenFileName())
+            VGotoXY(35, liLineLoc)
+            PutStr(fsCFName)
+        ENDIF
+        VGotoXY(Query(ScreenCols) - 12, liLineLoc)
+        PutStr(lsStr)
+        Set(Attr, liAttr)
+    END pnShowSpecialStats
+
+    INTEGER PROC piShortenFileName()
+
+        INTEGER liMaxLength = Query(ScreenCols) - 48,
+                liStart
+
+        fsCFName = CurrFileName()
+        IF (Length(fsCFName) <= liMaxLength)
+            Return(FALSE)
+        ENDIF
+        fsBuf = fsCFName
+        fsCFName = Format(SubStr(fsCFName, 1, 3), "...\")
+        fsBuf = SubStr(fsBuf, 4, (Length(fsBuf) - 3))
+        WHILE (Length(fsBuf) > (liMaxLength - 7))
+            liStart = Pos("\", fsBuf)
+            fsBuf = SubStr(fsBuf, (liStart + 1), (Length(fsBuf) - liStart))
+        ENDWHILE
+        fsCFName = Format(fsCFName,
+                            fsBuf:-(liMaxLength - 7):Chr(
+                                    Query(StatusLineFillChar)))
+        fsCFName = Format(fsCFName:-(liMaxLength + 1):
+                            Chr(Query(StatusLineFillChar)))
+        Return(TRUE)
+    END piShortenFileName
+
+
+//  E. Ray Asbury, Jr. (rasbury@msmailpc01.saic.com)
+//  Team TSE
+
+//*************************************************************************
+//                Display ASCII on Status Line  10/12/94
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 10-14-94  From: GEORGE DE BRUIN
+                         Subj: Remove Bookmarks
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³I have BOOK.MAC auto loaded and it works GREAT!  I was wondering however
+  ³if there is a way to delete a bookmark once it has been set.  You see, I
+  ³also use PROJECTS and the bookmarks being set add up after a while.  It
+  ³would be nice to be able to delete the marks no longer needed.  No big
+  ³deal but was just wondering.
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Believe it or not, this is a trickier question than it would seem. <g>
+  But we put on our collective thinking caps, and came up with a creative
+  solution.  Try this macro, it will remove all of the Marks you have
+  set (even the ones you haven't set! <g>) using the Book macro:
+
+***************************************************************************/
+
+    proc KillPlaceMarks()
+
+        Integer tBuf = CreateTempBuffer(),
+                   c = 97
+
+        If tBuf
+            GotoBufferId(tBuf)              // Create a TempBuffer
+        else
+            Warn("Could Not Create Temporary Buffer!!!")
+            Return()
+        endif
+
+        While c <= 122                 // Set PlaceMarks In TempBuffer
+            PlaceMark(Chr(c))
+            C = C + 1                  // Added from subsequent message
+        EndWhile
+
+        AbandonFile()                  // Abandon the TempBuffer!
+    End
+
+    <Ctrl 5>    KillPlaceMarks()
+
+/**************************************************************************
+
+  In a subsequent message Ralph Weeks said:
+
+  Works pretty good after making a minor adjustment.  I added C = C + 1
+  right after PlaceMark(Chr(C)).  Thanks for the quick reply....you guys
+  ARE REALLY GOOD.
+
+***************************************************************************/
+
+//*************************************************************************
+//                     Remove Bookmarks  10/14/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 10-17-94  From: JACK HAZLEHURST
+                           Subj: FRCapture()
+---------------------------------------------------------------------------
+
+>>  What I  do is to work out my regular expressions and debug them
+>>  using Find() or Replace() from inside TSE.   The problem is that you
+>>  run  into  trouble  when you want to transfer your results BACK into
+>>  your text file.   To this end I have added the following macro to my
+>>  UI:
+
+//
+// Macro to copy Find and Replace strings to the current cursor position
+//
+proc FRCapture( integer HB )            // Parameter is history buffer number.
+    string S[128] = ""
+
+    if Ask( "Pick a string:", S, HB )   // Let the user pick something.
+        InsertText( S )                 // Stuff to the buff.
+    endif
+end
+
+Menu FRStrMenu()                        // Menu lets user select Find or
+    title = "Get which?"                // Replace string.
+
+    "&Find string"      , FRCapture(_FIND_HISTORY_)
+    "&Replace string"   , FRCapture(_REPLACE_HISTORY_)
+end
+
+
+  I bind the menu to a key (I also have a menu selection for it in the
+  Search menu).   When I hit the key,  up comes  the  choice  of  Find
+  string or Replace string.   It works as though there it is a two-key
+  macro,  and I usually don't have to look at the little  menu,   but,
+  what the hey -- in case I forget.
+
+  I  just  put  a couple of double quotes in the text,  put the cursor
+  over the second one,  then use this macro to  copy  in  the  desired
+  string.
+
+  The  use  of  the history buffer this way allows you to have a whole
+  bunch of experiments going and just hit the down-arrow go  back  and
+  fetch the variant you want to use.
+
+  As you can see, the FRCapture() takes a parameter that specifies the
+  history to use,  so  you  can  add  stuff  to  the  menu,   such  as
+  _EDIT_HISTORY_,  or your own private histories.   For now, the macro
+  as shown is all I need.
+
+  I limited the string size to 128 since that's the limit of the  Find
+  and Replace strings in TSE.
+
+//*************************************************************************
+                         FRCapture()  10/17/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 10-19-94  From: GEORGE DE BRUIN
+                           Subj: Colors macro
+---------------------------------------------------------------------------
+ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+³highlighted text setting.  After setting Group L, shown as the last
+³available spare in the menu, the macro notified me that Group M existed
+³and was configured the same as the highlighted text.  Ditto for Group N.
+³Am I doing something wrong?  Where can I access Group M and N (and any
+³subsequent Groups)?  The macro is useful and more Spare Groups seems
+³great but I need a way to reconfigure them.
+ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Ian ran out of menu space for the extra color groups.  In his haste to
+  get things done, he forgot that he has a loop that checks all of the
+  group colors...  Alas, his loop checks for 16 groups, instead of the 12
+  that he was able to implement.
+
+  So, the trick here is to change the SENTRY.S file so that it only checks
+  the twelve group colors that are available.  Load SENTRY.S into TSE,
+  and find the mCheckAllColors() proc.  A short ways into this proc you
+  will find the following section of code:
+
+  SpinCheck:
+  i = 1
+  while i <= 16
+            if gs[i] == Chr(Query(BlockAttr))
+
+  The '16' needs to be changed to a 12.  Once you have made this change,
+  save the file and press <Ctrl F9>.  When the macro is done compiling,
+  you will be prompted to Load / Execute the macro. You can go ahead and
+  select either of these options.
+
+  Thats it.  The non-existent "Group-M" problem should never get in your
+  way again.
+
+
+//*************************************************************************
+                        COLORS bug fix  10/19/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 10-19-94  From: GEORGE DE BRUIN
+                       Subj: Invalid keystrokes??
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³I have discovered that when I try to assign a function to the
+  ³keystrokes <Ctrl ,> (Ctrl-comma) or <Ctrl .> (Ctrl-period),
+  ³I get, e.g.:
+  ³
+  ³      Error 112 (1939,1)    unknown key  <Ctrl ,>
+  ³      .....                 unknown key  <Ctrl .>
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Correct, these keys are not supported by TSE.  If you try them
+  with Showkey, you would see that they do not return a value.
+
+  The PC doesn't support them.
+
+//*************************************************************************
+                                10/19/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 10-19-94  From: GEORGE DE BRUIN
+                          Subj: SpellWrdLeft()
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³the left of the word in question.  Not having the patience simple
+  ³batch files tax me.  Is there something I can do to have the "Word"
+  ³function in the spell checker look at the word to the left of the
+  ³cursor?
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Actually, a relatively simple macro should do the trick for this:
+
+    proc SpellWrdLeft()
+        PushPosition()
+        PushBlock()
+        WordLeft()
+        PushKey(<w>)
+        ExecMacro("Spellchk")
+        PopBlock()
+        PopPosition()
+    end
+
+
+    <CtrlAlt F1>     SpellWrdLeft()
+
+  Just copy the above code into a .S file in the \TSE\MAC directory (for
+  example: \TSE\MAC\CHKWORD.S), change the key assignment to use the key
+  that you want, and press <Ctrl F9> to compile the macro.
+
+  Now, to add it to your configuration so it loads every time you load
+  TSE, goto the (M)acro menu and select (A)utoLoad List.  Press insert to
+  add a new entry, and type the name of the macro file without the
+  extension (ie, for the example above: CHKWORD).  Press <Escape> several
+  times until you get back to the editing buffer.
+
+//*************************************************************************
+                                10/19/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 10-19-94  From: GEORGE DE BRUIN
+                     Subj: Inserting Printer Codes
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³What I'm not sure about is the best way of putting together a macro.
+  ³(e.g., a menu in one macro? separate macros for each key? Any help
+  ³much appreciated.
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  You can do this one either way.  The thing that you need to know is the
+  InsertText() command.  If you were to do this as key assignments, it
+  would look like this:
+
+
+  <Ctrl><F4>     InsertText("(s0p12h12v0s0b1q6T", _INSERT_)
+  <Ctrl><F5>     InsertText("(s0p12h12v0s0b6T", _INSERT_)
+  <Ctrl><F6>     InsertText("(s0p12h12v1s0b6T", _INSERT_)
+  <Ctrl><F7>     InsertText("(s1p12v0s0b4101T", _INSERT_)
+  <Ctrl><F8>     InsertText("(s1p12v1s0b4101T", _INSERT_)
+  //  ^ Escape Character In
+  //     this column
+
+  If you wanted to put these on a menu instead, it would look like this:
+
+  // This should be placed before the key assignments.
+
+  menu mFonts()
+
+  Title = "Fonts Menu"
+
+  "Letter Gothic &Draft 12 pt" ,InsertText("(s0p12h12v0s0b1q6T", _INSERT_)
+  "Letter &Gothic 12 pt"       ,InsertText("(s0p12h12v0s0b6T", _INSERT_)
+  "Letter Gothic &Italic 12 pt",InsertText("(s0p12h12v1s0b6T", _INSERT_)
+  "&Times Roman 12 pt"         ,InsertText("(s1p12v0s0b4101T", _INSERT_)
+  "Times &Roman Italic 12 pt"  ,InsertText("(s1p12v1s0b4101T", _INSERT_)
+  //  ^ Escape Character In
+  //     this column
+  end
+
+
+  <Ctrl F5>   mFonts()        // This line would be in the key assignments area
+
+  It's really up to you, and what you think will be easier.
+
+  You can try out both of these, and decide which you like better.  Note
+  that if you want to change the hot-keys on the mFonts() menu, just move
+  the &'s in front of the appropriate letters, making sure that you don't
+  use the same letter on two different entries.
+
+//*************************************************************************
+                    Entering Printer Codes  10/19/94
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 10-21-94  From: GEORGE DE BRUIN
+                          Subj: Book.S Change
+---------------------------------------------------------------------------
+
+>  I have 'book.mac' autoloaded and it work GREAT!  I was wondering if
+>  there is a way to delete a bookmark once it has been set.  In PROJECTS
+>  the bookmarks add up after a while.
+
+  Believe it or not, this is a trickier question than it would seem.
+  <g> But we put on our collective thinking caps, and came up with a
+  creative solution.  Try this macro, it will remove all of the Marks
+  you have set (even the ones you haven't set! <g>) using the Book
+  macro:
+
+***************************************************************************/
+
+    proc KillPlaceMarks()
+        Integer tBuf = CreateTempBuffer(),
+                   c = 97
+        If tBuf
+            GotoBufferId(tBuf)              // Create a TempBuffer
+        else
+            Warn("Could Not Create Temporary Buffer!!!")
+            Return()
+        endif
+        While c <= 122
+            PlaceMark(Chr(c))
+            C = C + 1           // Added by Ralph Weeks
+        EndWhile
+        AbandonFile()           // Abandon the TempBuffer!
+    End
+
+    <Ctrl 5>    KillPlaceMarks()
+
+/**************************************************************************
+
+In an another message Ralph Weeks said:
+
+  Works pretty good after making a minor adjustment.  I added C = C + 1
+  right after PlaceMark(Chr(C)).  Thanks for the quick reply....you guys
+  ARE REALLY GOOD.
+
+***************************************************************************/
+
+//*************************************************************************
+//                 KILL book.mac Bookmarks  10/22/94
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                Date: 10-26-94  From: RICHARD BLACKBURN
+                     Subj: Word Count w/output file
+---------------------------------------------------------------------------
+
+  See if this macro is more to your liking.  I did not know that you were
+  depending on the output file from Tom's macro.  I wrongly assumed you
+  were just using it for the word count (which is what the macro is
+  supposed to do :))
+
+***************************************************************************/
+
+proc wc(integer normal)
+    string WordSet[32] = ""
+    integer cid = GetBufferId(), tid = 0
+
+    tid = CreateBuffer("!")
+    if NOT tid
+        Warn("ERROR in setup")
+        return()
+    endif
+    GotoBufferId(cid)
+
+    if normal
+        WordSet = Set(WordSet,ChrSet("0-9A-Z_a-z"))
+    else
+        WordSet = Set(WordSet,ChrSet("~ \t"))
+    endif
+    PushPosition()
+    PushBlock()
+    BegFile()
+    repeat
+        if MarkWord()
+            AddLine(GetMarkedText(), tid)
+        endif
+    until NOT WordRight()
+    PopBlock()
+    PopPosition()
+    Set(WordSet, WordSet)
+    GotoBufferId(tid)
+end
+
+<Alt 9>     wc(1)
+<Alt 0>     wc(0)
+
+//*************************************************************************
+                   Word Count w/output file  10/26/94
+//*************************************************************************
+
+//***********************  Start Comment Area *****************************
+/**************************************************************************
+===========================================================================
+                 Date: 10-27-94  From: GEORGE DE BRUIN
+               Subj:  Modified SetDataBuffer()  10/27/94
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³again. The Procomm aspect language has explicit, one-word
+  ³commands to open a file, to read (the next line of) the file,
+  ³to pass the string read to become the next value of a string
+  ³variable, and to test for end of file (so as to break out of the
+  ³loop when all conferences have been read).  I'm hoping for
+  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  By modifying SetDataBuff() a bit you would have those commands for TSE.
+  Here's a modified SetDataBuff() that would allow you to open a file:
+
+  The GetString() proc already returns a Null string if any of the
+  following things happen:
+
+    - The buffer doesn't exist
+    - The line number you passed in doesn't exist (ie, if you try to
+      read past the end of the file.)
+    - There is nothing on the line you asked for (ie, it already is
+      Null).
+
+  Also, realize that this has the advantage of allowing you to access the
+  lines in any order you want to.  You aren't forced to access it
+  sequentially.
+
+//*********************** END of MAIN Comment Area *************************
+***************************************************************************/
+
+// Open data buffer - Returns buffer ID
+// ----------------------------------------------------------------------
+integer proc SetDataBuff(string fn[255])
+    integer cID = GetBufferID(),
+            dID = 0
+
+    dID = CreateTempBuffer()              // Create the Temporary Buffer
+    if dID
+        PushBlock()                       // Save current block
+        UnMarkBlock()                     // UnMark Current Block
+        InsertFile(fn)                    // Insert The Datafile
+        UnMarkBlock()                     // UnMark Inserted Data
+        PopBlock()                        // Restore Previous Block
+        GotoBufferID(cID)                 // Go back to original buffer
+    else
+        Warn("Could Not Create Buffer!")  // Warn user if there was an error
+    endif
+    Return(dID)
+end
+
+
+//*************************************************************************
+                   Modified SetDataBuffer()  10/27/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 10-28-94  From: GEORGE DE BRUIN
+                      Subj: Command Line Interface
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³LIST.COM has a startup switch, "/s", that allows output to the
+  ³console to be piped to LIST, so that it can be viewed with all of
+  ³LIST's features.  For example:
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+
+  Richard Hendricks wrote a macro during the Beta cycle that does this:
+
+  proc DeletePipeFile()       // added 06/02/1994 -- /d"dos cmd"
+       EraseDiskFile( LoadDir()+"!!PIPE!!.!!!" )
+  end DeletePipeFile
+
+  proc mPipe()
+       string NewDOStail[150] //  /d"dos cmd"
+       string QuoteChr[1]=chr(0)  //  /d"dos cmd"; user is using ' or "
+       string SwitchChr[1]=chr(0) //  /d"dos cmd"; user used /d or -d
+       string DOStail[150] = Query( DOSCMDLINE )      // added 06/02/1994 -- /d"dos cmd"
+
+// Execute any DOS commands that are supplied on the command line
+
+  if( pos( "/d", Lower( DOStail ) ) )
+    SwitchChr = "/"
+  endif
+  if( pos( "-d", Lower( DOStail ) ) )
+    SwitchChr = "-"
+  endif
+  if( pos( SwitchChr+"d", Lower( DOStail ) ) )
+    DOStail = Trim( SubStr( Lower( DOStail ),
+              pos( SwitchChr+"d", lower( DOStail ) )+2, 255 ) )
+    if( DOStail[1] == '"' )
+      QuoteChr = '"'
+    endif
+    if( DOStail[1] == "'" )
+      QuoteChr = "'"
+    endif
+    if( QuoteChr[1] == "'" or QuoteChr[1] == '"' )
+      DOStail = substr( DOStail, 2, 255 )
+      DOStail = substr( DOStail, 1, iif( pos( QuoteChr, DOStail ),
+                pos( QuoteChr, DOStail )-1, 255 ) )
+      DOS( DOStail+" >"+LoadDir()+"!!PIPE!!.!!!", _DONT_PROMPT_|_DONT_CLEAR_ )
+
+//   Compose a NEW DOSCMDLINE that doesn't include the /d"dos command" and
+//   includes !!PIPE.!!!
+
+      DOStail = Query( DOSCMDLINE )
+      NewDOStail = SubStr( DOStail, 1, pos( SwitchChr+"d",
+                   Lower( DOStail ) )-1 ) +
+                   " "+LoadDir()+"!!PIPE!!.!!! "
+      DOStail    = Trim( SubStr( DOStail, pos( SwitchChr+"d",
+                   Lower( DOStail ) )+2, 255 ) )
+      DOStail    = SubStr( DOStail, 2, 255 )
+      NewDOStail = NewDOStail + SubStr( DOStail,
+                   iif( pos( QuoteChr, DOStail ),
+                   pos( QuoteChr, DOStail )+1, 255 ), 255 )
+      Set( DOSCMDLINE, NewDOStail )
+      Hook( _ON_ABANDON_EDITOR_, DeletePipeFile )
+    endif
+  endif
+end
+
+  To install this macro, just add the above code right before the
+  WhenLoaded() proc in your UI file.  Then, near the end of the
+  WhenLoaded(), add a call to mPipe().
+
+  To use this with TSE, all you need to do is execute the editor using the
+  /d command line parameter, and pass in the DOS command that you want to
+  see in quotes.  For example, if I wanted to view a listing of a
+  directory in TSE:
+
+    e /d"dir"
+
+//*************************************************************************
+                    Command Line Interface  10/28/94
+//*************************************************************************
+
+//*************************************************************************
+===========================================================================
+                     Date: 10-29-94  From: TOM HALL
+                     Subj: Modification to Template
+---------------------------------------------------------------------------
+  I've been trying _really_ hard to find something wrong with TSE 2.0... :-)
+
+  The closest I could come was a modification to the way the Template Editor
+  operates.
+
+  The special case of "\c" or "\C" got me to thinking: if "\C" forces insert
+  mode ON, why not simply have "\c" force insert mode OFF?
+
+  My particular application of this feature involves positioning the cursor
+  in the middle of a line of text, and since I always had to hit the Insert
+  key because I wanted to fill in some whitespace at the cursor position, I
+  asked myself, "why not have the Template Editor turn it off for me?".
+
+  So, after some experimentation, I came up with the following modification
+  to TEMPLATE.S:
+
+    // see if user has specified cursor location
+    if lFind('\c','gli')
+        ScrollToRow(CurrLine() - delta)
+        DelChar()
+        if (CurrChar() == ASC('C')) // special handling required!
+            if Set(Insert, ON) == OFF
+                cursor_line = CurrLine()
+                SetGlobalInt("Template->Editing",TRUE)
+                Hook(_AFTER_UPDATE_DISPLAY_, RestoreInsert)
+            endif
+        endif
+
+// THIS SECTION ADDED BY ME
+
+        if (CurrChar() == ASC('c')) // set insert explicitly OFF
+            Set(Insert,OFF)
+                cursor_line = CurrLine()
+                SetGlobalInt("Template->Editing",TRUE)
+                Hook(_AFTER_UPDATE_DISPLAY_, RestoreInsert)
+            endif
+
+// END ADDED SECTION
+
+        DelChar()
+    elseif
+        GotoBlockEnd()
+        if CurrChar() >= 0 and not isWhite()
+            InsertText(" ",_INSERT_)
+        else
+            Right()
+        endif
+    endif
+end
+
+//*************************************************************************
+                   Modification to Template  10/29/94
+//*************************************************************************
+
+===========================================================================
+                   Date: 10-29-94  From: RALPH WEEKS
+                        Subj: mCompressView use
+---------------------------------------------------------------------------
+
+>  I'm looking for an editor which will allow me, when programming in C,
+>  to (a) see a "pop-up" list of all function names, then (b) by picking
+>  one, moving the screen to that function.
+
+  Yes, this function is built into the TSE editor.  It can easily be
+  configured to handle any programming language.  Where I work we have an
+  inhouse language and it took only a few minutes to configure TSE to
+  handle the our function names. If you have TSE now then search the .UI
+  file for mCompressView and review the 'case CurrExt()' section.
+
+//*************************************************************************
+//*************************************************************************
+
+//*************************************************************************
+                   Modification to Template  10/29/94
+//*************************************************************************
+
+===========================================================================
+                   Date: 10-31-94  From: DAVID MARCUS
+                      Subj: Using Global Variables
+---------------------------------------------------------------------------
+
+>  macros are limited to 16k? Is there a way to get around the 16k limit?
+
+  FWIW, the easiest way to reduce the size is to reduce static strings.
+
+  HOWEVER, it sounds as if you're going to need to end up dividing your
+  procs into two or more files. One way to get around the multitude of
+  set/get globals is to put the values you want to pass around into a
+  buffer, and set the buffer number as a global int. Or, if a lot of
+  your values are single-integer values, put them into a string and use
+  it as an array. Then just pass around the string via a global.
+
+  But, the best technique I've found is to write two procs. One writes
+  every setting I use to globals, the other reads them. Put them into a
+  file that has [more or less] nothing else in it. Then #INCLUDE this
+  file in all of the macro files for a particular "cross-file" macro.
+  In the primary file, you might have something like this:
+
+  proc tsgrep()
+    ...
+    set_all_globals()
+    execmacro('TSGREP2')
+    get_all_globasl()
+    ...
+    ...
+    ...
+    set_all_globals()
+    execmacro('TSGREP3')
+    get_all_globasl()
+    ...
+    ...
+end
+
+The main() function in TSGREP2 and TSGREP3 would then do
+
+    get_all_globals()
+    foo1()
+    foo2()
+    foo3()
+    foo4()
+    foo5()
+    set_all_globals()
+
+  where foo?s are the procs that really do whatever work I need done.
+
+  Hope this helps.... it is the technique I used in TSGREP, which ended
+  up as a 64k macro.
+
+
+//*************************************************************************
+                    Using Global Variables  10/31/94
+//*************************************************************************
+
+===========================================================================
+                    Date: 10-31-94  From: MEL HULSE
+                       Subj: SmartReplace() Macro
+---------------------------------------------------------------------------
+
+       Paul Lenz posted this great idea on the SemWare BBS.  I've
+            twiddled it a bit to increase its functionality.
+---------------------------------------------------------------------------
+
+  PL> This macro adds the "Local" option to the Replace Options if
+  PL> a block is marked:
+
+  May I extend it a bit?  When replacing without a marked block
+  after replacing with one, the with block options are presented.
+  The following resets the defaults after a block find.
+
+  Also, it is handy to do a replace in a block from wherever the
+  cursor is.  Adding the option "G" (global) does this.
+
+  Here's the mod:
+
+PROC SmartReplace()
+  // Paul Lenz, October 25, 1994
+  // Minor mode, Mel Hulse, October 31, 1994
+
+    if isBlockMarked()
+        AddHistoryStr(Query(ReplaceOptions) + "LG", _REPLACEOPTIONS_HISTORY_)
+        Replace()
+        AddHistoryStr(Query(ReplaceOptions), _REPLACEOPTIONS_HISTORY_)
+    Else
+        Replace()
+    EndIf
+END
+
+//*************************************************************************
+                  SmartReplace() even better  10/31/94
+//*************************************************************************
+
+//***********************  Start Comment Area *****************************
+/**************************************************************************
+
+ Taken from the SemWare BBSs 'quote11.zip' file with one enhancement
+===========================================================================
+
+/*   Quote, v.1.1.01, October 31, 1994 TAK added blank line after quote
+/*   Quote, v.1.1,    October 22, 1994
+
+  Places a quote line at the beginning of a BBS network message that is
+  derived from the header information placed within the file by your
+  off-line mail reader.  The macro will then delete the header
+  information before continuing with your reply.
+
+  This macro was adapted by Mel Hulse based on a macro by Richard
+  Blackburn, SemWare Technical Support.
+
+  Because the names and subject can each be 25 characters long, It
+  is possible that the quote line could exceed 80 characters.  If
+  your name is very long, you may want to disable showing the
+  subject.
+
+Sample header:
+
+===========================================================================
+ BBS: SEMWARE
+Date: 10-11-91 (18:39)             Number: 305  COMPEASE
+From: FROM NAME                    Refer#: 281
+  To: TO NAME                       Recvd: YES
+Subj: Standard Quote Macro           Conf: (15) RoadRNR
+---------------------------------------------------------------------------
+
+The intro quote line will look like:
+
+On Wed. the 10th FROM NAME wrote TO NAME about "Standard Quote Macro":
+
+This macro can be made to operate automagically by adding the
+following within the OnFirstEdit() proc in your TSE.UI at the end
+and deleting the key binding at the end of this file.
+
+===========================================================================
+
+PROC OnFirstEdit()                  // add if not there
+
+ If SplitPath(CurrFileName(), _NAME_|_EXT_) == "reply.msg" //lower case req'd
+     PushPosition()              // save our cursor position
+     Down()                      // go to second line of file
+     If GetText(1,3) == "On "    // check to see if quote line already there
+         Return()                // if so, quit
+     Else                        // otherwise
+         LoadMacro("Quote")      // get the macro
+         ExecMacro("Quote")      // and execute it
+     EndIf
+     PopPosition()               // restore the cursor
+ EndIf
+
+End
+
+===========================================================================
+
+  If you make the above a file you can #INCLUDE this file in your TSE.UI
+  immediately following the keybindings.  If you use the OnFirstEdit()
+  above then you will automatically generate the quote line and delete
+  the header.
+
+//*********************** END of Comment Area ******************************
+***************************************************************************/
+
+/*
+    Day of the week macro using Zeller's Congruence.
+    By Mel Hulse, April 10, 1993
+*/
+
+String PROC DayOfWeek(Integer Month, Integer Day, Integer Year)
+    Integer DOW, Y1, Y2
+
+    If Month < 3
+        Month = Month + 10
+        Year = Year - 1
+    Else
+        Month = Month - 2
+    EndIf
+
+    Y1 = (Year * 10) / 1000
+    Y2 = Year Mod 100
+
+    DOW =  1+((Day+(26*Month-1)/10)+Y2+(Y2/4)+(Y1/4)-(2*Y1)+49) Mod 7
+
+    Case DOW mod 7
+        When 1    Return("Sun.")
+        When 2    Return("Mon.")
+        When 3    Return("Tue.")
+        When 4    Return("Wed.")
+        When 5    Return("Thu.")
+        When 6    Return("Fri.")
+        Otherwise Return("Sat.")
+    EndCase
+    Return("Fake It Out!")
+END
+
+
+String Proc FormatDate(String Date)
+/*
+Convert the message MM-DD-YY date into quote format "Wednesday the 10th"
+*/
+    String  Suffix[2] = ""              // st, nd, rd, th
+
+    Integer Day,
+            Month,
+            Year
+
+    Month = Val(SubStr(Date,1,2))       // convert date components to integer
+    Day   = Val(SubStr(Date,4,2))
+    Year  = Val(SubStr(Date,7,2))
+
+    If Year <= 90                       // expand 2-digit year
+        Year = Year + 2000
+    Else
+        Year = Year + 1900
+    EndIf
+
+    Case Day
+        When  1 Suffix = "st"
+        When  2 Suffix = "nd"
+        When  3 Suffix = "rd"
+        When 21 Suffix = "st"
+        When 22 Suffix = "nd"
+        When 23 Suffix = "rd"
+        When 31 Suffix = "st"
+    Otherwise
+               Suffix = "th"
+    EndCase
+
+    // return the date string to calling function
+    // include call to StrDayOfWeek function
+    Return(DayOfWeek(Month, Day, Year) + " the " + Str(Day) + suffix)
+End FormatDate
+
+PROC Quote()
+
+string  From[25]     = "",          //  who the message is from
+        To[25]       = "",          //  who the message is to
+        Date[8]      = "",          //  from header
+        Subject[25]  = ""           //  from header
+
+
+// Get the header info or quit, if no a header in the file.
+    BegFile()                       // goto begining of the file
+    if (GetText(2, 2) <> "==" )     // if no equal signs assume no header
+        PopPosition()
+        Return()                    // no header, quit
+    else
+
+//*****Blank line after header even if original message was on top line ***
+
+        Down(7)
+        If CurrLine() <> 0
+                CReturn()
+                BegFile()
+        EndIf
+        BegFile()
+        lFind("Date:","^")          // move to date line
+        Date = GetText(7, 14)       // get date field
+        lFind("From:","^")          // move to "From:" line
+        From = GetText( 7, 28 )     // get "from" field
+        lFind("  To:","^")          // move to "To:" line
+        To = GetText( 7, 28 )       // get "to" field
+        lFind("Subj:","^")          // move to "Subj:" field
+        Subject = GetText( 7, 28 )  // get "subject" field
+        BegFile()                   // goto start of file
+        DelLine( 7 )                // delete the header
+        CReturn()                   // leave an empty line at the top
+// Insert quote line in the message
+        InsertLine('On ' + FormatDate(Date) +
+                ' ' + RTrim(From) +
+                ' wrote ' + RTrim(To) +
+                ' about "' + RTrim(subject) +
+                '"')
+        Down(2)
+    EndIf
+END
+
+<CtrlAlt Q>           Quote()        // don't use this if using OnFirstEdit()
+
+
+//*************************************************************************
+                           Quote11+  10/31/94
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 11-02-94  From: GEORGE DE BRUIN
+                          Subj: Finding words
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³Do you remember that I asked if there was a way to search a file
+  ³against a list of words in another file?  As 2.0 was just shipping
+  ³you asked if I could put this request on hold for a while.
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Here's a greatly expanded version of the macro.  This one does a _lot_
+  of error checking (much more than is normally needed).  This is just for
+  testing purposes, after we determine what we need in the macro, I will
+  shorten and speed it up.
+
+  Search for //! to change user input information
+
+***************************************************************************/
+//! Enter the name of the file that contains words to search for
+String NameFile[] = "D:\NAMES"      // Set the name of list file here
+
+String Name1[20] = "", Name2[20] = "", Name3[20] = ""
+integer nBufId = 0, cBufId = 0
+
+proc On_Exit()
+
+    if not AbandonFile(nBufId)
+        Warn("Unable to abandon list buffer!")
+    endif
+end
+
+proc WhenLoaded()
+    cBufId = GetBufferId()  // Get buffer ID of current buffer
+
+    // Set up names list buffer
+
+    PushPosition()
+    PushBlock()
+    nBufId = CreateBuffer("++Names++")      // Temporary buffer
+    if not nBufId
+        warn("Unable to create Names List buffer! Aborting...")
+        AbandonFile()
+        PurgeMacro(SplitPath(CurrMacroFileName(), _NAME_))
+        return()
+    endif
+    if not InsertFile(NameFile)
+        warn("Unable to read ",NameFile,"!  Macro aborting.")
+        AbandonFile()
+        PurgeMacro(SplitPath(CurrMacroFileName(), _NAME_))
+        return()
+    endif
+    UnMarkBlock()
+    FileChanged(FALSE)
+    PopBlock()
+    PopPosition()
+
+    Hook(_ON_EXIT_CALLED_, ON_EXIT)
+end
+
+proc mGetNameErr(string no)
+
+    warn("Name #",no," not marked!")
+    down()
+end
+
+proc mGetNames()
+    GotoPos(PosFirstNonWhite())
+    if MarkWord()
+        Name1 = GetMarkedText()
+        UnMarkBlock()
+        WordRight()
+    else
+        mGetNameErr("1")
+        return()
+    endif
+    if MarkWord()
+        Name2 = GetMarkedText()
+        UnMarkBlock()
+        WordRight()
+    else
+        mGetNameErr("2")
+        return()
+    endif
+    if MarkWord()
+        Name3 = GetMarkedText()
+        UnMarkBlock()
+    else
+        mGetNameErr("3")
+        return()
+    endif
+    Down()
+end
+
+proc rr8()
+
+    cBufId = GetBufferId()  // Get current file ID
+
+    GotoBufferId(nBufId)    // Goto the names list
+    mGetNames()             // Get the names
+    GotoBufferId(cBufId)    // Return to the original Buffer
+    if Name1 <> "" and Name2 <> "" and Name3 <> ""
+        // Search for the names from list
+        if not Find("{"+Name1+"}|{"+Name2+"}|{"+Name3+"}", "GX")
+            warn("Search Failed!")
+        endif
+    else
+        Warn("One of the name strings is null???")
+    endif
+end
+
+<Alt =>     rr8()
+
+//*************************************************************************
+         Finding Words with word list in another file  11/02/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 11-04-94  From: GEORGE DE BRUIN
+                    Subj: Justify() Entire Document
+---------------------------------------------------------------------------
+
+  /---------------------------------------
+  | Is there anyone who has a macro that will Justify a Complete
+  | document and Justify it BETWEEN the Left and Right Margin
+  | settings?
+  \---------------------------------------
+
+  There is a macro included with TSE to justify a paragraph.  The macro is
+  called JUSTIFY, and is listed on the Potpourri menu (via the Util menu,
+  or <Shift F10>).
+
+  Knowing this is available, you could have a macro that walks through the
+  file and justifies each paragraph until the end of the file is reached.
+  Here is such a macro:
+
+    proc JustifyAll()
+
+       PushPosition()
+       PushBlock()
+       UnMarkBlock()
+       BegFile()
+       while down()
+           ExecMacro("justify")
+       endwhile
+       PopBlock()
+       PopPosition()
+    end
+
+   <Shift F11>     JustifyAll()
+
+//*************************************************************************
+                         JustifyAll()  11/04/94
+//*************************************************************************
+
+===========================================================================
+            ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+            ³TAK Information Exchange; Fort Wayne, Indiana ³
+            ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+   InterNet: tom.klein@chrbbs.sccsi.com  OR tom.klein@lunatic.com
+
+===========================================================================
+
+        ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+        ³              Additions to ClipMenu() -              ³
+        ³WordWrap(on|off), mSetRightMargin(), mSetLeftMargin()³
+        ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+  I find that I often need to change word wrap, right and left margins
+  quite often and to make it easier I have added these items to the
+  ClipMenu() that is activated with the right mouse button.  The items
+  must be added to the Menu ClipMenu() area of your 'tse.ui'.
+
+  Menu ClipMenu()
+    x = 10
+    y = 5
+    history
+
+    "Cu&t"              ,   Cut()
+    "C&ut Append"       ,   Cut(_APPEND_)
+    "&Copy"             ,   Copy()
+    "Cop&y Append"      ,   Copy(_APPEND_)
+    ""                  ,                       , Divide
+    "&Paste"            ,   Paste()
+    "Paste &Over"       ,   Paste(_OVERWRITE_)
+    ""                  ,                       , Divide
+    "Un&Mark"           ,   UnMarkBlock()
+    "&Named ClipBoards  ", NamedClipBoardMenu(), DontClose
+
+// Additions to ClipBoardMenu start here
+
+    ""                  ,                       , Divide
+    "&WordWrap"   [OnOffStr(Query(WordWrap)):3], Toggle(WordWrap),
+           DontClose
+    "&RIGHT Margin"  [Query(RightMargin):3], mSetRightMargin(), DontClose
+    "&Left Margin"   [Query(LeftMargin):3],  mSetLeftMargin() , DontClose
+
+// Additions to ClipBoardMenu END here
+
+end
+
+---------------------------------------------------------------------------
+  You need to add these two items to you 'tse.ui' before the line ---
+// Global variables - assumes globals initialized to 0.
+
+Forward proc mSetRightMargin()
+Forward proc mSetLeftMargin()
+
+and add the following procedures to you 'tse.ui' before your keydef or
+before the line #include ["tse.key"]
+
+//*****mRight & mLeft MARGIN***********************************************
+
+// Thursday -  June 30, 1994 changed to new version from Ray Waters
+// mSetRightMargin()-keypad 6/CursorRight
+// mSetLeftMargin()-keypad 4/CursorLeft
+//*************************************************************************
+
+proc mSetRightMargin()
+
+    string s[3] = str(query(RightMargin))
+    ask("Right Margin [1..255]: ", s)
+    if val(s) > 255
+        warn("Value out of range: ")
+        return()
+    endif
+    set(RightMargin, val(s))
+
+End  mSetRightMargin    // bound to keypad 6/CursorRight
+
+//*************************************************************************
+
+proc mSetLeftMargin()
+
+    string s[3] = str(query(LeftMargin))
+    ask("Left Margin [1..255]: ", s)
+    if val(s) > 255
+        warn("Value out of range: ")
+        return()
+    endif
+    set(LeftMargin, val(s))
+
+End mSetLeftMargin      // bound to keypad 4/CursorLeft
+
+===========================================================================
+
+  In addition to using the mSet.....Margin() procedures in the ClipMenu()
+  you can assign the procedures to keys and I used the keypad items.
+  NUMLOCK must be on for these assignments to function.
+
+  <keypad4>    mSetLeftMargin()
+  <keypad6>    mSetRightMargin()
+
+  These two key assignments can be place in your keydef area or in you
+  'tse.key' file depending on which you are using.
+
+  The Set...Margin() procedures QUERY the current value of the margins
+  and displays that value in the prompt box.
+
+//*************************************************************************
+//                    ClipMenu() Changes  11/04/94
+//*************************************************************************
+
+            END  'tse_tips4.txt'  Sunday -  November 6, 1994
+

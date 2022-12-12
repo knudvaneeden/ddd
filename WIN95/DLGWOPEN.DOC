@@ -1,0 +1,96 @@
+
+1. Overview
+-----------
+
+DlgWOpen is a Windows 95 replacement for the DlgOpen dialog which is
+distributed with the dialogs macro package. It allows you to load and save
+files using long names while running TSE in a DOS session in Windows 95.
+The dialogs macro package version 1.20 is necessary both to compile and and
+run DlgWOpen.
+
+
+2. Installation
+---------------
+
+Copy all the DlgWOpen files to the directory where you stored the dialogs
+source files, e.g.
+
+        copy dlgwo*.* dlg_path
+
+Now go to that directory and compile the dialog, e.g.
+
+        cd dlg_path
+        sc dlgwopen
+
+Finally, copy the compiled macro to a place where TSE can find it, e.g.
+
+        copy dlgwopen.mac c:\tse\mac
+
+DlgWOpen is now ready to use.
+
+If you have previously installed DlgOpen within your burned in UI or even
+use DLG.UI from the dialogs macro package you should change some of the
+references to DlgOpen within your UI to DlgWOpen. Load your UI file into
+TSE and search for the string "dlgopen". You should change "dlgopen" to
+"dlgwopen" within the ExecMacro calls, if no command line switch is present
+or if it is one of the following: -s, -i or -b. Don't touch the other calls,
+e.g. the switches -l, -v and -k, since DlgWOpen does not understand them and
+you must still use the old DlgOpen to load/save SAL and KBD macros. (This
+means that you cannot use long filenames for SAL macros and to store
+recorded keyboard macros.)
+
+
+3. Using DlgWOpen
+-----------------
+
+This shouldn't be much of a problem, if you have worked with Windows 95 any
+length of time, since DlgWOpen goes a long way to emulate the new Open File
+dialog which is commonly used in Windows 95. DlgWOpen also includes a
+(hopefully) comprehensive on-line help which explains the hot keys and other
+features of the dialog. The command line switches of DlgWOpen do the
+following
+
+        none    EditFile
+        -s      SaveFileAs
+        -i      InsertBlock
+        -b      SaveBlock
+        -f      list only files (don't list folders)
+        -n      list only names (don't list file date/time and file size)
+
+The settings of the -f and -n switches can still be changed when DlgWOpen is
+already executing using the options dialog.
+
+
+4. Dos Mode
+-----------
+
+What happens, if you use TSE in DOS mode? Well, nothing you have to concern
+yourself about. DlgWOpen detects DOS mode (and old DOS versions) and
+automatically calls DlgOpen as a replacement instead.
+
+
+5. Limitations
+--------------
+
+DlgWOpen uses SAL strings to store path names, e.g. the longest path it can
+handle is 254 characters long. On the other hand, Windows 95 allows path
+names which are up to 260 characters long. This means that you MUST NOT use
+path names which exceed the limit imposed by DlgWOpen or the macro will fail
+utterly most probably hanging TSE. The dialog library imposes another limit
+yet. The maximum length of the text within an edit control is 128 characters
+which limits the size of the filenames you can use.
+
+Well, I guess that in real life these aren't limits at all, since nobody
+actually will use filenames _that_ long.
+
+If you should find something buggy, have suggestions on what is missing or
+just wanted to say hello, please contact me. My name is Dieter K”ssl and my
+e-mail address is 100517.1221@compuserve.com.
+
+
+6. Copyright and Disclaimer
+---------------------------
+
+This program is thereby donated to the public domain. Use it or even alter
+it as you see fit, but ENTER AT YOUR OWN RISK!
+

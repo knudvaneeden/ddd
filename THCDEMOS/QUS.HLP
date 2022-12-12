@@ -1,0 +1,16 @@
+" You must tell QUS what you want to find - one or two items "
+
+-c15/0 The syntax is: QUS argument1 [optional argument2]
+
+Examples: qus seattle     (try it)
+          qusid dee
+
+Examine the header for the US search tool just above, and you can see which
+fields are available for you to enter as arguments to the QUS command.  In most
+cases, you will want to find the name of a city or place in the Location
+Description.  To search for a city name which is made up of two words, enclose
+the argument in quotes as in the example below.
+
+Example: qus "Palm Beach"
+
+The searches are not case sensitive.

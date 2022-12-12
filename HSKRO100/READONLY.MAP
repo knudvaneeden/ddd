@@ -1,0 +1,52 @@
+Map file of: e:\util\tse\hsk\readonly.s
+
+                                               Code   Stack
+Binary:   e:\util\tse\hsk\..\ui\wp.bin          122       0
+Proc:     ffattr                                 12       0
+Proc:     findfirst                              36     257
+Proc:     listit                                 33       0
+Proc:     onoffstr                               21       0
+Proc:     listandgoto                           143     421
+Proc:     mhsklistopenfiles                     462     355
+Proc:     bufferliststr                          90       0
+Proc:     mtoggle_setting_bufferlist             44       0
+Menu:     mhsklistopenfilesmenu                  85       0
+Proc:     mmessageifreadonly                    162      82
+Proc:     whenloaded_messageifreadonly           10       0
+Proc:     whenpurged_messageifreadonly            7       0
+Proc:     mtoggle_setting_alarm                   8       0
+Proc:     displaylevelstr                        78       0
+Proc:     mtoggle_setting_display                44       0
+Menu:     mhskmessageifreadonlymenu             122       0
+Proc:     mhook_savefileattributeinfo           187     347
+Proc:     mhook_deletefileattributeinfo          76     343
+Proc:     mgetcurrentfileattributes             163     347
+Proc:     mbuildstatuslinefilename              258     522
+Proc:     mhook_hskstatusline                   427     547
+Proc:     whenloaded_statusline                 262     347
+Proc:     whenpurged_statusline                  35       0
+Proc:     mtoggle_statuslineisenabled            14       0
+Proc:     mtoggle_setting_shortfilename          12       0
+Proc:     mrefreshfileinfo_current               42       0
+Proc:     mrefreshfileinfo_all                   64       4
+Proc:     mtoggle_setting_attributes             12       0
+Proc:     mtoggle_setting_charatcursor           12       0
+Proc:     mviewtrackingbuffer                   145       4
+Menu:     mhskstatuslinemenu                    308       0
+Menu:     mhskreadonlymenu                      178       0
+Proc:     whenloaded                             12       0
+Proc:     whenpurged                              7       0
+KeyDef:   unnamed                                16       0
+
+                         *** Summary ***
+
+Proc:                                          2882
+Binary:                                         122
+Publics:                                         22
+KeyDef:                                          16
+Menu:                                           706
+Help:                                             0
+Data:                                             0
+Variable:                                       595
+
+Total                                          4343

@@ -1,0 +1,12 @@
+TextView is a full-text search and retrieval
+tool for text files which contain a repeated
+discernible   structure.   The  macro  takes
+advantage of  TSE  large  file  and  virtual
+memory capability to allow rapid access to a
+user  definable  set  of   text   resources.
+Examples  of  common text resources include:
+Ralf Brown's DOS Interrupt List; Tom Klein's
+TSE  Tip  files;  various  *.DOC files;  BBS
+'Allfiles' listings, source libraries,  etc.
+Version 1.10 adds support for untagged file
+collections (like source/macro files).

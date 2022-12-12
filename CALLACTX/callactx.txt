@@ -1,0 +1,31 @@
+                         The "Call ActiveX" Project
+
+Author:  Christopher Shuffett
+
+Introduction:
+The intent is to create a TSE compatible custom DLL written in C++ using
+Microsoft Visual C++ version 6 that can interface with the Microsoft
+ScriptControl and thus VBScript and the world of ActiveX.  This is to be
+open source project to be maintained by the TSE user community as freeware.
+
+Project Definition:
+The DLL will provide these three functions.  It will implement a Jscript
+function to convert a temperature from Fahrenheit to Celsius.  It will
+render an HTML document using the Microsoft Internet Explorer.  It will
+transform an XML document into an HTML document using a XSL stylesheet and
+render it using the Microsoft Internet Explorer.  The DLL will have the
+absolute minimum number of library dependencies and will not impact the
+Windows registry.
+
+Project Status:
+The development has drawn heavily upon the work done by Ernest Laurentin who
+wrote the article, "Adding VBScript and JScript support in your C++
+applications", found on The Code Project website,
+<http://www.codeproject.com/com/ScriptDemo.asp>.   In order to produce a
+clean compile without adding the MFC libraries, several lines in the modules
+used from Ernest's project had to be commented out and still need to be
+re-coded.  To assist with debugging, code was added to pass data from the
+DLL to TSE via the Windows clipboard.  The resulting DLL does not yet have
+the ability to interface with the Microsoft ScriptControl object.
+
+

@@ -1,0 +1,10 @@
+(05-11-00) Sample TSE.UI mods to TSE Pro/32
+
+Purpose: To demonstrate how to customize the
+sign-on screen which displays when the editor
+is first invoked and which also displays
+after the last file is quit if quit-to-prompt
+is turned on.
+
+Author:  Chris Shuffett
+ email:  chris.shuffett@usa.net

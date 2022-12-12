@@ -1,0 +1,56 @@
+!			GC ST
+"			GD S
+"			GE XQE
+#			GC ST
+#			GC XA
+$			GC ST
+$			GB XA
+%			GC ST
+%			GF XA
+&			T
+&KEEP			GD
+&NODOS			GD
+&NOLOG			GD
+&POSITION		GD
+'			GD SQ
+'			GE XE
+(			GC ST
+)			GC ST
+*			GC ST
+*			GF XA
++			GC ST
+,			GC ST
+-			GC ST
+.			GC ST
+.			GA XA
+/			GC ST
+/			GF XN
+0			GB SW
+1			GB SW
+2			GB SW
+3			GB SW
+4			GB SW
+5			GB SW
+6			GB SW
+7			GB SW
+8			GB SW
+9			GB SW
+:			GC ST
+:			GE YP
+;			GC ST
+<			GC ST
+=			GC ST
+>			GC ST
+>			GE XA
+?			GC ST
+?			GB XA
+@			GC ST
+@			GD XA
+[			GC ST
+\			GC ST
+\			GE XN
+]			GC ST
+^			GC ST
+^			GC XA
+_			T
+

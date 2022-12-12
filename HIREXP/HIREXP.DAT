@@ -1,0 +1,101 @@
+
+   The format of HIREXP.DAT is as follows,
+   without the slashes and starting on column 1:
+
+/     [.extension1 .extension2 .extension3 ...]
+/     1122 33 ...regexp1options1regexp2options2 ...
+/     4455 66 ...regexp3options3regexp4options4 ...
+/     ...
+/     [.extension4 .extension5 ...]
+/     7788 99 ...regexp5options5regexp6options6 ...
+/     ...
+
+   Where:
+
+      .extensension  At least one extension between the [] for which the
+                     lines following apply.
+
+                     Use a point followed by a space to indicate
+                     extensionless files.
+
+      11             Mandatory hexadecimal color code that indicates the
+                     color to use if the regular exressions succeed.
+
+                     This is the same hexadecimal code shown by TSE when
+                     you are changing colors: there you can look it up.
+
+      22 33 ...      Optional hexadecimal color codes that indicate the
+                     colors under the cursor not to recolor when the regular
+                     expressions succeed.
+
+                     This is for instance usefull for not recoloring
+                     commented text: for this parameter you use the
+                     hexadecimal color codes of the comment colors.
+
+      regexp         The first regular expression on the line is mandatory,
+                     the rest is optional.
+
+                     Do not use delimiters other than the hearts.
+
+                     Only if all regular expressions in a line succeed,
+                     then the last found text is recolored.
+
+      option         All options are optional. The default is "ix".
+
+                     The "c" option is never necessary, because here ALL
+                     searches are are limited to a line.
+
+                     Before the first regular expression the "cursor" is set
+                     to the begin of each line, so the "g" option is also not
+                     necessary.
+
+                     If the "g" option is omitted, then an attempt is made
+                     to find multiple occurrences of the same string within
+                     one line, otherwise just the first occurrence will be
+                     found.
+
+                     From the second regular expression onwards it is
+                     possible to use the ">" in your options: this means to
+                     start searching after the string found by the previous
+                     regular expression.
+
+                    This delimiter is mandatory between parameters,
+                     especially when an optional parameter is omitted and
+                     more not-empty parameters are following.
+
+                     A heart delimter after the last parameter is optional.
+
+
+
+   Note: Lines without at least two hearts and lines before the first
+         extensions indicator are treated as comments in this file.
+
+
+
+[.c .c++]
+Color variables starting with a "%" bright yellow on blue
+1e17%[~ ]#
+Color assembler statements bright yellow on blue, but not following comments
+1e17![~;]#
+
+[.cbl .cob]
+Color cobol comment lines white on blue.
+17^......\*.#
+17^......\/.#
+Color cobol line numbers white on blue.
+17^......
+Color cobol columns 73 and further white on blue.
+17^.........................................................................#ix>
+Color the cobol double and single quote characters bright red on blue,
+instead of bright green on blue like the enclosed string.
+1c17"
+1c17'
+Color the word left of "section" bright magenta on blue.
+1d17 section\.|$[~ ]#bix
+Color the word right of "perform" bright magenta on blue.
+1d17 perform perform[~ ]#ix>
+
+[.ftn]
+Color fortran comment lines white on blue.
+17^\*.#
+

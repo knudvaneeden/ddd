@@ -1,0 +1,89 @@
+!		GC ST
+"		GD ST
+$		GC ST
+&		GC ST
+'		GD S
+'		GE XQ
+(		GC ST
+)		GC ST
+*		GC ST
+*/		GA DTR
++		GC ST
+,		GC ST
+-		GC ST
+->		GC DT
+.		GC ST
+/		GC ST
+/*		GA DTM
+0		GB SW
+1		GB SW
+2		GB SW
+3		GB SW
+4		GB SW
+5		GB SW
+6		GB SW
+7		GB SW
+8		GB SW
+9		GB SW
+:		GC ST
+:-		GE DT
+;		GC ST
+<		GE ST
+=		GE ST
+=.		GC DT
+>		GE ST
+?-		GE DT
+arg		GF
+asserta 	GF
+assertz 	GF
+atom		GB
+atomic		GB
+call		GC
+clause		GF
+consult 	GF
+debugging	GF
+display 	GF
+fail		GF
+functor 	GF
+get		GF
+get0		GF
+integer 	GB
+is		GE
+listing 	GF
+mod		GF
+name		GF
+nl		GF
+nodebug		GF
+nonvar		GB
+nospy		GF
+not		GC
+op		GF
+put		GF
+read		GF
+reconsult	GF
+repeat		GC
+retract 	GF
+see		GF
+seeing		GF
+seen		GF
+skip		GF
+spy		GF
+tab		GF
+tell		GF
+telling 	GF
+told		GF
+trace		GF
+true		GF
+var		GB
+write		GF
+[		GD ST
+\		GC ST
+\=		GE DT
+]		GD ST
+^		GC ST
+_		T
+{		GC ST
+|		GD ST
+}		GC ST
+~		GC ST
+

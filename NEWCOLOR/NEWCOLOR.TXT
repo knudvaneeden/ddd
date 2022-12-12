@@ -1,0 +1,211 @@
+Here is a series of color templates for Ian Campbell's "Colors" macro included 
+with version 2.00 of The SemWare Editor.  This document and all template files 
+described in it are donated to the public domain by the author. 
+
+
+CIMCOLOR.TSE
+
+This template enables color editing of CompuServe Information Manager and 
+CompuServe Navigator connect scripts. The template file must be renamed 
+SCRCOLOR.TSE.  Note the name conflict with the OzCIS color template file. 
+
+The template assigns colors as follows:
+
+White   - Most statements.
+Yellow  - If statements; comparison operators; labels; strings.
+Red     - Most symbols; transfer of control statements such as CALL, GOTO, etc.
+Green   - Numbers; symbol definitions.
+Magenta - String delimiters; global variables.
+Grey    - Remarks.
+
+
+EZTCOLOR.TSE
+
+This template enables color editing of CA-EASYTRIEVE 1.1 programs.
+
+The template assigns colors as follows:
+
+White   - Most reserved words and parameters.
+Yellow  - IF statements; comparison operators; strings.
+Red     - Most symbols; transfer of control statements such as CALL, GOTO, etc.
+Green   - Numbers; activities; keys.
+Magenta - String delimiters.
+Grey    - Remarks.
+
+
+INICOLOR.TSE
+
+This template enables color editing of initialization files.
+
+The template assigns colors as follows:
+
+White   - Switches.
+Yellow  - Block headers; filenames.
+Red     - Symbols.
+Green   - Numbers.
+Grey    - Remarks.
+
+
+MAKCOLOR.TSE
+
+This template enables color editing of Borland makefiles.
+
+The template assigns colors as follows:
+
+White   - Predefined macros.
+Yellow  - Comparison operators; strings.
+Red     - Most operators.
+Green   - Numbers; directives.
+Magenta - String delimiters.
+Grey    - Remarks.
+
+
+MDFCOLOR.TSE
+
+This template enables color editing of Automenu menu definition files.
+
+The template assigns colors as follows:
+
+White   - Page titles; menu items.
+Yellow  - Strings; output messages.
+Red     - Symbols; passwords; end of MDF.
+Green   - Numbers; item descriptions; extended help.
+Magenta - String delimiters; load other MDF; special commands.
+Grey    - Remarks.
+
+
+NAVCOLOR.TSE
+
+This template enables color editing of NavCIS Pro 1.2 for Windows script 
+files.  The template file must be renamed SCRCOLOR.TSE.  Note the name 
+conflict with the OzCIS color template file. 
+
+The template assigns colors as follows:
+
+White   - Commands.
+Red     - Symbols.
+Green   - Numbers.
+Grey    - Remarks.
+
+
+PPSCOLOR.TSE
+
+This template enables color editing of PCBoard Programming Language (PPL) 
+version 2.00 programs.
+
+The template assigns colors as follows:
+
+White   - Most statements.
+Yellow  - If...then...else statements; comparison operators; labels; strings.
+Red     - Most symbols; transfer of control statements such as gosub, goto.
+Green   - Numbers; data types; constants.
+Magenta - String delimiters; predefined variables; functions.
+Grey    - Remarks.
+
+
+PROCOLOR.TSE
+
+This template enables color editing of Prolog programs, as defined in 
+"Programming in Prolog" by Clocksin and Mellish.
+
+The template assigns colors as follows:
+
+White   - Most built-in predicates.
+Yellow  - Comparison operators; strings.
+Red     - Most symbols; predicates such as CALL, REPEAT, ETC.
+Green   - Numbers; classifying predicates.
+Magenta - String delimiters.
+Grey    - Remarks.
+
+
+QMCOLOR.TSE
+
+This template enables color editing of Qmodem 4.6 script files.  The template 
+file must be renamed SCRCOLOR.TSE.  Note the name conflict with the OzCIS 
+color template file. 
+
+The template assigns colors as follows:
+
+White   - Most reserved words.
+Yellow  - IF statement; strings; labels; comparison operators.
+Red     - Most operators; transfer of control statements such as GOTO & GOSUB.
+Green   - Numbers; predefined string variables; ASSIGN & STRING.
+Magenta - String delimiters; PUSH and POP; system variables; connect
+          information variables; condition indicators.
+Grey    - Remarks.
+
+
+REXCOLOR.TSE
+
+This (rather rudimentary) template enables color editing of REXX programs.
+
+Depending upon your REXX's filename conventions, you may need to rename this 
+file or add the lines: 
+
+   when ".rex", ".r", ".cmd", ".exc"
+       s = ".rex"
+
+to the mResolveGroupExtensions proc in colors.s.
+
+The template assigns colors as follows:
+
+White   - Most instructions and reserved words.
+Yellow  - IF instruction; comparison operators; labels; strings.
+Red     - Most operators; transfer of control instructions.
+Green   - Numbers; special variables.
+Magenta - String delimiters; built-in functions.
+Grey    - Remarks.
+
+
+SCRCOLOR.TSE
+
+This template enables color editing of OzCIS 2.0 script files.
+
+The template assigns colors as follows:
+
+White   - Most verbs.
+Yellow  - IF verb; strings; labels; comparison operators.
+Red     - Most operators; transfer of control verbs such as goto & gosub.
+Green   - Numbers; DEFINE verb; predefined variables.
+Magenta - String delimiters; predefined constants.
+Grey    - Remarks.
+
+
+TAPCOLOR.TSE
+
+This template enables color editing of TapCIS 5.4b script files.  The template 
+file must be renamed SCRCOLOR.TSE.  Note the name conflict with the OzCIS 
+color template file. 
+
+The template assigns colors as follows:
+
+White   - Commands.
+Red     - Symbols.
+Green   - Numbers.
+Grey    - Remarks.
+
+
+WBTCOLOR.TSE
+
+This template enables color editing of WinBatch 5.0 files, and other files 
+that use the Windows Interface Language.  The template includes the WinBatch 
+5.0 network extenders, WinEdit 3.0 and FileCommander 3.0 WIL functions, and 
+Norton Desktop for Windows Batch Builder functions.
+
+The template assigns colors as follows:
+
+White   - Most functions.
+Yellow  - If...then...else functions; comparison operators; labels; strings.
+Red     - Most operators; transfer of control functions such as
+          for, while, switch, gosub, goto.
+Green   - Numbers; constants.
+Magenta - String delimiters; network extender functions.
+Grey    - Remarks.
+
+
+
+I hope you like this and find it useful.  Please write to me with any 
+suggestions, corrections, etc. that you may have.
+
+Tom Bowden
+73247.3571@compuserve.com

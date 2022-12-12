@@ -1,0 +1,1293 @@
+                             CRAZY JACK'S TABOLATOR
+
+     (C)Copyright 1993 by Jack Hazlehurst
+     07/01/93 - First version
+
+     This file contains NO page breaks.  To get a printed  copy,  use  your
+     favorite file printer, or, better, suck it in to TSE and print it.
+
+                             FLOGGING THE TABOLATOR
+
+     In  the O-o-old Days, programmers used tabs in their code to hold down
+     on the amount of paper tape their source files occupied.  Short  tapes
+     read in faster than long ones.
+
+     Today we have different reasons.
+
+     Not  only  is  an  en-tabbed  file  shorter  than  one full of spaces,
+     en-tabbed files are smaller after compression with PKZIP or  LHARC  as
+     well.  And if you are paying the phone bills for up- and down- loading
+     them, you will appreciate this.
+
+     There are editors that watch as you type and replace long  strings  of
+     spaces  with  tabs whenever they can.  The Borland editors are notable
+     examples.  TSE Jr. also does this.  Right now, TSE does not, and  that's
+     my problem.
+
+     The  Semware  Editor  pre-release  includes a set of macros to do this
+     job.  They are in the file TABUTIL.S, and are  accessed  by  calls  to
+     EnTab() and DeTab().
+
+     The  biggest problem in replacing spaces with tabs is knowing when NOT
+     to use tabs.  Normally we DON'T want tabs inside quoted strings, while
+     in  comments,  things  that look like quoted strings CAN be en-tabbed.
+     Further, escape sequences that allow inclusion in  quoted  strings  of
+     characters  that  would  otherwise be interpreted as comment starts or
+     ending string quotes must be detected and correctly handled.  And each
+     language we write programs in seems to use a different set of rules.
+
+     If  an  editor tries to do the job as you type, it must know the rules
+     of the language you are using and keep track of what's going on as you
+     type.   The  hardest  part comes when you start jumping about from one
+     spot in the file to another, or when you copy chunks of  text  in,  or
+     make typos and go back later to correct them.
+
+     EnTab()  addresses  these problems by not en-tabbing lines with string
+     quotes in them.  String quotes are " and  ',  which  COULD  appear  in
+     comments.
+
+     The  Tabolator, by contrast, does the conversion in a single pass over
+     the file using a programmable state machine to specify the rules.
+
+     The  state machine approach allows us to do sophisticated things, but,
+     since each character must be examined to see  if  a  state  change  is
+     called  for,  can be slow.  To get reasonable performance out of it, I
+     have written it in assembly language.  The source code is in the  file
+     TABOLATE.ASM,   and   the   assembly   listing   is  in  TABOLATE.LST.
+     TABOLATE.LST can  be  printed  on  any  printer  that  has  132  print
+     positions,  whether  by wide carriage or by condensed or other special
+     character set printing.  The number of lines per page  is  57,  so  it
+     will fit even if you are using a sheet feeder instead of pin-feed.
+
+     To  hold  down  on  execution  time I have made every effort to reduce
+     jumps along the most likely paths, and I have tried to keep  items  in
+     constant  use  in  registers  so  as  to minimize fetches to RAM.  The
+     peculiar arrangement of the various parts of the routines is aimed  at
+     eliminating j<cond> .. JMP sequences which ALWAYS dump the instruction
+     pipline which takes a lot of extra time.
+
+     In my tests, the Tabolator is from 1.5 to 2.5 times as fast as EnTab()
+     (the one in TABUTIL.S), depending on the file being processed.  What's
+     more,  in  addition  to much more sophisticated tabbing, the Tabolator
+     WORKS,  whereas  EnTab()  does  VERY  odd  things.   For  laughs,  try
+     en-tabbing  TABOLATE.ASM.   (You'll  have  to run DeTab() on it first,
+     then just TRY EnTab()!)
+
+     The Tabolator is still not as fast as I would like, particularly on my
+     old  beater  8mHz  XT  clone.   It takes it about 10 seconds to en-tab
+     TABOLATE.ASM, and it takes more than a minute (72 seconds)  to  en-tab
+     the burn-in .S file that I customize my copy of TSE with.  On a  25mHz
+     486SX  the  times  are 1.5 seconds and 5.5 seconds, respectively.   On
+     any  given  machine,  the speed of the Tabolator is dependent upon the
+     percentage  of  whitespace and the complexity of  the  state  program.
+     For example, it takes the Tabolator about  25%  longer to  process the
+     burn-in  file using the rules for C/C++ than it does using  the  rules
+     for SAL.
+
+     For  en-tabbing, the Tabolator is the ONLY choice.  Not only can it be
+     made to avoid en-tabbing blanks inside  quoted  strings,  it  CAN  tab
+     quoted  strings  in comments.  In addition, it can EXPAND tabs that it
+     finds INSIDE quoted strings even as it en-tabs the rest of  the  data.
+     The  need  for this feature can occur as the result of a typo, say the
+     use of a ";" instead of a "'"  (the  keys  are  next  to  each  other)
+     followed  by an en-tabbing run that, as a result, gets the tabs all in
+     the wrong places.  Correcting the typo and  re-running  the  Tabolator
+     can  fix the problem.  The example state programs (given later on) are
+     set up to work this way.
+
+     For converting tabs back into spaces, the DeTab() routine  that  comes
+     with  TSE (in the TABUTIL.S file) is faster than the Tabolator, taking
+     about 2/3 the time that the Tabolator does for a 25k file with 7% tabs
+     to about 1/4 the time for a 100k file with about 3% tabs, so I suggest
+     that you de-tab your files with DeTab().   I've  included  a  slightly
+     modified version of DeTab() (it checks for a couple of possible errors
+     during processing that the original doesn't) in this  compressed  file
+     for this purpose.
+
+
+                         THE STRUCTURE OF THE TABOLATOR
+
+     The  Tabolator has two main parts: a set of interface routines written
+     in SAL, and a binary module written in assembler.
+
+     The binary routines can't get at the lines  in  the  editor's  buffers
+     directly,  so  we  must pull them into SAL strings that we can pass to
+     the binary routines.  But the editor can  process  lines  much  longer
+     than the longest string allowed.  The SAL interface routines break the
+     lines up into pieces that WILL fit into strings and pass these to  the
+     binary routines, then put the resulting strings back into the editor's
+     buffer.
+
+     The toughest problem you are going to have  is  figuring  out  how  to
+     program the Tabolator's state machine.
+
+
+                            INSTALLING THE TABOLATOR
+
+     I intended the Tabolator to be included in the ".S" file I  burn  into
+     my  copy of TSE.  Obviously you can use it as a separate macro file if
+     you wish.  The preparation of such a file is left as  an  exercise  to
+     the reader.  |-)
+
+     I don't like to edit en-tabbed files with TSE.  Column block moves and
+     overlays don't always behave the way I would like them to, and I don't
+     like the way the cursor jerks about as you move through a file.  I use
+     indenting in my code (except for assembler) to show the structure, and
+     I like to put the cursor at  some  indent  level  and  scroll  through
+     looking for indent matches.  You can't always do this with tabs in the
+     file, so I generally de-tab a file before editing it.
+
+     What  I  would LIKE to do is to have each file de-tabbed as it is read
+     in and en-tabbed as it is written out.  But how do we know that a file
+     is to be de-tabbed when it is read in?  We COULD use a rule that says:
+     if it contains tabs, we de-tab it and set a flag noting  that  we  may
+     want  to  en-tab  it  when  it  is  written  back  out.   We just hook
+     _ON_FIRST_EDIT_ and put a routine there to do the de-tabbing.
+
+     We have a problem, however, when we go to write the file back out.  We
+     can  hook _ON_FILE_SAVE_, but we don't get control back just afterward
+     to allow us to clean up.  We could en-tab, save the file, then  de-tab
+     it,  but  when  would we do the de-tab?  And suppose the file is saved
+     and  abandoned  instead  of  just  saved?   Also,   en-tabbing,   then
+     de-tabbing  could take a lot of time, especially on MY machine!  A way
+     around this would be to move a copy of the  file  to  another  buffer,
+     en-tab it, then write THAT file out.  But after that, the Save routine
+     will STILL write the original file back out.  We need a way of telling
+     TSE  that  it should NOT save the file, even though it's been asked to
+     do so.  Setting the "File Changed" indicator to  OFF  doesn't  do  it.
+     <Sigh.>
+
+     Maybe  the final release of TSE will have a few more hooks in it, or a
+     way of telling the Save commands to skip saving after  all.   Then  we
+     just  en-tab  the  file,  stuffing  the  lines  we  get  back from the
+     Tabolator into a temp buffer which we "SaveAs()"  under  the  original
+     file  name, abandon the temp buffer, and tell the Save NOT to save the
+     original file after all.  If not, we'll just have to write  macros  to
+     replace  all  of  the  various ones that now lead into Save, including
+     Exit(),  so  we won't miss en-tabbing when needed.  Anyway, in MY case
+     the process can be slow enough that I may not want to do  it  all  the
+     time.  There seems to be no pat solution.
+
+     Pending  such  useful  changes to TSE, I have simply put the Tabolator
+     and DeTab() on menu choices that I can use as needed.
+
+     You  can  add them to your burn-in file and activate them as you like.
+     See below for the calling sequences.
+
+                             RUNNING THE TABOLATOR
+
+     The  Tabolator  (and  DeTab(),  for that matter) processes the current
+     file if there is no marked block.  If there IS a  marked  block,  they
+     processes  that block if the cursor is within the marked block, or the
+     entire file if the cursor isn't in the marked block.
+
+     Activate the Tabolator by the means you have chosen when you installed
+     it.
+
+     Both  the  Tabolator and DeTab() (the revised version in DETAB.S) will
+     process marked blocks as well as entire files.   Tabolate(),  however,
+     will  NOT process COLUMN blocks, since the likelihood of starting each
+     line with the wrong state is high, and the difficulties of getting the
+     columns  in the result correct are too much trouble.  DeTab() does not
+     have as bad a problem, but you can still have it come out  wrong  with
+     column blocks.  Beware.
+
+     You  will  have to be careful when you Tabolate() a marked block.  The
+     tabolator initializes to a first state of 0, which is appropriate  for
+     the  first  line  of  a file.  It may NOT be appropriate for the first
+     line of a marked block, however.  For example, in a language,  if  you
+     start inside a comment, the starting state is most INappropriate!
+
+     In  an  Editor  written  to  support a particular language, the editor
+     itself can store the text in a way that allows it to keep track of the
+     context  of  each  line  even  if you jump about in a file.  A general
+     purpose editor such as TSE cannot easily do this.
+
+     If you would like to try,  you  can  always  see  if  you  can  modify
+     Tabolate() to figure out what the current context is.  It looks like a
+     POSSIBLE, but losing, game to me.
+
+     As  it  stands,  Tabolate()  will  process only full lines.  No matter
+     where along a line a marked block begins or ends, that entire line  is
+     processed from the beginning.
+
+     ALSO,  the  cursor must be WITHIN the marked block.  If it is outside,
+     the entire file is processed.
+
+     For reasons I don't fully understand, after Tabolating, the start of a
+     marked character or stream block is moved to the end of  the  line  it
+     began  on.   It  happens whether the entire file is Tabolated, or just
+     the marked block.  This does NOT happen with a LINE block.
+
+     In the event of an error, you'll get a warning message, and you'll get
+     the  editor  back  with the cursor on the offending line.  DO NOT MOVE
+     OFF THIS LINE!!  Examine the line to see if you can see what happened.
+     Then  do whatever you have assigned RestoreCursorLine() to to get back
+     the original contents.  If you move off the offending line,  you  will
+     lose this ability to restore it!
+
+
+                       HOW TO USE THE TABOLATOR INTERFACE
+
+     TABOLATE.S  contains  the  Tabolator  interface.  DETAB.S contains the
+     entire DeTab routine, modified from the version supplied with the  TSE
+     pre-release.  We will discuss both of these here.
+
+     The main routines you are interested in are Tabolate() (in TABOLATE.S)
+     and DeTab() (in DETAB.S).
+
+     The calling sequence for Tabolate() is:
+
+          Tabolate( string is, integer tw )
+
+     --where "is" is the initialization string to be passed to  StartTabs()
+     (see below), and "tw" is the width of a tab.  Many of you will want to
+     use the TabWidth from TSE.  I don't.  A tabbed file may  be  displayed
+     by other programs and/or printed on any old kind  of  printer  by  who
+     knows  what  program.   Most of these devices assume that the tab is 8
+     positions long, stopping at column 9, 17, 25, . . ., etc.  So I prefer
+     to use the value 8, no matter what TSE "thinks" it  is.   But  I  know
+     lots  of  you  out there will want to use TSE's TabWidth, or something
+     else, so I've provided for a value that YOU pass in.  Make it whatever
+     you  like.   You  cannot  use  a  value greater than 64, however.  The
+     Tabolator won't like it.
+
+     The  nature  of  the  initialization  string is described below in the
+     section on programming the Tabolator state machine.
+
+     If processing completes without errors, Tabolate returns TRUE, else it
+     returns FALSE.
+
+     The calling sequence for DeTab() is:
+
+          DeTab( integer tw )
+
+     --where  "tw" is the tab width that DeTab() is to use.  Again, this is
+     provided as a convenience to those who want  to  use  something  other
+     than 8.
+
+     DeTab() returns TRUE if processing was completed without problems, and
+     FALSE otherwise.
+
+     In the file TABOLATE.S there is, also, a proc called Tabolate1Line().
+     It's called by Tabolate(), but you can call it too, if you know what
+     you're doing.  Its calling sequence is:
+
+          Tabolate1Line( integer State )
+
+     --where "State" is the state the Tabolator must be in at the start of
+     the line.  The line used is the current line on which the cursor lies.
+     The entire line is processed.
+
+     If  all  goes  well,  Tabolate1Line()  returns the state (0-15) of the
+     Tabolator at the end of the line just processed, otherwise it  returns
+     -1.
+
+     You MUST call StartTabs() (see below) before the first time  you  call
+     Tabolate1Line() in order to get the state to pass to it.  From then on
+     until you wish to process a new file, or to change the  state  machine
+     programming,  you  can call Tabolate1Line() as you wish.  Each time it
+     returns, you should save the state it passes you so as to have the new
+     state  for  the next line.  You CAN provide a different starting state
+     if you wish, and have a good reason to do so.  Any errors  that  occur
+     as a result of passing in a wrong state are YOUR problem.
+
+     If you get a negative number back from Tabolate1Line(), something  bad
+     has happened, and it's probably not a good idea to go on.  The current
+     line in your buffer may be screwed  up  and  you  may  need  to  do  a
+     RestoreCursorLine() to get the original data back.
+
+
+                       HOW TO USE THE TABOLATOR BINARIES
+
+     There are three routines to contend with.
+
+     The first is StartTabs(), which you call to initialize and program the
+     state  machine.  You only need to call StartTabs() once when you begin
+     processing a file.  It returns a state value which you must  save  and
+     pass to TabALine() when you next call it.
+
+     The second is TabALine() which you call with each piece  of  the  line
+     you are processing.  You pass it the line fragment you want processed,
+     the address of an SAL string where it will place  the  result  string,
+     and  a  copy  of the state it is to begin processing with.  It returns
+     the value of the state at the end of the line fragment you have  given
+     it.   This  business  of  passing  in the starting state allows you to
+     repeat the processing of a fragment if an error occurs,  or  otherwise
+     modify the way your fragments are processed by changing states.
+
+     Finally, there is EndALine(), which you call at the end of each  line,
+     when  all the fragments are processed.  It returns any trailing spaces
+     from the line, and the state you will  pass  to  TabALine()  when  you
+     process the first fragment of the next line.
+
+     If  an  error is detected during processing, all three binary routines
+     will return -1 instead of a valid state.
+
+     After  each  call  to  TabALine(),  a number of leftover spaces may be
+     retained for inclusion in the next fragment processed, as well as  the
+     position  of  the  next  tab stop.  EndALine() clears these values and
+     returns any trailing blanks it has accumulated.  These trailing spaces
+     can  exist  when  you  are retaining trailing whitespaces.  It is VERY
+     important that you call  EndALine()  at  the  end  of  each  line  you
+     process.
+
+     The calling sequence for StartTabs() is:
+
+          StartTabs( string SetupString, integer TabSize )
+
+     Note the ama-a-azing similarity between this  call  and  the  call  to
+     Tabolate() described above.  As in that call, the "SetupString" is the
+     state machine program, described below, and the TabSize is an  integer
+     specifying the number of spaces that  a  tab  takes.   Note  that  all
+     tabbing  is  referenced  to column 1 (the first tab position) just the
+     way a printer or file viewer (like Vern Buerg's  LIST  program)  would
+     interpret them.
+
+     You  MUST  call this subroutine before you start calling either of the
+     other routines.  You won't necessarily get an error if you don't,  but
+     the results probably won't be what you want.
+
+     StartTabs()  returns  the initial state of the state machine.  This is
+     always zero.  If you get a -1 back instead, either you have  specified
+     a  TabSize  that  is  outside  the  range 0-64, or you have supplied a
+     SetupString that is less than 4 or more than 64 bytes long or  is  not
+     an integral multiple of 4 bytes in length.  Now we all know that a tab
+     size of zero is nonsense; if you  give  "StartTabs()  a  "TabSize"  of
+     zero,  it  will  assume  you  mean 8.  The upper limit of 64 is just a
+     convenience, and prevents insanely long output lines.  Note  that  TSE
+     restricts  you  to  16  maximum  on  "TabWidth".   The reasons for the
+     restrictions on the "SetupString" will become clear when you read  the
+     section on programming the state machine.
+
+     The calling sequence for TabALine() is :
+
+          TabALine( var string LineOut, var string LineIn,
+                                                       integer StartState )
+
+     --where "LineOut" is an empty string large enough to hold the  results
+     of  the  Tabolation,  "LineIn"  is the sdtring you want Tabolated, and
+     "StartingState" is the state you want the Tabolator to begin the  line
+     in.  Usually this is the state returned by the last call to one of the
+     Tabolator subroutines.
+
+     If "OutLine" is  not  empty,  the  original  contents  will  be  lost,
+     replaced  by  whatever  is produced by TabALine().  If an error occurs
+     (result is < 0), "OutLine" will have a length of zero.
+
+     In no event is "InStr" altered in any way.
+
+     TabALine returns a state (in the range (0-15) if all goes well, or  -1
+     if something goes wrong.  In the case of TabALine(), this happens when
+     "OutLine" is too short to take the results of  the  Tabolation.   This
+     usually  happens when the expansion of tabs in a line fragment results
+     in too long a result, but can also happen as a result of adding spaces
+     at  the  beginning  of  a  line  fragment  that  we left over from the
+     preceding fragment.  Yes, the way the Tabolator is written,  this  CAN
+     happen.   When  it  does,  you  should break the current fragment into
+     smaller pieces and try feeding THEM to the Tabolator.   In  fact,  the
+     Tabolator  EXPECTS  you to do this and resets itself back to its state
+     at  the  time  you  called  it  with  the   current   fragment.    See
+     "Tabolate1Line()"  in the file TABOLATE.S for an example of this.  You
+     will note that the routine tries chopping the line  fragment  in  half
+     until it succeeds.
+
+     If  the returned state is NOT negative, you should save it and pass it
+     to the next call to TabAline().
+
+     The calling sequence for EndALine() is:
+
+          EndALine( var string LineOut )
+
+     --where "LineOut" is an empty  string  to  receive  possible  trailing
+     spaces at end of line.
+
+     EndALine() MUST be called at the end of each line to cause end-of-line
+     processing to occur.  This is necessary since a line longer  than  255
+     characters will have to be passed in a piece at a time for processing,
+     so we need someway of telling when the end of the line is reached.
+
+     A word about those "possible leftover blanks" we mentioned a couple of
+     times:  When  the  Tabolator  encounters  a string of spaces, if it is
+     turning spaces into tabs, it doesn't copy them to the output just yet;
+     it  just  accumulates  them.  If it crosses a tab point, it puts out a
+     single tab instead.  This means  that  it  can  reach  the  end  of  a
+     fragment  with some accumulated spaces left over.  Since the string in
+     "InStr" may continue in the next fragment, and we may not be at a  tab
+     boundary, we must hold the count of spaces and continue it in the next
+     input string fragment.  If we are at the end of a line, we must  still
+     put out the spaces in case we are not removing trailing whitespaces.
+
+     Yeah, I know it looks a little weird, but you don't see this when  you
+     are  using  the  editor; only the macro programmer needs to know about
+     it.
+
+     By way of illustration, let's look at a slightly stripped  version  of
+     the test program (given in its entirety later on):
+
+     /********************************************************************/
+
+     binary ["tabolate.bin"]
+         integer proc StartTabs( string SetupString, integer TabSize )  : 0
+         integer proc EndALine( var string LineOut )                    : 3
+         integer proc TabALine( var string LineIn, var string LineOut,
+                                                  integer StartState )  : 6
+     end
+
+     string
+         SALTabsOut = 'CA/D.A"K' + ".A'LMD A.D/G.D*HGG ACH*IMI H.I/A"
+                                                          + 'FK"A' + "FL'A"
+
+     proc test()
+         string InStr[128]  = "",  // String to contain line fragments.
+                OutStr[255] = ""   // String to receive results.
+         integer S                 // Holder for current state.
+
+         S = StartTabs( SALTabsOut, 0 )    // Initialize the Tabolator.
+         BegLine()
+         InStr = GetText( CurrPos(), 128 ) // Get a line fragment.
+         S = TabALine( InStr, OutStr, S )  // Process it.
+         Down()
+         InsertText( OutStr, _INSERT_ )    // Result to display.
+         S = EndALine( OutStr )            // End of line processing.
+         InsertText( OutStr, _INSERT_ )    // Add any trailing spaces.
+     end
+     /********************************************************************/
+
+     The  first thing we do is to cause the binary to be included.  You can
+     copy it from here into your program, or  you  can  grab  it  from  the
+     initial description block in the TABOLATE.ASM file.
+
+     Next  we  need a setup string for the Tabolator.  I have just stuck in
+     the SAL setup string for convenience.  It  looks  awful,  doesn't  it?
+     Don't  worry,  Sometime  Soon  we'll get around to finding out What It
+     Means and how to write Ones of Your Own.
+
+     Finally we have our procedure.  We declare "InStr", a string  to  hold
+     the  source  data,  "OutStr",  a  string  to  hold  the results of our
+     Tabolation, and an integer "S"  to  hold  the  state  value.   Usually
+     en-tabbing  SHRINKS the length of the data line, but we don't want any
+     errors (tabs inside quoted strings WILL be expanded by  the  rules  in
+     "SALTabsOut")  so  we allow some extra room here.  And we don't expect
+     too many source lines more than 128 characters long, do we?
+
+     The first thing we do is to call "StartTabs()".  We  tell  it  to  use
+     "SALTabsOut" as the setup string for the state machine, and we tell it
+     to use a tab width of 8.  We save the result in  "S"  to  use  as  the
+     starting state for TabALine().
+
+     Next  we move to the beginning of the current line and fetch up to 128
+     bytes of data from the line.
+
+     We pass this, along with the address  of  "OutStr"  and  the  starting
+     state we got from "StartTabs()" to "TabALine()".  We save the returned
+     value as a new state.  Normally we would test  it  to  see  if  it  is
+     negative, and we wouldn't actually overwrite the original value in "S"
+     until we're SURE that it's all right.  But this is a toy program.   In
+     fact,  in  the  test program we don't really care; we just want to get
+     the value to display, as you will see if you look at the test  program
+     (at the end of this writeup).
+
+     Since  it  IS  just a test driver, we don't disturb the original data.
+     Instead, we drop down a line and insert it into our file.
+
+     To finish things off, we call "EndALine()",  supplying  a  pointer  to
+     "OutStr"  to pick up any stray spaces, which we tack on the end of the
+     line in the file.  We also save the returned value.  If this is not -1
+     (and  "OutStr" is so big there shouldn't ever be an error) it would be
+     the state with which we would begin processing the next  line,  if  we
+     were  of such a mind.  But we're not, so we just let the proc end, and
+     look at the results on the screen.
+
+     The only differences between this rather  low-grade  example  and  the
+     test  program  is  the  addition  of  of  the "BegLine()" call and the
+     elimination of "Warn()" calls to display the values of various things.
+     The  real test driver uses the C/C++ rules instead of the SAL rules as
+     they test more of the binaries' features.  You will find  the  "Simple
+     Test Driver" at the end of this writeup.
+
+
+                 HOW TO PROGRAM THE TABOLATOR STATE MACHINE
+
+     The  state  table  entries  for  the  tabolator  must  be  constructed
+     carefully, and you are provided with precious little help.  This saves
+     ME a lot of time and trouble.  At least you don't have to do  it  very
+     often.
+
+     Print  yourself  a copy of the form in "TABOLATE.FRM" to use as a work
+     sheet.  It looks like this:
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+
+              For:_______________________________________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+          ( 2)  C    |(   ) . . . . . |         |       |       |
+                     .                .         .       .       .
+                     .                .         .       .       .
+                     .                .         .       .       .
+                     .                .         .       .       .
+          (13)  N    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+          (14)  O    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+          (15)  P    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+                             | | | |
+                             | | | +-Convert tabs to spaces
+                             | | +---Convert spaces to tabs
+                             | +-----This state ends at end-of-line
+                             +-------This state ends after next character
+
+     I've cut the center out of it here to save space.
+
+     The form reflects the structure of the state table where the tabolator
+     state  program  is stored.  The table can hold a maximum of 16 entries
+     numbered 0 thru 15, and there are four parts  to  each  entry.   There
+     must always be at least one entry in the state table.  Each part of an
+     entry is specified by a single character in the setup string passed to
+     StartTabs().   This accounts for the requirement that the setup string
+     must contain at least four characters (one entry),  a  maximum  of  64
+     characters (16 entries) and must be an integral multiple of four bytes
+     (per entry) long.
+
+     The first item is a set of control bits.  If the bit is ON, the action
+     occurs.   Bit  0  requests  that  tabs  be  changed  to spaces.  Bit 1
+     requests  that  spaces  be  converted  to  tabs.   They  are  mutually
+     exclusive  only to the extent that you don't want both ON at once.  It
+     is reasonable to expect situations where NEITHER is ON.
+
+     Bit  2  indicates  that  the  current  state  ends  with  end-of-line.
+     Comments  in SAL beginning with "//" are an example of this.  Comments
+     beginning with "/*", however, extend across several  lines  and  would
+     NOT  have  this bit set.  Bit 3 indicates that the current state lasts
+     for one character (or less).  In C/C++, the escape character "\" is of
+     this  type.   An example of the "or less" would be (in both C and SAL)
+     the "/" which could be the first  character  of  "//",  or  the  first
+     character  of  "/*",  or just a request for division.  The use of this
+     flag can be a bit tricky, as we shall see, and  it  has  some  strange
+     rules attached to it.
+
+     The  second  item  in a table entry is the current state.  The current
+     state is always named after the first table entry for that  state.   A
+     state  can  contain more than one entry.  They must be contiguous, and
+     the "current state" item in each entry must contain the value  of  the
+     first entry for the state.
+
+     The third item ("token chr")is a character to watch for which will end
+     this state.  The reason for having more than one entry per state is to
+     allow  us  to look for more than one character to end it.  This may be
+     any character EXCEPT a space or  a  tab.   The  space  has  a  special
+     meaning  here,  however,  in  the  case  of  states that end after one
+     character, or at end-of-line.  More on this later.
+
+     The  fourth item is the state to which we change when the character in
+     the third item is encountered or the current state is otherwise ended.
+
+     The control bits (in the first item) apply to  all  entries  for  that
+     state  and  do  not  have to be included in the remaining entries (for
+     that state).
+
+     If the state ends at  end-of-line,  or  after  one  character,  it  is
+     possible  that  none of the state-ending characters will be found.  We
+     need some state to go to anyway.  The Tabolator uses the "next  state"
+     from  the  first (or only) entry.  If you want this to be a state that
+     is different from any of the states specified by other entries, put  a
+     SPACE  in  the "token chr" item of the first entry for that state, and
+     the desired state in the "next state" item.
+
+     There are two tricky rules:
+
+     First: If the "next state" item is a SPACE, a default state  is  used.
+     The  default  state  is the last state the state machine was in before
+     the current state was entered.  These are NOT nested.  If  we  are  in
+     state  A,  then switch to state B, the default is state A.  If we then
+     switch to state C, the default is state B.  If we then switch back  to
+     state  B, the default becomes state C.  Once again: these are NOT like
+     nested subroutine calls!
+
+     Second: If there is only one entry for a state, and if that state ends
+     after one character and if  the  "token  chr"  is  a  SPACE,  the  one
+     character  is transferred to the output string without being examined,
+     and the "next state" is entered.   In  all  other  cases,  the  single
+     character is re-examined when the next state is entered if none of the
+     characters we are looking for is found.  (If we get a hit on one,  the
+     requested  state  change  is  made,  and,  since we DID get a hit, the
+     character is NOT re-examined.) This let's  us  use  the  one-character
+     state  bit to deal with escape character sequences such as \" in C/C++
+     that will NOT end a  quoted  string,  but  still  correctly  handle  a
+     sequence  in Pascal such as ((* which is a legitimate left parenthesis
+     followed immediately by the start of a comment.
+
+     ---and a warning:
+
+     When you call EndALine(), if the current state has  the  end-state-at-
+     EOL  flag  ON,  the  state specified in the "next state" field of this
+     state's first entry will become the next state.   If,  in  turn,  THIS
+     state  ends  at EOL, the state will be switched to the "next state" of
+     THAT state's first entry.  This will continue until a state that  does
+     NOT  end  at EOL is encountered.  Be sure you don't create an infinite
+     loop this way!
+
+     Use the form to work out the table  entries.
+
+     LEAVE NO GAPS!  All UNUSED entries MUST be at the end of the table
+     following the used ones!  You will be tempted to do this because you'll be in  a
+     hurry.   Don't  give  in!   If  need  be,  work  it all out, then copy
+     everything to a new form, changing the  state  numbers  as  necessary.
+     StartTabs()  simply  loads  the  state  table  directly from the setup
+     string without even looking at the "current state"  field.   The  only
+     purpose  of  this field is to let the state table processor know where
+     to stop when it is getting information about a particular  state  from
+     the  table.
+
+     Well, after all that, if you don't mind typing, you CAN have gaps,  so
+     long  as  you  fill them with valid entries that you never go to.  You
+     WILL have to code something in them that follows the rules and include
+     that  coding  in the setup string.  This could be confusing to someone
+     (including you) who tries to modify the state program later.
+
+     A STATE'S NUMBER IS ALWAYS THE ENTRY NUMBER OF ITS FIRST  ENTRY.   You
+     will  set  up a state program so seldom, and the state programs are so
+     small (16 entries MAXIMUM), that it is not worth putting checking code
+     into  the binary.  The damn thing has already overflowed 1024 bytes by
+     a small amount, and I find that  annoyance  enough!   If  someone  out
+     there  thinks  it would be worth writing a little compiler or checker,
+     go ahead.  My own experience is that it isn't  that  hard  to  get  it
+     right doing it by hand.
+
+     Transfer the information in the form to the setup string you are going
+     to pass to "StartTabs()".  Each field in each entry is represented  by
+     a  single ASCII character.  To simplify things, use letters instead of
+     numbers.  In place of zero use "A"; in place of 1 use "B", and  so-on.
+     The  codes  are  listed  down  the  side  of the form beside the entry
+     numbers.  Use this coding to represent the control  bit  codes  (which
+     vary  from 0 thru 15), the current state, and the next state.  For the
+     character in the "token chr" item,  use  the  actual  character.   The
+     letter  coding  scheme for numbers is straight forward.  The coding is
+     not case sensitive.  In the binaries I just decrement by one and  mask
+     away  the  upper  four  bits.  If you need a space in the "next state"
+     field, just use a space.  The Tabolator will Understand.  I suppose  I
+     could  have  saved  the trouble of decrementing by asking you to start
+     one character lower in the ASCII series, but I chose A thru P as being
+     easier  to remember than, say, 0 thru ? or ^ thru m or some other such
+     nonsense. I am not going to convert hex. It would just take up  space,
+     and  there's no need for it.
+
+     Just  between  you and me, this is all a little confusing, even to me,
+     and I cooked this thing up, so let's try some examples.
+
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     Here's a state machine program that en-tabs an entire file:
+
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+              For:_Complete en-tabbing___________________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |( C ) .0.0.1.0. |    A    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+          ( 2)  C    |(   ) . . . . . |         |       |       |
+
+
+     It  doesn't  look  for quoted strings or anything.  It might be useful
+     for en-tabbing tables, for example.  The  control  bits  request  only
+     conversion  of  spaces  to tabs.  All other control bits are off.  The
+     resulting binary value is 2.  The code for 2 is "C".  The name of  the
+     current  state  is  "A".   There  is no character that will change the
+     state, so we use a SPACE.  Since there will never  be  a  change,  the
+     "next  state" is meaningless.  We could put anything here, including a
+     space.  I just stuck "A" in here to make it clear that the state never
+     changes.
+
+     Foe the resulting setup string we need to provide all four  characters
+     of this entry:
+
+          AllTabsOut = "CA A"
+
+     If we had decided to leave the "next state" field blank, we would use:
+
+          AllTabsOut = "CA  "
+                          ^^---those are two spaces up there!
+
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     The obverse of this would convert all tabs to spaces:
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+              For:_Convert all tabs to spaces____________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |( B ) .0.0.0.1. |    A    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |         |       |       |
+
+
+     --with the resulting setup string being:
+
+     AllTabsIn = "BA A"
+
+     As I noted before,  the  DeTab()  macro  does  this  faster  than  the
+     Tabolator.
+
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     Now let's try something more complicated.  Here's  a  Tabolator  state
+     program for an assembler such as the Turbo Assembler:
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+              For:_Assembler source______________________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |( C ) .0.0.1.0. |    A    |   ;   |   F   |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |    A    |   "   |   G   |
+                     +----------------+---------+-------+-------+
+          ( 2)  C    |(   ) . . . . . |    A    |   '   |   H   |
+                     +----------------+---------+-------+-------+
+          ( 3)  D    |(   ) . . . . . |    A    |   <   |   I   |
+                     +----------------+---------+-------+-------+
+          ( 4)  E    |(   ) . . . . . |    A    |   !   |   J   |
+                     +----------------+---------+-------+-------+
+          ( 5)  F    |( G ) .0.1.1.0. |    F    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 6)  G    |( F ) .0.1.0.1. |    G    |   "   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 7)  H    |( F ) .0.1.0.1. |    H    |   '   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 8)  I    |( F ) .0.1.0.1. |    I    |   >   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 9)  J    |( M ) .1.1.0.0. |    J    |       |       |
+                     +----------------+---------+-------+-------+
+          (10)  K    |(   ) . . . . . |         |       |       |
+
+
+     State 0 (coded "A") is always the initial state.   The  assumption  is
+     that we are processing assembler text.  We are NOT in a quoted string,
+     a comment, or anything else special.
+
+     There are 5 entries, 0 thru 4 ("A" thru "E"), in state 0.   The  first
+     entry contains the control bits (or, in this case, bit) to be used for
+     state 0.  It does NOT have to appear in the other entries, though  you
+     can put it there if you wish.  The code tells the Tabolator to convert
+     spaces into tabs.  The numeric value of the control bits is  2,  which
+     is coded as "C".
+
+     The code for state 0 is "A", and this is placed in the "current state"
+     field of each of the five entries.
+
+     Entry 0 looks for the semi-colon, which starts  a  comment,  which  is
+     handled  by  state  5 (coded as "F").  Entries 1, 2 and 3 look for the
+     start of quoted strings, which can  begin  with  either  ",  '  or  <.
+     Different  states  are needed to process these quoted strings since we
+     need to look for different ending quotes.  Finally, entry 4 looks  for
+     the escape character !, which allows ANY character to follow it.
+
+     If,  during  state 0, we encounter a semi-colon, we change to state 5,
+     coded as "F".  Here the control bits specify that we convert spaces to
+     tabs,  and the state ends at the end of the line.  The main difference
+     between this state and state 0 is that we ignore escape characters and
+     string  quotes  since  this  is  now just a comment.  The value of the
+     control bits is 6, which is coded as "G".  The "current state"  is  5,
+     coded "F".  No character can get us out of this state, only EOL, so we
+     use a space to make sure we never find a  match  (remember,  there  is
+     NEVER a hit on spaces or tabs).  When EOL is encountered, we go to the
+     next state, which is state 0, coded "A", which is the desired state to
+     start processing the next line.
+
+     The  next  three  entries are similar in function; only the characters
+     which cause a state change  are  different.   They  are  entered  from
+     entries 1 thru 3, respectively, out of state 0.  The control bits call
+     for a state change at EOL, and request that tabs  be  EXPANDED  rather
+     than  spaces be converted to tabs.  Except for a couple of versions of
+     MASM, where the backslash can be used to continue quoted strings,  the
+     assembler  rules  don't allow quoted strings to continue from one line
+     to the next.  Each line MUST have closing quotes.  Since I  never  use
+     the  backslash  continuation  "feature", and since it isn't necessary,
+     and since it  makes  embedding  backslashes  in  strings  unreasonably
+     messy,  I  choose  to  kill the quoted string state at EOL.  Backslash
+     continuation OUTSIDE quoted strings will have no effect on  our  state
+     program,  so  we  don't worry about it.  The rule that allows a string
+     quote to be embedded by doubling it  is  handled  inherently  by  this
+     state program.   If the string quote is a ", and we have an embedded "
+     signalled by a pair of "s, when we encounter the  first  one,  we  pop
+     back  to state 0.  Then we immediately encounter the second one, which
+     puts us right back into the quoted string state.  We do  NOT  want  to
+     convert  spaces  to  tabs  inside  quoted  strings,  since  that would
+     actually change the string.  Normally there should be  no  tabs  in  a
+     quoted string.  The programmer is supposed to do something like:
+
+          db   "a string",9,"more stuff"
+
+     to  include  tabs  in  his  string.   So,  for safety, we ask that any
+     spurious tabs inside quoted strings be expanded.  The numeric value of
+     these  control  bits is 5, which is coded as "F".  The "current state"
+     field in each entry reflects the coding  of  its  entry  number.   The
+     "token  chr"  field  in  each contains the character that ends the "in
+     quoted string" state.  Note the correspondence between the quote  that
+     starts the string with the quote that ends it.  This ensures that only
+     the correct quote character will end  the  quoted  string.   In  every
+     case,  when  the  expected end-quote character is found, we go back to
+     state 0 and continue converting spaces to tabs again.  In  each  case,
+     when  EOL  is  reached,  the no-hit next state is taken from the first
+     entry of each state, which, since there is only one entry in each,  is
+     the  same  state we enter when the closing quote is found.  These next
+     states are all 0, encoded as "A".
+
+     By  the way, those of you who want to implement backslash continuation
+     of quoted strings can do it with no more than three additional entries
+     in  this  state  program.   No, I won't say how; you should be able to
+     figure it out.  Just remember that if you do  this,  and  you  have  a
+     program  with  backslashes embedded in quoted strings for a version of
+     the assembler that DOESN'T support this kind of continuation, you will
+     either  get tabs where you don't want them or won't get them where you
+     do (depending on your control bit settings).
+
+     Entry  4  (part  of  state  0)  sends  us  to  state 9 when the escape
+     character ! is found.  We merely wish to skip the next character.  But
+     suppose  the programmer made a boo-boo and made a ! the last character
+     on the line.  Do we want to skip the first character of the next line?
+     Of course not.  So in addition to putting on the control bit that says
+     that this is a one-character state, we also put on the bit  that  says
+     the  current state ends at EOL.  The control bits have a numeric value
+     of 12, which is coded as "M".  As this is entry 9, the "current state"
+     field  receives its code, "J".  We are NOT looking for a character, so
+     the "token chr" is a SPACE, and the state we return to is state 0.  By
+     way  of  illustration  here,  however, I've put a space in this field,
+     too.  Since the state we came here from is state  0,  that's  what  we
+     will  go to after we bypass the single character.  Since there is only
+     one entry in this state, and since the "token chr" is a space, we will
+     completely ignore the character that follows the !.
+
+     Now  to  make  a  setup string out of this.  The first four characters
+     are, clearly, "CA;F".  The second four COULD be 'CA"G', but that first
+     character  can be ANYTHING, since only the control bits from the first
+     entry for a state are used.  To  make  this  show  up  better  in  the
+     character  string, I use a period.  You can use what you like.  In SAL
+     notation this all comes out to:
+
+     AsmTabsOut = 'CA;F.A"G' + ".A'H.A<I.A!JGF A" + 'FG"A' + "FI>AMJ  "
+
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     With  Pascal,  we  get more complex.  On the one hand we don't have to
+     worry about escape characters, or two kinds of string quotes.  On  the
+     other hand, we DO have to worry about two kinds of comment delimiters,
+     one of which is a two-character sequence.  Here's what we do:
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+              For:_Pascal source_________________________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |( C ) .0.0.1.0. |    A    |   {   |   D   |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |    A    |   (   |   E   |
+                     +----------------+---------+-------+-------+
+          ( 2)  C    |(   ) . . . . . |    A    |   '   |   J   |
+                     +----------------+---------+-------+-------+
+          ( 3)  D    |( C ) .0.0.1.0. |    D    |   }   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 4)  E    |( M ) .1.1.0.0. |    E    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 5)  F    |(   ) . . . . . |    E    |   *   |   G   |
+                     +----------------+---------+-------+-------+
+          ( 6)  G    |( C ) .0.0.1.0. |    G    |   *   |   H   |
+                     +----------------+---------+-------+-------+
+          ( 7)  H    |( M ) .1.1.0.0. |    H    |       |   G   |
+                     +----------------+---------+-------+-------+
+          ( 8)  I    |(   ) . . . . . |    H    |   )   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 9)  J    |( F ) .0.1.0.1. |    J    |   '   |   A   |
+                     +----------------+---------+-------+-------+
+          (10)  K    |(   ) . . . . . |         |       |       |
+
+
+     As  before, we start with state 0 which is outside everything special,
+     just processing Pascal text, converting tabs into spaces, and  looking
+     for something tricky to come along.
+
+     We only have to look for three things: a {, which starts a comment, an
+     apostrophe, which starts a quoted string, and a (, which MIGHT start a
+     comment,  but,  then  again,  might  not.   This  uses the first three
+     entries.  The control bits, which go in the first entry for this state
+     merely  specify  conversion  of  spaces  to tabs.  The "current state"
+     field in each of the first three entries is "A", indicating that  they
+     are  all  part  of  state 0.  The "token chr" fields specify the three
+     characters, and the "next state" fields code for the next state.   The
+     code for the control bits, whose numeric value is 2 is coded as "C".
+
+     Handling the { is easy.  Entry 3 does it all.  It merely looks  for  }
+     and changes back to state 0.  Notice that the control bits only ask to
+     convert spaces to tabs, ignoring string quotes and other things  (okay
+     in comments).  This will even handle (*..*) comments nested inside the
+     curly  bracket   comment.    Note   also  that state  3 does  NOT  end
+     at  EOL.   The  only  thing that stops it is the }, which follows  the
+     rules for Pascal.
+
+     If we find a ( while in state 0 we MIGHT have the start of a  comment.
+     We  must check only the next character to see if it's an asterisk.  If
+     it is, we've got a comment.  If not, we must go back to  state  0  and
+     check  that  second  character  again.   After  all,  we  might have a
+     sequence like ({ or (' or even ((* and we wouldn't want  to  miss  it!
+     We  use  the  one-character state flag.  In the event that the ( comes
+     immediately before end-of-line, which might  very  well  happen  in  a
+     Pascal  program, we must also set the control bit to end this state at
+     EOL.  We have no reason to even look for a tab or a space during  this
+     one-state  since  if the next character is NOT an * we will go back to
+     state 0 and check it again.  The control bits have the  numeric  value
+     12, coded as "M".
+
+     The  state  that does all this begins in entry 4 and includes entry 5.
+     The two entries guarantee that if we get no hit on the * specified  in
+     entry  5,  we'll  take the no-hit next state from entry 4 and re-check
+     the character out of state 0.   The  "current  state"  field  in  both
+     entries  4  and  5  identifies  these entries as belonging to state 4,
+     coded as "E".  The "token chr" field of entry  4  is  a  space.   This
+     entry  only supplies the "next state", used in case an * is not found.
+     The "token chr" field of entry 5 contains the * we  are  looking  for,
+     and  the  "next  state" field points to state 6, coded as "G".  If the
+     next character is NOT an asterisk, we merely return  to  state  0  and
+     recheck  the  character on which we got no hit.  If the next character
+     IS and asterisk, we go to state 6, coded "G", which begins in entry 6.
+
+     State 6 cooks along just looking for the * that MIGHT signal  the  end
+     of  the  comment.   It  converts tabs to spaces, and ignores EOL, just
+     like state 3.  When an asterisk is found, we must check to see if it's
+     followed  by  a  ).  It COULD just be part of an asterisk outline.  It
+     could also be the first asterisk of a sequence like **)  or  ****)  or
+     like  that.  So we need a one-character state to test it.  Entry 6 has
+     a control bit code of 2, which is coded as "C".  Since it is entry  6,
+     the "current state" field must identify this, coded as "G".  The token
+     character is *, and the next state will be 7, coded as "H".
+
+     State 7 occupies entries 7 and 8 and resembles state 4.   The  control
+     bits  indicate  a  one-character  state  that  also  ends at EOL.  The
+     "current state" is 7, coded as "H".  Entry 7's "token chr" contains  a
+     space  that returns us to state 6 (still inside a (*...*) comment) and
+     reexamines the current character if the next character  is  NOT  a  ).
+     Entry  8's "token chr" field checks for the ) and transfers to state 0
+     (back to normal Pascal text) if it is.
+
+     The last thing we were looking for in state 0 was the string quote  '.
+     State  9 (a one liner in entry 9) takes care of this.  While we are in
+     the string quote we expand tabs, just like in the assembler,  and  for
+     the  same  reasons.  Since a Pascal quoted string can't span lines, we
+     also set the control bit that ends the state at EOL.  Since we  return
+     to  state  0  in  either  case,  we only need the one-line entry.  The
+     control bits have the numeric value 5, coded  as  "F".   The  "current
+     state"  is  coded  as "J".  The "token chr" is the apostrophe, and the
+     next state is 0, coded as "A".
+
+     Note that we don't have to worry about an  escape  character  here  to
+     avoid  mis-processing an apostrophe embedded in a quoted string.  This
+     is specified by two apostrophes is a row.  The first one  will  switch
+     us  back  to state 0; the second one will put us right back into state
+     9, right where we want to be!
+
+     The setup string would be:
+
+     PscTabsOut = "CA{D.A(E.A'JCD}AME A.E*GCG*HMH G.H)AFJ'A"
+
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     We HAVE to have a state program to process SAL source code, don't we?
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+              For:_SAL source____________________________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |( C ) .0.0.1.0. |    A    |   /   |   D   |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |    A    |   "   |   K   |
+                     +----------------+---------+-------+-------+
+          ( 2)  C    |(   ) . . . . . |    A    |   '   |   L   |
+                     +----------------+---------+-------+-------+
+          ( 3)  D    |( M ) .1.1.0.0. |    D    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 4)  E    |(   ) . . . . . |    D    |   /   |   G   |
+                     +----------------+---------+-------+-------+
+          ( 5)  F    |(   ) . . . . . |    D    |   *   |   H   |
+                     +----------------+---------+-------+-------+
+          ( 6)  G    |( G ) .0.1.1.0. |    G    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 7)  H    |( C ) .0.0.1.0. |    H    |   *   |   I   |
+                     +----------------+---------+-------+-------+
+          ( 8)  I    |( M ) .1.1.0.0. |    I    |       |   H   |
+                     +----------------+---------+-------+-------+
+          ( 9)  J    |(   ) . . . . . |    I    |   /   |   A   |
+                     +----------------+---------+-------+-------+
+          (10)  K    |( F ) .0.1.0.1. |    K    |   "   |   A   |
+                     +----------------+---------+-------+-------+
+          (11)  L    |( F ) .0.1.0.1. |    L    |   '   |   A   |
+                     +----------------+---------+-------+-------+
+          (11)  M    |(   ) . . . . . |         |       |       |
+
+
+     Like  the  other  state  programs  we  start  with  state 0 processing
+     straight SAL text.  We are looking for comments  and  quoted  strings.
+     All comment delimiters (// and /*) begin with a slash.  Strings can be
+     quoted by either a " or a '.  Spaces will be converted to tabs, and we
+     remain  in  state  0  until  one  of  the characters is found.  So the
+     control bits have a numeric value of  2,  coded  as  "C".   The  three
+     entries  (0,  1  and  2)  all  have  the code for state 0 ("A") in the
+     "current state" field.  The characters we look for are /, " and '. The
+     "next  state  fields are coded to point to the appropriate next state.
+     If we find a slash, we go to state 3 (coded "D"); if we find a " we go
+     to  state  9 (coded "K"); and if we find an apostrophe, we go to state
+     10 (coded "L").
+
+     There is a temptation to fill this form out leaving  gaps  into  which
+     you  intend  to  put  stuff later.  Resist this temptation.  There are
+     only 16 possible entries, and the state programs are all pretty short.
+     DO  NOT  LEAVE GAPS IN YOUR STATE PROGRAM.  You will get errors if you
+     do.  It doesn't take all that much extra time to do a clean job;   you
+     don't  have  to  do  it  all  that  often.  I can see no percentage in
+     putting a lot of stuff in the binary to catch errors or to  fill  gaps
+     or  to  do  special  checking to make easier a job you hardly ever do!
+     StartTabs() simply loads the  state  table  directly  from  the  setup
+     string  without  even  looking at the "current state" field.  The ONLY
+     purpose of this field is to let the state table processor know when to
+     stop  when it is getting information about a particular state from the
+     table.
+
+     If we find a slash, we go to state 3,  coded  "D".   This  will  be  a
+     one-character  state,  and we also need it to end at EOL.  The numeric
+     value of the control bits is  12,  coded  as  "M".   There  are  three
+     entries  for this state, so entries 3, 4 and 5 all have state 3, coded
+     as "D", in the "current state" field.   The  three  possibilities  are
+     that  we  find  another  slash,  an asterisk, or neither.  We code the
+     "neither" first, since the  first  entry  for  a  state  provides  the
+     no-hit  next  state.   Since this is a "none of the others" entry, the
+     "token chr" is a SPACE.  The next state will be state  0  (coded  "A")
+     since  we will still be in normal SAL text.  And, because we have more
+     than one entry for this state, we will recheck the character  that  we
+     didn't  get a hit on.  The remaining two entries for state 3 are for a
+     slash, which means we have a // comment-to-EOL, or an asterisk,  which
+     means we have a /*, which starts a comment block.
+
+     If we get a second slash, we go to state 6, coded "G", which processes
+     a comment that ends at EOL.  In this state we just convert  spaces  to
+     tabs,  ignoring string quotes and anything else until we hit EOL.  The
+     control bits have a numeric value of 6, coded "G".  The current  state
+     is  6,  so  we use a "G" here, too (no, it's just a coincidence!).  We
+     are not looking for any character, so the  "token  chr"  is  a  SPACE.
+     When  we  reach  EOL we switch back to state 0, so we code for that in
+     the "next state" field.
+
+     If we found an asterisk out of state 3, we come to state  7  where  we
+     process  a comment block which can cross line boundaries, and is ended
+     only by a */.  We will ignore double  slashes  and  string  quotes  in
+     here,  and  we  will convert spaces to tabs.  The numeric value of the
+     control bits is 2, coded "C".  The current state is 7, coded "H".  The
+     character  we are looking for is an asterisk, and the state we will go
+     to when we find it is 8, coded as "I".  This is essentially  the  same
+     procedure  we  used  in  the  state  program  for Pascal where we were
+     looking for *).
+
+     State 8 is a one-character state, which also  ends  at  EOL,  with  no
+     space/tab  processing, so its control bits have a numeric value of 12,
+     coded "M".  We are checking to see if the next character is  a  slash,
+     which  would  end  the  comment  block.  If not, we want to go back to
+     state 7, recheck the character which was found not to be a slash,  and
+     continue processing the comment block.  Thus we need a two-entry state
+     with the first entry providing the no-hit return.  Both of the entries
+     for  this state (entries 8 and 9) are identified as belonging to state
+     8 by having this state, coded "I", in the "current state" field.   The
+     first  entry, entry 7, has a SPACE for the "token chr", and a state 7,
+     coded "H", for the "next state".  Entry 9 checks for the  slash,  and,
+     if  it  is  found,  makes the next state 0, coded "A", putting us back
+     into the normal SAL text state.
+
+     The remaining two entries handle the two kinds of quoted strings.
+
+     Entry 10 handles the " delimiter, and state 11 handles the  apostrophe
+     delimiter.   In  both  entries  the control bits request tab expansion
+     (for safety) and end-at-EOL, since quoted strings  cannot  cross  line
+     boundaries.  Since both entries return to state 0, coded "A", for both
+     no-hit  and hit, we put the  desired  character  in  the  "token  chr"
+     field.   Each  entry  has  it's own entry number coded in the "current
+     state" field.
+
+     The resulting setup string is:
+
+     SALTabsOut = 'CA/D.A"K' + ".A'LMD A.D/G.D*HGG ACH*IMI H.I/A"
+                                                          + 'FK"A' + "FL'A"
+
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+     The  state  program  for C/C++ is the messiest of the lot, and it uses
+     all of the features of the Tabolator.   Its very wretchedness makes it
+     a good test for changes to the Tabolator binaries and interface.
+
+                         TABOLATOR STATE TABLE WORKSHEET
+
+              For:_"C" source____________________________________
+
+                     +----------------+---------+-------+-------+
+              entry  |  +--code       | current | token | next  |
+                #    |  |   ctrl bits |  state  |  chr  | state |
+                     +--V-------------+---------+-------+-------+
+          ( 0)  A    |( C ) .0.0.1.0. |    A    |   '   |   D   |
+                     +----------------+---------+-------+-------+
+          ( 1)  B    |(   ) . . . . . |    A    |   "   |   G   |
+                     +----------------+---------+-------+-------+
+          ( 2)  C    |(   ) . . . . . |    A    |   /   |   I   |
+                     +----------------+---------+-------+-------+
+          ( 3)  D    |( F ) .0.1.0.1. |    D    |   '   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 4)  E    |(   ) . . . . . |    D    |   \   |   F   |
+                     +----------------+---------+-------+-------+
+          ( 5)  F    |( M ) .1.1.0.0. |    F    |       |       |
+                     +----------------+---------+-------+-------+
+          ( 6)  G    |( F ) .0.1.0.1. |    G    |   "   |   A   |
+                     +----------------+---------+-------+-------+
+          ( 7)  H    |(   ) . . . . . |    G    |   \   |   F   |
+                     +----------------+---------+-------+-------+
+          ( 8)  I    |( M ) .1.1.0.0. |    I    |       |   A   |
+                     +----------------+---------+-------+-------+
+          ( 9)  J    |(   ) . . . . . |    I    |   /   |   L   |
+                     +----------------+---------+-------+-------+
+          (10)  K    |(   ) . . . . . |    I    |   *   |   M   |
+                     +----------------+---------+-------+-------+
+          (11)  L    |( G ) .0.1.1.0. |    L    |       |   A   |
+                     +----------------+---------+-------+-------+
+          (12)  M    |( C ) .0.0.1.0. |    M    |   *   |   N   |
+                     +----------------+---------+-------+-------+
+          (13)  N    |( M ) .1.1.0.0. |    N    |       |   M   |
+                     +----------------+---------+-------+-------+
+          (14)  O    |(   ) . . . . . |    N    |   /   |   A   |
+                     +----------------+---------+-------+-------+
+          (15)  P    |(   ) . . . . . |         |       |       |
+                     +----------------+---------+-------+-------+
+
+
+     The  state  program  for  C/C++ uses up 15 of the 16 entries, which is
+     kind of pushing the limits.
+
+     The first three entries constitute state 0, coded "A" in the  "current
+     state"  fields.   This  is  essentially  the  same as state 0 for SAL.
+     State 0 lasts until we get a hit on a character, and we convert spaces
+     into tabs.  The control bits have a numeric value of 2, coded "C".  We
+     are looking for the same three characters that we did for SAL, and for
+     the same reasons.
+
+     The  handling  of  the  comments  is  the  same  as for SAL.  The only
+     difference is the order of the characters in state 0, and the  numbers
+     of the processing states.  In the SAL state program, the processing is
+     done by states 3, 6, 7 and 8, coded "D", "G", "H" and  "I",  while  in
+     the  C/C++ state program the same processing is done, respectively, by
+     states 8, 11, 12 and 13, coded "I", "L", "M" and "N".
+
+     The difference comes in the handling of quoted strings.  C uses "  for
+     quoting strings, and ' for quoting single characters.  But it may take
+     more than one actual character to specify a single character inside  a
+     pair  of  apostrophes, so we will treat a quote character the same way
+     we treat a regular quoted character string.  Inside  these  things  we
+     can  have escape sequences with the backslash as the escape character.
+     This lets us embed  string  quotes  and  other  freaky  characters  in
+     strings.
+
+     The  '  is  handled  by  state 3, coded "D", and the " is processed by
+     state 6, coded "G".  Both of these states are ended by either EOL or a
+     hit  on the appropriate string delimiter, so the delimiter entries are
+     the first entry in each state, since the first entry "next state" will
+     be  used  if  we  get  to  EOL  before  getting  a  hit  on one of our
+     characters.  In both states we want to expand any tabs we find, so the
+     control  bits  have  a numeric value of 5, which is coded as "F".  The
+     "current state" fields are coded to reflect  the  states  the  entries
+     belong  to.   Both states also look for the escape character backslash
+     and want it treated the same way.
+
+     State 5, coded "F", is used by BOTH states  3  and  6  to  process  the
+     escape  character.   We have a one-character state that just skips the
+     next character without doing anything else.  So we have a single entry
+     state  with  a  SPACE for the "token chr".  The control bits ask for a
+     one-character state and an end-state-at-EOL which results in a control
+     bits  numeric  value  of  12,  coded as "M".  We make the "next state"
+     field a SPACE so the next state will be the same  as  the  state  that
+     transferred  to  us.  Thus this state can be used by both states 3 and
+     6.
+
+     The resulting setup string is:
+
+     CTabsOut = "CA'D" + '.A"G.A/I' + "FD'A.D\FMF  "
+                                   + 'FG"A.G\FMI A.I/L.I*MGl ACM*NMN M.N/A'
+
+
+
+                               SIMPLE TEST DRIVER
+
+     Here is a simple test driver for the Tabolator.  Clip  it  to  another
+     file  and  modify  it  to suit your needs.  It's handy for testing new
+     setup strings and changes you may make to the binaries.  The  CTabsOut
+     setup  string is used here because of the way it exercises the various
+     features of the Tabolator.
+
+/*************************************************************************/
+
+binary ["tabolate.bin"]
+    integer proc StartTabs( string SetupString, integer TabSize )  : 0
+    integer proc EndALine( var string LineOut )                    : 3
+    integer proc TabALine( var string LineIn, var string LineOut,
+                                             integer StartState )  : 6
+end
+
+string
+    CTabsOut = "CA'D" + '.A"G.A/I' + "FD'A.D\FMF  "
+                                   + 'FG"A.G\FMI A.I/L.I*MGl ACM*NMN M.N/A'
+
+public proc test()
+    string InStr[128] = "", OutStr[255] = ""
+    integer I
+
+    I = StartTabs( CTabsOut, 0 )
+    Warn( "StartTabs returned ", I )
+    InStr = GetText( CurrPos(), 128 )
+    Warn( "Length of InStr is ", Length(InStr) )
+    I = TabALine( InStr, OutStr, I )
+    Warn( "TabALine returned ", I )
+    Warn( "Length of OutStr is ", Length(OutStr) )
+    Down()
+    InsertText( OutStr, _INSERT_ )
+    I = EndALine( OutStr )
+    Warn( "EndALine returned ", I )
+    Warn( "Length of OutStr is ", Length(OutStr) )
+    InsertText( OutStr, _INSERT_ )
+end
+
+proc main()
+end
+/*************************************************************************/
+
+                           ** END OF TABOLATE.DOC **

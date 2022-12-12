@@ -1,0 +1,71 @@
+Sat 17-May-1997
+
+About TSTSE in General                        (All rights reserved)
+======================
+
+This package may be used and distributed freely for  NON-COMMERCIAL,
+NON-INSTITUTIONAL,  PRIVATE  purposes, provided it is not changed in
+any way. (Repacking with another method  is  ok,  though.)  For  ANY
+other  usage,  such as use in a business enterprise or a university,
+contact the author for registration. Uploading to bulletin boards is
+encouraged.  Please  do  not  distribute  any  part  of this package
+separately.
+
+The SAL macro codes are under development. Comments and contacts are
+solicited.  If  you have any feedback, please do not hesitate to use
+electronic mail for communication.
+
+The author shall not be liable to the user for any direct,  indirect
+or  consequential loss arising from the use of, or inability to use,
+any  program,  macro,  information  or  file  howsoever  caused.  No
+warranty  is given that the codes will work under all circumstances.
+
+Timo Salmi (email: ts@uwasa.fi WWW: http://www.uwasa.fi/~ts/)
+Professor of Accounting and Business Finance
+Faculty of Accounting & Industrial Management
+University of Vaasa
+P.O. BOX 700, FIN-65101 Vaasa, Finland
+
+
+                           - 2 -
+
+Timo Salmi The SemWare Editor SAL 2.5 macro sources release 1.9
+*    *     *   *       *                                    * *
+includes the following material. The material is self-documenting.
+The SemWare Editor (TSE) and the SemWare Applications Language (SAL)
+are copyright (c) 1991-1996 of SemWare Corporation. Disclaimer: I
+have no business association with the SemWare Corporation.
+
+TSTSE19         TSE editor SAL macros, T.Salmi
+Filename        Comment
+--------        --------------------------------
+COUNT.S         Count block lines, words, chars
+DATETIME.S      Input date/time, alternate forms
+DEJUSTIF.S      Dejustify a right margin
+DETAB.S         Detab a line or the entire file
+DICONIX.S       Esc seqs, Diconix InkJet 150
+DUMP.S          Dump block as bin oct dec or hex
+FILE_ID.DIZ     Brief characterization of tstse
+FLIPONE.S       Flip one character, incl foreign
+HP500.S         Esc sequences, HP DeskJet 500
+LINE.S          Insert line numbers
+MISC.S          Miscellaneous SAL macros
+NOBLANK.S       Remove blank lines from file/blk
+POSTSCRI.S      Advanced net postscript printing
+PROGS.S         Run programs on the editor text
+QUOTE.S         Quote messages Internet style
+RNGEFIND.S      Forward search an ascii range
+ROT13.S         Rotate text by 13 positions
+ROTATE.S        Copy column to row or vice versa
+RULER.S         Relative, abs. or centered ruler
+SWAP.S          Swap order of text, words/chars
+SYNCH.S         Scroll windows in unison
+TEST.S          Testbench for new SAL macros
+TOASC.S         Scandinavian 7/8-bit conversions
+TSPROG.INF      List of programs from Timo Salmi
+TSTSE.INF       Document (and a readme)
+TSTSE.NWS       News announcements about tstse
+UPCASE.S        Convert text to upper/lower case
+VAASA.INF       Info: Finland, Vaasa, U of Vaasa
+----            ------             ------  -----
+0028

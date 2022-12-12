@@ -1,0 +1,39 @@
+// INI.SI ù IniFile macro include file
+// Chris Antos ù chrisant@microsoft.com
+
+// This include file contains the declarations for the functions necessary
+// to use INI.MAC with your macros. Please see INI.TXT for more information.
+
+// If you get compilation warnings about "GetIniInt declared but never used"
+// (or SetIniInt) you can #define INI_NOINT 1 to turn them off.
+
+
+proc IniExec(string exec, string section, string keynm, string value)
+	ExecMacro("ini -"+exec+Chr(10)+section+Chr(10)+keynm+Chr(10)+value)
+end
+
+
+string proc GetIniStr(string section, string keynm, string default)
+	IniExec("g", section, keynm, default)
+	return(Query(MacroCmdLine))
+end
+
+proc SetIniStr(string section, string keynm, string value)
+	IniExec("s", section, keynm, value)
+end
+
+
+#ifdef INI_NOINT
+#else
+integer proc GetIniInt(string section, string keynm, integer default)
+	return(Val(GetIniStr(section, keynm, Str(default))))
+end
+
+proc SetIniInt(string section, string keynm, integer value)
+	SetIniStr(section, keynm, Str(value))
+end
+#endif
+
+proc SaveIniSettings()
+	ExecMacro("ini -x")
+end

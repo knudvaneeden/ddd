@@ -1,0 +1,140 @@
+
+    SetCache
+    SReload  - Tools to let macros cache settings and reload on demand
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+
+    Many macros load their settings from configuration files,
+    such as TSE.INI.  These macros may cache their setting
+    information so they don't have to constantly reread the
+    file.
+
+    However, if you edit the macro's configuration file, you
+    usually have to reload the macro, or even the editor in
+    order to see the changes.
+
+    Setcache provides a library (setcache.si) that macros can use
+    to determine when they need to reload their settings.
+
+    The package also includes a small macro (sreload.s) which
+    when run will tell all participating macros to reload their
+    settings.
+
+    2. INCLUDING IN MACROS
+    ---------------------------------------------------------------
+
+    You need to do three things to make a macro compatible with the
+    SetCache system:
+
+       1) Create a global integer variable in your macro, e.g.
+          Settings_Serial
+
+       2) Include the setcache.si library file in your macro
+
+       3) Call the NeedToReloadSettings() function when you want
+          to see if you need to reload your settings.
+
+    Some further hints:
+
+       * Create a function in your macro where you load all
+         your settings.  Then you can call this function
+         on startup, and also when you are not sure whether
+         or not you need to reload your settings.
+
+    Code Example:
+
+      integer Settings_Serial = 0
+      integer Settings_Loaded = 0
+
+      string User_Name[255] = ""
+
+      #include ['profile.si']
+      #include ['setcache.si']
+
+      proc LoadSettings()
+          if (not Settings_Loaded) or NeedToReloadSettings(Settings_Serial)
+              Settings_Serial = GetSettingsRefreshSerial()
+              User_Name       = GetProfileStr('MyMac','user_name','','')
+              Settings_Loaded = 1
+          endif
+      end
+
+      proc WhenLoaded()
+         LoadSettings()
+      end
+
+      proc InsertUserName()
+         LoadSettings()
+         InsertText("User Name: " + User_Name)
+      end
+
+
+    For other examples, see some of my other projects:
+
+        CurrExt.s - Find out the real type of the current file
+        YACS.S    - Yet Another Commenting System
+        CodePad.S - Line up code nicely into columns
+
+    These (and others) are avalable from http://www.occamstoothbrush.com/tsemac/
+
+    3. TELLING MACROS TO RELOAD THEIR SETTINGS
+    ---------------------------------------------------------------
+
+    Place the SReload.s and SetCache.si files in your TSE macro directory.
+    Compile SReload.
+
+    You can run SReload from TSE's Macro menu, or bind a key to it, e.g.
+
+        <CtrlShift R>  ExecMacro('sreload')
+
+    When you run sreload, all participating macros will reload their
+    settings when they next have the opportunity to do so.
+
+    4. HOW IT WORKS
+    ---------------------------------------------------------------
+
+    The SetCache system maintains a single session global Integer variable,
+    named "setcache:refresh_serial"
+
+    This initially starts with the value of zero.
+
+    Each macro maintains its own local settings serial number.
+
+    The SReload macro increments the session global variable by one.
+
+    The NeedToReloadSettings() function compares the macro's
+    local serial number to the global serial number.  If
+    they're the same, the function returns FALSE, signaling to the
+    macro that its settings are up to date.
+
+    If the local serial is less than the global serial,
+    the function resets the macro's local serial number and then
+    returns TRUE, signaling to the macro that it needs to reload
+    its settings.
+
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    SetCache
+    SReload  - Tools to let macros cache settings and reload on demand
+
+    v1.0.5 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+

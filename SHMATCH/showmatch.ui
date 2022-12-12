@@ -1,0 +1,139 @@
+/******************************************************************
+ mShowMatching  -   Higlight matching char (useful for (),{},[],<>)
+
+ Version:   1.00
+
+ Author:
+        original match macro included with TSE
+        modified by Chris Lee (cslee@direct.ca)
+        Thanx to George at Semware for his help!
+
+ Notes:
+        centers brace on screen if not on current screen
+        hilites both closing and opening brace
+        delays on match until timer expires or key pressed (thanx George!)
+
+
+ Date:  Nov 8, 1996
+
+ To Do:
+ ******************************************************************/
+
+string matchChars[] = "(){}[]<>"   // pairs of chars to match
+
+integer proc mShowMatching( INTEGER attribute )
+
+    INTEGER     startLine,              // starting line in file
+                startRow,               // starting row on screen
+                Position,               // offset into matchChars
+                Level,                  // level of matches found
+                MatchingChar,           // char that matches
+                CharToMatch,            // char to be matched
+                hold                    // loop counter
+
+    /*
+     * Configuration options
+     */
+
+    CONSTANT    delayDuration = 25      // max delay
+
+    INTEGER     onlyInCMode = FALSE,    // set to TRUE to enable only in cMode
+                warnNoMatch = TRUE,     // warn if matching char not found
+                hiliteBoth  = TRUE      // hilite both chars
+
+
+    SelfInsert()                // insert the char that macro is bound to
+
+    if( onlyInCMode and not cMode )
+        return(1)
+    endif
+
+    PushPosition()              // where to resume text entry
+    PrevChar()                  // match on closing brace
+
+    startLine = CurrLine()
+    startRow = CurrRow()
+
+    if( hiliteBoth )
+        UpdateDisplay()             // MUST force update before changing attr
+
+        // highlight closing brace
+        Window(     Query(WindowX1),
+                    Query(WindowY1),
+                    Query(WindowCols),
+                    Query(WindowRows))
+
+        VGotoXY( CurrCol(), CurrRow() )
+        PutAttr( attribute, 1 )
+    endif
+
+    Position = Pos( Chr(CurrChar()), matchChars )
+
+    if( Position == 0 )
+        Message("The character " + Chr(CurrChar()) + " isn't in the matchChars array!")
+        return(1)
+    endif
+
+    if Position
+        CharToMatch = Asc( matchChars[Position] )             // Get the character we're matching
+        MatchingChar = Asc( matchChars[ iif( Position & 1, Position + 1, Position - 1 )] )  // And its reverse
+        Level = 1                       // Start out at Level 1
+
+        while lFind( "[\" + Chr(CharToMatch) + "\" + Chr(MatchingChar) + "]", iif( Position & 1, "x+", "xb" ))
+            case CurrChar()             // And check out the current character
+                when CharToMatch
+                    Level = Level + 1
+
+                when MatchingChar
+                    Level = Level - 1
+                    if Level == 0
+
+                       GotoXoffset(0)          // Fix up possible horizontal scrolling
+
+                       // determine if matching brace is on same screen
+                       ScrollToRow(CurrLine() - startLine + startRow)
+
+                       if( startLine - CurrLine() > startRow )
+
+                            // if not on same screen, center on brace
+                            ScrollToCenter()
+
+                       endif
+
+                       UpdateDisplay()  // MUST update before changing attr
+
+                        // compensate for logical display
+                        Window(     Query(WindowX1),
+                                    Query(WindowY1),
+                                    Query(WindowCols),
+                                    Query(WindowRows))
+
+                        VGotoXY( CurrCol(), CurrRow() )
+                        PutAttr( attribute, 1 )
+
+                        FullWindow()
+
+                        for hold = 1 to delayDuration
+                            if KeyPressed()
+                                break
+                            endif
+                            Delay(1)
+                        endfor
+
+                        PopPosition()            // resume entry after brace
+                        return (1)               // And return success
+                    endif
+            endcase
+        endwhile
+    endif
+
+    PopPosition()                       // Restore position
+
+    if( warnNoMatch )
+        Message("Matching " + chr(CharToMatch) + " not found")
+        Alarm()
+    endif
+
+    return (0)
+end
+

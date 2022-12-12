@@ -1,0 +1,11 @@
+" You must tell QUSID what you want to find - ONLY ONE item "
+
+-c15/0 The syntax is: QUSID loc_to_find
+
+Examples: qusid fbk    (try it)
+          qusid asz    (won't find - not valid as of 3/24/05)
+
+Examine the header for the US LOC_ID search tool just above, and you can see
+which fields are available for you to enter as arguments to the QUSID command.
+
+The searches are not case sensitive.

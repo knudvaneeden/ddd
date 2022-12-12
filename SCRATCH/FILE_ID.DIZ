@@ -1,0 +1,4 @@
+SCRATCH.S (04/09/2001) - Quick scratch buffer
+(named clipboard) macro for TSE Pro/32.
+Provides fast multiple-clipboard support.
+Written by Bill Stewart (bstewart@iname.com).

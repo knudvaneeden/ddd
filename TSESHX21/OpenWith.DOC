@@ -1,0 +1,74 @@
+1. Synopsis
+-----------
+
+The OpenWith macro allows you to insert an additional "Open With TSE" entry
+into the shell's context menu of an existing file type.
+
+
+2. What's New (Version 2.10)
+----------------------------
+
+Tried to enhance the user friendliness of the macro ;-).
+
+þ menu caption of "Open With TSE" entry may now be customized
+þ macro now displays the file type the same way the windows explorer does
+þ enhanced information display for current file type
+þ added refresh command
+þ fixed some bugs (quoting of filenames, error handling)
+
+When run for the first time, the new version will updated existing shell
+entries to the new format automatically.
+
+
+3. Installation
+---------------
+
+Creating the "Open With TSE" entries is simple and straight forward.
+
+Make sure that both E32.EXE and SC32.EXE are found on your path and run the
+OpenWith batch file. This will extract a list of existing file types from
+the windows registry for you to edit.
+
+Each line of the generated list displays a file type and its associated file
+extensions. Press <Ins> to add an "Open With TSE" entry to the windows
+shell. <F3> searches and lists all "Open With TSE" entries. Use <Enter> to
+display more information for the current file type. The list cannot be
+edited. To change these entries use the windows explorer.
+
+If the installation routine should terminate with an error message, upgrade
+your copy of TSE to version 2.8. A free patch that upgrades version 2.6 to
+version 2.8 is available at SemWare's web site. The shell extensions do not
+work with the DOS version of TSE (version 2.5 or earlier).
+
+
+4. Un-Installing
+----------------
+
+Run the OpenWith batch file, pop up the menu <F10> and choose Uninstall.
+This will remove all existing "Open With TSE" entries from the registry.
+
+
+5. Using the Shell Extensions
+-----------------------------
+
+To use the "Open With TSE" menu entry, right click an associated file
+within the explorer. The context menu now let's you open the file with TSE.
+This is in addition to and does not interfere with any previously existing
+menu entry.
+
+An example: TXT files are usually associated with notepad. If you double
+click them or choose Open from the context menu, notepad will be opened
+and load the respective file. Now if you add an "Open With TSE" entry to
+the textfile file type, you can right click any TXT file and choose to
+open it with TSE.
+
+
+6. Disclaimer
+-------------
+
+These programs are thereby donated to the public domain. Use them or even
+alter them as you see fit, but ENTER AT YOUR OWN RISK!
+
+If you should find some bugs or have comments, please let me know. My
+address is DieterKoessl@csi.com.
+

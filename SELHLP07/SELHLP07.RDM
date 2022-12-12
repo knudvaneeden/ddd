@@ -1,0 +1,80 @@
+
+  ThisFile:  'selhlp07.rdm' Part of 'selhlp07' macro             10/14/94
+
+  The macro 'SelectHelpMenu()' contains the following files.
+
+  Files included in the zip:
+
+  begquote.s               ; Put quotes at beginning of ASCII file Alt-i
+  endquote.s               ; Put quotes at the end of an ASCII file Alt-i
+  selhlp07.s               ; Source file for SelectHelpMenu() Alt-F1
+
+  selhlp07.rdm             ; Read Me file - This File
+
+  checkhlp.s               ; Quick check of *.hlp file for proper format
+                           ; It is a small version of 'selhlp07' to
+                           ; quick check a file for proper quoting
+
+  ["tse.hlp"]          // QuickHelp text  'KeyAssignments_SemWare
+  ["function.hlp"]     // QuickHelp text   grouped by function
+  ["keybind.hlp"]      // QuickHelp text  'KeyAssignments' Mine or Yours
+  ["newmacro.hlp"]     // QuickHelp text   for new macros
+
+
+  This is TSE QuickHelp() macro intended to add additional HELP screens.
+  To select press <Alt F1> or change this default key to one of your
+  choice.  To compile this macro will require additional help files with
+  various help formats in the same directory as the *.s file.
+
+  You can make your own help file by putting the following header on any
+  ASCII text file, enclose all of the text except the header in
+  quotes, and then placing 'END' at the end of the text file.
+
+  Header:
+
+  helpdef  Definition_Name title  "Something to place in top
+           window border"
+
+  Text:
+
+  All of text must be placed within quotes.
+
+  To aid in placing the quotes around your text two(2) very basic macros
+  are included.  First load both 'begquote.s' and 'endquote' compile
+  both of them.  Use 'begquote.mac' first and then 'endquote.mac'.
+
+  After loading 'begquote', place the  cursor on the first line that
+  requires quoting. Press <Alt i> and then continue pressing <Alt i>
+  until all lines of ASCII, including any blank line, start with a
+  quote.  Then load 'endquote.mac', put cursor on the first line that
+  requires and ending quote, continue to press <Alt i> until all lines
+  of ASCII have a closing quote.  You could take your *.key file,
+  enclose it in quotes, rename it *.hlp and use it as the basis for your
+  key bindings.  The helpdef that is named 'Key Assignments' will be the
+  file used with the Beta Help when 'Key Assignments' is clicked from
+  the Help Table of Contents.
+
+  For a sample of the correct format any of the *.hlp files included
+  with this zip file will provide the correct format.
+
+  An attempt was made to have ALL of the included help files reflect
+  TSE's default key bindings except for the file 'keybind.hlp'.  The
+  'keybind.hlp' is the default keybindings except where noted by '-tak'
+  which are my own personal key bindings.  I may have goofed and not
+  changed all of my personal keys and for that I apologize.  Of
+  course you can edit any or all of the *.hlp files to reflect your
+  personal key bindings and correct any goofs that I left in the files.
+  After changing any of the *.hlp files it will be necessary to
+  recompile the macro(selhlp07.s).
+
+  If you have problems or find obvious errors, please let me know so I
+  can correct any errors in the next release
+
+>  \\\...tak
+            ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+            ³TAK Information Exchange; Fort Wayne, Indiana ³
+            ³    ÷÷  Friday; October 14 at 1914 hrs  ÷÷    ³
+            ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+>  InterNet: tom.klein@chrbbs.sccsi.com  OR tom.klein@lunatic.com
+>  RelayNet/RIME  SEMWARE (#330)
+

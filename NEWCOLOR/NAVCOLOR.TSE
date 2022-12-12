@@ -1,0 +1,32 @@
+.		GC ST
+0		GB SW
+1		GB SW
+2		GB SW
+3		GB SW
+4		GB SW
+5		GB SW
+6		GB SW
+7		GB SW
+8		GB SW
+9		GB SW
+:		GC ST
+;		GA STE
+C		GF
+E		GF
+H		GF
+I		GF
+L		GF
+M		GF
+N		GF
+O		GF
+P		GF
+Q		GF
+R		GF
+S		GF
+T		GF
+U		GF
+W		GF
+X		GF
+\		GC ST
+^		GC ST
+

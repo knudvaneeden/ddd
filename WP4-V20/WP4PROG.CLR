@@ -1,0 +1,19 @@
+// Attributes
+
+CurrWinBorderAttr       = Color(Bright White on Magenta)
+OtherWinBorderAttr      = Color(Cyan on Black)
+MenuTextAttr            = Color(Blue on Cyan)
+MenuTextLtrAttr         = Color(Bright Yellow on Cyan)
+MenuBorderAttr          = Color(Bright Cyan on Cyan)
+MenuSelectAttr          = Color(Bright Cyan on Blue)
+MenuSelectLtrAttr       = Color(Bright Yellow on Blue)
+BlockAttr               = Color(Bright White on Green)
+CursorInBlockAttr       = Color(Bright Yellow on Green)
+CursorAttr              = Color(Bright Black on White)
+HiLiteAttr              = Color(Bright Yellow on White)
+TextAttr                = Color(Blue on White)
+EofMarkerAttr           = Color(Bright Green on White)
+MsgAttr                 = Color(Bright White on Cyan)
+StatusLineAttr          = Color(Bright Yellow on Cyan)
+
+

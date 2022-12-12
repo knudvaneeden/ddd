@@ -1,0 +1,11 @@
+(06-23-2003) CallActX.zip - TSE Pro (Pro/32)
+for Windows.   The "Call ActiveX" Project.
+The intent is to create a TSE compatible
+custom DLL written in C++ using Microsoft
+Visual C++ version 6 that can interface with
+the Microsoft ScriptControl and thus VBScript
+and the world of ActiveX. This is to be open
+source project to be maintained by the TSE
+user community as freeware. For more
+information see CallActX.txt/CallActX.doc.
+Author: Christopher Shuffett

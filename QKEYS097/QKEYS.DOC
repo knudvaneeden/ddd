@@ -1,0 +1,197 @@
+
+                                    QKEYS
+
+    SOFTWARE:   QKEYS
+    VERSION:    0.97 Beta for TSE 1.52B Beta (or later)
+    DATE:       May 29, 1994
+    REV. DATE:  July 18th, 1994
+    AUTHOR:     Ian Campbell
+
+    This version of QKEYS, version 0.97 Beta, is for BETA test
+    evaluation only.  Do NOT release this version to the general public.
+
+---------------------------------------------------------------------------
+
+OVERVIEW
+
+    QKEYS works to increase cursor key speed.  It does this two ways:
+
+    1.  By reprogramming the keyboard to a minimum delay before keys start
+        auto-repeating, and by increasing the keyboard's auto-repeat
+        rate beyond the pre-configured defaults.  This change will
+        affect all keys on the keyboard, and the effects will show up in
+        other programs besides TSE.  Also, it will most likely be
+        permanent until the PC is rebooted.
+
+    2.  Once it is determined that a cursor key is repeating, QKEYS
+        immediately begins calculating the exact delay necessary to evenly
+        implement additional cursor movement functions.
+
+        For example, let's say that the keyboard is producing a repeating
+        <CursorRight> once every 30 msecs.  This key would call the "Right()"
+        function.  QKEYS will attempt to call "Right()" two additional times
+        within this 30 msec time period.  These two extra "Right()" functions
+        must be called at even intervals, each separated by 10 msecs, or the
+        screen will become jerky.  QKEYS dynamically recalculates these
+        delays on a continuing basis.
+
+        This function is specific to TSE only, and will have no effect
+        on other running programs.
+
+------------------------------------------------------------------------------
+
+INSTALLATION
+
+    QKEYS is ready to run -- just compile it and load it.  You might
+    want to try moving your cursor keys first, before loading QKEYS, in
+    order to get a feel for the existing keyboard situation.
+
+------------------------------------------------------------------------------
+
+PERFORMANCE
+
+    In its default configuration, QKEYS will triple the speed of your
+    horizontal cursor keys (<CursorRight> and <CursorLeft>), and it will
+    double the speed of your vertical cursor keys (<CursorUp> and
+    <CursorDown>).
+
+    Note, however that it requires considerable more CPU to achieve
+    these speeds, particularly when other macros are installed (such as
+    COLORS).  Most of the performance hit occurs when text is scrolling
+    vertically, and manifests as uneven scrolling.  To this end, it may
+    be desirable to set "AdditionalVerticalKeys" to 0, and forego any
+    vertical acceleration.
+
+------------------------------------------------------------------------------
+
+CUSTOMIZING QKEYS
+
+    Most of the delays/keystroke repeat rates may be customized by
+    changing a few values in QKEYS, and then recompiling.  These are
+    found in the QKEYS.S file near the beginning under the "User
+    Configurable Options" section.
+
+    They include the following:
+
+    1.  Keyboard Specific Values
+
+        These values affect the actual keyboard itself, and will remain
+        in effect even when TSE exits.
+
+        It should be noted here that some keyboards will not accept
+        one or both of these values.  These include older IBM XT type
+        keyboards.  Also, GateWay 2000 keyboards (and possibly others)
+        will not accept the NativeKBRepeatRate parameter.  There is a
+        "repeat rate" key on the keyboard itself that handles this.
+
+        The values break down as follows:
+
+        a)  integer NativeKBRepeatRate = 0
+
+                Minimum Value = 0
+                Maximum Value = 31
+                PowerUp Value = 20?
+                Default Value = 0
+
+            Use hex values 0-31 for keyboard typematic rates of 30cps
+            down to 2cps.  This is the repeat rate for keystrokes from
+            the actual keyboard (power up default = 20?).
+
+        b)  integer NativeKeyboardDelay = 0
+
+                Minimum Value = 0
+                Maximum Value = 1
+                PowerUp Value = 1
+                Default Value = 0
+
+            Use hex values 0=250ms, 1=500ms
+            This is the actual keyboard delay before the keyboard itself
+            will begin repeating a held key (power up default = 1).
+
+    2.  Synthesized Cursor Movement Values
+
+        This function is specific to TSE.  There are three values which
+        may be adjusted as follows:
+
+        a)  integer KeystrokeCountBeforeSpeedup = 1
+
+                Minimum value = 0
+                Maximum value = 7
+                Default value = 1
+
+            This value represents the number of keys that must be
+            repeated by the keyboard before any speedup occurs.
+            The default is "1", for immediate speedup.  If you want
+            normal cursor key speed for a time, with a transition to
+            high speed after X number of repeated characters, then you
+            should change this value from its default of 1 to the
+            required keystroke count.
+
+        b)  integer AdditionalHorizontalKeys = 2
+
+                Minimum Value = 0
+                Maximum Value = 7
+                Default Value = 2
+
+            This value represents the number of ADDITIONAL Left's() or
+            Right's() (default = 2) that are inserted between actual
+            <CursorLeft>, <CursorRight> keyboard keystrokes.  Setting
+            this value to zero will disable the function.  Increase it
+            for greater horizontal cursor velocity.
+
+        c)  integer AdditionalVerticalKeys = 1
+
+                Minimum Value = 0
+                Maximum Value = 5
+                Default Value = 1
+
+            This value represents the number of ADDITIONAL Up's() or
+            Down's() (default = 1) that are inserted between actual
+            <CursorUP>, <CursorDown> keyboard keystrokes.  Setting this
+            value to zero will disable any acceleration.  Increase it
+            for greater vertical cursor velocity.
+
+------------------------------------------------------------------------------
+
+History
+
+    Version 0.95
+
+        Original release.
+
+    Version 0.96
+
+        1.  Added a binary keyboard "tail" check to tighten up imunity
+        to keystroke macros, and to eliminate a measured delay
+        requirement.  The macro now watches the bios keyboard tail
+        pointer, and if this pointer is static, then any received
+        keystrokes must be from a keystroke macro.  This used to be done
+        with a keyboard delay signature, and I was a bit concerned that
+        it might cause failures on some systems.
+
+        2.  Increased the native speed of the keyboard to its maximum
+        rate of 30CPS.  This should further increase the QKEYS cursorkey
+        speed.
+
+        3.  TSE's record key macro caused some interesting side effects.
+        When the cursor key functions started to stream, the macro only
+        recorded the actual keystrokes from the keyboard -- not the
+        additional "synthetic" ones that QKEYS inserted.  So when a
+        macro was played back, only about 1/2 of the expected cursor
+        keys would show up.  The solution was to detect (tricky since
+        TSE offers no native SAL way to access this internal state) and
+        disable QKEYS while in the record key macro mode.
+
+Version 0.97
+
+        Fixed a problem where QKEYS would not work if Equate Enhanced
+        Keyboard were set to OFF, and the grey cursor keys were used.
+
+------------------------------------------------------------------------------
+
+     ENJOY!
+
+
+    Ian Campbell
+    Team TSE
+

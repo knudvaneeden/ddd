@@ -1,0 +1,29 @@
+!EnableCaseChecking
+.		GC ST
+0		GB SW
+1		GB SW
+2		GB SW
+3		GB SW
+4		GB SW
+5		GB SW
+6		GB SW
+7		GB SW
+8		GB SW
+9		GB SW
+:		GC ST
+;		GA STE
+B		GF
+C		GF
+E		GA E
+I		GF
+K		GF
+N		GF
+P		GF
+S		GF
+U		GF
+W		GF
+X		GF
+Y		GF
+\		GC ST
+^		GC ST
+

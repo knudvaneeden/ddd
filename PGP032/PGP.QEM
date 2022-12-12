@@ -1,0 +1,30 @@
+ThisFile:  pgp.qem
+
+TSE Jr. macro to PGP encrypt and sign a file
+
+It was included in TSE 'pgp032.zip' which is the TSE link to PGP and is
+much more robust than the TSE Jr. macro below.
+
+It needs work since is uses a RamDisk that the user may not have or the
+RamDisk is a different logical drive.  Also filenames need work('aa' and
+'bb' filenames have been picked out of the air).               \\\...tak
+
+===========================================================================
+                  Date: 01-30-94  From: JORJ STRUMOLO
+                       Subj:  TSE Jr. macro for PGP
+---------------------------------------------------------------------------
+
+      * plaintext message signed/encrypted with PGP (whole msg)
+
+@F11  MacroBegin SetScreenOff SaveFile UnMarkBlock WriteBlock
+      "d:\aa" Return Dos "pgp -se" Return Return BegFile MarkLine
+      EndFile Cut ReadBlock "d:\bb" Return UnMarkBlock EndFile
+      Find "END PGP" Return "b" Return EndLine DelCh 2
+
+  Writes/reads from a ramdisk.  Obviously the -se part can be changed
+ to just -s or just -e to sign *or* decrypt, and not both, or Input or
+ something stuck in to grab a choice of switches.
+
+//*************************************************************************
+                     TSE Jr. macro for PGP  02/02/94
+//*************************************************************************

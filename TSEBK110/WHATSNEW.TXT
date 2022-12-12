@@ -1,0 +1,18 @@
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+³ What's New for TSEBOOK 1.10 º
+ÔÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+TSEBook can be added to your TSE User Interface in the Print Menu.  Due
+to some changes in the ExecMacro() functionality between the initial
+writing of TSEBook and the release of TSEPro 2.5, some changes in the
+TSE.UI integration are necessary.  Unfortunately, I missed the need for
+these changes in testing the 1.00 version for release.  See the TSEBook.DOC
+file for more information.
+
+Duplex page style is fully implemented in this release.
+
+My thanks to Jim Miller, Robert Guyan, and George De Bruin for bringing
+the integration and duplexing issues to my attention.  By way of thanks,
+this release has been optimized and requires 50% less macro space.
+
+Mike Chambers

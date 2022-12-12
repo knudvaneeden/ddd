@@ -1,0 +1,2 @@
+@Echo Off
+E WSPLUS.CFG WSPLUS.S 

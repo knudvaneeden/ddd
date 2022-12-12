@@ -1,0 +1,187 @@
+
+1. Overview
+-----------
+
+Win95Xit shuts down TSE, if it is running in a windowed session under
+Win95 after the user has chosen the Close command or pressed the Close
+button. Moreover, it displays the current filename as the title of the
+window. This DOC also includes some hints how you can start TSE from the
+Windows Explorer loading marked files.
+
+
+2. What's New?
+--------------
+
+Version 1.20
+------------
+
+Win95Xit now displays the long filename as the window title. The filename
+displayed at the status line still is the old fashioned 8.3 filename so you
+can see both names. It also clears the title when it terminates. Moreover,
+updating the window title has been optimized to reduce unnecessary flicker.
+Finally, a new paragraph within this doc describes how to create a shortcut
+to TSE upon your Windows desktop.
+
+Version 1.10
+------------
+
+It's embarrassing to be forced to make an update just a couple of days
+after the upload of the original macro. What happened? Well, I ran afoul
+of an inconsistency of Microsoft's programmers' interface. Still, you can
+blame me for not carefully enough reading the programmers' manual.
+
+It's a bit tricky to explain the issue, but I'll try anyway. A DOS box in
+Win95 has two titles. The virtual machine title and the application title.
+Both are displayed at the title bar of the window separated by a dash.
+When you're at the DOS prompt only the virtual machine title is displayed.
+It's what you (or the operating system) entered at the title entry of the
+program page within the corresponding pif file. When you execute a program
+within a DOS box the name of the program is added as an application title
+(you see this happen, if you run TSE from the prompt without loading
+Win95Xit).
+
+Well, if the virtual machine title is changed, as the first version of
+Win95Xit did it, a couple of things will go wrong.  First of all, what the
+programmers' manual doesn't state and what I didn't expect to happen, is
+that Win95 saves changes to the virtual machine title within the pif file
+(don't ask me why they do this). Perhaps, that's the reason why the
+programmers' manual states that you should not change the virtual machine
+title of a DOS box (I'm still wondering, why Microsoft included those API
+calls anyway). And what's even more of a mystery, it also states that you
+cannot rely on the operating system to have changed the windows titles of
+a DOS box even when the API function signals success.
+
+Well, after two hours of fruitless experiments I decided to remove the
+parts of the macro which set the machine title. Moreover, I also included
+another hook which forces the execution of the WhenPurged routine when TSE
+is exited. (I don't think that this is necessary, but one never knows.)
+
+If you should have used version 1.0 of this macro, please check the pif
+settings of your DOS box shortcuts. The title entry on the program page of
+these might by now all read "TSE" instead of what you or the operating
+system put in there. This change is completely harmless, it only effects
+what is displayed within the title bar of the DOS box. The best way to
+reset these entries is to use the Windows find command and search for
+"*.pif". Right click the relevant entries after the search has finished
+and choose properties from the shortcut menu.
+
+Well, after all, the answer to the question in the heading of this section
+simply is: nothing. All I did, was to remove some pieces of code which did
+not work properly.
+
+
+3. Installation
+---------------
+
+First of all compile Win95Xit. Then copy the macro file to a place where
+TSE can find it (the directory aka folder c:\tse\mac is the default).
+Finally, you must add Win95Xit to the TSE autoload list. To accomplish
+this, start TSE and choose "Autoload List" from the "Macro" menu. Press
+<Ins> and type "win95xit" at the prompt. Press <Enter> twice and exit
+TSE.
+
+
+4. Using Win95Xit
+-----------------
+
+The source code of Win95Xit may look complicated and cryptic, but using
+the macro actually is quite easy, because most of the time it is silently
+working in the background. Only when you switch files or load a new file
+you will notice that the title of your window changes to reflect the new
+filename.
+
+Moreover, as long as Win95Xit is loaded you can use the mechanisms built
+into Win95 to exit TSE: either chose the Close command from the system
+menu or press the Close button at the upper right corner of your window.
+Don't be afraid, Win95Xit doesn't simply shut down the editor when you do
+that. It calls SemWare's QuickXit macro instead and thus gives you the
+opportunity to save your work or cancel the shutdown entirely.
+
+Unfortunately there is a major drawback to that feature. It doesn't work
+when you have executed TSE from within a DOS shell. You must launch TSE as
+a stand alone application, if you want it to become close sensitive (as
+the people at MS put it). The next section explains how you can do that.
+
+Finally, you also cannot exit as long as TSE's menu or any macro is
+active. When you close TSE with an active menu, Windows will add the
+message "Closing" to your window's title, but nothing else will happen.
+Simply press <Escape> until the menu is closed. This will also shut down
+the Editor.
+
+
+5. Launching TSE from the SendTo Menu
+-------------------------------------
+
+While working with the Windows Explorer you certainly have noticed the
+entry christened "SendTo" which resides within the files context menu.
+On default this allows you to send e-mail and print files or copy them
+to a disk drive. The fine thing about this submenu is that it is fully
+customizable. And what's even better, it's fairly easy to do so.
+
+Well, let's pull up our sleeves and add TSE as a SendTo target. Open the
+Windows Explorer and double click the Windows folder, so that you can
+see its subdirectories (oops, the subfolders it contains :-)). One of
+these should read SendTo. Click it. The files panel now displays a
+couple of links (you cannot see the .lnk and .pif extensions, because
+the Explorer will not display them whatever you may do). Well, you have
+just uncovered the secret of the SendTo menu. Every link to a program
+that you put into the SendTo folder will immediately appear within the
+SendTo menu. There is an obvious limitation, though. The programs which
+these links are referring to must understand filenames as command line
+arguments, since the Explorer simply launches those programs with the
+marked files added as a command line.
+
+Ready? Ok! Search the TSE executable (e.exe within c:\tse on default).
+It should be visible within the files panel. Next scroll the folders
+outline, so that you again can see the SendTo folder. Grab TSE with the
+mouse (left click it) and drag it onto the SendTo folder. This will
+create a new entry (link) within the SendTo folder. Finally, give the
+new entry a more pleasant name (e.g. TSE or Editor). You can also change
+a couple of other things you might not like (e.g. the icon, the font and
+the default startup directory). Right click your new link and choose
+properties. This will pop up the pif editor (yes that's what it is)
+which allows you to change these settings.
+
+To test your new user interface, search some text file and right click it.
+Choose SendTo and your new TSE entry and TSE will pop up with the file
+already loaded. And what's the best, Win95Xit will now be fully
+functional, that is you can exit your TSE session by clicking the Windows
+Close button.
+
+
+6. Launching TSE from the Desktop
+---------------------------------
+
+(Thanks to James C. Sewell)
+
+This is easily achieved, if you have installed TSE within the SendTo menu
+as described in the previous paragraph. Once again open the SendTo folder
+within the Windows explorer. Now click the TSE shortcut you just created
+and drag it onto the desktop using the _right_ mouse button. When you
+release the button a menu will pop up asking you what to do. Choose copy
+and Windows will create a shortcut to TSE on your desktop. Now if you want
+to edit a file, you can simply drag it from the explorer onto your new
+shortcut and TSE will start loading that file. This method is even faster
+than using the SendTo menu. But its hard to drag something onto a desktop
+icon hidden beneath some other window. So it's perhaps best you implement
+both shortcuts and take whichever is easier to use at the moment.
+
+
+7. Bugs & Co.
+-------------
+
+Well, this program is fairly short. This is to say, that I'm also fairly
+sure that it doesn't include too many bugs. Well, it seems that I was a bit
+overoptimistic :-( with the first version. I hope that the macro is sound
+this time. As always, if you should find something buggy, have a suggestions
+on what is missing or just wanted to say hello, please contact me. My name
+still is Dieter K”ssl :-) and my e-mail address is
+100517.1221@compuserve.com.
+
+
+8. Copyright and Disclaimer
+---------------------------
+
+This program is thereby donated to the public domain. Use it or even alter
+it as you see fit, but ENTER AT YOUR OWN RISK!
+

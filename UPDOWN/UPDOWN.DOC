@@ -1,0 +1,23 @@
+UPDOWN.DOC
+
+Contents of ZIP file UPDOWN.ZIP
+
+   UPDOWN.MAC -- TSE Pro v2.5 compiled Macro
+   UPDOWN.S   -- Source code
+   UPDOWN.DOC -- This file
+
+
+This macro basically selects the current line of the current window,
+and then (using the up and down arrow keys) moves it up and down, displacing
+other lines of code while it goes...
+
+Press Enter to paste the line in place.
+
+Version 1.00 written by John Meadows on 09/18/95
+Phone:  (310) 302-4627
+CIS:    74513,2616
+NET:    johnm@felix.scvnet.com
+
+Have fun!  I look forward to questions, comments and observations!
+
+John

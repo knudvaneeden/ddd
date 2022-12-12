@@ -1,0 +1,156 @@
+/****************************************************************************\
+
+    TSEFile.SRC
+
+    TSEFile global constants and variables
+
+    Version         v3.10/28.04.95
+    Copyright       (c) 1994,95 by DiK
+
+    History
+
+    v3.10/28.04.95  extended version (file compare)
+
+    The following constants are used by all modules.
+
+\****************************************************************************/
+
+/****************************************************************************\
+    Global constants
+\****************************************************************************/
+
+constant    CC_TEXT     = Color( black on cyan ),           // listing
+            CC_CURR     = Color( bright white on cyan ),
+            CC_CURSOR   = Color( bright white on red ),
+            CC_MENU     = Color( black on white ),          // main menu
+            CC_HOTKEY   = Color( red on white ),
+            CC_SELECT   = Color( black on green ),
+            CC_SELKEY   = Color( red on green ),
+            CC_MENU1    = Color( bright white on blue ),    // list menu
+            CC_HOTKEY1  = Color( bright yellow on blue ),
+            CC_SELECT1  = Color( bright white on green ),
+            CC_SELKEY1  = Color( bright yellow on green ),
+            CC_BLOCK    = Color( white on blue ),           // editing
+            CC_PROMPT   = Color( bright white on blue ),    // boxes
+            CC_INFO     = Color( black on white ),
+            CC_LOAD     = Color( black on green ),
+            CC_ERROR    = Color( bright yellow on red )
+
+constant    TC_DIR      = 0,            // invisible mark on directories
+            TC_NODIR    = 32,           // ordinary files
+            TC_TAG      = 175,          // character for tagging files
+            TC_TOGGLE   = 241,          // character for toggling tags
+            TC_NOTAG    = 255           // non-tagged files & searching tag
+
+constant    TM_OFF      = 0x0000,       // marking flags
+            TM_ON       = 0x0001,
+            TM_TOGGLE   = 0x0002,
+            TM_EXTEND   = 0x0100
+
+constant    LF_THIS     = 0x0001,       // file listing actions
+            LF_OTHER    = 0x0002,
+            LF_BOTH     = LF_THIS | LF_OTHER
+
+constant    IB_PORT     = 0x0001,       // input box actions
+            IB_DESC     = 0x0002,
+            IB_GREP     = 0x0004,
+            IB_FILE     = 0x0008,
+            IB_DIRS     = 0x0010,
+            IB_EXEC     = 0x0020,
+            IB_NULL     = 0x8000
+
+constant    MB_SHOW     = 0x0000,       // message box titles
+            MB_INFO     = 0x0001,
+            MB_LOAD     = 0x0002,
+            MB_INPUT    = 0x0004,
+            MB_FILE     = 0x0008,
+            MB_ERROR    = 0x0080,
+            MB_OPEN     = 0x0100,       // message box actions
+            MB_CLOSE    = 0x0200,
+            MB_PAUSE    = 0x0400,
+            MB_YESNO    = 0x1000,
+            MB_GETKEY   = MB_PAUSE | MB_YESNO,
+            MB_DEFAULT  = MB_OPEN | MB_CLOSE | MB_GETKEY,
+            MB_INFBOX   = MB_DEFAULT | MB_INFO,
+            MB_INPBOX   = MB_DEFAULT | MB_INPUT,
+            MB_RAWINP   = MB_INPBOX & ~MB_YESNO,
+            MB_ERRBOX   = MB_DEFAULT | MB_ERROR
+
+constant    FM_COPY     = 0x0001,       // file iterator actions
+            FM_MOVE     = 0x0002,
+            FM_DUP      = 0x0004,
+            FM_REN      = 0x0008,
+            FM_DEL      = 0x0010,
+            FM_COMP     = 0x0020,
+            FM_EDIT     = 0x1000,
+            FM_QUIT     = 0x8000,
+            FM_THIS     = FM_MOVE | FM_DUP | FM_REN | FM_DEL,
+            FM_OTHER    = FM_COPY | FM_MOVE
+
+constant    FC_MISS     = -1,           // file comparison return codes
+            FC_SIZE     = -2
+
+constant    BF_DEFAULT  = 0x0000,       // file browsing actions
+            BF_HEX      = 0x0001,
+            BF_TEXT     = 0x0002
+
+constant    FF_CURR     = 0x0001,       // scope for file finds and greps
+            FF_TREE     = 0x0002,
+            FF_DISK     = 0x0004,
+            FF_GLOB     = 0x0008,
+            FF_GREP     = 0x0010,
+            FF_CONT     = 0x0100,       // actions following a file find
+            FF_LIST     = 0x0200,
+            FF_CHDIR    = 0x0400
+
+constant    TC_TREE     = 0x0001,       // various tree listings
+            TC_SUB      = 0x0002,
+            TC_CHDIR    = 0x0003,
+            TC_NEW      = 0x0004
+
+constant    DS_NAME     = 1,            // directory sort fields
+            DS_EXT      = 2,            // CODE DEPENDS ON ORDER OF CONSTANTS
+            DS_SIZE     = 3,
+            DS_TIME     = 4,
+            DS_DESC     = 5,
+            DS_MARK     = 6
+
+constant    WARN_NONE   = 1,            // warning levels
+            WARN_DEL    = 2,            // CODE DEPENDS ON ORDER OF CONSTANTS
+            WARN_OVER   = 3,
+            WARN_ALL    = 4,
+            WARN_TREE   = 5
+
+/****************************************************************************\
+    Copyright info
+\****************************************************************************/
+
+string  banner[]    = "TSE File Manager 3.1 (c) 1994,95 by DiK"
+
+/****************************************************************************\
+    Module communication
+\****************************************************************************/
+
+string  switch[]    = "TSEF3-switch"     // INT  process communication
+string  target[]    = "TSEF3-target"     // STR  dito
+string  source[]    = "TSEF3-source"     // STR  dito
+
+/****************************************************************************\
+    Configuration variables
+\****************************************************************************/
+
+string  lmask[]     = "TSEF3-lmask"      // STR  filename display mask
+string  rmask[]     = "TSEF3-rmask"      // STR  dito, for right window
+string  sfield[]    = "TSEF3-sfield"     // INT  sort field of file lists
+string  sorder[]    = "TSEF3-sorder"     // INT  file sort order
+string  quitmsg[]   = "TSEF3-quitmsg"    // INT  prompt before terminating
+string  inisave[]   = "TSEF3-inisave"    // INT  save all files on startup
+string  describe[]  = "TSEF3-describe"   // INT  use file descriptions
+string  savedsc[]   = "TSEF3-savedsc"    // INT  descriptions saving flag
+string  confirm[]   = "TSEF3-confirm"    // INT  confirm destructive actions
+string  restore[]   = "TSEF3-restore"    // INT  restore directory on exit
+string  autosave[]  = "TSEF3-autosav"    // INT  save configuration at exit
+string  drives[]    = "TSEF3-drives"     // STR  drives scanned for tree
+string  device[]    = "TSEF3-device"     // STR  printer output port
+string  prtini[]    = "TSEF3-prtini"     // STR  control sequence for printer
+

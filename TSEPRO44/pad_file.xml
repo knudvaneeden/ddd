@@ -1,0 +1,225 @@
+<?xml version="1.0" ?>
+<XML_DIZ_INFO>
+	<MASTER_PAD_VERSION_INFO>
+		<MASTER_PAD_VERSION>2.01</MASTER_PAD_VERSION>
+		<MASTER_PAD_EDITOR>PADGen 2.0.1.22 http://www.padgen.org</MASTER_PAD_EDITOR>
+		<MASTER_PAD_INFO>Portable Application Description, or PAD for short, is a data set that is used by shareware authors to disseminate information to anyone interested in their software products. To find out more go to http://www.asp-shareware.org/pad</MASTER_PAD_INFO>
+	</MASTER_PAD_VERSION_INFO>
+	<Company_Info>
+		<Company_Name>SemWare Corp.</Company_Name>
+		<Address_1>730 Elk Cove Court</Address_1>
+		<Address_2 />
+		<City_Town>Kennesaw</City_Town>
+		<State_Province>GA</State_Province>
+		<Zip_Postal_Code>30152-4047</Zip_Postal_Code>
+		<Country>USA</Country>
+		<Company_WebSite_URL>http://www.semware.com</Company_WebSite_URL>
+		<Contact_Info>
+			<Author_First_Name>Sammy</Author_First_Name>
+			<Author_Last_Name>Mitchell</Author_Last_Name>
+			<Author_Email>smitchell@semware.com</Author_Email>
+			<Contact_First_Name>semware</Contact_First_Name>
+			<Contact_Last_Name>support</Contact_Last_Name>
+			<Contact_Email>support@semware.com</Contact_Email>
+		</Contact_Info>
+		<Support_Info>
+			<Sales_Email>sales@semware.com</Sales_Email>
+			<Support_Email>support@semware.com</Support_Email>
+			<General_Email>support@semware.com</General_Email>
+			<Sales_Phone>800-467-3692</Sales_Phone>
+			<Support_Phone>678-355-9810</Support_Phone>
+			<General_Phone>678-355-9810</General_Phone>
+			<Fax_Phone>678-355-9812</Fax_Phone>
+		</Support_Info>
+	</Company_Info>
+	<Program_Info>
+		<Program_Name>TSE Pro</Program_Name>
+		<Program_Version>4.4</Program_Version>
+		<Program_Release_Month>07</Program_Release_Month>
+		<Program_Release_Day>01</Program_Release_Day>
+		<Program_Release_Year>2005</Program_Release_Year>
+		<Program_Cost_Dollars>99</Program_Cost_Dollars>
+		<Program_Cost_Other_Code>USD</Program_Cost_Other_Code>
+		<Program_Cost_Other />
+		<Program_Type>Shareware</Program_Type>
+		<Program_Release_Status>Major Update</Program_Release_Status>
+		<Program_Install_Support>Install and Uninstall</Program_Install_Support>
+		<Program_OS_Support>Win95,Win98,WinME,WinNT 3.x,WinNT 4.x,Windows2000,WinXP,Windows2003</Program_OS_Support>
+		<Program_Language>English</Program_Language>
+		<Program_Change_Info>Color Syntax Highlighting for additional languages, enhanced CUA-style block marking, backup file enhancement, Wheel Mouse, Fonts, enhanced printing, undo/redo, browse-mode, many new macro language commands, enhanced user-interface files</Program_Change_Info>
+		<Program_Specific_Category>Development Tools</Program_Specific_Category>
+		<Program_Category_Class>Development::Source Editors</Program_Category_Class>
+		<Program_Categories>utilities,text editors,programming tools</Program_Categories>
+		<Program_System_Requirements>no special requirements</Program_System_Requirements>
+		<Includes_JAVA_VM>N</Includes_JAVA_VM>
+		<Includes_VB_Runtime>N</Includes_VB_Runtime>
+		<Includes_DirectX>N</Includes_DirectX>
+		<File_Info>
+			<Filename_Versioned>tsepro44.zip</Filename_Versioned>
+			<Filename_Previous>tsepro42.zip</Filename_Previous>
+			<Filename_Generic>tsepro.zip</Filename_Generic>
+			<Filename_Long>TSEPro44.zip</Filename_Long>
+			<File_Size_Bytes>1380724</File_Size_Bytes>
+			<File_Size_K>1348</File_Size_K>
+			<File_Size_MB>1.32</File_Size_MB>
+		</File_Info>
+		<Expire_Info>
+			<Has_Expire_Info>Y</Has_Expire_Info>
+			<Expire_Count>60</Expire_Count>
+			<Expire_Based_On>Days</Expire_Based_On>
+			<Expire_Other_Info />
+			<Expire_Month />
+			<Expire_Day />
+			<Expire_Year />
+		</Expire_Info>
+	</Program_Info>
+	<Program_Descriptions>
+		<English>
+			<Keywords>editor, text editor, windows text editor, text manipulation, SemWare, regular expressions, color syntax highlighting, macros, scripts, column blocks, programming, data</Keywords>
+			<Char_Desc_45>TSE Pro v4.4 full-featured text editor.</Char_Desc_45>
+			<Char_Desc_80>TSE Pro v4.4 full-featured text editor for Windows, all in a small package.</Char_Desc_80>
+			<Char_Desc_250>TSE Pro v4.4 for Windows. Compact, fully-featured text editor.  Undo/Redo; Multiple files/windows; color syntax hiliting; regular expression search/replace; macro programming language; configurable menus/keyboard/commands; column blocks; much more!</Char_Desc_250>
+			<Char_Desc_450>TSE Pro v4.4 for Windows. Compact, fully-featured text editor.  Undo/Redo; Multiple files/windows; color syntax hiliting; regular expression search/replace; incremental search; macro programming language; configurable menus/keyboard/commands; column blocks; multi-language compiler support; bookmarks; templates; sort; compare files; spelling checker; compressed view; and much more! Ideal for anyone that needs to manipulate text.</Char_Desc_450>
+			<Char_Desc_2000>The SemWare Editor Professional (TSE Pro) v4.4 for Windows (9x/Me/NT/2000/XP or greater) is a compact, fully-featured text editor that is ideal for programmers, for users needing to manipulate data files (both large and small), as well as anyone needing a fast, powerful, general purpose text editor.  Load as many files (long filenames supported) as Window's virtual memory will allow.  Files may be loaded in normal text mode or in binary mode (great for editing/viewing non-ASCII files), and additionally offers a HEX mode view, which can be toggled on/off for each file. Use the editor's video macro to adjust the size of the editor's display on the Windows desktop, choosing one of the predefined window sizes, a custom defined size, or choose to use the maximum columns/rows of Windows desktop. Some of the many features of the editor include: Powerful macro programming language (over 500+ commands, including the ability to call DLLs) with debugger; multi-language compiler support; load and/or execute macros from within the editor, or from the command line; configurable menus/keyboard; block marking operations (includes column, character, and line based blocks); regular expression search/replace; color syntax highlighting; spelling checker; pop-up ASCII chart; Windows clipboard support (in addition to editor's internal clipboard); interactive configuration; context-sensitive help system; GUI interface and more! Other key features - Wheel Mouse support; Font selection; Enhanced printing; Multilevel Undo/Redo; option to search subdirectories for matching files when loading or selecting files; search external files for a string; dynamic visual brace match; Browse mode for Read-Only viewing of files; Handy startup menu option; Multiple user-interface files, featuring common windows key assignments; New for this release - Single-instance option; Transparent mode option; Editor-on-top option; 30+ new macro language commands/variables and command enhancements.</Char_Desc_2000>
+		</English>
+	</Program_Descriptions>
+	<Web_Info>
+		<Application_URLs>
+			<Application_Info_URL>http://www.semware.com/html/products.php</Application_Info_URL>
+			<Application_Order_URL>http://www.semware.com/html/salesandordering.php</Application_Order_URL>
+			<Application_Screenshot_URL>http://www.semware.com/images/tseproscreen.png</Application_Screenshot_URL>
+			<Application_Icon_URL>http://www.semware.com/images/tseproicon.gif</Application_Icon_URL>
+			<Application_XML_File_URL>http://www.semware.com/pad/tsepro.xml</Application_XML_File_URL>
+		</Application_URLs>
+		<Download_URLs>
+			<Primary_Download_URL>http://www.semware.com/files/testdrive/tsepro44.zip</Primary_Download_URL>
+			<Secondary_Download_URL>ftp://ftp.semware.com/testdrive/tsepro44.zip</Secondary_Download_URL>
+			<Additional_Download_URL_1 />
+			<Additional_Download_URL_2 />
+		</Download_URLs>
+	</Web_Info>
+	<Permissions>
+		<Distribution_Permissions>DISTRIBUTION, COPYING RESTRICTIONS
+
+Individuals are granted a limited license to copy the Test-Drive Software
+only for the trial use of other individuals in accordance with the
+limitations identified in this License, and subject to the following
+restrictions:
+
+1. You MAY NOT distribute the Software in connection with any other product
+   or service.
+
+2. You MAY NOT make general use of the Software within a company,
+   institution, or agency.
+
+3. You MAY NOT copy or distribute the Software for any consideration or
+   'disk fee'.
+
+4. You MAY NOT copy or distribute the Software in modified form.  (Any
+   distribution must include ALL FILES supplied by SemWare with the
+   Test-Drive version of The SemWare Editor Professional, WITHOUT
+   ALTERATION.)
+
+5. You MAY NOT distribute the Software documentation, in whole or in part,
+   in printed form.
+
+Operators of ftp sites, WWW sites, or electronic bulletin board systems
+(Sysops) are permitted and encouraged to post the Test-Drive version of the
+Software for downloading by their users, as long as the above conditions are
+met.  Though a fee may be charged for access, NO FEE may be charged to
+specifically access or download the TSE Pro Test-Drive files.
+
+Non-profit computer-related User Groups may distribute the Test-Drive
+version of the Software provided the above conditions are met. However, such
+User Groups MAY charge a NOMINAL fee to cover the cost of the disk and
+copying of the Software.
+
+Disk vendors MUST obtain written permission from SemWare before distributing
+the Test-Drive version of the Software.  Certain restrictions apply.</Distribution_Permissions>
+		<EULA>Test-Drive Software License
+
+THE SEMWARE EDITOR PROFESSIONAL TEST-DRIVE SOFTWARE LICENSE
+
+This version of The SemWare Editor Professional (the 'Software') is NOT public domain or free software, but is being distributed in 'Test-Drive' form for EVALUATION PURPOSES ONLY.  Your use of this Software indicates your agreement to the terms and conditions of this License.
+
+COPYRIGHT, PROPRIETARY RIGHTS
+
+The SemWare Editor Professional (TSE Pro) Software is owned by SemWare Corporation or its suppliers and is protected by United States copyright laws and international treaty provisions. You may not reverse engineer, decompile, disassemble, or create derivative works based on the Software for any purpose other than creating an adaptation to the Software as an essential step in its utilization for your own use. This Software embodies valuable trade secrets proprietary to SemWare; you may not disclose any information regarding the internal operations of this Software to others.
+
+USAGE RESTRICTIONS
+
+SemWare grants a limited license to individuals to use this Test-Drive Software for a 60-day evaluation period on a private, non-commercial basis, for the express purpose of determining whether TSE Pro is suitable for their needs.  At the end of this 60-day evaluation period, the individual must either purchase a license from SemWare for continued use of the Software, or discontinue using TSE Pro.
+
+Licensed users receive the latest, fully-functioning version of the Software (that does NOT show the opening and closing reminder screens); printed documentation; source code for numerous macros; additional utilities and configuration files.  Purchasing a license to use the Software also entitles the licensed user to receive technical support (by phone, fax, mail, or various electronic services such as CompuServe or InterNet), and makes them eligible for discounts on future versions.
+
+This Test-Drive version of the Software is not intended for use on a network or multi-user system.  However, SemWare does offer licensing of a network/multi-user version of the fully-functioning Software; please contact SemWare for details.
+
+DISTRIBUTION, COPYING RESTRICTIONS
+
+Individuals are granted a limited license to copy the Test-Drive Software only for the trial use of other individuals in accordance with the limitations identified in this License, and subject to the following restrictions:
+
+1. You MAY NOT distribute the Software in connection with any other product or service.
+
+2. You MAY NOT make general use of the Software within a company, institution, or agency.
+
+3. You MAY NOT copy or distribute the Software for any consideration or 'disk fee'.
+
+4. You MAY NOT copy or distribute the Software in modified form.  (Any distribution must include ALL FILES supplied by SemWare with the Test-Drive version of The SemWare Editor Professional, WITHOUT ALTERATION.)
+
+5. You MAY NOT distribute the Software documentation, in whole or in part, in printed form.
+
+Operators of ftp sites, WWW sites, or electronic bulletin board systems (Sysops) are permitted and encouraged to post the Test-Drive version of the Software for downloading by their users, as long as the above conditions are met.  Though a fee may be charged for access, NO FEE may be charged to specifically access or download the TSE Pro Test-Drive files.
+
+Non-profit computer-related User Groups may distribute the Test-Drive version of the Software provided the above conditions are met. However, such User Groups MAY charge a NOMINAL fee to cover the cost of the disk and copying of the Software.
+
+Disk vendors MUST obtain written permission from SemWare before distributing the Test-Drive version of the Software.  Certain restrictions apply.
+
+WARRANTY DISCLAIMER
+
+SEMWARE PROVIDES THE TEST-DRIVE VERSION OF THE SEMWARE EDITOR PROFESSIONAL 'AS IS' AND WITHOUT ANY WARRANTY. TO THE EXTENT PERMITTED UNDER APPLICABLE LAW, SEMWARE DISCLAIMS ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, ANY IMPLIED WARRANTY OF MERCHANTABILITY OR FITNESS FOR A PARTICULAR PURPOSE. SPECIFICALLY, SEMWARE MAKES NO REPRESENTATION OR WARRANTY THAT THE SOFTWARE IS FIT FOR ANY PARTICULAR PURPOSE.
+
+SEMWARE SHALL NOT BE LIABLE FOR ANY DAMAGES RESULTING FROM THE USE OF THIS SOFTWARE, INCLUDING BUT NOT LIMITED TO, LOSS OF PROFIT, DATA OR USE OF THE SOFTWARE, OR INDIRECT, SPECIAL, INCIDENTAL OR CONSEQUENTIAL DAMAGES OR OTHER SIMILAR CLAIMS, EVEN IF SEMWARE HAS BEEN SPECIFICALLY ADVISED OF THE POSSIBILITY OF SUCH DAMAGES. SOME STATES DO NOT ALLOW THE EXCLUSION OF INCIDENTAL OR CONSEQUENTIAL DAMAGES, SO THE FOREGOING LIMITATION MAY NOT APPLY TO YOU.
+
+U. S. GOVERNMENT LICENSEES
+
+If you are acquiring the Software on behalf of any unit or agency of the United States Government, the following provisions apply:
+
+The Government acknowledges SemWare's representation that the Software and its documentation were developed at private expense and no part of same is in the public domain.
+
+The Government acknowledges SemWare's representation that the Software is 'Restricted Computer Software' as that term is defined in Clause 52.227-19 of the Federal Acquisition Regulations (FARs) and is 'Commercial Computer Software' as that term is defined in Subpart 27.401 of the Department of Defense Federal Acquisition Regulation Supplement (DFARS).
+
+The Government agrees that:
+
+   (i) if the Software is supplied to the Department of Defense (DoD), the Software is classified as 'Commercial Computer Software' and the Government is acquiring only 'restricted rights' in the Software and its documentation as that term is defined in Clause 252.227-7013(c)(1)(ii) of the DFARS, and
+
+   (ii) if the Software is supplied to any unit or agency of the United States Government other than the DoD, the Government's rights in the Software and its documentation will be as defined in Clause 52.227-19(c)(2) of the FARs.
+
+RESTRICTED RIGHTS LEGEND.  Use, duplication or disclosure by the U.S. Government is subject to restrictions as set forth in subparagraph (c)(1)(ii) of the Rights In Technical Data and Computer Software clause at DFARS 252.227-7013.  SemWare Corporation, 730 Elk Cove Court NW, Kennesaw, Georgia 30152-4047, U.S.A.
+
+EXPORT LAW ASSURANCES
+
+You acknowledge and agree that the Software is subject to restrictions and controls imposed by the United States Export Administration Act (the 'Act') and the regulations thereunder. You agree and certify that neither the Software nor any adaptation thereof is being or will be acquired, shipped, transferred or reexported, directly or indirectly, into any country prohibited by the Act and the regulations thereunder, nor will it be used for any purpose prohibited by the same.
+
+GOVERNING LAW AND GENERAL PROVISIONS
+
+This License and Warranty Disclaimer shall be construed, interpreted and governed by the laws of the State of Georgia, U.S.A. If any provision is found void, invalid or unenforceable, it will not affect the validity of the balance of this License and Warranty Disclaimer which shall remain valid and enforceable according to its terms. This License and Warranty Disclaimer may only be modified in writing signed by you and a specifically authorized representative of SemWare. All rights not specifically granted in this License are reserved by SemWare.</EULA>
+	</Permissions>
+	<ASP>
+		<ASP_FORM>Y</ASP_FORM>
+		<ASP_Member>Y</ASP_Member>
+		<ASP_Member_Number>00094</ASP_Member_Number>
+	</ASP>
+	<MSN>
+		<MSN_FORM>Y</MSN_FORM>
+		<MSN_IS_32bit>Y</MSN_IS_32bit>
+	</MSN>
+	<Simtel>
+		<Simtel_Email>support@semware.com</Simtel_Email>
+		<Simtel_FORM>Y</Simtel_FORM>
+		<Simtel_DOS_Category>Select - MS-DOS Platform</Simtel_DOS_Category>
+		<Simtel_Win31_Category>Select - Win3 Platform</Simtel_Win31_Category>
+		<Simtel_WinXX_Category>Major Applications - editor Editors/Word Processors</Simtel_WinXX_Category>
+		<Simtel_Category>Utilities - Text Editors</Simtel_Category>
+		<SIMTEL_FORM_VER>1.03 04/09/2001</SIMTEL_FORM_VER>
+	</Simtel>
+</XML_DIZ_INFO>

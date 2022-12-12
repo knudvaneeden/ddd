@@ -1,0 +1,6 @@
+(11-03-00) - Unicode macro - TSE Pro/32 v2.8
+Attached is a package to convert ascii to
+unicode and back for tse32.  A worthy
+utility, I think.  It's a dll with some
+tse.ui stuff.
+Author: Cornel Huth (http://40th.com/)

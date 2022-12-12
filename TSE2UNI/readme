@@ -1,0 +1,135 @@
+tse2uni.dll readme
+(C)2000 Cornel Huth
+3-Nov-2000  http://40th.com/
+
+This package adds ascii/unicode conversion for tse32 (win32).
+
+How to use:
+
+ 1. Copy tse2uni.dll anywhere in your PATH
+
+ 2. Edit ui/tse.ui
+
+    A. Add macro stuff (see MACRO_STUFF below)
+
+    B. Insert new (File) menu entries (see MENU_STUFF)
+
+ 3. Compile it (Ctrl-F9)
+
+ 4. Exit tse32 and restart tse32
+
+ 5. Load up a short text file, or just type some text
+
+ 6. Bring up main menu, select File->Save UNICODE
+
+    The current file is written as a unicode file, same name but the
+    extension is ".uni"
+
+    Any existing pathname.uni is overwritten (see TSE_OVERWRITE in macro
+    stuff)
+
+ 7. Load up that unicode file, as is
+
+    The screen will look odd, with lots of [] characters
+
+    The .uni file must have a 0xFF 0xFE signature as its first two bytes
+
+ 8. Bring up the menu, select File->Save ASCII
+
+    The current file is written as an ascii file, same name but the
+    extension is ".asc"
+
+    Any existing pathname.asc is overwritten (see TSE_OVERWRITE in macro
+    stuff)
+
+ 9. C source is included but is not supported (careful with the open flags)
+
+
+ The macro stuff is just a suggestion, and is what I used because
+ it's all I knew right off.  Pretty simple, and you don't have
+ to type any new filenames.
+
+
+ MACRO_STUFF
+ -----------
+
+ dll "<tse2uni.dll>"
+    integer proc TseCopyAsciiToUnicode(string src:cstrval, string dest:cstrval, integer flags) : "TseCopyAsciiToUnicode"
+    integer proc TseCopyUnicodeToAscii(string src:cstrval, string dest:cstrval, integer flags) : "TseCopyUnicodeToAscii"
+ end
+
+ integer proc myCopyAsciiToUnicode()
+
+  #define TSE_OVERWRITE  1
+
+  integer rc
+  string src[255] = CurrFilename()
+  string dest[255] = SplitPath(CurrFilename(), _DRIVE_ | _PATH_ | _NAME_) + ".uni"
+
+  rc = TseCopyAsciiToUnicode(src, dest, TSE_OVERWRITE)
+
+  if (rc)
+     Warn("TseCopyAsciiToUnicode failed, rc = ", rc)
+  endif
+
+  return (rc)
+ end
+
+ integer proc myCopyUnicodeToAscii()
+
+  #define TSE_OVERWRITE  1
+
+  integer rc
+  string src[255] = CurrFilename()
+  string dest[255] = SplitPath(CurrFilename(), _DRIVE_ | _PATH_ | _NAME_) + ".asc"
+
+  rc = TseCopyUnicodeToAscii(src, dest, TSE_OVERWRITE)
+
+  if (rc)
+     Warn("TseCopyUnicodeToAscii failed, rc = ", rc)
+  endif
+
+  return (rc)
+ end
+
+
+ MENU_STUFF
+ ----------
+
+ New entries are at very bottom of this menu, starting at "Conversion":
+
+ /****************************************************************************
+   TSE Pull-down Menus
+  ***************************************************************************/
+
+ menu FileMenu()
+    history
+
+    "Ne&w"                          ,   NewFile()
+    "&Open..."                      ,   EditFile()
+    "&Insert..."                    ,   InsertFile()
+    "&File Manager..."              ,   ExecMacro("f -r")
+    "Change &Dir..."                ,   ExecMacro("cd")
+    ""                              ,                       ,   Divide
+    "&Next"                         ,   NextFile()          ,   NumFilesMenuFlags()
+    "&Previous"                     ,   PrevFile()          ,   NumFilesMenuFlags()
+    "Lis&t Open..."                 ,   ExecMacro("listopen")
+    "List &Recent..."               ,   mListRecentFiles()
+    "Current File"                  ,                       ,   Divide
+    "&Save"                         ,   SaveFile()
+    "Save &As..."                   ,   SaveAs()
+    "Save && C&lose"                ,   SaveAndQuitFile()
+    "&Close"                        ,   QuitFile()
+    "Chan&ge Name..."               ,   ChangeCurrFilename()
+    "S&how File Info"               ,   ExecMacro("fileinfo")
+    "All Files"                     ,                       ,   Divide
+    "Sa&ve All"                     ,   SaveAllFiles()
+    "Save All && &Exit"             ,   SaveAllAndExit()
+    "E&xit"                         ,   Exit()
+    "Conversion"                    ,                       ,   Divide
+    "Save UNICODE"                  ,   myCopyAsciiToUnicode()
+    "Save ASCII"                    ,   myCopyUnicodeToAscii()
+ end
+
+
+<eof>

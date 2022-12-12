@@ -1,0 +1,206 @@
+            QUIET FLIGHT FOR THE SEMWARE EDITOR PROFESSIONAL
+                           INFORMATION SHEET
+
+The Quiet Flight macros for TSE Pro 2.5 create a powerful and efficient
+programming environment.   These macros take full advantage of the
+expansive macro language of The SemWare Editor Professional.  No matter
+what language you program in, you can take advantage of these Quiet
+Flight features:
+
+* Shorthand Abbreviations
+Quiet Flight employs a flexible command completion and boilerplate
+function.  For example, you can insert the following construct in the
+Semware macro language (SAL) by typing  IFF<SPACE>:
+
+ 	if Name == "Quiet Flight"
+
+	else
+	endif // Name == "Quiet Flight"
+
+Or, generate the following C file header by simply entering
+HEADER<SPACE>:
+
+/*
+* Program....: SAMPLE.C
+* Version....: 1.0
+* Author.....: Ryan Katri & Randy Wallin
+* Date.......: June 19, 1993   Last Modified: 06/19/93 @ 3:42 pm
+* Notice.....: Copyright (c) 1993 COB System Designs, Inc.
+* Compiler...: Watcom C
+* Abstract...:
+*/
+
+You can customize all function headers, file headers, and command
+abbreviations to suit your needs and tastes.  Quiet Flight recognizes
+the following keywords in your boilerplate templates, as well as many
+others:    Date, DateStr, DOW (day of week), Time, Year, File, Your
+Name, Your Company's Name, and Path. You can also setup Quiet Flight to
+prompt for fill-in-the-blank fields on the fly.
+
+* Quick Commenter
+Commenting out large sections of code with Quiet Flight is a breeze.
+Block the section of code to comment out and press a single ALT-key
+combination--Quiet Flight automatically determines the type of comment
+delimiters to use for that particular file.  You can reverse the
+commenting using the same procedure.
+
+* Where Am I?
+Do you ever forget the name of the function you are currently positioned
+in, and the function prototype isn't visible on-screen?  Press the "5"
+key on your numeric keypad and Quiet Flight displays the name of the
+current function being edited.
+
+
+* Window Size
+Visually draw a window representation on-screen using a column block and
+let Quiet Flight tell you the coordinates of that window.
+
+* Projects / Buffer List
+Give a name to a group of related files and let Quiet Flight load them
+all at once.  The project mechanism is incorporated seamlessly into TSE
+Pro using an enhanced Buffer List. Even if you have no interest in using
+projects, Quiet Flight's Buffer List replacement gives you complete
+control over the editing ring.
+
+* Directory Lister
+Do you wish that directory names be placed at the top of the directory
+list in TSE Pro?  That directories be displayed even when a file
+specification other than *.* is entered?  Or, perhaps you desire to tag
+several files to load?  Quiet Flight's Directory Lister gives you all of
+these capabilities.  In addition, you can delete files; view the
+contents of text, ZIP, and dBASE .DBF files; and change the sort order.
+
+* Zip Viewer
+From within TSE Pro you can manage your .ZIP files using QF's Zip Viewer.
+Peek inside the archive, add and delete files, freshen it up, or extract
+the contents.  All of these functions are now available to you without
+ever leaving your favorite editor.
+
+* Screen Counter
+Establish the coordinates of an unknown position relative to another
+location on screen using the Quiet Flight screen counter.
+
+* Screen Generator
+Drawing screens is a hassle delegated to over-blown user interface
+generators.  You can now mock up a screen within TSE Pro and let QF
+generate the coordinates.  For example, the following text:
+
+             Full Name: ~name     City: ~City
+                                 State: ~State
+
+was converted to this FoxPro / dBase IV code:
+
+DEFINE WINDOW Sample FROM 3, 11 TO 6, 54
+ACTIVATE WINDOW Sample
+@ 0, 5 SAY "Full Name:"
+@ 0, 16 GET name
+@ 0, 26 SAY "City:"
+@ 0, 32 GET City
+@ 1, 25 SAY "State:"
+@ 1, 32 GET State
+
+
+Of course, similar code fragments could be generated for Clipper or TSE
+Pro SAL macro language.
+
+*Much More!
+
+* Use the Kill-Restore macro to revert to your original file before
+  editing.
+
+* Display file information (date & time, file size, and full pathname)
+  with the touch of a key.
+
+* Save all modified files without exiting TSE Pro using the Save All
+  Modified macro.
+
+* Return to the line & column where you left off last time for each &
+  every file with the QF Restore feature.
+
+dBASE, FoxPro, and Clipper users of Quiet Flight will find some 
+additional tools:
+
+* DBF/Index Structures
+We go beyond just giving you the structure of a database file.  You can 
+also build complete field lists and SQL Create Table commands by simply 
+tagging the selected fields. Or, let QF generate the working code for 
+re-creating your indexes.  Quiet Flight supports the following index 
+formats:  .IDX, .NDX, .NTX, .MDX, and .CDX.  In fact, we include one of
+the only DOS utilties we are aware of that correctly reads .CDX files!
+
+* Flow
+Never again hand-indent your code.  Quiet Flight will re-indent a single 
+procedure or an entire dBASE file.  You can configure the Flow options
+to your preferences:  indentation level, hard or soft tabs, add
+conditional comments, and more.  Flow will even catch structural errors,
+such as a DO WHILE without a matching ENDDO.  And best of all, Flow is
+super-fast!
+
+* Color Table
+You'll never again have to hunt down your manual to figure out those
+cryptic dBASE color codes.  A pop-up table lets you visually select the
+color and automatically insert the appropriate foreground/background
+combination (such as "W+/BG")
+
+* Update Row/Col
+Did you ever have to update a series of SAY's and GET's co-ordinates to
+add or remove a field?  It's a time consuming task that QF can handle in
+a heartbeat. After highlighting the code to be altered, start QF
+Row/Column update , give the adjustment and QF will do the rest.
+
+----------------------------------------------------------------------------
+
+                        ***  QUIET FLIGHT V3.5  ***
+              Macros for The SemWare Editor Professional v2.5
+                     * SINGLE-USER LICENSE ORDER FORM *
+
+ MAIL: SemWare Corporation                InterNet: sales@semware.com
+       4343 Shallowford Rd, Suite C3A     FAX: (770) 640-6213
+       Marietta, GA  30062-5022  USA      CIS: 75300,2710
+
+                           http://www.semware.com
+
+ PHONE (Orders ONLY): (800) 467-3692      OTHER VOICE CALLS: (770) 641-9002
+          Inside USA, 9am-5pm ET                               9am-5pm ET
+ ==========================================================================
+
+ ___ Quiet Flight Macros V3.5 ........................ @ $69.00 ea   $ ______
+
+ SHIPPING (each copy)   US/Canada/Mexico: $3    Overseas: $5         $ ______
+
+ PURCHASE ORDERS under $100.00, add $6 Billing Fee ...............   $ ______
+     (Does NOT apply to PREPAID Check or Charge Card orders)
+
+                                                      SUBTOTAL       $ ______
+
+ GEORGIA RESIDENTS please add Sales Tax ....................  @ 5%   $ ______
+
+ TOTAL  (U.S. Dollars drawn on U.S. Bank, payable to SemWare)        $ ______
+
+ ----------------------------------------------------------------------------
+
+ Payment by:  ( )CHECK   ( )VISA   ( )MC   ( )AMEX   ( )DISCOVER
+              ( )PO#_____________ (copy attached)
+
+ Name: _____________________________________________________________
+
+ Company (ONLY if company address):_________________________________
+
+ Address: __________________________________________________________
+
+        : __________________________________________________________
+
+        : __________________________________________________________
+
+ Daytime Phone: _______________________  FAX: ______________________
+
+ Card #: _________________________________ Exp. Date: ______________
+
+    Name on Card: _________________________ Signature: ______________________
+
+    Card Billing Address: ___________________________________________________
+
+ Quantity, multi-user, US government, educational, and approved User Group
+ discounts are also available.  Contact SemWare for details.  Prices and
+ offer subject to change without notice.
+

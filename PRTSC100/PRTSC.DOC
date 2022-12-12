@@ -1,0 +1,39 @@
+/* ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ÚÄÙ TSE Screen Capture     ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+ ³ SOFTWARE:    PrtSc
+ ³ VERSION:     1.00.00
+ ³ DATE:        06/12/95 08:50 am
+ ³ REV. DATE:   09/16/95 01:50 am
+ ³ AUTHOR:      Mike Chambers
+ ³ TYPE:        External Macro
+ ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³ Revision History                                                         ³
+ ³              0.10 Initial functionality                                  ³
+ ³              1.00 Released for TSE Pro 2.5                               ³
+ ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+ ³                                                                          ³
+ ³ FUNCTION:    Captures the current TSE screen to an edit buffer.          ³
+ ³                                                                          ³
+ ³              PrtSc is a utility macro which allows you to capture        ³
+ ³              the exact contents of the entire TSE screen to a buffer.    ³
+ ³              It will capture everything in the viewable screen area      ³
+ ³              including statusline, message, help lines, menus, and       ³
+ ³              prompt boxes.                                               ³
+ ³                                                                          ³
+ ³              PrtSc uses quite a few TSEPRO 2.5 beta features             ³
+ ³              (including _NonEdit_Idle_, PeekWord, PeekByte).             ³
+ ³                                                                          ³
+ ³ USAGE:       Execute the macro (via Potpourri, menu, etc).  Navigate     ³
+ ³              TSE to the condition you wish to capture.  Press the        ³
+ ³              "trigger", <Ctrl PrtSc>.  This will create a sequentially   ³
+ ³              numbered buffer, 1.SCR.  This file will not be written      ³
+ ³              to disk unless you save it.                                 ³
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+*/
+
+   Comments are welcomed on the SemWare echoes on FidoNet, Intelec, Ilink,
+   & Relaynet or on Semware's Support BBS (any TSE related conference).
+
+

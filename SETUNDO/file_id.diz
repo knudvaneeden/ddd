@@ -1,0 +1,6 @@
+(06-11-03) SetUndo for TSE Pro for Windows
+(v3.0 or greater). Set TSE's undo logging
+on/off for file/session/always, when undo
+logging for too many changes makes TSE's
+memory requirements explode.
+Author:  Carlo.Hogeveen@xs4all.nl

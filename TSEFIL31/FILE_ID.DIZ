@@ -1,0 +1,13 @@
+TSEFile is a file manager for TSE, implemented exclusively using TSE's
+own macro programming language SAL. It allows you to execute all basic
+file management tasks without leaving TSE, e.g. copying, renaming and
+deleting files. You can view files in text and hex mode and navigate the
+directory tree, which includes making and removing subdirectories.
+Moreover, version 3.1 of TSEFile implements some advanced techniques,
+which include:
+    þ deleting, copying and moving directory trees,
+    þ comparing files both binary and as lines of text,
+    þ searching files by name and by text (grep),
+    þ managing 4dos compatible file descriptions,
+    þ running programs and associated files,
+    þ viewing and extracting archived files.

@@ -1,0 +1,190 @@
+                        ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+                        º SPLIT & SCROLL MACRO º
+                        º         for          º
+                        º  The Semware Editor  º
+                        ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+                Macro   : SAS - Split and Scroll Windows
+                Version : 2.2
+                Date    : 26.06.95
+                Author  : Alex S Wilson  [ alex.wilson@almac.co.uk ]
+
+ ÖÄÄÄÄÄÄÄÄ·
+ÄºContentsºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄ½                                                                                Requirements
+
+  General
+  Requirements
+  Function
+  Packing List
+  Installation
+  Operation
+  Using the Mouse
+  Note on AutoScrolling
+  Version Details
+  1stReader - Off Line Mail Reader
+
+
+ ÖÄÄÄÄÄÄÄÄ·
+ÄºGeneral:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄ½
+
+The following document provides notes on the Split and Scroll Macro.
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+ÄºRequirements:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+To use the SAS macro you need the The SemWare Editor v2.0 or The
+Semware Editor Professional.
+
+ ÖÄÄÄÄÄÄÄÄÄ·
+ÄºFunction:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄ½
+
+The SAS macro will horizontally or vertically split the screen into
+windows if 2 files are opened (one window per file). When the windows
+have been split simultaneous scrolling in each of them is available.
+
+Two types off scrolling are available;
+
+1. Key Scrolling allows scrolling of multiple windows using the keyboard
+   to control it.
+2. Auto Scrolling allows the the text in multiple windows to be scrolled
+   automatically at variable speeds without having to touch the keyboard
+   - except to stop it.
+   Auto Scrolling can also be used in one window.
+
+It has been designed to only work with 2 files at present mainly because,
+if more than two files/windows are open, editing is not that easy!
+However, this can be changed by increasing the variable "maxfiles" in the
+SAS.s file but things can get untidy since the macros does not resize the
+windows.
+
+The macro was originally designed to be run from the 1stReader editor
+option using the TSE -e option (see last section of notes), however it
+can be used as a stand alone macro for editing or viewing files.
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+ÄºPacking List:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+The following files should be included in the SASxx.zip file;
+Where xx denotes the version of SAS.
+
+        SAS.doc         - This file.
+        SAS.s           - Split and Scroll Macro source file.
+        SAS.mac         - Compiled version of SAS.s.
+        file_id.diz     - BBS information / description.
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+ÄºInstallation:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+If you use the complied version of the macro that is provided in the
+package, miss out number 1 in the following list;
+
+1. Compile the SAS source file SAS.s using TSE or the SAL Complier.
+2. Put the compiled SAS.mac file in a location that is specified in
+   the TSE search paths (TSEpath).
+3. The macro can now be executed from the command line or run from
+   within TSE.
+
+ ÖÄÄÄÄÄÄÄÄÄÄ·
+ÄºOperation:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄ½
+
+F11 will call a menu from which the following options can be chosen;
+
+Windows:
+Ctrl Alt S will         Toggle the Split Windows feature.
+Split Type              This toggles horizontal or vertical window splitting.
+                        The macro defaults to horizontal and any changes are
+                        applicable to the current editing session only.
+
+Scrolling:
+Shift                  Scroll the text in the windows up simultaneously.
+Shift                  Scroll the text in the windows down simultaneously.
+
+AutoScrolling:
+Ctrl                   Auto Scroll the text in the current window up.
+Ctrl                   Auto Scroll the text in the current window down.
+Ctrl PgUp               Auto Scroll the text in all windows up.
+Ctrl PgDn               Auto Scroll the text in all windows down.
+
+Set AutoScroll Delay    Controls the speed of autoscrolling.
+                        Changes are applicable in current editing session.
+
+Disable/Enable Scroll   I have included this because Ctrl PgUp and
+keys                    Ctrl PgDn have other useful standard file
+                        navigation functions in TSE.
+
+Ctrl Alt H              Provides help information.
+
+About                   Tells you what you are using and how to contact me.
+
+Other keys:
+
+Esc                     Interrupt AutoScrolling. (not shown in Menu)
+
+Menu items that have [ ] displayed are showing the current status for that
+option.
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+ÄºUsing the Mouse:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+When using Autoscroll, pressing and holding any mouse key will pause the
+scrolling. While paused, pressing the other mouse button will scroll the
+windows by one line at a time.
+Releasing the mouse button will cause the AutoScrolling to continue.
+
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+ÄºNote on AutoScrolling:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+Auto scrolling will stop in all files when the end of the current file is
+reached. The current file is the one with the active cursor.
+The macro checks for the end of file (EOF). When the EOF is reached, auto
+scrolling in both windows stops. Therefore if the current file is smaller
+that the one in the other window or you start autoscrolling at a
+position further into the current file than the other, auto scrolling will
+stop when the end of the current file is reached.
+I will resolve this in the next release....
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+ÄºVersion Details:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+Version  Date      Comments
+
+2.2      18.06.95  Added facility to change the type of window split,
+                   horizontal or vertical. Changed key assignments.
+                   Changed Scroll Delay procedure. Added pause facility to
+                   AutoScroll using the mouse. Recoded AutoScroll procs
+                   to check for abort or pause request.
+
+2.1      10.06.95  Changed Menu text and added status indicators.
+
+2.0      13.05.95  Public Release Version.
+
+
+ ÖÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ·
+Äº1stReader - Off Line Mail Reader:ºÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ ÓÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ½
+
+I originally wrote the macro to use when replying to messages from
+within 1stReader. To use it in 1stReader make sure that the compiled
+SAS macro is in one of the locations specified in the TSEpath and then
+use the following line in the 1stReader external editor option:
+
+        e %R %O -eSAS
+
+This will execute the SAS macro everytime that you reply to, enter a
+new message or re-edit a message from within 1stReader.
+
+
+                               ÉÍÍÍÍÍÍÍ»
+                               º  Eck  º
+                               ÈÍÍÍÍÍÍÍ¼

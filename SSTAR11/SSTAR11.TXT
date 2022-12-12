@@ -1,0 +1,6 @@
+ScreenStar v1.1
+A Norton Commander like screen saver for TSE-Pro. v1.00 written by Luca
+Salvini. v1.1 made by TSE user Miguel Farah (mfarah@lascar.puc.cl), with
+permission. New feature: some stars can have colors other than white (this
+is user controllable).
+

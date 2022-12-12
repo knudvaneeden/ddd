@@ -1,0 +1,69 @@
+<html>
+
+<head>
+<title>Readme for Vga2Fon</title>
+</head>
+
+<body>
+<font face="Arial">
+<hr>
+
+<h1>Readme for Vga2Fon</h1>
+
+<p>Vga2Fon is a tool for converting old DOS VGA fonts into Windows fonts. This
+tool was created to help generate monospace fonts for use with <a
+href="http://www.semware.com">The Semware Editor Professional</a> (TSE Pro),
+but the fonts can be used with any Windows program. Note that the fonts are
+bitmap fonts, not TrueType fonts, so they are not scalable.</p>
+
+<h2>Files included</h2>
+
+<ul>
+<li><b>Vga2fon.exe</b> (5632 bytes, 5/22/2002 10:46pm) -- Windows program that
+converts old DOS VGA fonts into Windows fonts.
+<li><b>Fed.exe</b> (53110 bytes, 11/26/1990 3:28pm) -- An old (and simple) DOS
+program for editing DOS VGA fonts.
+<li><b>*.F*</b> -- A collection of sample DOS VGA fonts, that came along with
+the old DOS VGA utility called VgaFontMax (also written by me). </ul>
+
+<h2>Using Vga2Fon</h2>
+
+Run <b>vga2fon -?</b> to display help information about how to use the tool.
+Basically, you can convert a VGA font by running <b>vga2fon -9 -n "Font Name"
+vgafontfile.f14 windowsfontfile.fon</b> where "Font Name" is the name you want
+to show up in the Choose Font dialog for Windows programs.</p>
+
+<p>After converting a VGA font into a Windows font, you must install the
+Windows font so other Windows programs can use it. Open the Control Panel, and
+double click on Fonts. Then drag the Windows font file you converted into the
+Fonts folder. Close any Windows programs that are running, and open them again
+and the newly installed font will be available.</p>
+
+<h2>Using FED</h2>
+
+<p>To start editing a font, run <b>fed.exe</b> and enter the name of the font
+to load. The font editor should be basically straightforward and easy to use,
+and there is some help information displayed on the screen.</p>
+
+<p>Note that if you press <Alt-Enter> while running FED in a command prompt
+window, this makes the command prompt window switch to fullscreen text mode.
+In fullscreen mode, FED even shows the changes to the font while you edit
+it.</p>
+
+<p>The VGA fonts saved by FED can be converted into Windows bitmap fonts using
+the Vga2fon utility program.</p>
+
+<hr>
+
+<p><b>Note:</b> please don't bother sending feature requests, as I can't do
+anything about them. These tools are released as-is, and FED hasn't been
+modified in about twelve years. I don't think I even have the source code
+anymore.</p>
+
+Chris Antos
+
+<hr>
+</font>
+</body>
+
+</html>

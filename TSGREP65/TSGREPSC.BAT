@@ -1,0 +1,1 @@
+for %%s in (tsgrep?.s) do sc %%s

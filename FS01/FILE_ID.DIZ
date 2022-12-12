@@ -1,0 +1,3 @@
+FS: keeps track of certain settings
+individually for each file in the ring.
+By: Chris Antos, chrisant@microsoft.com

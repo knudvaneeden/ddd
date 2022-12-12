@@ -1,0 +1,1 @@
+@clock colormsg -p " Press a key to stop the clock -> "

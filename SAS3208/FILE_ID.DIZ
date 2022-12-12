@@ -1,0 +1,12 @@
+<07-20-98> v3.2.08 - TSE Pro/32 v2.8
+Replaces v3.2.01 dated 03-12-98.
+Split & Scroll (SAS) Macro v3.2.08
+Description: Splits the display into windows
+for each file opened.  Allows simultaneous
+horizontal and vertical key and auto
+scrolling of the windows.  Fully configurable
+scrolling. Scroll a number lines at a time.
+Different menu modes.  Menu or Key driven.
+Please read the included SAS.txt file for
+more detailed information.  Author: Alex S
+Wilson (alex.s.wilson@btinternet.com)

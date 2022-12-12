@@ -1,0 +1,132 @@
+
+1. What Is TSEComp?
+-------------------
+
+TSEComp compares text files. It is also capable of synchronizing the
+compared files. For that purpose, it can search blocks of text, which
+are present in only one of the two files, copy and delete those blocks
+and copy and delete single lines.
+
+
+2. Installation
+---------------
+
+See TSEFile.DOC for installation instructions.
+
+
+3. Command Line Interface
+-------------------------
+
+TSEComp can be executed directly from the DOS command line. The command
+line syntax is quite simple:
+
+        TSEComp  First-File  Second-File.
+
+TSEComp.BAT has a short help screen, which shows the above rules, if
+you should ever forget them. Moreover, it tests, if the files actually
+exist and tells you, if it cannot find one of the files.
+
+
+4. Command Reference
+--------------------
+
+The following list contains a short description of all the commands
+available in TSEComp. The key bindings and the keys used to access the
+menu system are also included. This list is a verbatim copy of the help
+screen of the program, which means that it is only a key stroke away,
+when TSEComp is running.
+
+  Help
+    F1              F10 H H     this help
+    -               F10 H I     info on file compare
+
+  Movement
+    Up/Down         -           move up/down one line
+    PgUp/Down       -           move up/down one page
+    Home/End        -           go to beginning/end of list
+    Alt-B/Alt-E     -           go to beginning/end of marked block
+
+  Comparing
+    Ctrl-Enter      F10 C R     restart from beginning of files
+    Enter           F10 C C     continue comparison
+    SpaceBar        F10 C D     show details of differences
+    -               F10 C F     enter characters to ignore
+    Tab             -           toggle horizontal/vertical split
+
+  Searching
+    Alt-F           F10 S F     search for text
+    Alt-L           F10 S L     search for block (left window)
+    Alt-R           F10 S R     search for block (right window)
+    Alt-U           F10 S U     unmark block and go back
+
+  Synchronizing
+    Alt-D           F10 E D     delete currently marked block
+    Ctrl-D          F10 E T     delete one of the current lines
+    Alt-C           F10 E C     copy marked block to other window
+    Ctrl-L          F10 E C     update left line
+    Ctrl-R          F10 E C     update right line
+
+  Miscellaneous
+    F10             -           activate menu
+    Escape          F10 F E     exit file compare
+
+
+
+5. Using TSEComp
+----------------
+
+On default TSEComp displays the files to be compared on a vertically
+split screen. You can toggle to horizontally split windows using the
+<Tab> key. You can move around using the cursor keys (including <PgUp>,
+<PgDn>, <Home> and <End>). The 'unshifted' keys move the text in the
+left (or upper) window. If you additionally press the <Ctrl> key, the
+right (or lower) window is affected. If you want to move the text of
+both windows simultaneously, use the <Alt> key instead. E.g., <Alt Home>
+will position the highlights at the beginning of both files.
+
+When TSEComp is started, it will immediately begin comparing the two
+files and stop only when it encounters mismatching lines (or the end
+of file marker in one of the files). Once TSEComp has stopped, you can
+do a couple of things. To resume the comparison press <Enter>. If you
+want a 'zoomed' view of the mismatching lines, hit the <SpaceBar> and a
+window will pop up, which shows a detailed comparison of the two lines.
+To update one of the lines with the other, use <Ctrl L> or <Ctrl R>.
+To delete one of the lines, press <Ctrl D> and TSEComp will ask you
+which one it should remove.
+
+Things are a bit more complicated, when you encounter whole blocks of
+text which are missing in one of the files. But TSEComp helps you to
+find these. Use <Alt L> and <Alt R> to scan for blocks within the (l)eft
+or (r)ight file. If you hit the wrong key, you can undo the search with
+<Alt U>. <Alt B> and <Alt E> can be used to move to the beginning or end
+of a marked block. Furthermore, a marked block can be copied over to the
+other file using <Alt C>. If things should be even more complicated,
+e.g., some parts of the files are completely different, you can use
+<Alt F> to search for a line from which you want to resume comparing.
+
+Finally, you can 'blank out' a set of characters (Compare|Filter).
+TSEComp will completely ignore these characters. But you should be aware
+that 'filtering' will slow down TSEComp considerably. Thus, you should
+not use it unless it is absolutely necessary.
+
+
+6. Why?
+-------
+
+TSEComp is similar to Cmp2BkUp, which is distributed with TSE. It misses
+some of the features which Cmp2BkUp has, but has some additional goodies
+of its own, like displaying a detailed comparison of two different
+lines. Since there already was a file comparison macro, I did not intend
+to publish the whole stuff. But when I included file comparison into
+TSEFile, I found that it was easier to write an interface between macros
+than to duplicate all the functionality. Since I did not want to flirt
+with someone else's macro in public <grin>, I used my own instead. So,
+that is the reason why you get second file comparison macro.
+
+
+7. Copyright and Disclaimer
+---------------------------
+
+This program is thereby donated to the public domain. Use it or even
+alter it as you see fit, but ENTER AT YOUR OWN RISK!
+

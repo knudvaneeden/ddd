@@ -1,0 +1,158 @@
+  The included macros were written to work under Semware Editor
+Professional v2.50. The version of FORTRAN used was FORTRAN 77, (as used
+on Unisys 2200/1100 machines) though the macros may be of some use for
+later versions of FORTRAN and on other hardware.
+
+   I read somewhere that most of an application programmer's time was
+spent trying to understand original code, and I find it so. To help,
+these macros try to beautify (make neat and tidy) the original code to
+(hopefully) make it easier to read.
+
+   In order of importance I would suggest:-
+
+(1) Correct indentation of "IF" and "DO" (see INDENT.S).
+
+(2) Make all comments into lower case and code into upper case. This
+    clearly identifys each one. Many times I have been confused by
+    commented out code, failing to see the "C" or "c" in column one.
+    (see COMMENTS.S and UPPERC.S).
+
+(3) Make all labels consecutively numbered. Not so much a problem these
+    days with good editors to find the labels quickly, but if all you
+    have is a printout, consecutive labeling lets you find the label
+    quickly or at least lets you know in which direction to start
+    looking for the label! (see RELABEL.S).
+
+(4) Removal of "dead" code. Check if a subroutine or function is still
+    called in the program (INUSE.S) or if a label is still in use
+    (NOTLABEL.S).
+
+     These macros have been used on a daily basis, but they do not cover
+all cases. After changing some code, I would always recommend
+recompiling the program and checking if the executable (absolute) was
+exactly the same, bit for bit, as the original. Sometimes the compiler
+will change the order of code on a pseudo-random basis to get better
+code pipelining, but a with a good disassembler you will be able to spot
+these cases. Alternatively compile and compare the old and new versions
+with the compiler code reordering option off.
+
+
+     I hope someone, somewhere finds these macros of use,
+
+
+               Paul Bennett
+
+                   75204.3432@Compuserve.com
+
+P.S. If you don't already have a copy of the SEMWARE editor I would
+recommend buying it. It has been one of my best investments saving hours
+of typing time and its very good searching facilities have made program
+functionality research a lot easier. A big thank you to the programmers
+who wrote it.
+
+=================================================================
+More detailed explanation of each macro (in alphabetic order).
+
+-----------------------------------------------------------------
+Note all macros assume that there are no horizontal tab characters in
+the source code. The editor can expand tabs out to space values, and
+then after processing the spaces can be reconverted back to tabs if
+required.
+-----------------------------------------------------------------
+
+ASGNUM.S
+
+    Used to set an error variable to sequential values in the program.
+Can be useful in debugging to set a variable to a unique value at
+various points in the program. If a dump/abort occurs then checking this
+variable will give an indication of where to look for the error.
+Especially useful if the same error message is used in many places. For
+example put ERRORX = 1, ERRORX = 2 etc. spread throughout the program.
+If a new piece of code is inserted, then all these code numbers can be
+made unique and sequential again, with just one macro call. Or if
+writing new code just leave "ERRORX =" without a value leaving the
+macro to put in the values.
+
+BLINES.S
+
+   Removes blank comment lines (those with just a "C" or "c" in column
+one). This is just a personal preference of mine, to make program
+listings more compact, so that more can be seen on the screen and the
+printout listings are a few pages shorter- saves paper and weight.
+
+COMMENTS.S  (*)
+
+    Makes all comments into lower case. It is easier to find commented
+out code (if real code is in upper case). Some would say it is easier on
+the eye and quicker to read if comments are in lower case. You may have
+to re-edit some long multi-sentence lines to put a capitol letter at the
+start of each sentence, or make program variables, proper names etc into
+upper case.
+
+INDENT.S
+
+   This is the biggest and most complicated macro. It needs the FORTRAN
+code correctly formatted in the first place, that is code in upper case
+with labels starting in column one. The macro is complicated as the
+macro language has no array function so 'dangling' DO loop ending labels
+have to be stored in variables lp0, lp1 etc. It can handle an
+indentation level of up to 10 DO loops. The indentation factor can be
+set (default 3 spaces) and also DO loop indentation is optional. After
+processing the code lines may have exceeded column 72 so some additional
+editing may be necessary. If you are writing new code this macro can be
+used, by looking at the indentation produced, to find just where that
+missing END IF should be placed. This can sometimes take a long time to
+find out! Macros marked with an (*) were written to clean up code before
+using this macro. Recompile the FORTRAN code after using this macro to
+check that the absolute (executable) produced is the same as before
+indentation (see note above).
+
+INUSE.S
+
+   Checks to see if each function or subroutine is used in the program.
+Used to find 'dead' code.
+
+LJLABELS.S  (*)
+
+   Left justifies labels so that they start in column one.
+
+NIN.S   (*)
+
+   The initials stand for Not In Line. Used to correct a Unisys
+peculiarity of allowing comments on the same line as code. The comment
+started with a '@'. This macro puts such comments on their own separate
+lines. The comment can be optionally be either above or below the
+original line.
+
+NOTLABEL.S
+
+    Finds labels that are not used. Removing unused labels means you
+don't have to find out where in the program the labels are jumped to
+from. Also the code is cleaner.
+
+RELABEL.S
+
+   Renumbers all labels. The start label number and increment are input
+as parameters. I would recommend a four digit starting label with an
+increment of 3 or 7. A starting label of one, two or three digits can be
+hard to find with an editor, as numeric constants such as 10 or 100 can
+be confused with the labels. A five digit label is probably too big to
+keep typing in, so four digits are about right. If the increment is
+something obscure, say 3 or 7 then you avoid values that are likely to
+be used a numeric constants or text strings, such as 1000. Be careful to
+check READ, WRITE and FORMAT statements after using this macro. Watch
+out if the number of digits have increased in the new labels. The code
+may then stretch past column 72. If you have some identification in
+column 73-80, then remove it as a vertical block and place it in the
+clip file restoring it later. Sometimes it may be necessary to relabel
+twice if the original and final set of labels overlap. i.e. relabel to
+an intermediate number set to avoid overlap. This macro is rather crude
+so be sure to check the compiled code before and after to make sure no
+unintentional changes have been made (see above).
+
+UPPERC.S (*)
+
+    Puts all FORTRAN code in upper case (except for text strings).
+Needed for some of the other macros that are searching for "IF" and "DO"
+in upper case. Also helps differentiate between comments and code, if
+comments are in lower case.

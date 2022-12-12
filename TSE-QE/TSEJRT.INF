@@ -1,0 +1,55 @@
+The following steps will allow you to set up TSE Jr. as an external editor for
+TAPCIS 6.0.  I am assuming the use of a registered version of TSE Jr. when I
+refer to support files.  (Items such as the spelling checker that is part of
+the TSE Jr. 3.0 registered package.)  These instructions will work even with
+the shareware version, __EXCEPT__ you will not have access to the support
+files that I refer to.
+
+0.   BE SURE THAT TSE Jr. AND ITS SUPPORT FILES (IF YOU USE THEM) ARE IN YOUR
+     DOS PATH.  Otherwise, in Step 3 below, include the full path name to
+     reach TSE Jr..
+
+1.   Activate the SETUP > EDITORS > CONFIGURE menu options in TAPCIS 6.
+
+2.   Select which external editor setting (1 or 2) that you want to
+     configure as TSE Jr. and <TAB> to the first data entry field.
+
+3.   Enter the following information for each field.
+
+     Edit:     q
+
+     Reply:    q root~.tmp editor~.tmp
+
+     Write:    q editor~.tmp
+
+4.   Select the save option and return to the main screen.
+
+5.   (THIS IS THE SECRET TO MAKING IT WORK) Exit T6 and then restart it.  If
+     you don't do this, the changes you made in the configuration are not
+     saved to the proper location and you can't use the editor.
+
+6.   Return to the SETUP > EDITORS sub-menu.  Select the number for the
+     external editor as you configured it in Step 2 above.
+
+7.   Get some messages to read.  When you see one that you want to reply to,
+     simply press "R".  TSE Jr. will load both temp files into the editor, and
+     you will be presented with a single screen showing the message you are
+     replying to.
+
+8.   (THIS STEP MAY BE DIFFERENT, DEPENDING ON HOW YOU HAVE TSE Jr. CONFIG'ED)
+     Use the appropriate command from the keyboard or the menu (ESC, WINDOW,
+     SPLIT) to create an additional horizontal window.  Typically you will
+     be presented with a prompt box asking you which file to edit.  SELECT
+     editor~.tmp -- that is, the one NOT shown in the title line of the
+     upper window.  You will write your message in this window.
+
+You can move back and forth between the files, if you feel the need to quote
+from the first message.  When you are done responding, simply exit the program
+with a file save.  You will be returned to the message reading area in T6.
+
+BTW, if you are using the registered version of TSE Jr. 3.0 or later, you can
+spell check the reply message before you save it.
+
+Writing a new message is even simpler.  There is only one, blank screen to
+worry about.  Simply start writing, spell check if desired, and save/exit.
+

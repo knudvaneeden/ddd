@@ -1,0 +1,42 @@
+TextView Resource config file
+Intr
+k:\dosinfo\interlst\interrup.?
+Ralf Brown's DOS Interrupt List (v 47)
+^-------
+1
+-1
+
+AllFiles
+
+PC-Board ALLFILES.TXT
+^[!-z]
+0
+-1
+
+KJV
+d:\k\bethel\bible\*.txt
+King James Translation Bible
+^
+0
+-1
+
+MsgCap
+l:\tsestuff\*.cap
+TSE Captured Message Base
+^<<<>>>
+7
+-1
+l:\tsestuff\tse_tips\tse_tip?.txt
+Tom Klein's Collection of TSE Tips
+Subj:
+0
+-4
+
+TseTips
+l:\tsestuff\tse_tips\tse_tip*.txt
+Tom Klein's TSE Tips Collections
+Subj:
+0
+2
+
+

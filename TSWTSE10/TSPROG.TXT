@@ -1,0 +1,231 @@
+Mon 3-Jan-2005                                   All rights reserved
+
+A list of program and other packages by Timo Salmi
+==================================================
+
+If you have an access to the Internet, and have FTP  (file  transfer
+program)  or WWW (World Wide Web) capability, you can download these
+programs from the Garbo garbo.uwasa.fi archives at the University of
+Vaasa, Finland, by anonymous FTP. If you use WWW the relevant URL is
+http://garbo.uwasa.fi/pc/ts.html
+
+Although Garbo archives  probably  still  are  mirrored  by  several
+sites,  there  is  no  absolute  guarantee  that the material at the
+mirrors will be up to date. Thus it is  best  to  get  the  material
+directly from the original Garbo source.
+
+Comments  and  feedback  are  welcome.  Please note, however, that I
+can't afford the time to process any correspondence sent to  me  via
+the  ordinary (paper) mail. Furthermore, if you consider sending any
+questions by email to me you should first take a very  careful  look
+at http://www.uwasa.fi/~ts/garbo.html#faqtimo
+
+          BINARY files :
+          ---------------
+
+ts1st     Statistics: Univariate statistical measures
+ts2st     Statistics: Multiple (OLS) regression analysis
+ts3st     Statistics: Transformations of observations
+ts4st     Statistics: Correlation analysis
+ts5dos    MS-DOS 5.0 (or 4.+) specific programs. (setser,driveoff)
+ts5st     Least absolute deviation (LAD) multiple regression.
+tsaea     Timo's templates for the As-Easy-As spreadsheet program
+tsbase    Programmer's tools base: base, basecalc, scancode
+tsbat     A collection of useful batch files and tricks
+tsbits    Base conversions, decimal bit calculations
+tscdar    Perpetual calendar in English and Finnish
+tschek    A Unix-like spelling checker for MS-DOS ascii files
+tscmd     A CMD.EXE script file collection for NT/2000/XP
+tsdemo    Assorted graphics demonstrations of functions etc
+tsdraw    Graphical presentation of equations and LP problems
+tsf2cm    Comparison of two files, etc
+tsfair    Some scientific Publications in HTML Format, T.Salmi+al.
+tsfaqn    Questions from Usenet and Timo's answers
+tsfaqp    Common Turbo Pascal Questions and Timo's answers
+tsfcom    A set of programs for manipulating text files
+tsfilt    Programs for filtering messages, log files, Unix-PC, etc.
+tsfima    Programs of financial mathematics
+tsfltb    Easily customizable general filters, for text or binary.
+tsfltc    More filters: dump,col,concat,cut,detab,rep,rot13,undump,...
+tsfunc    Calculates, tabulates, and plots your functions
+tsgame    Three educational games including a management game
+tsgarb    Garbo related utilities for the PC (ffind,gfind)
+tsgifs    Timo's free collection of 575 GIF labels for World Wide Web
+tsgmeb    Timo's educational games: typevade, revegame, witpin
+tsgmec    Timo's educational games: ascigame,linegame,wordexam
+tsgmed    Learn national flags as educational games (good)
+tsgmee    Classic Hangman and Towers of Hanoi
+tsgmef    A simple reaction game w/mouse
+tsicon    Timo's Windows icons colllection
+tsjog     A simple calculator and pacer for a jogging enthusiast.
+tskerm    Keypads, .bats, logging, and file transfers for MsKermit.
+tslin     Friendly linear programming and linear goal programming.
+tsmatr    Standard matrix calculations. Product, inverse, etc.
+tsnum     Various programs in numerical analysis
+tspa35    Turbo Pascal 4.0 units for (real:-) programmers
+tspa35    Turbo Pascal 5.0 units for (real:-) programmers
+tspa35    Turbo Pascal 5.5 units for (real:-) programmers
+tspa35    Turbo Pascal 6.0 units for (real:-) programmers
+tspa35    Turbo Pascal 7.0 real mode units for (real:-) programmers.
+tspell    Screen oriented spelling checker & word frequency counter.
+tspfon    Utilities and advice for Procomm Plus
+tsprn     Printing text files with various printers
+tspun     Timo's nauseating groaners (a collection of puns).
+tsqed     Macros and configurations for TSE Jr. text-editor
+tsqlpc    On home computer (QL) <-> PC file transfer
+tsrese    Research answers email+postings, from 23-Apr-96 to ...
+tstlx     Salt scripts etc for the Telix telecommunication program
+tstse     SAL macro sources to extend The SemWare Editor 2.5
+tstsr     TSR programs (noboot,reslock,sordino,timedown,timeup ...)
+tsutil    Timo's 1st utility set (sysinfo,dirw,dtetimal,timelog,...)
+tsutlb    Timo's 2nd utility set (touch,chars,dire,setgra)
+tsutlc    Timo's 3rd utility set (dirf,dirinfo,doubles,hidden,split,...)
+tsutld    Timo's 4th utility set (bigcurs,keyrate,caps,today,warmboot,...)
+tsutle    Timo's 5th utility set (lock keyboard,mailsplit,tdel,cmos,...)
+tsutlf    Timo's 6th utility set (advdate,choose,deledir,strings,strmemo,)
+tsutlg    Timo's 7th utility set (backgrnd,backdemo,samesize)
+tswtse    SAL macro sources to extend The SemWare Editor 4.0+
+
+          ASCII files in /pc/ts :
+          ------------------------
+00index.zip  Details of the contents of each TS-package
+0news_ts.txt Latest news about the files in /pc/ts directory
+0newts??.txt The news announcements of 19?? about ts-programs
+0newts6?.txt The news announcements of 200? about ts-programs
+fback        User feedback etc 24-Apr-91, later see /pc/pd2/tspost00.zip
+tsans???.txt Answers to some recurring questions about TS-packages
+vaasa2if.txt More (official) information about University of Vaasa
+vaasainf.txt Information about Finland, Vaasa, and University of Vaasa
+          In /pc/research :
+          ------------------
+farewa       A Review of Financial Ratio Analysis, T.Salmi+T.Martikainen
+simirr       Deriving IRR from ARR: A Simulation Testbench, TS+IV
+tscesb       Model for Bank's Optimal Credit Expansion Strategy, T.Salmi
+tscmpacc     Review of Finnish Expenditure-Revenue Accounting, T.Salmi
+tsicms       International Capital Market Segmentation, VJ+TS+YW
+tssera       On the Classification of Financial Ratios, TS + IV + PY-O
+tssmuc       A Simulation Evaluation of IRR Estimation Methods, TS+IV
+Most of these publications are better readable on the World Wide
+Web. You'll find the WWW versions of these and some other of my
+scientific publications at http://www.uwasa.fi/~ts/index.html#publicat
+
+          In /pc/doc-net :
+          -----------------
+sigart       A collection of signatures from the Usenet news
+
+          Selected ASCII files in /pc/pd2 :
+          ----------------------------------
+0dir-pd2        Information about the /pc/pd2 directory
+author??.zip    Email addresses of 255 MS-DOS shareware and PD authors
+bestpr??.zip    Timo's choice best MS-DOS/Windows PD/FW/SW programs
+camfaq.zip      comp.archives.msdos.{announce,d} Frequently Asked Questions
+camwfaq.zip     comp.archives.ms-windows.{announce,discuss} FAQ
+cbipafaq.zip    comp.binaries.ibm.pc.archives Frequently Asked Questions
+cbipwfaq.zip    comp.binaries.ibm.pc.wanted Frequently Asked Questions
+garbohis.zip    A popularized history of Garbo archives
+hist9196.zip    Timo's subjective look-back at 1991-96 on Usenet and archives
+infolist.txt    Information on the Garbo info private mailing list
+moder??.zip     A list of MS-DOS FTP sites and moderators
+news_pd2.txt    Current year's selective news about uploads at Garbo
+news??.txt      Selected garbo.uwasa.fi news announcements of 19??
+news6?.txt      Selected garbo.uwasa.fi news announcements of 200?
+pd2aw???.txt    Frequently asked Garbo questions with answers
+private.txt     Your feedback, questions and views are public
+tspost??.zip    Information email & postings (30 messages each)
+
+          Also see in /pc :
+          ------------------
+INDEXTS.ZIP  The contents of each ts-package, same as
+             ftp://garbo.uwasa.fi/pc/ts/00index.zip
+
+          Unix scripts & filters (Bourne shell) in /unix/ts :
+          ----------------------------------------------------
+0news_u.txt     News and advice about the files in /unix directories
+0newsu93.txt    News and advice prior 1994 about /unix directories
+0newsu94.txt    News and advice for 1994 about Garbo's /unix directories
+0newsu97.txt    News and advice for 1995-7 about Garbo's /unix directories
+asc2ibm         Filter 7-bit Scandinavian characters to 8-bit characters
+asc2lat1        Convert 7-bit Scandinavian characters to 8-bit latin1
+atpath          List all the occurrences of a file at PATH
+attach          Attach two (text) files side by side, Bourne shell
+colrm           Remove columns from a file, Bourne shell
+combine         A script to combine binary postings and email
+combine.txt     How to combine and uudecode CBIP binary postings
+dele            Recoverable delete of Unix files, Bourne shell
+dirm            Unix directories file matching comparison, Bourne shell
+filesin         Annotate Garbo's /pc/_files.in upload list with file names
+gar2ftp         Filter Garbo announcements to batchftp format
+gfind           A convenient Unix script for Garbo index searches
+headerq         Cover a message's header produced by tofile
+ibm2asc         Filter 8-bit Scandinavian characters to 7-bit characters
+ibm2lat1        Convert 8-bit Scandinavian PC characters to 8-bit latin1
+lat12ibm        Convert 8-bit latin1 scandies to 8-bit IBM PC scandies
+lower           Upper case characters to lower case, opt Scand
+mac2lat1        Convert 8-bit quoted printable characters to 8-bit latin1
+mcopy           Matching filenames copy for Unix
+namedown        A script to convert file names to lower case and ; to .
+nameup          A script to convert file names to upper case and ; to .
+pc2unix         Filter PC end of lines to Unix end of lines
+quote           Quote textfiles and email, a filter
+rot13           Rotate ascii text by 13 positions
+samefile        Finds matching files from two directories, name-independent
+sim2bat         Filter Simtel.Net monthly announcements to batchftp format
+simi2url        Convert Simtel.Net simms.idx format to ftp URL format
+tarzfaq.txt     What are and how to handle tar.Z and tar.gz files
+tolpr           Pipe an elm mail message to a printer, reduced headers
+unix2pc         Filter Unix end of lines to PC end of lines
+unzipper        A script to use unzip as an uncompress replacement
+upper           Lower case characters to upper case, opt Scand
+white           Filter white spaces from a text file
+zipper          A script to use zip as a compress replacement
+
+          Unix advice in various /unix directories
+          ----------------------------------------
+gzipmake.txt    How to make Unix gzip operative
+lpsolbsd.txt    How to make lp_solve operational on BSD Unix
+pcpsmake.txt    How to make Unix pcps PostScript operative
+pgpmake.txt     How to make PGP operational on a Unix system
+unzmake.txt     Making Info-ZIP's UnZip operational, example
+zipmake.txt     Making Info-ZIP's Zip operational, example
+
+          Sinclair QL
+          -----------
+The /ql subdirectories have some of my old Sinclair QL programs. The
+program codes in the /ql/pas can be of general interest since they
+are standard pascal programs.
+
+          Timo's WWW pages of general interest
+          ------------------------------------
+Links to Timo's FAQ materials
+  http://www.uwasa.fi/~ts/http/tsfaq.html
+Timo's procmail tips and recipes
+  http://www.uwasa.fi/~ts/info/proctips.html
+Foiling Spam with an Email Password System
+  http://www.uwasa.fi/~ts/info/spamfoil.html
+Some Frequently Asked Garbo Questions
+  http://www.uwasa.fi/~ts/garbo.html#faq
+A Collection of Electronic Photographs
+  http://www.uwasa.fi/ktt/lasktoim/photo/index.html
+Timo's free gif WWW thumbnails collection
+  http://www.uwasa.fi/~ts/gifst/gifst.html
+Timo's collection of banners with links
+  http://www.uwasa.fi/~ts/http/banners.html
+Timo's selection of Usenet newsgroups
+  http://www.uwasa.fi/~ts/http/news.html
+Timo's collection of http links
+  http://www.uwasa.fi/~ts/http/http.html
+Timo's HTML colors page
+  http://www.uwasa.fi/~ts/info/colors.html
+ISO Latin 1 Character HTML Entries
+  http://www.uwasa.fi/~ts/info/latin1.html
+Journals in Accounting, Finance and OR for Research, a link list
+  http://www.uwasa.fi/~ts/opas/jott/jottjcgi.html
+Timo's scientific publications by WWW
+  http://www.uwasa.fi/~ts/index.html#publicat
+
+....................................................................
+Prof. Timo Salmi   Co-moderator of news:comp.archives.msdos.announce
+Moderating at ftp:// & http://garbo.uwasa.fi/ archives 193.166.120.5
+Department of Accounting and Business Finance  ; University of Vaasa
+mailto:ts@uwasa.fi <http://www.uwasa.fi/~ts/>  ; FIN-65101,  Finland
+Dense procmail filtering in effect against spam and other mayhem.

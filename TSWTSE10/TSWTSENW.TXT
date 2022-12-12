@@ -1,0 +1,30 @@
+News on the TSWTSE SAL macros package by Timo Salmi in reverse order
+====================================================================
+
+University of Vaasa, Finland, Linux garbo.uwasa.fi has a large
+collection of Shareware, Freeware and Public Domain PC programs
+available by anonymous FTP and WWW (World Wide Web). The information
+file ftp://garbo.uwasa.fi/pc/ts/0news_ts.txt contains news about the
+TS-programs http://garbo.uwasa.fi/pc/ts.html in the /pc/ts directory
+(in reverse order). This text, which you now have, is an extract
+from the said 0news_ts.txt file and the Usenet news.
+
+....................................................................
+Prof. Timo Salmi   Co-moderator of news:comp.archives.msdos.announce
+Moderating at ftp:// & http://garbo.uwasa.fi/ archives 193.166.120.5
+Department of Accounting and Business Finance  ; University of Vaasa
+mailto:ts@uwasa.fi <http://www.uwasa.fi/~ts/>  ; FIN-65101,  Finland
+Dense spam-kill procmail filtering with a public email key in effect
+....................................................................
+
+Sun 9-Jan-2005: Ever since the days of MS-DOS my favorite text
+editor has been the SemWare Editor (TSE) and its SemWare
+Applications Language (SAL). I have previously written a SAL macros
+collection for the editor's versions 2.0 and 2.5 for MS-DOS. I have
+prepared those same macros and a few additions as a new collection
+hereby released as
+ ftp://garbo.uwasa.fi/pc/ts/tswtse10.zip
+ SAL macro sources to extend The SemWare Editor 4.0+
+Since the origins of these macros go far back expect some redundancy
+in my collection compared to what is now included by default in The
+SemWare editor.

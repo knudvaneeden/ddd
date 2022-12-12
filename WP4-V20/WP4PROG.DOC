@@ -1,0 +1,570 @@
+*****************************************************************************
+
+               WordPerfect For Programmers User Interface for
+                          The SemWare Editor V2.0
+        The Semware Editor Copyright 1991-1993 SemWare Corporation.
+                       All Rights Reserved Worldwide.
+
+         WordPerfect for Programmers Interface by Mike Hammer 4/93
+
+                            first revision 5/93
+                           second revision 10/93
+                            third revision 12/93
+                         production revision 10/94
+
+*****************************************************************************
+
+
+Contents:
+
+You should have received in this ZIP (or whatever) packet the following main
+WP4PROG interface files:
+
+    WP4PROG.DOC     the file you are reading right now
+    INSTALL.WP4     instructions on how to install WP4Prog into E.EXE
+                      (also included later in this file)
+    HISTORY         where all this came from
+    WP4PROG.S       macro & TSE program definition file
+    WP4PROG.KEY     key assignments - who does what
+    WP4PROG.HLP     help file - when you press F1
+    WP4PROG.CFG     configuration file w/ colors, etc
+    WP4PROG.DOC     the file you are reading right now
+    WP.CLR          traditional WordPerfect color scheme to plug into
+                      WP4PROG.CFG if you like
+    PHOLT.CLR       Phyllis Holt's original color scheme I based this on
+
+and the following additional support files:
+
+    FPCALC.S        calculator macro, main
+    FPLOW.BIN       calculator binary support
+    FP_MIN.S        calculator macro, support
+    MATCH.S         enhanced matching functions for C and xBase languages
+    PCTAGS.S        PCTags (enhanced subroutine find) support
+    AUTOWRAP.S      Automatic paragraph wrapping in Wrap mode
+    PARA.INC        Support routines for AUTOWRAP.S
+
+There are also miscellaneous DOC files with instructions and information
+on some of the various patches that are already included in WP4PROG.  You
+can ignore these or read them as you wish.  Thank you to the people who
+wrote these other patches.  All copyrights on other people's code remain
+theirs.
+
+These files are for use with The Semware Editor, or TSE. TSE is Semware's
+high-end, high-speed text editor, with full programmer functionality, text
+editing versatility, user-programmable interface, macro/application
+programming language, etc, etc, etc. If you don't yet own a copy of TSE, get
+one now! You'll never regret it. Semware's address and phone numbers are as
+follows.
+
+    Semware Corporation
+    Suite C3A
+    4343 Shallowford Road
+    Marietta, GA  30062-5022
+    U.S.A.
+
+    voice phone  (404) 641-9002
+    support BBS  (404) 641-8968
+    CompuServe   GO SEMWARE (select Section 6)
+                 or 75300,2710
+
+Other Acknowledgements
+
+I borrowed (or stole with permission and inclusion of copyright notices)
+ideas, pieces and functions from the following places:
+
+    TSE Jr., in my mind and experience the best text editor available
+        for most uses (until Tessie, that is)
+    Randy Brook's WordPerfect-style interface for TSE Jr., revised by Tim
+        Farley. I've been using this interface in its various modes,
+        of course customized, for four years now (unbelievable...)
+    The WordPerfect interface for TSE supplied with TSE v1.0 áeta (yes,
+        the interface does all the pretty little marks!)
+    The TSE standard interface, from which I stole a whole lot of neat
+        functions (not to mention all the menus!).
+    Vi and Emacs, arguably the ultimate C programmer's editors
+        (especially when you consider vi (pronounced vee-eye) has been
+        used to edit C programs for UNIX for almost twenty years now!).
+        These are highly specialized code editors that you don't want to
+        use for anything else, trust me. (I had to do my first resume in
+        vi on UNIX; it took almost a week just to format the thing!!!)
+    FPCalc by Tim Farley gives WP4PROG a real, simple, usable decimal
+        calculator using the Ctrl-5 combination. Thanks, Tim!
+    PCTAGS.S written by Ron Hockemeier lets me use the great PCTags package
+        when editing C and other languages that allow you to spread your
+        code over several hard drives. (If you write a lot of code that
+        lives in more than one source file, get PCTags.)
+    Match macro extension by Peter Birch. This extends the Match Braces
+        function (F11 key) to match if..endif and other such structure
+        statements in dBase, Fox and other fourth level languages. And of
+        course, WordPerfect, my companion of many years. (More on this in
+        the HISTORY file.)
+    Clock function written by Ian Campbell to fix a problem with the clock
+        written by David Marcus (now if that's not cooperation, I don't know
+        what is!). Then, I modified the clock function to not display
+        seconds, and moved it over for some extra room on the status line.
+    Enhanced left mouse button macro from Ray Waters, with some changes.
+        This one allows the left button to mark text and move the cursor
+        with the left button to make copying and moving easier.
+    Auto paragraph wrapping package by David Marcus. This one allows the
+        autowrap function to reformat the entire paragraph you are working
+        in every 1/10th of a second (my, that's busy!). I may slow it down a
+        bit to conserve CPU cycles under multitasking, like DesqView or
+        DV/X.
+
+Disclaimers.
+
+I have a great product disclaimer I send with "professional" software I
+write, but it all boils down to this:
+
+UNDER NO CIRCUMSTANCES WILL THE AUTHOR OR ANY OF HIS HEIRS OR ASSIGNS BE
+LIABLE FOR ANY USE MADE OF THE ENCLOSED FILES OR INTERFACE RESULTING FROM
+THESE FILES FROM NOW UNTIL THE END OF TIME, WHETHER SUCH PERCEIVED
+LIABILITIES BE OF A PERSONAL, BUSINESS OR CORPORATE NATURE.
+
+BY USING THESE FILES YOU AGREE THAT THE PROGRAMMER'S LIABILITY FOR YOUR
+USE OF THIS INTERFACE IS LIMITED TO WHAT YOU PAID THE PROGRAMMER FOR THESE
+FILES -- nothing.
+
+INSTALL AND USE THESE FILES WITH CAUTION, AS MISUSE OR PROBLEMS IN THE USE
+OF THESE FILES CAN RESULT IN THE LOSS OF CRITICAL DATA.
+
+BY READING AND/OR INSTALLING THESE FILES YOU ACKNOWLEDGE AND ACCEPT THIS
+DISCLAIMER, AND ACCEPT ALL RESPONSIBILITY UPON YOURSELF FOR ANY USE OR
+ABUSE MADE OF THE INFORMATION IN THE ABOVE LISTED FILES FOR ALL TIME.
+
+At the time I started on this project I had never been involved with
+Semware. Because of the large files I manipulate in TSE at work (regularly
+100,000 lines with 160,000 not uncommon), in October '93 they asked me to be
+a beta tester. Primarily I'm a very satisfied customer. I've used TSE Jr.
+since about 1987 (sorry it took me so long to pay for it, guys) and
+purchased Tessie as soon as it was offered.
+
+Licensing Stuff
+
+This user interface is a gift to Sammy Mitchell for his efforts on behalf of
+all of us who have to really use these computer things. Many times Semware
+employees put up with my whining about not having vi and emacs functions.
+Most of them we got figured out and plugged into TSE Jr.; the rest of the
+things I wanted are already in Tessie. It's all been done over BBS lines,
+with a 24-hour average response time. Wow.
+
+From now on, this interface is officially the property of Semware
+Corporation. They can do with it what they will without any obligation at
+all to me, not even so much as putting up with more of my whining.
+
+If you already bought Tessie, you can use this interface too. Please take
+out of it what you want, make improvements to it, and be sure to post
+whatever you create for the rest of us to enjoy. It's as much a fun art as
+anything else.
+
+
+
+Introduction
+
+If you (have to...) use WP and got this file without owning Tessie
+already, get on the phone, order Tessie, and when it comes install this to
+see how good a WordPerfect-based programming editor can be. Much better
+than WP's old PE.EXE was.
+
+If you don't like or use WordPerfect, Tessie comes with an almost-standard
+programmer's interface (like Microsoft and Borland's internal editors) and
+several other interfaces, such as a Brief lookalike interface. If none of
+these appeal to you, you can write your own custom interface; it's pretty
+straightforward.
+
+Why should you buy another editor?  Quite frankly TSE is the best editor
+I've ever worked with.  I have personally used this very wp4prog interface
+on a 28 megabyte trace file at work, and on a 24- and 16-meg file at the
+same time (Tessie loaded just part of the 16'er and gave a polite error
+about the rest; there is a 32 meg limit). And you can't beat the price!
+Get it! Use it! Love it!
+
+
+
+Before Installing: Back Up The Original Editor!
+
+Before you change anything in the editor (the E.EXE file), it's a good
+idea to copy the standard editor to a new name. (That way, if anything
+gets screwed up, you can restore the original version and either try again
+or give up.) To do this,
+
+        change to the main editor directory (where E.EXE was installed)
+        give the following DOS command:
+                copy e.exe e-ori.exe
+
+This copies the original editor to the file name E-ORI.EXE. To restore the
+original editor, give the following command:
+
+        copy e-ori.exe e.exe
+
+Now you can play to your heart's content.
+
+
+
+Installing the WP4PROG Interface
+
+1) First, you need to have a copy of Tessie installed on your machine. I
+will assume you did the default installation, which created a directory
+called UI underneath the main TSE subdirectory. This is where the standard
+Tessie User Interface files are located.
+
+2) Make a directory under your TSE directory named WP4 or something like
+that. This is where the WP4PROG files will go, and where you will doctor
+Tessie by "burning in" this new User Interface. (So you should have a path
+something like C:\TSE\WP4 )
+
+3) Change to this new WP4 subdirectory using the DOS command
+
+            cd wp4
+
+4) Copy the E.EXE files from the TSE subdirectory to the WP4 directory you
+should be in. You don't want to change your current copy of E.EXE, the
+main editor, in case you don't like this interface!
+
+5) Unzip or copy the files listed above (wp4prog.*) into this WP4
+subdirectory.
+
+6) Give the following command to install the interface:
+
+                        ..\sc -b wp4prog
+
+You should see a message followed by a lot of dots, then the message
+"Burning configuration into e.exe".
+
+7) That's it! You're done. To test drive the editor, just give the command
+
+                        e
+
+Most of the keys are WP-standard, although there are some important
+exceptions and many, many enhancements. Look at the bottom line for initial
+help; the F1 key gets you into the Help system (like WP6), while F7 is the
+exit key (just like all versions of WP).
+
+8) To make this the copy of Tessie that's called every time you run E.EXE,
+copy this new E.EXE file into a location in your DOS path. If you run the
+standard TSE setup this means copying over the E.EXE file in the \TSE
+subdirectory.
+
+
+Basic Instructions
+
+Two basic commands you should be aware of:
+
+    For the help screen, press the F1 key. This is the WP6 standard even
+        though it was different in previous versions (you can always change
+        the key assignments if you want it in F3).
+    To exit, hit F7 and answer the prompt.
+
+I stole most of the WP function key assignments from WordPerfect v5.1.
+Wherever possible, that is. Much of WP's functionality and nice-ness comes
+in it's tremendous number of text formatting commands -- so many that it
+really does need that 1,300 page manual it comes with. In places where
+there is no close equivalent, I substituted other commands, first
+considering Randy Brook's old TSE Jr. interface, then desired programmer's
+functions. A lot of neat new commands are in the function keys!
+
+I stole much of the Tessie menu and mouse system. The standard WP menus are
+terrible to use, so I never used them.Tessie's were really good;
+why mess with the best? To have access to a great set of menus, just hit the
+Escape key, then press Enter to pull down a menu. The arrow keys move back
+and forth and up and down in the menus just like you would expect.
+
+Likewise, WP is not a really mouseable program; there's just too much
+there. Tessie is a pretty good mouser. There are functions assigned to the
+function keys. If you want more, mouse "chords" are available (right and
+left mouse buttons simultaneously, etc); see your TSE manual for
+information on how to configure them.
+
+The bottom line of the display in E.EXE is a help line. It gives key
+assignments for "most-used" keys. It also changes if you hold down the
+Shift, Alt or Ctrl keys to reflect important assignments for those keys.
+
+And, of course, press F1 for the Help screen. I am still not sure how to
+best format it, but there it is. If I ordered the functions alphabetically,
+like WP, you'd have to learn all new words. If ...
+
+Please look around a bit; try all the functions, especially the ones you
+don't understand or see a need for. You really need to get used to how
+powerful Tessie is before you can appreciate it. Especially if you are
+like me, you need a somewhat familiar interface (like old faithful WP) to
+help in the initial familiarization phase of a new program. There is some
+real program editing power hidden away here!
+
+
+Changing Colors & Screen Settings
+
+If you don't have VGA you probably can't use the WP4PROG standard 50 line
+display setting.  Change the StartupVideoMode parameter in WP4PROG.CFG to
+the setting of your choice as detailed in the TSE manual.  You might
+prefer _28_LINES_ if your video card is good.  I like _50_LINES_ because I
+usually work with large files and need to see a lot at once.
+
+One of my hobbies for a while there was changing colors.  It is easy to
+try new colors using the ICONFIG macro (with this interface press ESC O F)
+and I am still looking for the perfect color scheme.  The one included
+standard is easier on the eyes after 12 hours than the standard WP
+grey/white-on-blue.  It is based on a color scheme given me by Phyllis
+Holt, one of the beta testers.  (She reported a few months ago that she is
+now using another color scheme -- when will it end???)
+
+If you want to try the standard WP colors you can plug the WP.CLR file
+into the WP4PROG.CFG file under the attributes section.  Be sure to delete
+the old stuff first.  If you want to try Phyllis' original color scheme
+plug in PHOLT.CLR.  The file WP4PROG.CLR will restore these colors.
+
+I left the Help colors and all that alone for you to play with.  Have fun!
+
+One word about changing colors: Some color combinations are very hard on
+the eyes after a while even though they look good originally.  So if you
+find a color scheme you like be sure to save it in a file you won't erase
+so you can come back to it later if necessary.  I've lost a few good color
+schemes in my day...
+
+
+Actual Interface Documentation (?)
+
+Ocassionally I have to write documentation for weeks at a time, so I'm not
+going to make this too fancy. You just want to use it, right?
+
+Follow the instructions given above and you will produce a copy of E.EXE
+with the interface. Use it, see what you like, and more importantly see
+what you don't like. Then, with Tessie manual in hand, look at the .S,
+.HLP and .KEY files, figure out how they work, and change them. If you
+come up with a really nice function or whatever, post it so the rest of us
+can use it. If you really do a great job changing the interface, post it
+so we can all see it.
+
+
+Notes on the Functions
+
+The following were compiled using Tessie's wonderful windowing capabilities.
+I now use three or four windows quite often; while compiling this list I
+usually had four files loaded: the .UI, .KEY, .HLP and of course this .DOC
+file. What more could you ask for? <grin>
+
+For a list of key assignments, the quickest way to get a good list is to
+print out the help file. Load the WP4PROG.HLP file into your new E using the
+Alt-F5 command (so you can still see this file), Shift-F7 is the command to
+print (just like WP, right?), then hit an A for ALL and it will send a copy
+of the file to LPT1, which is standard for DOS printers. If you need to send
+it to another address, like LPT2, select the Options at the Print window;
+you'll see what to change. To close the .HLP file, hit F7. Just like WP,
+right? (hahahahaha...)
+
+Remember -- F1 is Help, F7 is Exit. "Everything else is just keeping
+            track..."
+
+F1 - Various miscellaneous commands. F1 by itself is now Help. Ctrl-F1
+    shells to DOS; once in DOS type EXIT to return to Tessie. Shift-F1
+    provides help on the word the cursor is on if the word is a SAL language
+    word (SAL is TSE's macro language). Alt-F1 is Undelete like in
+    WP.
+
+F2 - The search and replace key. Search is standard TSE. Shift-F2 has been
+    changed to Repeat-Find, as you can easily do a backward search using
+    plain F2 and specifying the B option. Alt-F2 is Search&Replace, just
+    like in WP and TSE Jr.. Ctrl-F2 is TSE's internal speller.
+
+    Other search commands - The programmer's incremental search is under
+    Ctrl-I. To use the incremental search, start typing the word or phrase
+    you want to find. Tessie will move to the next occurence of the word as
+    you type it. If it beeps it can't find what you just typed looking
+    forward in the file. The top line prompts you for Ctrl-N/P/B, which you
+    can use anytime after you start typing. Hit ESC when you are done; the
+    word stays marked for you.
+
+    Ctrl-W will find the next occurence (forward search) of the word the
+    cursor is on. Alt-W will find the previous (backward search) occurence
+    of the word the cursor is on. Ctrl-N will repeat the last search forward
+    (Next); Ctrl-P will repeat the last search looking backward (Previous).
+    See the help file (F1 key!) under Miscellaneous for the special search
+    key listings.
+
+F3 - The window control key. Holds most of the windowing functions. The Help
+    diagram is pretty good here; too much to talk about!
+
+F4 - The block functions key. F4 does a right tab to mimic WP's indent. If
+    Tabs are set to Sticky in the .CFG file (WP4 default), the rest of
+    the paragraph will be indented anyway, even if you just use the Tab key.
+    Alt-F4 starts and stops marking of a block. Put the cursor at one end of
+    the block, move the the other end, and press Alt-F4 again to finish the
+    block. If you are deleting or moving the block to another window, you
+    can use Ctrl-F4 or F3 (jump to next window) without ending the block
+    mark. Shift-F4 removes block marking, while Ctrl-F4 gives access to all
+    the block functions: move, copy, delete, insert, etc. See the help
+    display for details on all these.
+
+F5 - Various file functions. Plain F5 prompts for the next file to load into
+    the file ring into the current window. The current file in the window is
+    put back in the file ring. Alt-F5 splits the current window
+    horizontally, and prompts for another file to load. If none is selected
+    (Escape is pressed), the next file in the ring is shown in the new
+    window (like TSE Jr.'s function). This is a quick way to split the window.
+    Shift-F5 inserts the date in special format text (from the TSE extra
+    macros) into the file. This is like WP. Ctrl-F5 inserts a text file into
+    the current file at the cursor position, like WP.
+
+F6 - The line format key. Plain F6 is Paste, or Insert the current scrap
+    clipboard contents at the cursor position. Alt-F6 pushes the current
+    line flush to the right, like WP. Shift-F6 centers the current line.
+    Ctrl-F6 is the programmer's Shift Block function; it shifts the entire
+    marked block in the direction answered in response to the prompt.
+
+F7 - The exit and filename key. Plain F7 exits the current window prompting
+    for file save if the file has changed. Alt-F7 exits immediately, closing
+    all files and saving ANY AND ALL changed files. Ctrl-F7 allows you to
+    change the name of the current file. Shift-F7 is, of course, the print
+    key; it produces a print menu. Important difference here: the letter A,
+    not the WP F, prints All of the file (I got used to TSE Jr.!).
+
+F8 - More formatting functions. Plain F8 should toggle text underlining --
+    (F8)_like_this_(F8).  (Unfortunately I can't get it to work right! Make
+    this work on your own, or plug in the underliner of your choice here.)
+    Alt-F8 reformats the current paragraph from the cursor position down.
+    Ctrl-F8 toggles Wrap Paragraph on/off (watch the top line "W"); this
+    is an enhanced function that reformats the entire paragraph you are in
+    as you type. Shift-F8 provides access to the format control menu.
+
+F9 - Programmer's / general line format/change functions. Plain F9 pushes
+    the current cursor line down to provide a new blank line. Alt-F9 copies
+    the current line below itself. Shift-F9 splits the current line at the
+    cursor position; sometimes useful programming C or FoxPro/SQL. Ctrl-F9
+    swaps the current line with the line below it. (Used sequentially down
+    through a file, almost a bubble sort!)
+
+F10 - The Macro and File key. Like WP, F10 by itself saves the current file
+    to its current file name. (If you changed the file name using Ctrl-F7,
+    file is saved to the new name.) Shift-F10 gives you a pick list of
+    recently loaded files; to select one, highlight it and press Enter.
+    Alt-F10 is Macro read/write. Ctrl-F10, like WP, allows the user to
+    record a keyboard macro that will be held in memory for the current
+    session only. When the editor is exited, any macro saved like this is
+    lost.
+
+F11 - Programmer's functions. F11 is Match Braces; {, [, and ( are matched
+    if possible; if no match exists (a boo-boo in programmer lingo) and
+    error is issued. (Thanks, Sammy, for the updated mMatch macro!) Also,
+    thanks to Peter Birch, Match will also match if..ifend and so forth in
+    Fox, dBase and other .PRG files (see the MATCH.S file for a list of
+    extensions that trigger this ability). Alt-F11 shows the DOS screen as
+    it looked when the editor was invoked. This is useful to see error line
+    numbers after compiles, directory listings, etc. Shift-F11 is the
+    programmer's shift block function. Ctrl-F11 restores the cursor
+    line to what it was before the last changes were made. This is great for
+    undoing errors. Warning: If the cursor is moved off the line after
+    changes are made, the original line is lost, and this function will not
+    work.
+
+F12 - More Programmer stuff. Plain F12 gives the extended ASCII chart
+    display. Put the cursor where you want to insert a nifty ASCII guy, hit
+    F12, highlight the character you want, and press Enter. Bingo, the
+    character is in the file! Shift-F12 pops up a list of defined
+    procedures, subroutines, etc in the current file. To go to one,
+    highlight it and press Enter. Ctrl-F12 lets you drop a bookmark (A
+    through Z) at the current cursor position, while Alt-F12 goes to the
+    bookmark (A through Z) you specify.
+
+
+
+Other Neat Keys
+
+The Home key is like WP. Press Home once, then the same key as WP to do
+what WP does with it. Home-Home even works; Home-LeftArrow goes to the
+first character on a line, while Home-Home-LeftArrow goes to column 1.
+Home-Up goes to the top of the screen shown, while Home-Home-Up goes to the
+start of the file. And so on...
+
+Ctrl-PageUp moves up one screen; Ctrl-PageDown moves down one
+screen.
+
+Ctrl-C pops up TSE's Compile menu. This is a macro; you can configure your
+compiler to work automatically with TSE if it's not in the list.
+
+Ctrl-B pops up the Named Clipboard menu. The right mouse button does this
+too. (This is the Clip option in the main menu line at the top of the
+screen.)
+
+Ctrl-M pops up TSE's macro menu.
+
+Ctrl-X toggles Hex mode. This is really great if you need to see what is
+_really_ in the file on disk, such as programming assembler, or tracing bad
+pointers in C files...
+
+Ctrl-Y deletes the current cursor line.
+
+See the instructions under the F2 key for lots of neat Ctrl-find
+options. These are all I have really needed or used more than once; with
+regular specify-able search under F2, Incremental Search (Ctrl-I),
+FindCursorWordFwd and Bwd (Ctrl- and Alt-W), FindAgainForward (Ctrl-N
+for Next), FindAgainBackward (Ctrl-P for Previous) these are probably
+all you need too!
+
+Alt-<1 through 9> will take you straight to that window- number on
+screen. Since you can have nine windows on screen at once, this is
+perfect.
+
+Ctrl-F3-V gives that beautiful vertical split window. If TSE Jr. had these, I
+never would have needed Tessie!
+
+Alt-5 (or Alt-Center-Arrow) pops up the FPCalculator package by Tim Farley,
+who kindly released it to public domain.
+
+Ctrl-] (right quare bracket) activates an automatic PCTags subroutine name
+search. If you don't have PCTags and you spend time programming, get PCTags.
+It's a very nice source code retrieval/archival system. I only use the "jump
+to subroutine" part of the package as I don't really need the rest (but I've
+played with it and it seems pretty good).  (By the way, there are other
+similar subroutine finders out there, like CTags, that will work just as
+well.  I just don't have code to make them do their thing with TSE.)
+
+Alt-] activates a PCTags keyword search. See the note above.
+
+The match braces command (F11 key) has been enhanced to match if-endif,
+do-while, etc. I program in FoxPro, and the ability to match at least most
+of the structural words really helps.
+
+
+Popup Menus
+
+The menu system is stolen straight from standard Tessie. I wanted all the
+functions available. See your manual for how it works; pretty much point &
+shoot.
+
+Some of the menus can be popped up by hotkeys as noted above. The rest
+are available by pressing Escape, then Enter, then use the arrow keys to
+move left/right and up/down.
+
+
+Mouse Support
+
+Wp4prog uses the same mouse commands as standard Tessie. See the help
+file. One difference from the manual -- Alt-LeftButton doesn't line
+DRAW, it line MARKS. I think it's a typo in the manual...
+
+
+What Else Could There Be?
+
+There are lots and lots of Ctrl- keys left over for you to use for your
+own favorite functions. Please feel free to move things around to where
+you want them (and recompile).
+
+I like to leave the Alt-() keys for WP-style key macros.
+
+I tried to leave room in the Help file too; moving those things around
+is a real pain after a while. But it's getting pretty crowded in there.
+
+
+The Last Word
+
+AND FINALLY - Thank you for supporting my favorite little editor company
+by buying Tessie! Remember, it's not too late to register TSE Jr. (if you
+haven't already). Get it for a good friend, maybe. Or better yet, buy a
+site license for Tessie for your whole office (if they aren't TOO stuck
+in a rut!).
+
+Thanks, Sammy, Matthew and everyone else who helped! "Success!"
+
+Mike Hammer
+April 23, 1993
+revised December 19, 1993
+re-released October 1, 1994 for v.2.0

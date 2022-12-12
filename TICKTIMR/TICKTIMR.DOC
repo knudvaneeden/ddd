@@ -1,0 +1,29 @@
+
+
+The TIMER.INC file can be included in your macros to provide fast,
+simple binary timing functions.  The timing functions are implemented
+completed in SAL using Semware's INTR.INC and INTR.BIN (which must
+be available to compile TICKTIMR.
+
+DOS maintains a counter of the 'clock ticks' (about 1.57 million per
+day or 18.2 per second) since midnight.  The value of the tick timer
+can be used as a 32 bit timestamp with 0.05 second precision.  Some
+high resolution timer routines change the tick frequency.  These macros
+do not.
+
+The primary usefulness of these macros are timestamps for event logging
+and duration calulations.  This could be accomplished through converting
+the DOS Hr, Min, Sec, Sec100 values; however, using the timestamp is
+much simpler and faster.  Since the system clock is updated on the same
+frequency as the system timer, it is as precise as the DOS time.
+
+The approach with these macros has been to stick within integer
+limitations and as a result, there are 31 bit limitations involved in
+the conversion calculations that force trade offs between range and
+precision.  TicksToMs is slanted toward resolution, whereas
+TicksToSeconds is slanted toward higher range.
+
+
+   These macros are in 'test mode'.  While I know of no problems, use
+   them at your own risk.  And in the words of Mikhail Gorbachev:
+                       "Trust -- but verify."

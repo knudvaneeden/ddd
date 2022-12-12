@@ -1,0 +1,586 @@
+
+
+
+                                  FSORT Ver. 1.0
+                          Copyright (c) 1993 Mike Albert
+                                    April 1993
+
+
+
+     1   INTRODUCTION
+
+     FSORT reads data from an input file, sorts it, and writes it to an
+     output file.  Sorting rearranges the lines of the file so that the keys
+     of the lines are in a specified order.  FSORT is similar to the MS-DOS
+     sort command and provides the following benefits:
+
+         o   FSORT is faster than other sort programs, and MUCH faster than
+             the MS-DOS sort command.
+
+         o   FSORT sorts any size file.
+
+         o   FSORT is careful in it's use of disk space, so that files can be
+             sorted successfully even when there's little space available.
+
+         o   FSORT can handle any number of sort keys, sort in ascending or
+             descending order, and ignore the case (upper/lower) of letters.
+
+         o   FSORT can sort using character or numeric keys.
+
+         o   FSORT can remove duplicate lines.
+
+
+     FSORT runs on any IBM-compatible computer using MS-DOS 3.00 or later,
+     and uses whatever memory is available.  At least 150K is needed, but
+     more results in faster sorting.  The file to be sorted must be stored in
+     the MS-DOS text file format, and may reside on floppy diskettes, hard
+     disks, RAM disks, or network drives.
+
+     If you want to try out FSORT right now, just run FSORT with no command
+     line arguments.  FSORT will display a brief description of its operation
+     that you can use to get started.
+
+
+
+     2   OPERATION
+
+     You control FSORT with command line arguments that specify the input
+     file, output file, and sorting options.  The arguments may be specified
+     in any order.  FSORT is invoked like this:
+
+         fsort  [options]  [<] infile  [>] outfile
+
+     The options are:
+
+         OPTION  EFFECT
+
+         /+n     Sort in ascending order using the key starting at column n
+
+         /-n     like /+n, only sort in descending order
+
+         /+n:m   like /+n, only the key length is m
+
+         /+Nn    like /+n, only treat key as a decimal number
+
+
+                                       - 1 -
+
+
+         /C      ignore differences between upper and lower case letters
+
+         /U      discard lines that have duplicate keys
+
+         /T      trace sort operations
+
+
+     These sort key forms can be combined, e.g. /-N5:6 can be used to sort a
+     fixed length numeric key.  For more details, see the Operational Details
+     section below.
+
+     The first file name identifies the input file that contains the lines to
+     be sorted.  The second file name identifies the output file, which will
+     contain the contents of the input file reordered by FSORT.  File names
+     can include names with or without paths in the standard MS-DOS format,
+     but wild-card characters ("*" and "?") aren't permitted.  The MS-DOS
+     input redirection operator ("<") may be used for the input file, and the
+     output redirection operator (">") may be used for the output file.  The
+     pipe operator ("|") may also be used for either input or output.  If no
+     output file is specified, the output is displayed on the screen.
+
+     The /U option removes lines that have duplicate keys from the output
+     file.  The keys must be exactly the same to be removed (unless the /C,
+     /+N, or /-N option is specified); e.g. if one key has a trailing space
+     at the end and another doesn't, neither line will be removed.  Lines
+     that have no key (i.e. a 10-character line with a key starting in column
+     20) are also removed.
+
+     The /C option makes FSORT ignore case (i.e. upper case vs. lower case
+     letters) when comparing keys.  This affects both the sort order and the
+     removal of lines with duplicate keys.
+
+     The /T option makes FSORT display status information as it sorts.  You
+     can use this option to help understand how FSORT works, or to determine
+     what's happening when an error occurs.
+
+     FSORT sometimes creates temporary work files while it's working, and
+     then deletes them when it's finished.  FSORT examines the FSTEMP
+     environment variable to determine the drive and directory to use for
+     these files.  You can specify multiple locations by separating each path
+     with a semicolon.  E.g. to direct FSORT to use the TEMP directory of the
+     E: drive, and then (if more space is needed) the root directory on the
+     D: drive, enter the command:
+
+             set FSTEMP=E:\TEMP;D:\
+
+     before running FSORT.  If FSORT can't create and read a file in a
+     directory specified in the environment variable, it will terminate when
+     it tries to use that directory.  If FSORT doesn't find FSTEMP, it looks
+     for the TEMP or TMP variables.  If these aren't found (or if the disks
+     specified don't have enough space), FSORT uses the root directory of the
+     hard or network disks on your system as needed.  Note that it's not
+     necessary to specify these environment variables, but it's useful when
+     you want FSORT to use the fastest drive available.
+
+     If you want to interrupt FSORT at any time press Ctrl-C or Ctrl-Break.
+     Any work files and partially written output files will be deleted.
+
+
+
+
+
+                                      - 2 -
+
+
+     Sorting large files can be time consuming.  You can maximize the sort
+     speed by doing the following:
+
+         o   Specify a RAM disk for your temporary work files.  If you can't
+             use a RAM disk, use the fastest disk available.
+
+         o   Run FSORT with plenty of memory.  The more memory available, the
+             faster FSORT runs.  Providing more memory reduces or even
+             eliminates the need for work files, and consequently speeds up
+             the sort.
+
+         o   If you're sorting large files, run FSORT with plenty of file
+             handles.  (The number of file handles controls the number of
+             files that can be open at one time.)  You can increase the total
+             number of file handles by increasing the value specified in the
+             FILES statement in your CONFIG.SYS file.  You can prevent other
+             programs from taking file handles by running FSORT with no other
+             programs (e.g. MS Windows or a TSR that access files) active at
+             the same time.
+
+         o   Avoid numeric keys when you can.  Numeric keys take more time to
+             process.
+
+         o   Use as few keys as possible.  The more keys you specify, the
+             slower the sort.
+
+         o   Don't use the /C option unless you really need it, because it
+             makes FSORT run more slowly.
+
+
+     You may find that FSORT is unable to sort a file because of insufficient
+     disk space.  If you specify the same file name for both the input and
+     output file, FSORT will write the output file over the input file.  This
+     lets you sort files that otherwise would be too large to process, but it
+     does incur the risk of loosing your file.  FSORT will not delete the
+     input file until it has fully read it, so if it then finishes
+     successfully, you will have no problem.  But if something goes wrong,
+     you could loose your file!  I've done what I can to ensure that this
+     won't occur, but there are no guarantees.  The choice is yours.
+
+     By the way, don't ever specify the same input and output file names when
+     using redirection (i.e. the "<" and ">" operators).  If you do, MS-DOS
+     will destroy your file (unless it's very short) before FSORT can read
+     it!
+
+     Here are some examples of FSORT use:
+
+                   fsort  test.in  test.out
+
+         The contents of file test.in is sorted and written to file test.out.
+         The file is sorted in ascending order, using the whole line as the
+         sort key.
+
+
+                   fsort  /+5  <a:\mp\data.in  >a:\wp\data.out
+
+         The contents of file a:\mp\test.in is sorted and written to file
+         a:\wp\test.out.  The file is sorted in ascending order, using the
+         key starting in the 5th character of each line.
+
+
+
+                                      - 3 -
+
+
+                   dir | fsort  /+N13:10
+
+         The output from the MS-DOS dir command is sorted on the file length
+         field and displayed on the screen.
+
+
+                   fsort  /-5  /+N10:5  /c  <data.in  data.out
+
+         The contents of file data.in is sorted and written to file data.out.
+         The file is sorted in descending order on the key in columns 5 thru
+         9 and in ascending order on the numeric key in columns 10 thru 14.
+         The case of letters is ignored when comparing keys.
+
+
+                   fsort  /c  /u  data  data
+
+         The input file is sorted and re-written back to the same file.  Any
+         duplicate records are discarded.  The case of letters is ignored
+         when comparing keys and testing for duplicates.
+
+
+
+     3   OPERATIONAL DETAILS
+
+     When you specify a key without a length (e.g. "/+5"), FSORT sorts the
+     file using the key starting at the specified column and extending to the
+     end of the line, or the beginning of another key, which ever comes
+     first.  When you specify a length explicitly (e.g. "/+5:10"), FSORT
+     looks only at the key characters specified.  There's no problem if you
+     specify a key that extends past the end of a line; FSORT treats the
+     missing characters as if they are less than characters that are present
+     in a longer line.
+
+     When you specify a numeric key (with the "N" option), FSORT interprets
+     the digits "1" through "9", an optional leading sign ("+" or "-"), and
+     an optional decimal point (".") as a number, and then sorts using the
+     number.  FSORT ignores any leading spaces or tabs, and stops when it
+     finds a character that can't be part of a number.  FSORT also accepts
+     numbers in scientific notation, e.g. 5.9E-5 (which is equivalent to
+     0.000059).
+
+     When you specify more than one key specification (e.g. "/+20 /+5:8"),
+     FSORT uses the first specification (the "/+20") to determine the order.
+     If the keys are equal, FSORT then looks at the second (i.e. "/+5:8")
+     specification, and continues looking at additional specifications until
+     unequal keys are found or all specifications are checked.
+
+     If FSORT finds two lines with equal keys, it keeps their original order
+     in the sorted file.
+
+     Keys are compared in ASCII order.  Control characters (e.g. tabs) aren't
+     expanded before comparing, so you should be careful when comparing lines
+     containing these characters.
+
+     FSORT has been successfully tested on three networks: Novell's Netware
+     and Netware Lite, and Digital Equipment Corporation's Pathworks.  The
+     only problem occurs with Pathworks: files with some VMS Record Formats,
+     e.g. Variable, cannot be sorted.  The Stream Record Format works fine.
+
+     FSORT assumes that the resources it uses (i.e. disk space, file handles,
+     and memory) don't vary while it runs.  If you run another program (e.g.
+
+                                      - 4 -
+
+
+     a TSR) that consumes any of these resources while FSORT is running,
+     FSORT may malfunction.
+
+
+
+     4   LICENSING, WARRANTY, REGISTRATION, AND SUPPORT
+
+     FSORT is distributed as shareware.  I encourage you to try the program
+     and share it with friends as long as:
+
+         1.  The FSORT program, this documentation, and any other FSORT files
+             are not modified and are distributed together.
+
+         2.  FSORT is not provided as a part of any other product.
+
+         3.  No fees, beyond a reasonable fee for media, duplication, or
+             downloading costs, are charged.
+
+         4.  FSORT is not used for commercial, government, or business
+             purposes without registration.  Each registration is for a
+             single person or a single computer.
+
+
+     If you decide to use FSORT regularly you are required to register.  All
+     proceeds from FSORT are directed to Oxfam America, an international
+     self-help and disaster relief organization that I've supported for many
+     years.  You can find more about Oxfam by reading section 5.  If you
+     register you get the satisfaction of saving lives in Africa, Asia, and
+     South America, and encourage me to produce more software at reasonable
+     prices.  You also get the following benefits:
+
+         I'll answer questions on FSORT and its use.  You can contact me at
+         the address shown below or via CompuServe mail.
+
+         I'll make an attempt (but no guarantee!) to fix any problems you
+         find.
+
+         If any important bugs are found I will notify you.
+
+         I'll send an updated version of FSORT to you at no additional cost.
+         You can request this when I notify you of a new version, when I've
+         fixed a bug you have found, or any other time.  I'll only do this
+         once per registered user.
+
+
+     Registration is $25.  Please make your check payable to Oxfam America -
+     I'll send your checks to Oxfam and record your registration information.
+     I'll also accept original canceled checks or receipts from Oxfam that
+     list you as the donor.  Please send payments, registration information,
+     and any other correspondence to:
+
+                Mike Albert
+                P. O. Box 535
+                Bedford, MA   01730
+
+     I can also be reached via CompuServe mail; my userid is [70325,1134].
+
+     Anyone can order the latest version of FSORT directly from me for a fee
+     of $5.00.  Just send the order (make sure it contains your mailing
+     address) with your check to the above address.  You'll receive a 5 1/4
+     inch 360K floppy disk containing the FSORT executable and documentation
+
+                                      - 5 -
+
+
+     files.  If you need other formats (5 1/4 inch 1.2Mb or 3 1/2 inch 720Kb
+     or 1.44Mb) I can provide them.  If you live outside North America,
+     please send extra money for the increased postage.
+
+     I welcome all comments and suggestions concerning FSORT.  I'd like to
+     know how you are using FSORT and what problems, bugs, or weaknesses you
+     find.  If you tell me about enhancements or changes you're interested
+     in, I'll make an effort to provide them.  I'll also include other
+     shareware products I produce.  I'd also like to know what other products
+     you would like to see.
+
+     This program is provided "as is" without warranty of any kind, either
+     express or implied, but not limited to the implied warranties of
+     merchantability or fitness for a particular purpose.  The entire risk as
+     to the results and performance of the program is assumed by the user.
+     Should the program prove defective, the user assumes the entire cost of
+     all necessary servicing, repair, or correction.
+
+
+
+     5   OXFAM AMERICA
+
+     As stated in Oxfam literature,
+
+         "Oxfam America is an international agency that funds self-help
+         development projects and disaster relief in poor countries in
+         Africa, Asia, and Latin America, and also prepares and distributes
+         educational materials for people in the United States on the issues
+         of development and hunger.  The name "Oxfam" comes from the Oxford
+         Committee for Famine Relief, founded in England in 1942.  Oxfam
+         America, based in Boston, was formed in 1970, and is one of seven
+         autonomous Oxfams around the world (Great Britain, Australia,
+         Belgium, Canada, Quebec, Hong Kong and the United States).  Oxfam is
+         a nonsectarian, nonprofit agency that neither seeks or accepts U.S.
+         government funds.  All contributions are tax-deductible to the
+         extent permitted by law."
+
+     For more information, you can phone Oxfam at 617-482-1211, or write to
+     them at:
+
+                  Oxfam America
+                  26 West Street
+                  Boston, MA  02111-1206
+
+
+     6   ERROR MESSAGES
+
+     FSORT displays an error message whenever it's invoked with arguments
+     that it can't process, or when problems occur that prevent it from
+     performing the requested work.  This section lists all the messages that
+     FSORT displays, as well as a description of what each message means and
+     what to do to correct the problem.  If you have any problems that you
+     can't correct, please contact FSORT support as described in section 4.
+
+         FSORT error: column of key "<key>" is to big; limit is <n>.
+             FSORT only sorts lines up to <n> characters long, so you can't
+             specify a key that starts after that.
+
+
+
+
+
+                                      - 6 -
+
+
+         FSORT error: couldn't create work file <fn>; <reason>.
+         FSORT error: couldn't create output file <fn>; <reason>.
+             FSORT was unable to create the work file <fn> or final output
+             file because of the problem stated in <reason>.  You can
+             probably guess what the problem is by looking at the location of
+             the file specified in <fn> and the problem description.  This
+             usually occurs because the work file location specified in the
+             FSTEMP, TEMP, or TMP MS-DOS environment variable is incorrect.
+             You can examine these variables by typing "set" at the MS-DOS
+             prompt.  Whichever variable you have should specify one or more
+             paths where work files can be placed.  This message also occurs
+             when the work file is on a network drive, and you don't have the
+             necessary rights to create a file in that directory and drive.
+
+         FSORT error: couldn't open input file; <reason>.
+             FSORT couldn't the input file you specified on the command line
+             because of the problem stated in <reason>.  You can usually
+             figure out what's wrong by examining the problem description.
+             The most likely problem is that the input file name is specified
+             incorrectly.
+
+         FSORT error: couldn't open enough files concurrently.
+             FSORT couldn't open enough files at once to perform the sort.
+             Since FSORT can sort with only three files open at once (even
+             though it's not very efficient), this message usually indicates
+             that you've done something to lower the number.  If you have
+             other programs running (e.g. TSRs, MS-Windows) that keep files
+             open, unload them.  You can also alter the FILES statement in
+             your config.sys file to increase the number.
+
+         FSORT error: couldn't allocate memory for I/O buffer.
+         FSORT error: couldn't allocate memory for input buffer.
+         FSORT error: couldn't allocate memory for line buffer.
+         FSORT error: couldn't allocate memory for output buffer.
+         FSORT error: couldn't allocate memory for priority queue.
+             FSORT ran out of memory when trying to sort.  FSORT needs about
+             150K to sort at all, and more to sort large files efficiently.
+             If you run FSORT from the MS-DOS window of another program, try
+             unloading the program and then running FSORT directly from the
+             MS-DOS prompt.  If you load TSRs that use large amounts of
+             memory, try removing them.
+
+         FSORT error: error closing file <fn>; <reason>.
+         FSORT error: error reading file <fn>; <reason>.
+         FSORT error: error writing file <fn>; <reason>.
+
+             FSORT was unable to close, read, or write file <fn> because of
+             <reason>.  This error is usually caused by an unrecoverable I/O
+             error as described in <reason>.  The problem causing the error
+             must be corrected.
+
+         FSORT error: insufficient disk space for output file.
+             There isn't enough space on your disk for the output file.  You
+             can correct this problem by deleting unneeded files on the
+             output drive, or specifying a different output drive that has
+             more space.  In some cases FSORT must put work files on the same
+             drive as the output file; when this occurs, freeing space on
+             other drives will also help.  You may also have lost some
+             sectors on your disk; these can be recovered by running the MS-
+             DOS program "chkdsk" with the "/f" option.  As a last resort, if
+             you don't need the unsorted file, you can specify the same file
+
+                                      - 7 -
+
+
+             name for both input and output so that FSORT will overwrite the
+             input file.  But be aware that you run the risk of loosing your
+             data if something goes wrong.
+
+         FSORT error: insufficient disk space for work file.
+             There isn't enough space on your disk for the needed work files.
+             You can correct this problem by deleting unneeded files on any
+             of your hard drives.  You may also have lost some clusters on
+             your disk; these can be recovered by running the MS-DOS program
+             "chkdsk" with the "/f" option.  If you don't need the input file
+             after the sort, you can specify the same file name for both
+             input and output so that FSORT will overwrite the input file.
+             But be aware that you run the risk of loosing your data if
+             something goes wrong.
+
+         FSORT error: key "<key>" exceeds limit of <n> keys.
+             FSORT only allows sorting with up to <n> keys.  The <key> key
+             exceeds that limit.
+
+         FSORT error: key "<key>" extends into column <n>; limit is <m>.
+             FSORT only sorts lines up to <m> characters long, so you can't
+             specify a sort key that extends beyond that.  Your key <key>
+             extends to column <n>.
+
+         FSORT error: key "<key>" has a starting column less than 1.
+             FSORT numbers the columns (i.e. characters) in each line
+             starting at 1, so each sort key starting value must be 1 or
+             more.  The <key> sort key has a value of zero.
+
+         FSORT error: key "<key>" has a length less than 1.
+             Sort keys must be one or more characters long; you specified a
+             length of zero.
+
+         FSORT error: key "<key>" is malformed.
+             Each sort key argument must have the form "/+n", "/-n", "/+n:m",
+             "/-n:m", "/+Nn", "/-Nn", "/+Nn:m", or "/-Nn:m" where n and m are
+             positive decimal numbers.  The key you specified isn't in this
+             form.  Examples of correct keys are "/+5", "/-8:3", "/+3:8".
+             Note that the double quote character isn't coded on the command
+             line; e.g. a sample use of FSORT is:
+                 fsort  /+5:5  /-10  infile  outfile
+
+         FSORT error: keys "<key1>" and "<key2>" start in the same column.
+         FSORT error: keys "<key1>" and "<key1>" overlap in column <n>.
+             It doesn't make sense for sort keys to overlap, because FSORT
+             doesn't know how to sort the overlapping part.  You specified
+             two sort keys (<key1> and <key2>) that overlap in column <n>.
+
+         FSORT error: line <n> is too long to sort; limit is <m>.
+             FSORT can only sort lines up to <m> characters long.  Line
+             number <n> exceeds that limit.
+
+         FSORT error: no input file specified.
+             FSORT didn't find the name of a file to sort on the command
+             line.  You must specify the name of the file to be sorted.
+
+         FSORT error: too many work files; limit is <n>.
+             FSORT needed to create more than <n> work files to sort your
+             file.  This occurs either because you have an extremely large
+             file to sort, or you have run FSORT with very little memory
+             available.  FSORT needs about 200K to sort at all, and more to
+
+                                      - 8 -
+
+
+             sort large files efficiently.  If you run FSORT from the MS-DOS
+             window of another program, try unloading the program and then
+             running FSORT directly from the MS-DOS prompt.  If you load TSRs
+             that use large amounts of memory, try removing them.
+
+         FSORT error: unable to get status of file.
+             FSORT was unable to obtain status information from MS-DOS about
+             a work file.  This error should not occur in normal operation.
+             If it does, please contact FSORT support as described in
+             section 4.
+
+         FSORT error: unknown argument "<arg>".
+             FSORT couldn't recognize <arg> as either a file name or a valid
+             option.  Check the list of arguments that FSORT accepts to
+             determine what arguments you can use.  You can list the options
+             FSORT recognizes by typing "fsort ?".  Remember that each option
+             must start with a "/", e.g. "/C".  You may also have specified
+             too many file names.  You may specify either one input file, or
+             one input file and one output file.  Note that if you forget to
+             enter a "/" before an option, FSORT will interpret it as a file
+             name.
+
+         FSORT error: unrecoverable I/O problem.
+             FSORT encountered a I/O error that could not be corrected.  This
+             is generally caused by a damaged disk.  You must correct the
+             problem causing the error before proceeding.
+
+         FSORT error: user aborted program.
+             This message is displayed when you abort FSORT with Ctrl-C or
+             Ctrl-Break.
+
+
+
+     7   REVISION HISTORY
+
+         FSORT version 1.00 - 4/9/93
+
+             Original program.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 9 -

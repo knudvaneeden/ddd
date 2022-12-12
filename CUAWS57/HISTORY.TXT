@@ -1,0 +1,321 @@
+CUAWS: CUA Macro/WordStar UI for TSE Pro/32
+(C) 1997-2004 by Bill Stewart (bstewart@iname.com)
+
+Version History
+
+>  Version 5.7 (03/10/04):
+
+   o  Updated for TSE Pro/32 v4.2 (console and GUI versions).
+
+   o  Interactive "open a file" commands now use EditThisFile() instead of
+      EditFile(). This eliminates the need to quote filenames containing
+      spaces unless you intend to specify multiple filenames (new in 4.2).
+
+   o  Changed several standard keystrokes to use the Windows clipboard:
+
+      o  Shift-Ins now performs PasteFromWinClip()
+      o  Ctrl-Ins now performs CopyToWinClip()
+      o  Shift-Del now performs CutToWinClip()
+
+      The CUA macro also uses the above keystrokes to work with the Windows
+      clipboard.
+
+   o  Added left mouse button marking to UI.
+
+   o  Added Ctrl-X and Shift-Del to prompt boxes.
+
+   o  Added Ctrl-K, Ctrl-O, and Ctrl-Q HelpLine menus (new in 4.2).
+
+   o  Added C# as a language and added 'try', 'catch', and 'finally' as
+      language keywords.
+
+   o  Updated WORDSTAR.UI based on the 4.2 TSE.UI file.
+
+   o  Added mReplace() macro to CUA.S. Basically, if you mark a CUA block
+      and then press Ctrl-QA or Ctrl-R, it will do a replace operation, but
+      will add 'gl' to the replace options for your convenience, and it
+      will leave the block marked as it was.
+
+>  Version 5.6 (06/11/02):
+
+   o  Updated for TSE Pro/32 v4.0 (console and GUI versions).
+
+   o  The "Save As" menu item now invokes the editor's internal
+      RenameAndSaveAs() command.
+
+   o  The UI now implements the editor's internal TabShiftsBlock editor
+      variable. Changed from the previous version: The block will not be
+      shifted if insert mode is off.
+
+   o  The CUA block-marking menu is now located on the Block menu rather
+      than the Text menu.
+
+   o  The ToggleAppWindowSize macro command has been removed; the editor
+      will instead execute the TOGMAX external macro that ships with the
+      editor (ToggleMaximizedWindow).
+
+   o  The mSaveBlock command was removed and the standard editor behavior
+      used instead.
+
+   o  Several of the prompt boxes are augmented with a list of commands
+      along the bottom to remind of useful keystrokes.
+
+   o  The mouse wheel is functional in the GUI version of the editor.
+
+   o  You can "right-click and drag" to mark a column block.
+
+   o  Added keys: F8 = shell, Alt-F8 = OS command.
+
+   o  The CUA macro now supports Ctrl-A to mark the entire file. The cursor
+      is placed at the bottom of the file. If you pressed Ctrl-A by
+      mistake, you can use Ctrl-QP to return to your previous position.
+
+>  Version 5.5 (04/18/02):
+
+   o  CUA block-marking macro updated to support persistent blocks and a
+      configuration menu. The UI now configures the macro using the menu.
+
+   o  Updated VB function string and filename extensions (added .cls and
+      .frm)--thanks to Howard Kapustein.
+
+   o  Added .tex support (thanks to Sjoerd Rienstra).
+
+>  Version 5.0 (04/10/01):
+
+   o  Updated for TSE Pro/32 v3.0.
+
+   o  Fixed some possible template macro loading issues.
+
+   o  VIEW macro no longer needed thanks to browse mode. Ctrl-OP toggles
+      browse mode.
+
+   o  Added Upper (Ctrl-K", Ctrl-U) and Lower (Ctrl-K', Ctrl-L) command
+      support to prompt boxes.
+
+   o  Prompt boxes support quotation mark toggling with Ctrl-' as well as
+      Ctrl-KU.
+
+   o  CUA macro now deletes the entire contents of the prompt box if you
+      enter a typable keystroke into the prompt box when it first appears.
+      (This is like "Typing replaces block," but "typing replaces block" is
+      otherwise ignored.)
+
+   o  Mouse marking bug fix added to CUA macro.
+
+   o  Removed "Revert to saved" command now that Undo/Redo are available.
+
+   o  ChangeDirectory command (Ctrl-KG) now calls the CD macro, and is
+      located on the File menu.
+
+   o  OpenSwitch command (Ctrl-OK) removed. Ctrl-OK now calls
+      OpenFileAndWindow instead.
+
+   o  The FlushRight command now calls the ADJUST external macro.
+
+   o  EmptyClipboard (Empty the System Clipboard) no longer generates a
+      prompt.
+
+   o  Added Next, Previous, and Change Dir commands to the File menu, and
+      removed the Revert to Saved command. This required changing the
+      shortcut keystrokes on the menu a bit. Also fixed duplicate quick-
+      key keystrokes on several of the menus.
+
+   o  Ctrl-KF now opens the File Manager.
+
+   o  Added View Windows Clipboard to the Clip menu.
+
+   o  Added keystrokes:
+
+      o  CtrlShift-B wraps and "quotes" a paragraph with ">"
+      o  CtrlShift-L now does repeatfind(_REVERSE_), like TSE.UI
+      o  Alt-Backspace executes the undo command
+      o  AltShift-Backspace executes the redo command
+      o  Ctrl-KO displays the named clipboards menu
+      o  Ctrl-O[ does flush left
+      o  Ctrl-OP toggles browse mode
+
+   o  Menus updated to be sensitive to browse mode.
+
+   o  Added support for Python files (.py) for SmartIndent mode and the
+      FunctionList command.
+
+>  Version 4.4 (02/23/01):
+
+   o  Modified language keyword list to include 'select' and 'with' (for VB
+      files).
+
+   o  Modified program extension lists to include .kix (KiXtart) and .vbs
+      (VBScript). KiXtart functions are located in the same manner as batch
+      files (a label starting at column 1).
+
+   o  .pp (Free Pascal) and .dpr (Delphi project) files are considered to
+      be Pascal source files, and .cmd files are considered to be batch
+      files.
+
+   o  Added .vbs, .kix, and .pl to the list of extensions that are affected
+      by SmartIndent mode.
+
+   o  .vbs files are supported by the FunctionList command. .bas files are
+      considered the same as .vbs files.
+
+   o  Added the SmartIndent section to the documentation.
+
+   o  The "Revert to Saved" command is implemented as an external macro.
+
+   o  HelpOnWordAtCursor now works with marked blocks. That is, if you mark
+      a block and press <Ctrl F1>, the help system will attempt to use the
+      marked block as the word to search for. For example, if you mark the
+      two words "SyntaxHilite Mode" (without the quotes) and press <Ctrl
+      F1>, the help system will jump immediately to the correct topic.
+
+   o  <CtrlShift B> now wraps a paragraph with quote characters. This
+      requires the updated WRAPPARA macro, which Sammy Mitchell posted to
+      the news.semware.com news server in October 1998. <CtrlShift B>
+      executes the command ExecMacro("wrappara quote") to support this new
+      feature. If you don't install the new macro, <CtrlShift B> will act
+      just like <Ctrl B>.
+
+>  Version 4.3 (01/09/98):
+
+   o  Added the ChangeDirectory command to WORDSTAR.UI (Ctrl-KG).
+
+   o  Added PrevFile, NextFile, and ChangeDirectory to the key assignments
+      list inside WORDSTAR.UI, and corrected the version number and date in
+      the key assignments screen.
+
+   o  Added a "hex view" mode to VIEW.S. Note that the hexadecimal and
+      "normal" view of the file are not synchronized.
+
+   o  Corrected some errors in the comments at the top of CUA.S.
+
+>  Version 4.2a (01/02/98):
+
+   o  ToggleAppWindowSize command no longer executed when you start the
+      editor without any command-line parameters.
+
+>  Version 4.2 (08/14/97):
+
+   o  WORDSTAR.UI requires TSE Pro/32 v2.8. CUA.S requires TSE Pro/32 v2.6
+      or later, and VIEW.S works with 2.5 or later.
+
+   o  CUAWS is now split into separate files: WORDSTAR.UI, CUA.S, and
+      VIEW.S.
+
+   o  Pull-down menu system changes:
+
+      o  WORDSTAR.UI's menu system has been changed back to the defaults
+         found in TSE.UI (except for the necessary changes and additions);
+         this change was made so the F1 key invokes the proper help items
+         when the pull-down are active.
+
+      o  Many menu items are appropriately "grayed out" (inactive) when
+         executing them would have no effect; for example, "Unmark" under
+         the Block menu is grayed (inactive) if a block is not marked.
+
+      o  On/Off menu items (e.g. Line Drawing on the Util menu) are now
+         represented on the pull-down menus with check marks. A check mark
+         next to the menu item indicates "On," and the absence of the check
+         mark indicates "Off." The pull-down menus haven't changed for
+         options that have more than three settings.
+
+      o  Many of the On/Off commands on the pull-down menus execute
+         immediately (e.g. they don't leave the pull-down menu active)--for
+         example, Line Drawing, Template Expansion, etc.
+
+      o  Some of the quick-keys on the pull-down menus are different to
+         accommodate new menu items.
+
+      o  Some pull-down menu items have been removed (to conserve screen
+         space) and some have been renamed.
+
+      o  Keystroke changes:
+
+         Keystroke  Old Command             New Command
+         ------------------------------------------------------------
+         Ctrl-Up    PrevPara                RollUp
+         Ctrl-Down  NextPara                RollDown
+         Ctrl-[     (nothing)               ShiftLeft
+         Ctrl-]     (nothing)               ShiftRight
+         Ctrl-0     (nothing)               ListRecentFiles
+         Ctrl-KI    Toggle PersistentBlock  Toggle ColumnOverlay mode
+         Ctrl-KN    Set BlockType           Toggle ColumnBlock mode
+         Ctrl-O+    LineTypeMenu            (nothing)
+         Ctrl-O-    (nothing)               ToggleLineDrawing
+         Ctrl-O=    ToggleLineDrawing       (nothing)
+         Ctrl-OF    RedisplayViewPickList   FunctionList
+         Ctrl-OG    (nothing)               PrevFile
+         Ctrl-OP    PrevFile                Viewer
+         Ctrl-OZ    (nothing)               Toggle app window size
+         Ctrl-OU    FunctionList            (nothing)
+         Ctrl-QV    (nothing)               RedisplayViewPickList
+
+   o  "Empty Clipboard" is a new command on the Clip menu.
+
+   o  "Tab Shifts Block" is a new option on the Options menu.
+
+   o  "EOF Type" is a new option on the Options menu.
+
+   o  "SyntaxHilite Mode" is a new command on the Util menu.
+
+   o  "CUA Block Marking" and "Typing Replaces Block" are two new options
+      under the Text pull-down menu.
+
+   o  "Save As" now works when a file is in binary mode.
+
+   o  BlockType and PersistentBlock are now obsolete.
+
+   o  You can toggle the quotation marks around a string of text inside a
+      prompt box by executing the QuoteLine command (Ctrl-KU).
+
+   o  You can execute the ListRecentFiles (Ctrl-0) command inside prompt
+      boxes.
+
+   o  The RevertToSaved command ("Revert to Saved" under the File menu)
+      keeps track of your position in the file.
+
+   o  The case-changing commands (Upper, Lower, Flip and Capitalize) now
+      operate on the current word if no block is marked.
+
+   o  Many of the prompts, warnings, and informational messages are
+      displayed in message boxes.
+
+   o  Key assignments help text has been enhanced to include "bold" text
+      and links to help topics.
+
+   o  If StartupFlags is set to _STARTUP_MENU_, the ToggleAppWindowSize
+      command is automatically executed on startup. (This is handy when you
+      run the editor from the desktop...)
+
+   o  The CUA macro supports the "typing replaces block" behavior of
+      Windows applications. For example, suppose you press <Shift End> to
+      open a CUA-style block and extend it to the end of the current line.
+      The next alphabetic character you type will delete the block and
+      replace it with the character you typed. You can toggle this behavior
+      by choosing "Typing Replaces Block" under the Text menu. If this
+      setting is OFF, the next character you type does not cause the CUA-
+      style block to be deleted.
+
+   o  When the CUA macro is active, the Find, Again, and IncrementalSearch
+      commands mark found text as a CUA-style block, and they can also
+      extend a block through the found text.
+
+>  Version 4.1:
+
+   o  Startup Menu support for DOS version (set StartupFlags to 0).
+
+   o  Ctrl-KF command executes the Dos command in 2.5 and FileManager in
+      2.6.
+
+   o  HelpSystem uses keydef so Ctrl-Home/Ctrl-End work properly.
+
+>  Version 4.0:
+
+   o  First portable version (works with 2.5/2.6/2.8).
+
+   o  Added "persistent block" setting (now obsolete).
+
+   o  Store deleted non-persistent CUA-style blocks in deletion buffer.
+
+   o  Fixed a bug in prompt box processing.
+
+   o  Several new commands added.

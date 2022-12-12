@@ -1,0 +1,197 @@
+                    ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤท
+                    ณ Introduction to TSEBook 1.10 บ
+                    ิออออออออออออออออออออออออออออออผ
+
+
+ TSEBOOK is a printer enhancement macro which allows TSE to print four
+ 80 x 60 page images on a single sheet of paper.  It prints two pages
+ per side and on both sides of each sheet.  TSEBOOK resequences the
+ print order to make this condensed printing read naturally in one of
+ two styles.
+
+
+ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤท
+ณ BookLet Style บ
+ิอออออออออออออออผ
+
+
+ In Booklet style, pages are sequenced so that they can be folded to
+ form a 5.5 x 8.5 booklet (the size your TSE 2.5 documentation
+ supplement).  This form is very convenient for small to medium size
+ (up to 3000 line) files.  It is also useful for making notes to be
+ kept in computer manuals.  When folded, the pages present themselves
+ in order, just like a manual.  For example, a 1200 line file would be
+ printed on 5 sheets of paper (20 logical page images) show below.
+
+
+ Front:
+    ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท
+    ณ20   ณ   1 บ  ณ18   ณ   3 บ  ณ16   ณ   5 บ  ณ14   ณ   7 บ  ณ12   ณ   9 บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ
+          .              .              .              .              .
+          .              .              .              .              .
+ Back:    .              .              .              .              .
+    ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท
+    ณ2    ณ   19บ  ณ4    ณ   17บ  ณ6    ณ   15บ  ณ8    ณ   13บ  ณ10   ณ   11บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ
+
+
+ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤท
+ณ Duplex Style บ
+ิออออออออออออออผ
+
+
+ In Duplex Style, pages are sequenced so that they can be placed in an
+ 8.5 x 11 binder, notebook or other cover.  The pages alternate from
+ Landscape to Reverse Landscape, front to back, to simulate the appearance
+ of a fanfold printout.  This form is convenient for large files
+ (3000 to 300,000) lines where folding isn't practical or where binding
+ is needed.  In duplex style, the same 1200 line file would be printed
+ as follows:
+
+ Front:
+
+    ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท
+    ณ1    ณ    2บ  ณ5    ณ    6บ  ณ9    ณ   10บ  ณ13   ณ   14บ  ณ17   ณ   18บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ
+          .              .              .              .              .
+          .              .              .              .              .
+ Back:    .              .              .              .              .
+    ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท  ฺฤฤฤฤฤยฤฤฤฤฤท
+    ณ3    ณ    4บ  ณ7    ณ    8บ  ณ11   ณ   12บ  ณ15   ณ   16บ  ณ19   ณ   20บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ  ณ     ณ     บ
+    ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ  ิอออออมอออออผ
+
+
+
+ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤท
+ณ Integration with TSE.UI บ
+ิอออออออออออออออออออออออออผ
+
+
+ To include TSEBook in your TSEPro 2.5 user interface:
+
+ 1.  Edit TSE.UI (or your own UI file)
+ 2.  Locate the following line:
+
+
+     "Set &Options  "       ,   ExecMacro("Iconfig PrintConfig"), DontClose
+
+ 3.  Add the following block of lines after the line above
+
+     ""                      ,                              , Divide
+     "Print Boo&klet"        ,    ExecMacro("TseBook")
+     "Font St&yle    "      ,    ExecMacro("TseBook FontMenuProc"),DontClose
+     "Pa&ge Style    "      ,    ExecMacro("TseBook PageMenuProc"),DontClose
+
+
+ 4.  Recompile the UI file by pressing Ctrl-F9 or using SC.EXE
+
+ Be sure that the 1.10 version of TSEBOOK.MAC is on your TSEPATH and that
+ any 1.00 versions have been erased.
+
+
+
+ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤท
+ณ Selecting TSEBook Options บ
+ิอออออออออออออออออออออออออออผ
+
+ With the user interface integration, you may select a page style from the
+ TSE print menu, as shown below.
+
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณฐFileฐฐBlockฐฐTextฐฐSearchฐฐWindowฐฐClipฐฐMacroฐฐPrintฐฐUtilฐฐOptionsฐฐHelpฐฐฐณ
+ณ                                                ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ          ณ
+ณ<*** End of File ***>                           ณ File             ณ          ณ
+ณ                                                ณ Block            ณ          ณ
+ณ                                                ณ Send Formfeed    ณ          ณ
+ณ                                                ณ Send Init String ณ          ณ
+ณ                                                ณ Set Options     ณ          ณ
+ณ                                                รฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤด          ณ
+ณ                                                ณ Print Booklet    ณ          ณ
+ณ                                                ณ Font Style      ณ          ณ
+ณ                                                ณฐPageฐStyleฐฐฐฐฐฐณ          ณ
+ณ                                                ภฺ TSEBook Page Style ฟ       ณ
+ณ                                                 ณฐBookletฐฐฐฐฐฐฐฐฐฐฐฐณ       ณ
+ณ                                                 ณ Duplex             ณ       ณ
+ณ                                                 ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู       ณ
+ณ                                                                              ณ
+ณF1-Help F2-AddLn F4-DupLn F5-ScrollTop F6-DelToEol F9-Shell F10-Menu          ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+
+ Likewise, font style can be selected from the Print Menu.
+
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณฐFileฐฐBlockฐฐTextฐฐSearchฐฐWindowฐฐClipฐฐMacroฐฐPrintฐฐUtilฐฐOptionsฐฐHelpฐฐฐณ
+ณ                                                ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟ          ณ
+ณ<*** End of File ***>                           ณ File             ณ          ณ
+ณ                                                ณ Block            ณ          ณ
+ณ                                                ณ Send Formfeed    ณ          ณ
+ณ                                                ณ Send Init String ณ          ณ
+ณ                                                ณ Set Options     ณ          ณ
+ณ                                                รฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤด          ณ
+ณ                                                ณ Print Booklet    ณ          ณ
+ณ                                                ณฐFontฐStyleฐฐฐฐฐฐณ          ณ
+ณ                                                ณฺ TSEBook Font Style ฟ       ณ
+ณ                                                ภณ LinePrinter        ณ       ณ
+ณ                                                 ณ Courier            ณ       ณ
+ณ                                                 ณ CourierBold        ณ       ณ
+ณ                                                 ณฐGothicฐฐฐฐฐฐฐฐฐฐฐฐฐณ       ณ
+ณ                                                 ณ GothicBold         ณ       ณ
+ณ                                                 ภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤู       ณ
+ณ                                                                              ณ
+ณF1-Help F2-AddLn F4-DupLn F5-ScrollTop F6-DelToEol F9-Shell F10-Menu          ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+
+
+
+ฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤท
+ณ Alternative Usages บ
+ิออออออออออออออออออออผ
+
+ Many people (and I among them) don't like to add or customize the TSE.UI
+ unless absolutely necessary.  TSEBook can be executed from the Potpourri
+ or macro prompt box.  If you need to use non-default options, specify the
+ menu on the macro command line:
+
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณL 1 ฐฐฐฐฐฐC 1 ฐฐฐฐIAฐฐฐฐฐ222kฐฐฐ  c:\tsepro\usermac\tsebook\testฐฐฐฐฐฐฐฐฐฐฐฐฐฐณ
+ณ                                                                              ณ
+ณฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟณ
+ณณExecuteฐmacro:ฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐณณ
+ณณc:\tsepro\usermac\tsebook\tsebook pagemenuproc                              ณณ
+ณภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤูณ
+ณ                                                                              ณ
+ณF1-Help F2-AddLn F4-DupLn F5-ScrollTop F6-DelToEol F9-Shell F10-Menu          ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+
+ีออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออธ
+ณL 1 ฐฐฐฐฐฐC 1 ฐฐฐฐIAฐฐฐฐฐ222kฐฐฐ  c:\tsepro\usermac\tsebook\testฐฐฐฐฐฐฐฐฐฐฐฐฐฐณ
+ณ                                                                              ณ
+ณฺฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฟณ
+ณณExecuteฐmacro:ฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐฐณณ
+ณณc:\tsepro\usermac\tsebook\tsebook fontmenuproc                              ณณ
+ณภฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤฤูณ
+ณ                                                                              ณ
+ณF1-Help F2-AddLn F4-DupLn F5-ScrollTop F6-DelToEol F9-Shell F10-Menu          ณ
+ิออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออพ
+
+TSEBook is still a fairly new macro.  If you encounter problems, please report
+them and I will look into them as I am able.

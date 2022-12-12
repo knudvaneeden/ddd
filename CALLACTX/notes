@@ -1,0 +1,23 @@
+                                     Notes
+                                     =====
+
+We want to add the temperature conversion function in order to provide a model
+function call. It should be easy to extract this from the ScriptDemo project.
+What is the best way to return real numbers to TSE?
+
+IE.vbs is a sample VBScript application to show how to invoke IE to render an
+HTML document.
+
+XML.vbs is a sample VBScript application to show how to transform XML using
+XSL.  Requires IE 5.0 or above.
+
+TSE needs to be able to pass documents to this application.  Could be passed as
+strings or file handles.  Possible functions to implement would be:
+RenderHTML(htmldoc), PutXML(xmldoc), PutXSL(xsldoc), and RenderXML(XSLtrue).
+XSLtrue is a boolean to indicate whether to apply the loaded xsldoc or
+defaultss.
+
+In order to create a formated display of XML documents, IE knows to apply
+defaultss.xsl so we may want to to duplicate that behavior in our application.
+When XSLtrue is false defaultss could be loaded into a DOMDocument using the
+load method.  Example: xsldoc.load "res://msxml.dll/DEFAULTSS.XSL"

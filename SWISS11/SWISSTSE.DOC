@@ -1,0 +1,116 @@
+------------------------------------------------------------------------------
+Program: SwissArmyTool() - TSE multi-purpose programmer's utility macro menu
+------------------------------------------------------------------------------
+Author:  David Daniel Anderson (see SWISSTSE.S for contact information)
+------------------------------------------------------------------------------
+Date:    March 6, 1995
+------------------------------------------------------------------------------
+Version: 1.1
+------------------------------------------------------------------------------
+History: 1.0 - March 1, 1995   First public release.
+         1.1 - March 6, 1995   Removed CALCSRC2.zip archive, replaced with a
+                               reference to those macros on the SemWare BBS.
+------------------------------------------------------------------------------
+Terms:   Public domain
+------------------------------------------------------------------------------
+Purpose: This package collects, into a single TSE menu, many of the standard
+         charts and utilities which programmers find useful.  Most of the
+         features were written in SAL - the macro language for The SemWare
+         Editor ("TSE").
+------------------------------------------------------------------------------
+Features:    1) ASCII chart (Decimal & Hex)
+             2) Box & line character displays
+             3) Color chart (Decimal & Hex)
+             4) ANSI help
+             5) Key code scan/ chart
+             6) Number base conversion utility
+             7) Full-featured programmer's calculator
+             8) Expression evaluator
+             9) Changeable calendar
+------------------------------------------------------------------------------
+Setup:   1) Extract all TSE macro source files (*.s), into your preferred
+            TSE macro directory (I suggest c:\tse\mac OR c:\tse\usermac,
+            assuming TSE (E.EXE) is in c:\tse\).  If this path is not
+            already included in the TSEPath variable in TSE.CFG, you should
+            add it, and then burn in your new configuration.
+
+         2) Extract the "SWISS-SC.BAT" batch file into the same directory
+            as the source files, and run it to compile the new macros.
+
+         3) Before using the default 'calculator' and 'calendar' features,
+            you must first extract the required external programs into a
+            directory that is in your PATH.  "C:\TSE\" should be fine.
+            The two external programs are:
+
+                 1) WazCalc.exe, in "WazCalc.ZIP"  (public domain)
+                 2) Cal.exe, in "Cal100.ZIP"       (freeware)
+
+         4) [Optional] Edit your TSE key assignments, and assign the MENU
+            macro for the SwissArmyTool() to a key, like this:
+
+               <Alt F1>   ExecMacro('swisstse')
+------------------------------------------------------------------------------
+Usage:   Either use your assigned key, _OR_ execute "SWISSTSE" directly,
+         from within TSE (from the menu or your "ExecMacro()" key).  The
+         "SWISSTSE" macro menu provides easy access to *all* of the other
+         installed macros and programs.
+------------------------------------------------------------------------------
+Features chart:
+
+  =======================================================================
+  |||||||||||||||||||| SwissArmyTool() feature chart ||||||||||||||||||||
+  -----------------------------------------------------------------------
+  Feature                 | As supplied  (Key) | Alternative      (Key) |
+  =======================================================================
+  ASCII chart (Dec & Hex) | AscChart.s     !   | mAsciiChart()      #   |
+  Box & line chars        | BoxChars.s     !   | none                   |
+  Color chart (Dec & Hex) | DosColor.s     !   | none                   |
+  ANSI help               | ANSIHelp.s     +   | none                   |
+  Key code scan/ chart    | ShowKey.s      *   | none                   |
+  Number conversion       | NConvert.s     !   | none                   |
+  Calculator              | Wazcalc.s      $   | FPCalc.s, Calc.s   %   |
+  Expression evaluator    | Expr.s         *   | ACalc.s, ICalc.s   %   |
+  Calendar                | Cal-DDA.s      $   | Cal-SEM.s          *   |
+  =======================================================================
+
+Legend for "Key" columns of the above feature chart:
+
+   ! = Consists of a stand-alone TSE macro written by DDA, which is
+       supplied with the SwissArmyTool package.
+
+   + = Consists of a TSE macro written by DDA, which calls the HELP
+       program in either DOS (v5.x or above) or 4DOS.
+
+   * = Consists of either a TSE macro which SemWare supplied with v2.0 of
+       TSE, or a TSE macro written by DDA which calls a TSE macro which
+       SemWare supplied with v2.0 of TSE.
+
+   $ = Consists of a TSE macro written by DDA, which calls an external
+       program, which is either freeware or public domain.  The entire
+       archive for the external program is provided in the SwissArmyTool
+       archive.  (This applies to both WAZCALC.ZIP and CAL100.ZIP.)
+
+   # = Consists of a TSE macro found in TSE.UI, which SemWare supplied
+       with v2.0 of TSE.
+
+   % = Consists of TSE macros found in CALC09.zip (or a later version of
+       same), which is a small archive with "The SemWare Editor calculator
+       Macros" by L.A.Vonderscheer.
+       Floating point support for these macros is provided by Tim Farley.
+       These macros are NOT included in the SwissArmyTool v1.1 archive, but
+       can be found on the SemWare BBS (phone 1-404-641-8968).
+
+Note:    To use any of the mentioned alternatives:
+
+         1) extract the source code into the same directory as the rest
+            of the macros;
+         2) edit the MENU in SWISSTSE.S to reflect the alternative;
+         3) compile both SWISSTSE.S and the source for the alternative
+            feature.
+------------------------------------------------------------------------------
+Further information on setting up or using each of the included macros can
+be found in the first few lines of that macro, or in the nested archive in
+which it was stored.
+------------------------------------------------------------------------------
+Copyright notice: TSE is a registered trademark of The SemWare Corporation.
+------------------------------------------------------------------------------

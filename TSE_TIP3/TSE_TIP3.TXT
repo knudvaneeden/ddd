@@ -1,0 +1,1443 @@
+                       ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                       ³TSE Tips and Mini-Macros³
+                       ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                        ThisFile:  \tse_tip3.txt
+
+                Compiled by Tom Klein from Beta Messages
+
+             with additions from on-line HELP via <Grey +>
+
+               and covers the dates 03/08/94 to 09/27/94
+
+  The macros in this file were only tested to insure that there were no
+  compile errors and checked for basic function but more complicated
+  macros were not checked for complete operation.
+
+  If you have any problems or find errors please let me know [Tom Klein]
+  so that they may be fixed in the next version.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³REVISION HISTORY³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+09/28/94:  Quick Cleanup for submission to Sammy Mitchell
+
+09/27/94:  Started editing session of 'btse.inf' from March 01, 1994
+           where the previous TIPS ended.
+
+===========================================================================
+
+  Most macros begin with:
+
+//*************************************************************************
+/************************  Start Comment Area *****************************
+
+  and end with:
+
+//*************************************************************************
+//                         macroname()  Date:
+//*************************************************************************
+
+  As with all rules there are exceptions to the macro being bracketed
+  with the above comment areas.  Small macros or snippets are not
+  necessarily bracketed but the comments around these macros should
+  allow you to clip the correct portion of text to compile the macro.
+
+  For bracketed you must include the 'Start Comment Area' line so that
+  the comment start will match up with the 'End Comment Area'
+
+===========================================================================
+===========================================================================
+
+                          ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                          ³START useful Hints³
+                          ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+/**************************************************************************
+===========================================================================
+                   From: IAN CAMPBELL  Date: 03-27-94
+                       Subj: File Changed Warning
+---------------------------------------------------------------------------
+
+  Every once in a while when I have multiple files open, I will forget
+  to save one or more of them prior to starting up a Windows compile.
+
+  This macro is useful in that it checks all open TSE files to see if
+  any have changed.  If so, the top status line is changed to a bright
+  white on red color.
+
+  Now I ALWAYS know when a file needs to be saved!
+
+ REVISION required for TSE2 by Tom Klein
+
+ 09/27/94:  isChanged() to FileChanged() in two places
+            (Query(BufferType) error in integer n = definition
+
+---------------------------------------------------------------------------
+
+  Filename - STATUS.S
+
+  This macro changes the color of the status line if any file in the
+  ring is currently changed.  The new color is set to bright white on
+  red, but you may change this to anything that you like (see the
+  "WhenLoaded()" section below).
+
+---------------------------------------------------------------------------
+  *************************************************************************/
+// ********************** END of Comment Area *****************************
+
+  integer OriginalAttr, NewStatusColor, HasChanged, FullCheckNeeded
+
+  proc mCheckSavedFile()
+    if HasChanged
+        if (Query(StatusLineAttr) == OriginalAttr)
+            Set(StatusLineAttr, NewStatusColor)
+            UpDateDisplay(_STATUSLINE_REFRESH_)
+        endif
+    else
+        if (Query(StatusLineAttr) == NewStatusColor)
+            Set(StatusLineAttr, OriginalAttr)
+            UpDateDisplay(_STATUSLINE_REFRESH_)
+        endif
+    endif
+  end mCheckSavedFile
+
+  proc mCheckAllSavedFiles()
+
+    integer start_file = GetBufferid()
+
+  //integer n = NumFiles() + (Query(BufferType) <> _NORMAL_) //TSE2 error
+
+    integer n = NumFiles()   // This fix displays only _NORMAL_ files.
+
+    HasChanged = FALSE
+      while n
+        NextFile(_DONT_LOAD_)
+        If FileChanged()
+            HasChanged = TRUE
+        endif
+        n = n - 1
+      endwhile
+    // back to the original buffer
+    GotoBufferID(start_file)
+    mCheckSavedFile()
+  end mCheckAllSavedFiles
+
+  proc mCheckThisFile()
+    if FullCheckNeeded
+        FullCheckNeeded = FALSE
+        mCheckAllSavedFiles()
+    endif
+    if FileChanged()
+        HasChanged = TRUE
+        mCheckSavedFile()
+    endif
+  end mCheckThisFile
+
+// flag a full files in ring check when TSE next idles
+
+  proc mFlagFullCheck()
+    FullCheckNeeded = TRUE
+  end mFlagFullCheck
+
+  proc WhenLoaded()
+    OriginalAttr = Query(StatusLineAttr)
+
+// You may change the following line to select any color that you
+// might prefer:
+
+    NewStatusColor = Color(Bright White on Red)
+
+// The next line simply inverts the background and foreground
+// status line colors.  It may be used as an alternative to
+// the bright white on red shown above.  It is currently
+// deliberately commented out.
+
+//  NewStatusColor = ((OriginalAttr shl 4) & 7) + ((OriginalAttr shr 4) & 15)
+
+    if OriginalAttr == NewStatusColor
+        Warn("New Status Line Color same as the old one -- ABORTING!")
+        PurgeMacro(CurrMacroFilename())
+    else
+        Hook(_ON_FILE_SAVE_, mFlagFullCheck)
+        Hook(_ON_FILE_QUIT_, mFlagFullCheck)
+        Hook(_IDLE_, mCheckThisFile)
+    endif
+  end WhenLoaded
+
+  proc WhenPurged()
+    // clean up when done
+    Set(StatusLineAttr, OriginalAttr)
+  end WhenPurged
+
+//*************************************************************************
+//                   File Changed Warning  03/28/94
+//*************************************************************************
+
+===========================================================================
+                Date: 05-03-94  From: RICHARD BLACKBURN
+                  Subj: Display Character Under Cursor
+---------------------------------------------------------------------------
+
+  >  A new feature of TSE Jr. 3.0 is the Hexadecimal / Decimal indicator
+     on the right side of the status line.  This indicator looks like
+     this: 20h,32.
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ Editors Note: ³  This macro will display the character under the
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  cursor on the status line.  Remember you can display
+                   the character under the cursor with TSE's default
+                   <Ctrl A> mAsciiChart().
+
+  The following macro will place the information on the status line,
+  just like TSE Jr.:
+
+  /*
+    Macro to duplicate the TSE Jr. ShowCurrChar
+  */
+  proc ShowChar()
+
+  integer n = CurrChar(),
+
+            // Set y to the row of the status line
+            y = iif(Query(StatusLineAtTop), 1, Query(ScreenRows)),
+
+            // Set the display attribute to the same as the status line
+            attr = Set(Attr, Query(StatusLineAttr))
+
+    // If you have not turned off status line updating
+    if Query(StatusLineUpdating)
+
+        //  Goto Place specified on status line.
+        //  Number below is column location where the value of the
+        //  character under the cursor is displayed on the status line.
+
+        vGotoXY(55, y)
+
+        // Place either <EOL> (if at or beyond EOL), or the decimal and
+        // hex value of the current character in the form: 01h,1
+        PutStr(iif(n < 0, "<EOL>  ", Format(n:2:"0":16, "h,", n:-3)))
+    endif
+
+    // Restore the saved attr variable
+    Set(Attr, attr)
+
+  end ShowChar
+
+proc WhenLoaded()
+    // hook the ShowChar proc to the status line update hook
+    Hook(_AFTER_UPDATE_STATUSLINE_, ShowChar)
+end
+
+//*************************************************************************
+                Display Character Under Cursor  05/04/94
+//*************************************************************************
+
+===========================================================================
+                Date: 06-07-94  From: RICHARD BLACKBURN
+                            Subj: ChainCmd()
+---------------------------------------------------------------------------
+
+  > Could you provide some info on ChainCmd()?
+
+  It will "Chain" to the previous key definition for the key.  Here is a
+  hoaky example:
+
+    proc mRightBtn()
+        Message("Before")   // displayed until you move the mouse
+        ChainCmd()          // chain to original "MouseMarking(_COLUMN_)"
+        Message("After")    // displayed after you release mouse
+        EndProcess()
+    end
+
+    keydef foo
+        <RightBtn>  mRightBtn()
+    end
+
+    proc Main()
+        Enable(foo)
+        Process()
+        Disable(foo)
+    end
+
+    <RightBtn>  MouseMarking(_COLUMN_)
+
+===========================================================================
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³EDITORs Addition:³ Information below taken from TSE 2.0 HELP ChainCmd()
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ChainCmd
+
+Invokes the command (if any) previously assigned to the keystroke currently
+being processed.
+
+Syntax:     ChainCmd()
+
+Returns:    Nothing.
+
+Notes:      ChainCmd() is used when you want to pass control to a command
+            that may have been previously been assigned to the overridden key
+            assignment.
+
+Examples:
+
+            The following macro illustrates a common use for this command.
+            It is assumed that mWordCompletion() is part of a larger
+            external macro that is loaded by the user.  (The macros
+            mLookupWord and mInsertReplacement are not specified here, but
+            are used for example purposes.)  If mWordCompletion decides
+            that it should not do anything (for whatever reason), it passes
+            control to a possible previous assignment of the <Tab> key by
+            using ChainCmd().
+
+            proc mWordCompletion()
+                if mLookupWord()
+                    mInsertReplacement()
+                else
+                    ChainCmd()
+                endif
+            end
+
+            <Tab>   mWordCompletion()
+
+See Also:   GetKey()
+
+            Variables:  Key
+
+//*************************************************************************
+                      ChainCmd() example  06/08/94
+//*************************************************************************
+
+===========================================================================
+                   Date: 06-13-94  From: DAVID MARCUS
+                           Subj: De-Scroll()
+---------------------------------------------------------------------------
+proc                          de_scroll()
+    //
+    // Reduces the scroll amount until
+    //      (a) it is zero or
+    //      (b) the end of found text is at the right edge of the screen.
+    //
+    integer
+        cpos,
+        cxo,
+        cScrC,
+        blockend,
+        scr,
+        desired_scroll,
+        max_scroll
+
+    PushBlock()                 // this could be replaced by any
+    MarkFoundText()             // positioning cmds.
+    GotoBlockEnd()              //
+
+    cpos = CurrPos()
+    cxo = CurrXOffset()
+    cScrC = cpos - cxo
+    blockend = Query(BlockEndCol)
+    GotoPos(cpos)
+    desired_scroll = CurrXOffset()
+    max_scroll = Query(WindowCols) - cScrC
+    scr = iif (max_scroll < desired_scroll, max_scroll, desired_scroll)
+    if scr > 0
+        repeat
+            ScrollLeft()
+            scr = scr -1
+        until not scr
+    endif
+
+    PopBlock()
+end
+
+//*************************************************************************
+                         De-Scroll()  06/14/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 06-16-94  From: SAMMY MITCHELL
+                         Subj: IsMouseInBlock()
+---------------------------------------------------------------------------
+
+  Here is something pretty neat Richard came up with:
+
+  proc Dummy()
+    BreakHookChain()
+  end
+
+  integer proc isMouseInBlock()
+
+    integer rc, wid
+
+    Hook(_ON_CHANGING_FILES_, Dummy)
+    wid = WindowId()
+    PushPosition()
+    MouseStatus()
+    GotoWindow(MouseWindowId())
+    PushPosition()
+    GotoMouseCursor()
+    rc = isCursorInBlock()
+    PopPosition()
+    GotoWindow(wid)
+    PopPosition()
+    UnHook(Dummy)
+    return (rc)
+  end
+
+//*************************************************************************
+                       IsMouseInBlock()  06/17/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 06-21-94  From: SAMMY MITCHELL
+                 Subj: NO macros from PromptKeys keydef
+---------------------------------------------------------------------------
+
+COMMAND PROMPTS AND KEYDEFS $IPrompts $IKeydefs $IKey assignments
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Among the many benefits of the editor is the ability it gives you to
+  create a macro that refines or alters the standard behavior of an
+  editing command, and then assign the macro to the key of your choice.
+  However, occasionally you may notice that, once you have done this,
+  the assigned key no longer works within a prompt box.
+
+  What is wrong?  The "problem" is a result of the way prompt boxes are
+  handled by the editor.  Only a limited set of commands are routinely
+  operational in a prompt box.  Thus, in a prompt box, if you press a
+  key that has your own macro assigned to it (rather than one of the
+  limited set of "prompt-box" commands), that key may become totally
+  non-operational.  Since the editor cannot execute your macro in the
+  prompt box, the key the macro is assigned to may possibly have no
+  effect.
+
+  To address this potential problem, the editor is equipped to force
+  certain keys to execute a pre-defined command when the key is pressed
+  within a prompt box.  For such keys, the pre-defined command for the
+  key is executed in a prompt box regardless of the command or macro you
+  may have assigned to the key.
+
+  For a small group of keys, the editor itself dictates the command that
+  is invoked when the key is pressed.  For example, the <Enter> key
+  ALWAYS executes the CReturn() command in a prompt box; and the <Del>
+  key ALWAYS executes the DelChar() command.  Thus, if you assign your
+  own macro to (for instance) the <Del> key, the <Del> key will still
+  operate in a prompt box, and will cause the editor to execute the
+  DelChar() command.
+
+  By using a special "PromptKeys" keydef, you can also identify your own
+  group of additional keys that are forced to execute a particular
+  command within a prompt box.  By taking advantage of this feature, you
+  can assign your own macro to a key for use while editing, but then
+  assign one of the prompt-box commands to that same key for use only
+  when the key is pressed in a prompt box.
+
+  The syntax to declare the PromptKeys keydef is:
+
+  |   keydef PromptKeys
+  |       <key_list>      command
+  |           ...
+  |       <key_list>      command
+  |   end [PromptKeys]
+
+  where:
+
+    ù keydef specifies this as a key definition.
+
+    ù PromptKeys identifies this as a PromptKeys definition.
+
+    ù key_list is a key (or two-key) name.
+
+    ù command is one of the commands that are functional within a prompt box.
+
+    ù end specifies the end of the key definition.
+
+    ù The PromptKeys identifier may optionally be repeated after the end
+      statement on the same line.
+
+  Key assignments made in a PromptKeys keydef (and installed in the
+  editor) are automatically enabled when a prompt box is displayed.
+  This effectively overrides the existing assignments for the keys for
+  the duration of the prompt.  Once the prompt is complete, the
+  PromptKeys assignments are disabled and the previous key assignments
+  are restored.
+
+  To illustrate use of this feature, suppose you want a customized
+  version of the "Paste from the System ClipBoard" function to be
+  assigned to the <Grey*> key.  In your custom version, "paste" acts
+  differently depending on the state of Insert mode, and is defined as
+  follows:
+
+  |   proc myPaste()
+  |       Paste(iif(Query(Insert), _DEFAULT_, _OVERWRITE_))
+  |   end
+  |
+  |   <Grey*>    myPaste()
+
+  You now have a paste command that works the way you like.  However,
+  you can no longer use the <Grey*> key to Paste inside of prompts
+  (because myPaste() is a macro, rather than the native Paste() command
+  that is operational in a prompt box).  To remedy this, locate the
+  PromptKeys keydef in the TSE.UI user-interface file in the UI\ editor
+  subdirectory (assuming you are using the standard user interface), and
+  add the following key assignment:
+
+  |   keydef PromptKeys
+  |       <Grey*>     Paste()
+  |   end
+
+  After you compile and burn-in your new TSE.UI interface, the native
+  Paste() command will again be available in prompt boxes.
+
+  Commands functional within prompt boxes are:
+
+  BackSpace() BegLine() CReturn() CopyBlock() DelChar() DelLine()
+  DelToEol() Down() EndLine() Escape() Left() Literal() NextChar() Paste()
+  PrevChar() Right() SelfInsert() TabRight() ToggleInsert() Up()
+  WordLeft() WordRight()
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³Editors Note:³ On-line help on 'Prompt Boxes' from more information
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+                If you wish to know something about a command there is a
+                function called HelpOnWordAtCursor() that is tied to
+                <Alt F1>.  To use this feature put the cursor on the
+                beginning of the command that you wish HELP and then
+                press Alt F1.  Placing the cursor on PROMPT and then
+                pressing Alt F1 you will go to the index for 'Prompt
+                Boxes'
+
+//*************************************************************************
+               NO macros from PromptKeys keydef  06/22/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 06-26-94  From: ARNOLD HENNIG
+               Subj: Switch between two most recent files
+---------------------------------------------------------------------------
+
+  add the line:
+
+    Hook(_ON_CHANGING_FILES_, mTrackFileChanges)
+
+  into the Whenloaded() in your TSE.UI file.
+
+  (mToggleBuffers is the one to assign a key to.)
+
+---------------------------------------------------------------------------
+
+integer PreviousID = 0, CurrentID = 0
+
+proc mTrackFileChanges()
+    if PreviousID == 0
+        PreviousID = GetBufferID()
+        CurrentID = GetBufferID()
+    elseif GetBufferID() <> CurrentID
+        PreviousID = CurrentID
+        CurrentID = GetBufferID()
+    endif
+end mTrackFileChanges
+
+proc mToggleBuffers()
+    if PreviousID
+        GotoBufferID(PreviousID)
+        EditFile(Currfilename())
+    endif
+end mToggleBuffers
+
+// NumLock must be on for <keypad 5> key assignment
+
+<keypad5>  mToggleBuffers()        //For macro check out
+
+//*************************************************************************
+//                     mToggleBuffers()  06/26/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 06-27-94  From: STEVE WATKINS
+                        Subj: Menu & _dontclose_
+---------------------------------------------------------------------------
+
+TK>  Screen bleeding through when a menu item had _dont_close and
+TK>  a DOS program or *.bat files writes to the screen
+
+The best way I know is to popwin over the entire screen before calling
+a DOS function... Something like:
+
+    integer proc mDOS(string cmd, integer flags)
+        integer n = 0
+
+        if PopWinOpen(1,1,Query(ScreenCols), Query(ScreenRows), 0,'',0)
+            n = Dos(cmd, flags)
+            PopWinClose()
+        endif
+        return (n)
+    end
+
+(This hasn't been checked for accuracy <g>)
+
+//*************************************************************************
+       Possible fix for Menu _dont_close_ bleed through  06/28/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 06-27-94  From: STEVE WATKINS
+                         Subj: Extracting TAG's
+---------------------------------------------------------------------------
+
+  >  What I would like to do is to be able to just grab the name from
+     the matched string. What I am doing is using the substr() to remove
+     the 10:, 11: and 12: from the string.
+
+How 'bout
+
+string proc GetName()
+    string name[32]
+
+    name = ''
+    if lFind("1[012]:{........\c.}","x")
+        PushBlock()
+        MarkFoundText(2)
+        name = GetMarkedText()
+        PopBlock()
+    endif
+    return (name)
+end
+
+//*************************************************************************
+                       Extracting TAG's  06/28/94
+//*************************************************************************
+
+//***********************  Start Comment Area *****************************
+/**************************************************************************
+===========================================================================
+                Date: 06-28-94  From: RICHARD BLACKBURN
+                        Subj: MarkWordContinue()
+---------------------------------------------------------------------------
+
+  Are you wanting a macro that marks multiple words?  First invocation
+  would mark the current word, and each additional invocation would add
+  an additional word to the marked block?  If so, the following macro
+  might do what you are wanting:
+
+//*********************** END of MAIN Comment Area *************************
+***************************************************************************/
+
+    proc MarkWordContinue()
+        integer key = Query(Key),
+                nextkey = 0
+
+        MarkWord()
+        UpdateDisplay()
+        nextkey = GetKey()
+        while nextkey == key
+            PushPosition()
+            GotoBlockEnd()
+            if NOT isWord()
+                WordRight()
+            endif
+            if WordRight()
+                MarkChar()
+            endif
+            PopPosition()
+            UpdateDisplay()
+            nextkey = GetKey()
+        endwhile
+        PushKey(nextkey)
+    end
+
+  <F7> MarkWordContinue()
+
+//*************************************************************************
+//                    MarkWordContinue()  06/28/94
+//*************************************************************************
+
+===========================================================================
+                    Date: 06-29-94  From: BOB PIGORS
+                    Subj: MarkWordContinue() Cont'd
+---------------------------------------------------------------------------
+
+  RB³ Are you wanting a macro that marks multiple words?
+ÚÄÄÄÁÄÄÄÄ¿
+³TAKnote:³ SEE previous note for the procedure
+ÀÄÄÄÄÄÄÄÄÙ
+
+  This procedure was almost perfect. As you may have read in the thread
+  on RTPmFindBlock, I have been looking for a way to quickly block a
+  string of "words" on a line so I can search through my .UI. For
+  example: I might want to quickly Search for:
+  GotoPos(PosFirstNonWhite()) using a line such as the following as my
+  baseline.
+
+  GotoPos(PosFirstNonWhite())     // Go to first non white
+
+  A second keypress using your original procedure that uses "if WordRight"
+  caused an "overshoot" beyond the ()) to just past the //
+
+  I found that changing if WordRight to if EndWord partially solves the
+  problem by allowing a step-block-stop just before the ())
+
+  Since, in most cases I don't need the ()) as part of the search criteria
+  this should work fine.  Thanks for your help.
+
+//*************************************************************************
+                  MarkWordContinue()  Cont'd  06/29/94
+//*************************************************************************
+
+===========================================================================
+          Date: 06-30-94  From: Steve Watkins via Peter Birch
+                        Subj: mSkipBlankLines()
+---------------------------------------------------------------------------
+
+  Thanks for looking.  Steve Watkins solved it for me.  He suggested using
+  posfirstnonwhite() == 0 in place of currchar() == _AT_EOL_ and it works!
+
+  --------- fixed macro thanks to SW ------------------
+
+  proc mSkipBlankLines (integer direction)
+
+    begLine()
+    case (direction)
+
+        when (GO_UP)
+            while (0 == posfirstnonwhite() and up())
+            endwhile
+
+        when (GO_DOWN)
+            while (0 == posfirstnonwhite() and down())
+            endwhile
+    endcase
+
+  end  mSkipBlankLines
+
+//*************************************************************************
+//*************************************************************************
+
+===========================================================================
+                  Date: 07-12-94  From: STEVE WATKINS
+                          Subj: PrevPosition()
+---------------------------------------------------------------------------
+
+> Problem  PrevPosion() did not work in the same line
+-----------------------------------------------------------------------------
+
+  But.... there is actually an undocumented optional parameter you
+  can specify.  If you specify PrevPosition(1) it will restore
+  the previous position even on the same line.
+
+//*************************************************************************
+//*************************************************************************
+
+===========================================================================
+                  Date: 07-15-94  From: STEVE WATKINS
+                     Subj: Replace("  "," ","NGL")
+---------------------------------------------------------------------------
+
+  >  I could use the ability to do this sort of thing (compress multiple
+  >  spaces using the gln options). An interim solution would be to bind
+  >  another keystroke to:
+
+  An easier solution is to use regular expressions and no RepeatFind()
+  is needed.
+
+// replace 1 or more spaces in a row (max closure) with a single space
+
+Replace(" #"," ","xgn")
+
+//*************************************************************************
+                                07/16/94
+//*************************************************************************
+
+===========================================================================
+                Date: 08-12-94  From: RICHARD BLACKBURN
+                            Subj: QuitFile()
+---------------------------------------------------------------------------
+
+    proc mQuitFile()
+        repeat
+            if FileChanged()
+                case YesNo("Save Changes")
+                    when 1      SaveFile()
+                    when 0, 3   return()
+                endcase
+            endif
+            AbandonFile()
+        until NumFiles() == 1
+        QuitFile()
+    end
+
+//*************************************************************************
+//*************************************************************************
+
+===========================================================================
+                 Date: 08-16-94  From: GEORGE DE BRUIN
+                Subj: Stripping out a Table of Contents
+---------------------------------------------------------------------------
+
+ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+³It would be nice if NEWTSE.DOC had a table of contents.  In the
+ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  We have attempted to mark all of the items with a bullet character
+  (in the current document we are using a ù (ALT 249) at the beginning of
+  each line that has a topic name).
+
+  In this way, all you will need to do is use CompressView(0) [Alt V] to
+  find all of the lines with a ù on them to get an outline of the whole
+  document.
+
+  If you restrict the search to lines that begin with a "ù" [Alt 249]
+  (by using "^ù" as a the search string, and "X" as the options), you
+  will get a table of contents.
+
+//*************************************************************************
+              Stripping out a Table of Contents  08/17/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 09-01-94  From: GEORGE DE BRUIN
+                   Subj: Parans in HelpOnWordAtCursor
+---------------------------------------------------------------------------
+
+ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+³Example: When I write "InsertText" and press <Ctrl F1>, the right
+³        syntax helpscreen will be displayed. When I write
+³        "InsertText()" and press <Ctrl F1>, the helpsystem brings
+³        up the index! (With the right word marked!)
+ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  As you have stated, this was obviously the problem.  The help system
+  does not include the parenthesis when looking up the help topic.
+
+  If you want to have the parenthesis included in your WordSet when you
+  are working on your programs, and still have the help system work, you
+  can do something like this:
+
+    Proc HelpOnWordAtCursor()
+        string OldWrdSet[32]
+
+        OldWrdset = Set(WordSet, ChrSet("0-9A-Z_a-z"))
+        Help(GetWordAtCursor(), TRUE)
+        Set(WordSet, OldWrdSet)
+    end
+
+//*************************************************************************
+                 Parans in HelpOnWordAtCursor  09/02/94
+//*************************************************************************
+
+===========================================================================
+                   Date: 09-06-94  From: URS MELLINI
+                   Subj: Parans in HelpOnWordAtCursor
+---------------------------------------------------------------------------
+
+> If you want to have the parenthesis included in your WordSet when
+> you are working on your programs, and still have the help system
+> work, you can do something like this:
+
+     Proc HelpOnWordAtCursor()
+         string OldWrdSet[32]
+
+         OldWrdset = Set(WordSet, ChrSet("0-9A-Z_a-z"))
+         Help(GetWordAtCursor(), TRUE)
+         Set(WordSet, OldWrdSet)
+     end
+
+//*************************************************************************
+//*************************************************************************
+
+===========================================================================
+                 Date: 09-19-94  From: JACK HAZLEHURST
+                     Subj: Error in DeTab() macro.
+---------------------------------------------------------------------------
+
+  In a way I've been negligent.  I put a note about this at the end of a
+  long, boring note to Unca Sammy, so I guess it didn't get through.
+  HOWEVER,    the  TABUTIL  macro  in  release  2.00  has  an   error,
+  specifically in the DeTab() procedure.
+
+  The  error stems from neglecting the fact that ExapndTabs must be ON
+  for ExpandTabsToSpaces() to work.   I see this is NOT documented  in
+  the help system.  And don't I recall a maximum allowed length of the
+  line that ExpandTabsToSpaces() can be run on?  The length 255 sticks
+  in my mind.
+
+  The shipping DeTab() is:
+
+  public proc DeTab()
+
+      SetUp("Removing")
+      repeat
+          ExpandTabsToSpaces()
+      until NOT Down() or CurrLine() > target_line
+     CleanUp()
+  end
+
+It SHOULD be something like:
+
+public proc DeTab()
+    integer xt = Set( ExpandTabs, ON )
+    SetUp("Removing")
+    repeat
+        ExpandTabsToSpaces()
+    until NOT Down() or CurrLine() > target_line
+    CleanUp()
+    Set( ExpandTabs, xt )
+end
+
+//*************************************************************************
+                    Fix for 2.00 DeTab Bug  09/19/94
+//*************************************************************************
+
+errata #1:
+===========================================================================
+                  Date: 09-23-94  From: SAMMY MITCHELL
+                  Subj: TSE 2, the mouse in 'TSE Jr..ui'
+---------------------------------------------------------------------------
+
+  In TSE 2.0, we inadvertently left out mouse support in the TSE Jr..UI.
+  If you are using the TSE Jr..UI, and would like to add mouse support, do
+  the following:
+
+//* Add the following lines just before the key assignments:
+
+
+  proc mLeftBtn()
+    if not ProcessHotSpot()
+       MainMenu()
+    endif
+  end
+
+  proc mTrackMouseCursor()
+    if GotoMouseCursor()
+        TrackMouseCursor()
+    endif
+  end
+
+//* Add the following lines at the end of the key assignments
+
+//*** Mouse keys ************************************************************
+
+<LeftBtn>               mLeftBtn()
+<Ctrl LeftBtn>          MouseMarking(_COLUMN_)
+<Alt LeftBtn>           MouseMarking(_LINE_)
+<Shift LeftBtn>         mTrackMouseCursor()
+<RightBtn>              ClipMenu()
+
+
+  Once you recompile the TSE Jr..UI (you can compile it from within the
+  editor, using the Compile command on the Macro pulldown menu), and
+  restart the editor, you should have mouse support when using the TSE Jr.
+  emulation.
+
+//*************************************************************************
+                 Mouse missing in 'TSE Jr..ui'  09/24/94
+//*************************************************************************
+
+===========================================================================
+                    Date: 09-24-94  From: RAY ASBURY
+                 Subj: OnChangingFiles WordWrap Switch
+---------------------------------------------------------------------------
+
+    case CurrExt()
+        when ".ui",".s",".asm",".pas",".inc",".prg"
+            language = TRUE
+            Set(WordWrap, OFF)
+        when ".c",".h",".cpp",".hpp", ".slt"
+            language = TRUE
+            cmode = TRUE
+            Set(WordWrap, OFF)
+        when ".bat", ".btm", ".sys"
+            Set(WordWrap, OFF)
+        // NEW STUFF FOLLOWS
+        otherwise
+            language = FALSE
+            cmode = FALSE
+            Set(WordWrap, ON)
+    endcase
+
+  In your original code, there wasn't anything to tell TSE what to do with
+  DOC files.  Since you say wrap was initially on, I'm guessing you have
+  TSE configured with WordWrap ON.  With the new code, DOC files are
+  handle by the "otherwise" section, along with any other files not
+  specifically handled by other "cases".  This should fix things up.
+
+  ÚÄÄÄ<<<                  >>>ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+  ³Also I would like my choice to be sticky if I arbitrarily change the³
+  ³wordwrap status of one file to the opposite of what I normally want.³
+  ÀÄÄÄ>>>     <<<ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+  I have something I call "Super word wrap", which allows me to either set
+  word wrap to it's default (depending on the current file's extension),
+  always on (for ALL files), and always off (again, for ALL files).  What
+  you what can be done, but you will need to:
+
+    1.  create a temp buffer, probably in your UI's Whenloaded, which
+        keeps track of buffers and how word wrap was set last time you
+        were in the file.
+
+    2.  the buffer in 1 will need to be changed everytime a file is
+        loaded and/or abandoned, as well as anytime you toggle word wrap
+        to either on or off.
+
+  While this is not difficult, it will take some work, since you will need
+  to modify several things in your UI.  Maybe this is time to start really
+  digging into SAL. <hint, hint>
+
+===========================================================================
+===========================================================================
+
+//*************************************************************************
+                    Date: 09-24-94  From: RAY ASBURY
+                         Subj:  Track Tab Types
+//*************************************************************************
+
+To help you get started, here's something I used to track tab types:
+
+    FORWARD PROC pnOnFirstEdit()
+
+    INTEGER fiFListBuf
+
+    PROC WhenLoaded()
+        fiFListBuf = CreateTempBuffer()
+        Hook (_ON_FIRST_EDIT_, pnOnFirstEdit()
+    END WhenLoaded
+
+    INTEGER PROC piUseHardTabs()
+
+        STRING  lsFName[250]  = CurrFileName()
+
+        INTEGER liCid         = GetBufferId(),
+                liRtnCode     = FALSE
+
+        IF (fiFListBuf == 0)
+            Warn("No buffer for fiFListBuf")
+        ELSE
+            GotoBufferId(fiFListBuf)
+            BegFile()
+            piUHTAgain:
+            IF (LFind(lsFName, "") == 0)
+                GotoBufferId(liCid)
+                pnOnFirstEdit()
+                GotoBufferId(fiFListBuf)
+                Goto piUHTAgain
+                //Warn("No entry for current file in fiFListBuf")
+            ELSE
+                EndLine()
+                WordLeft()
+                IF (CurrChar() == Asc("T"))
+                    liRtnCode = TRUE
+                ENDIF
+            ENDIF
+        ENDIF
+        GotoBufferId(liCid)
+        Return (liRtnCode)
+    END piUseHardTabs
+
+    PROC pnOnFirstEdit()
+
+        STRING  lsFName[250]    = CurrFileName()
+
+        INTEGER liCid           = GetBufferId()
+
+        IF (fiFListBuf == 0)
+            fiFListBuf = CreateTempBuffer()
+        ENDIF
+        GotoBufferId(fiFListBuf)
+        BegFile()
+        IF (LFind(lsFName, "") == 0)
+            GotoBufferId(liCid)
+            CASE (psCurrExt())
+                WHEN ".c", ".h", ".pc", ".slt", ".xrf", "cpp", ".hpp"
+                    IF (LFind(Format("This file was generated by XVT-Design ",
+                                        "[0-9\.]#, a product of:"), "X") <> 0)
+                        AddLine(Format(lsFName, " TRUE"), fiFListBuf)
+                    ELSE
+                        AddLine(Format(lsFName, " FALSE"), fiFListBuf)
+                    ENDIF
+                OTHERWISE
+                    AddLine(Format(lsFName, " FALSE"), fiFListBuf)
+            ENDCASE
+        ELSE
+            GotoBufferId(liCid)
+        ENDIF
+        BegFile()
+    END pnOnFirstEdit
+
+//*************************************************************************
+                WordWrap Switch and Track Tabs  09/25/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 09-26-94  From: STEVE WATKINS
+                   Subj: Converting WS files to ASCII
+                        Strips High Bit - Bit 8
+---------------------------------------------------------------------------
+
+>  I would like to convert some old WordStar 3/4 files to ASCII.
+>  Wordstar itself will do it, but the process is slow.  Is there a
+>  way to do it with TSE?
+>
+> What needs to be done is to strip the eighth bit (set bit 8 = 0)
+> for all characters in the document.  The old WordStar, in
+> document mode, would set the last character of a word to "bit 8 =
+> 1" to identify locations where it would be permissible to add
+> spaces to accomplish right margin justification.
+
+
+  If all you want to do is strip the high-bit, the following macro should
+  work for you.  This does not handle any other WordStar issues, though.
+
+  proc main()
+    PushPosition()
+    BegFile()
+    loop
+        if CurrChar() >= 0
+            if not InsertText(chr(CurrChar() & 0x7f),_OVERWRITE_)
+                break
+            endif
+        elseif not NextChar()
+            break
+        endif
+    endloop
+    PopPosition()
+  end
+
+//*************************************************************************
+//*************************************************************************
+
+===========================================================================
+                    Date:  09/27/94  HOOKS Explained
+                        Taken from TSE 2.00 Help
+---------------------------------------------------------------------------
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  Help can be copied from the display to the Clipboard
+³Editors Note:³  by pressing <Grey +>.  While viewing help press either
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  <F1> or <ALT h> for Help on Help other options.
+
+Associates a procedure with an event.
+
+Syntax:     Hook(INTEGER event, PROCEDURE proc_name)
+
+            ù event is one of the editor's pre-defined events.
+
+            ù proc_name is the name of a procedure to be associated with
+              event.
+
+Returns:    Non-zero if successful.  Zero (FALSE) if proc_name is already
+            hooked to the same event, or if the maximum number of hooks is
+            reached.
+
+Notes:      This command gives the user a way to intercept and act on certain
+            editor events.  Events that may be hooked include:
+
+            ù _ON_CHANGING_FILES_  This event is called each time a different
+              file is switched to, with the following exceptions:
+
+               ù If the file was switched to via the GotoBufferId() command,
+                 this event is NOT called.
+
+               ù If the file was switched to using the _DONT_LOAD_ option of
+                 NextFile() or PrevFile() commands, this event is NOT called.
+
+              See the OnChangingFiles() macro in the TSE.UI user-interface
+              file (located in the UI\ editor subdirectory) for examples of
+              using this event.
+
+            ù _ON_FIRST_EDIT_  This event is called the first time a file is
+              loaded into the editor.  Therefore, it is only called once for
+              each file edited.  This event is not called by the
+              CreateBuffer() or CreateTempBuffer() commands.
+
+            ù _ON_FILE_SAVE_  This event is called just before the editor
+              saves a file.  It is not called by the SaveAs() and SaveBlock()
+              commands.
+
+            ù _ON_FILE_QUIT_  This event is called just before the editor
+              quits a file, via the single file quitting commands
+              (QuitFile(), AbandonFile()).  If only a single file is loaded,
+              this hook will not be called unless the editor variable
+              QuitToPrompt is set ON.
+
+            ù _ON_EXIT_CALLED_  This event is called at the beginning of the
+              Exit() and SaveAllAndExit() commands.
+
+            ù _ON_ABANDON_EDITOR_  This event is called just before the
+              editor is terminated.
+
+            ù _IDLE_  This event is called from the editor's keyboard
+              processing loop, when no keys are available to be processed.
+
+            ù _AFTER_UPDATE_DISPLAY_  This event is called after each window
+              is updated.
+
+            ù _AFTER_UPDATE_STATUSLINE_  This event is called after the
+              StatusLine is updated.
+
+            ù _AFTER_COMMAND_  This event is called after each command is
+              processed.
+
+            ù _LIST_STARTUP_  This event is called when the List() and
+              lList() functions start processing.
+
+            ù _LIST_CLEANUP_  This event is called when the List() and
+              lList() functions terminate.
+
+            ù _PICKFILE_STARTUP_  This event is called when the PickFile()
+              function (called explicitly or implicitly by EditFile() or
+              others) starts processing.
+
+            ù _PICKFILE_CLEANUP_  This event is called when the PickFile()
+              function terminates.
+
+            ù _PROMPT_STARTUP_  This event is called when the Ask() and
+              Read() functions start processing.
+
+            ù _PROMPT_CLEANUP_  This event is called when the Ask() and
+              Read() functions terminate.
+
+            Multiple procedures can be hooked to the same event.  If
+            this is the case, the hooked procedures are called in a
+            last-hooked, first-called order.
+
+            The same procedure can also be hooked by multiple events.  The
+            same procedure can not be hooked more than once to the same
+            event, however.
+
+            A hooked event may be removed by calling the UnHook() command or
+            purging (or re-loading, since loading a macro file will cause an
+            already loaded macro file of the same name to be purged) the
+            macro file containing the hooked procedure.
+
+            The editor prevents hooked events from being recursively called.
+
+            Hooks may be temporarily disabled by using the BreakHookChain()
+            command.
+
+Examples:
+
+            proc foo()
+                Warn("I am in the ON_FIRST_EDIT hook!")
+            end
+ 
+            proc main()
+                Hook(_ON_FIRST_EDIT_, foo)
+            end
+
+            If this macro file is executed, every time a new file (that is,
+            one that is not currently in the editor's Ring of files) is
+            loaded, the foo() macro will be executed.
+
+See Also:   UnHook(), ExecHook(), BreakHookChain(), AbandonFile(), Ask(),
+            CreateBuffer(), CreateTempBuffer(), EditFile(), Exit(), List(),
+            NextFile(), PickFile(), PrevFile(), QuitFile(), Read(),
+            SaveAllAndExit(), SaveAs(), SaveBlock(), lList()
+
+            Variables:  QuitToPrompt
+
+//*************************************************************************
+                       HOOKS explained  09/27/94
+//*************************************************************************
+
+===========================================================================
+                  Changing the Direction of Search 09/27/94
+                          TSE 2.00 RepeatFind() HELP
+===========================================================================
+
+RepeatFind
+
+Repeats the most recent Find() or Replace() command.
+
+Syntax:     INTEGER RepeatFind([INTEGER direction])
+
+            ù direction is an optional integer that forces the repeated find
+              or replace to proceed in the indicated direction.  Supported
+              values for direction are:
+
+              ù _BACKWARD_ causes the search to proceed backward, towards
+                the beginning of the file.
+
+              ù _FORWARD_ causes the search to proceed forward, towards the
+                beginning of the file.
+
+Returns:    Non-zero if successful; zero (FALSE) on failure.
+
+Notes:      Returns zero if nothing was found.
+
+            The search starts one character beyond the current cursor
+            position.
+
+See Also:   Find(), Replace(), lFind(), lReplace(), lRepeatFind()
+
+            Variables:  Beep
+
+===========================================================================
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿ The following keyassignments can be placed in your
+ ³Editors Addition:³ KeyDef an then when you re-compile *.ui the you will
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ always have the direction change available.
+
+NUMLOCK must be ON for the following key assignments to work.
+
+<Keypad3>               RepeatFind(_forward_)   //        3/Page Down
+<Keypad9>               RepeatFind(_backward_)  //        9/Page Up
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿  All of the tidbits below were added by Tom Klein
+³Editors Additions:³  from his notes and snippets files.
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+===========================================================================
+
+  To add a function to the Right Mouse Button and change the behavior of
+  the left mouse button to control block marking and un-marking.
+
+  In Your 'TSE.UI' add this new mouse marking for the RIGHT mouse button
+
+    #include "c:\tse2\src\mousemk5.inc"  // Change the PATH for your setup
+
+  AND then comment out the mLeftBtn() procedure.
+
+  In Your 'TSE.KEY' file or keydef area of 'TSE.UI' you need to change
+  the right button assignment.
+
+  FROM:  <RightBtn>              ClipMenu()
+  TO:    <RightBtn>              mRightBtn()
+
+  The ClipMenu is still displayed but some NEW functions have been added
+  to the mRightBtn().  One addition was adding MouseHelp was added when
+  the right button is clicked on the Help Line.
+
+  NOW you need to add the following to your PATH.
+
+===========================================================================
+  <cut here> to the next <cut here>
+//*************************************************************************
+/************************  Start Comment Area *****************************
+
+            ThisFile:  'mousemk5.inc'  Original Date: 11/28/93
+         NOT a StandAlone macro --- must be included in 'tse.s'
+
+REVISION History:
+
+06/23/94:  'mousemk5.inc' Cleaned up, changed to *.inc
+                          Added QuickHelp(MouseHelp) to explain new
+                          features. To activate this mouse help RIGHT
+                          click on the HelpLine.  All features of this
+                          procedure will then be displayed.  New
+                          features added to mRightBtn() by Ray Waters
+                          Changed *.key to add mRightBtn()
+
+09/21/93:  'mousemk3.s'   Commented out ShowHelp() that was removed from
+                          1.00? beta
+
+05/22/93:  'mousemk2.s'   Original from a message from Ray Waters
+
+===========================================================================
+                    Date: 11-27-93  From: RAY WATERS
+                      Subj: MouseMarking improved
+---------------------------------------------------------------------------
+
+  Actually, since that  posting(of  MouseMarking)  I  changed  my  mouse
+  button functions, so that pressing the RIGHT button while the mouse is
+  in the block now does the UnmarkBlock() operation.  This  change  lets
+  me  use the mouse (the LEFT button) to position the text cursor inside
+  the block so that I can edit the block before moving it,  copying  it,
+  etc.  TSE's default right button behavior is to bring up the clipboard
+  menu; my version still does that if the  mouse  cursor  is  NOT  in  a
+  marked block.
+
+  *************************************************************************/
+//********************** END of Comment Area ******************************
+
+//*****MouseHelp HelpDef***************************************************
+
+helpdef  MouseHelp
+
+         title= "Mouse Marking Help 0.01"
+
+"=========================================================================== "
+"                          ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»                              "
+"                          ºMouse Marking v5.0º                              "
+"                          ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼                              "
+"                                06/23/94                                    "
+"                     TAK RIGHT & LEFT mouse buttons                         "
+"=========================================================================== "
+"                                                                            "
+"             RIGHT click on HelpLine -- QuickHelp(MouseHelp)                "
+"                                                                            "
+"             RIGHT click on a Marked Block puts cursor into the block       "
+"                                                                            "
+"             LEFT click on a Marked Block will UnMarkBlock()                "
+"                                                                            "
+"             LEFT click outside a marked block pops up ClipboardMenu()      "
+"                                                                            "
+"  The change from previous and the default operations lets the mouse        "
+"  (the RIGHT button) to position the text cursor inside the block so        "
+"  that I can edit the block before moving it, copying it, etc.              "
+"                                                                            "
+"  TSE's default right(TAK LEFT) button behavior is to bring up the          "
+"  clipboard menu; my version still does that if the mouse cursor is         "
+"  NOT in a marked block.                                                    "
+"                                                                            "
+"=========================================================================== "
+"  This TSE macro contains both mLeftBtn() & mRightBtn() for the mouse       "
+"=========================================================================== "
+
+END MouseHelp
+
+proc mLeftBtn()
+
+  integer HelpBar = Query(ShowHelpLine)
+  integer TopStatus = Query(StatusLineAtTop)
+  integer TopRow
+
+//*****MouseHotSopt()******************************************************
+
+  case MouseHotSpot()
+    when _NONE_                 // when mouse in not in editing area
+      TopRow = iif(Query(MouseY) == 1, TRUE, FALSE)
+      if HelpBar
+        if ((TopStatus and TopRow) or (not TopStatus and not TopRow))
+          MainMenu()
+        else
+          QuickHelp(MouseHelp)  // TAK added HelpDef-Click RIGHT on HelpLine
+        endif
+      else
+        MainMenu()
+      endif
+
+    when _MOUSE_MARKING_            // when mouse is in editing area,
+        MouseMarking(_INCLUSIVE_)   // use INCLUSIVE blocking
+    otherwise
+        ProcessHotSpot()
+  endcase
+end
+
+proc mRightBtn()
+    if MouseHotSpot() == _MOUSE_MARKING_  // if mouse is in editing area,
+          PushPosition()                  //  save the text cursor position
+          GoToMouseCursor()               // move text cursor to mouse cursor
+    if IsCursorInBlock()          //  if text cursor is now in a block,
+      UnMarkBlock()               //  unmark the block
+      PopPosition()               //  and restore text cursor position
+    else                          //  if not inside a marked block,
+      PopPosition()               //  restore text cursor position
+      //ClipBoardMenu()           //  and show clipboard menu
+      //Above changed to ClipMenu() inn 1.54a
+      ClipMenu()                  //  and show clipboard menu
+    endif
+  else                            //  if mouse is not in editing area,
+    ClipMenu()
+  endif
+end
+
+<cut here>
+
+//*************************************************************************
+//                       mousemk5.inc  06/23/94
+//*************************************************************************
+
+                 ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                 ³'tse_tip3.txt'  03/08/94 to 09/27/94³
+                 ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+

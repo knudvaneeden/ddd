@@ -1,0 +1,3361 @@
+/*************************************************************************
+ WORDSTAR.UI version 5.7 - 10 Mar 2004
+ (C) 1997-2002 by Bill Stewart (bstewart@iname.com)
+
+ Below is listed a table comparing WordStar's keystrokes and the
+ keystrokes used in this UI.
+
+ Keystroke     WordStar 7.0                  WORDSTAR.UI
+ -----------------------------------------------------------------------
+ Home          Beginning of window           Beginning of line
+ End           End of window                 End of line
+ Ctrl-PgUp     Scroll up one line            Roll left one column
+ Ctrl-PgDn     Scroll down one line          Roll right one column
+ F1            Help                          Help Table of Contents
+ F2            Undo                          Save file
+ F3            Underline                     Open horizontal window
+ F4            Bold                          (nothing)
+ F5            Delete line                   Zoom window
+ F6            Delete word                   Next window
+ F7            Reformat paragraph            (nothing)
+ F8            Insert ruler line             Shell
+ F9            Save file                     Load macro
+ F10           Save and close file           Activate main menu
+ Shift-F1      Toggle command tags           Help with key assignments
+ Shift-F2      Center line                   (nothing)
+ Shift-F3      Run spelling checker          Open vertical window
+ Shift-F4      Check spelling of word        (nothing)
+ Shift-F5      Delete marked block           (nothing)
+ Shift-F6      Toggle block display          Previous window
+ Shift-F7      Move marked block             (nothing)
+ Shift-F8      Copy marked block             (nothing)
+ Shift-F9      Mark beginning of block       Compile menu
+ Shift-F10     Mark end of block             Pop-up menu
+ Ctrl-F1       (nothing)                     Help on word at cursor
+ Ctrl-F3       (nothing)                     Close duplicate windows
+ Ctrl-F5       (nothing)                     Resize window
+ Ctrl-F6       (nothing)                     Next file
+ Ctrl-F9       (nothing)                     Compile current file
+ Alt-F1        (nothing)                     Previous help topic
+ Alt-F3        (nothing)                     Close window
+ Alt-F4        (nothing)                     Exit
+ Alt-F5        (nothing)                     Show entry screen
+ Alt-F8        (nothing)                     Single command
+ Alt-F9        (nothing)                     Execute macro
+ Ctrl-[        (nothing)                     Shift line/block left
+ Ctrl-]        (nothing)                     Shift line/block right
+ Ctrl-A        Left one word                 (nothing)
+ CtrlShift-B   (nothing)                     Wrap/enquote paragraph
+ Ctrl-C        Down one line                 Copy to clipboard
+ Ctrl-D        Right one character           (nothing)
+ Ctrl-E        Up one line                   (nothing)
+ Ctrl-Enter    (nothing)                     Execute scrap macro
+ Ctrl-F        Right one word                Find
+ Ctrl-I        Tab                           Incremental search
+ Ctrl-J        Help                          Help index
+ Ctrl-K.       Sentence case block           Capitalize
+ Ctrl-K\       Fax                           (nothing)
+ Ctrl-KA       Copy block from other window  Mark paragraph
+ Ctrl-KB       Mark beginning of block       Start marking
+ Ctrl-KE       Rename a file                 Rename current file
+ Ctrl-KF       Execute DOS command           File Manager
+ Ctrl-KG       Move block from other window  Change directory
+ Ctrl-KH       Toggle block display          Unmark block
+ Ctrl-KI       Toggle column replace mode    (same)
+ Ctrl-KJ       Delete a file                 (nothing)
+ Ctrl-KK       Mark end of block             Stop marking
+ Ctrl-KL       Change directory              Fill block
+ Ctrl-KM       Block math                    Set bookmark
+ Ctrl-KN       Toggle column block mode      (same)
+ Ctrl-KO       Copy a file                   Named clipboards
+ Ctrl-KT       Save as and close             Save As
+ Ctrl-KU       Re-mark previous block        Quote/unquote line(s)
+ Ctrl-KX       Save file and exit WordStar   Save all files and exit
+ CtrlShift-L   (nothing)                     Repeat find (reverse)
+ Ctrl-M!       Insert time                   Date/time Stamp
+ Ctrl-M#       Insert last expression        (nothing)
+ Ctrl-M$       Insert last result as $       (nothing)
+ Ctrl-M*       Insert filename (w/o path)    (nothing)
+ Ctrl-M.       Insert current directory      (nothing)
+ Ctrl-M:       Insert current drive          (nothing)
+ Ctrl-M=       Insert last result            (nothing)
+ Ctrl-M@       Insert date                   (nothing)
+ Ctrl-M\       Insert filename (full path)   (nothing)
+ Ctrl-MD       Edit or create macro          Save keyboard macros
+ Ctrl-ME       Rename a macro                (nothing)
+ Ctrl-MO       Copy a macro                  (nothing)
+ Ctrl-MP       Play a macro                  (nothing)
+ Ctrl-MR       Record a macro                Record keyboard macro
+ Ctrl-MS       Play macro step-by-step       (nothing)
+ Ctrl-MY       Delete a macro                Purge keyboard macros
+ Ctrl-O[       (nothing)                     Align left
+ Ctrl-O#       Set page numbering            (nothing)
+ Ctrl-O-       (nothing)                     Toggle line drawing
+ Ctrl-O?       Display status                File information
+ Ctrl-OA       Toggle auto align             Set autoindent type
+ Ctrl-OB       Screen settings/soft spaces   Toggle expand tabs
+ Ctrl-OD       Toggle command tags           Hex display toggle
+ Ctrl-OE       Insert soft hyphen            Set EOL type
+ Ctrl-O Enter  Toggle Enter closes dialogs   (nothing)
+ Ctrl-OF       Manage paragraph styles       Function list
+ Ctrl-OG       Temporary indent              Go to previous file
+ Ctrl-OH       Toggle automatic hyphenation  Toggle syntax highlighting
+ Ctrl-OI       Set margins and tabs          Set tab width
+ Ctrl-OJ       Toggle right justify          (nothing)
+ Ctrl-OL       Set margins and tabs          Set left margin
+ Ctrl-ON       Create/edit notes             Go to next file
+ Ctrl-OO       Insert ruler line             Compressed view
+ Ctrl-OP       Print preview                 Browse mode
+ Ctrl-OR       Set margins and tabs          Set right margin
+ Ctrl-OS       Set line spacing              Shift block or line
+ Ctrl-OT       (nothing)                     Set tab type
+ Ctrl-OU       Define columns                Function list
+ Ctrl-OV       Center text on page           Center cursor in window
+ Ctrl-OW       (nothing)                     Set word wrap mode
+ Ctrl-OX       Margin release                Exchange windows
+ Ctrl-OY       Set page layout               Toggle sync scrolling
+ Ctrl-OZ       Paragraph numbering           Toggle maximized window
+ Ctrl-P        (print menu)                  Insert next character
+ Ctrl-Q<       Go to next style marker       (nothing)
+ Ctrl-Q=       Go to next font marker        (nothing)
+ Ctrl-Q[       (nothing)                     Go to matching pairs
+ Ctrl-QI       Go to page                    Go to line/column
+ Ctrl-QJ       Thesaurus                     (nothing)
+ Ctrl-QM       Calculator                    Go to bookmark
+ Ctrl-QN       Check spelling of word        (nothing)
+ Ctrl-QO       Spell check typed word        Potpourri
+ Ctrl-QQ       Repeat next command           Repeat last command
+ Ctrl-QT       Delete to character           (nothing)
+ Ctrl-QU       Reformat remaining            Restore cursor line
+ Ctrl-QV       Go to last find/replace       View finds
+ Ctrl-QW       Continuous scroll up          (nothing)
+ Ctrl-QZ       Continuous scroll down        (nothing)
+ Ctrl-R        Page up                       Replace
+ Ctrl-S        Left one character            (nothing)
+ Ctrl-V        Toggle insert                 Paste clipboard contents
+ Ctrl-X        Down one line                 Cut block to clipboard
+ Alt-Backspace (nothing)                     Undo
+ AltShift-Bksp (nothing)                     Redo
+ Alt-0         (nothing)                     List open files
+ Alt-1..9      (nothing)                     Go to window 1 through 9
+
+ ************************************************************************/
+
+string ui_version_string[] = "Version 5.7 ş 10 Mar 2004"
+
+// maximum tab width and case-changing constants
+constant
+  MAXTABWIDTH = 16,
+  UPPER_CASE = 0,
+  LOWER_CASE = 1,
+  FLIP_CASE = 2,
+  CAP_CASE = 3
+
+// WORDSTAR.UI flags
+integer
+  column_block_mode,        // for WordStar-style blocks
+  column_overlay_mode,      // for WordStar-style blocks
+  gotolinecol_history,      // history for mGotoLineCol() command
+  close_dup_windows = TRUE  // closes duplicate windows on a quitfile()
+
+// Internal flags
+integer
+  cmode, sal, language, sort_flags, recent_files
+
+// [was 02/22/01] added 'select' and 'with' as keywords
+// [was 03/09/04] added 'try', 'catch', and 'finally' as keywords
+string keywords[]   = " case catch do else elseif finally for if loop otherwise proc repeat select switch try when while with "
+string asm_fun[]    = "[a-zA-Z0-9] +{proc}"
+// [was 04/02/02] VB support updated; thanks to Howard Kapustein
+string basic_fun[]  = "^{{friend}|{private}|{public}[\t]+}?{function}|{sub}|{property}[ \t]"
+string bat_fun[]    = "^[\t ]*:"    // [was 08/14/97] .BAT/.BTM added
+string c_fun[]      = "^_@[a-zA-Z][a-zA-Z0-9_* \t]@([~;]*$"
+// Note that c++ allows a few extra characters in function names.
+string cpp_fun[]    = "^{extern[ \t]+\x22C\x22[ \t]+}?_|~@[a-zA-Z:][a-zA-Z0-9_+\-*/%^&|~!=<>,\[\] \t:~]@([~;]*$"
+string ini_fun[]    = "^[ \t]*\[.*\][ \t]*$"   // better ini regexp, thanks to Howard Kapustein
+string java_fun[]   = "{private}|{protected}|{public}|{void}[ \t]+_@[a-zA-Z][\.a-zA-Z0-9_*@{\[\]}? \t]@([~;]*$"
+string pas_fun[]    = "^ *{procedure}|{function} +[a-zA-Z_]"
+string python_fun[] = "^[ \t]*{class}|{def} "  // added Python support, thanks to Howard Kapustein
+string sal_fun[]    = "^{menu}|{{public #}?{{integer #}|{string #}}@proc} +[a-zA-Z_]"
+string tex_fun[]    = "^\\{chapter}|{{subsub}|{sub}|{}section}|{{sub}|{}paragraph}"
+string xbase_fun[]  = "^{static }?{{procedure}|{function}} +[a-zA-Z_]"
+
+string ident_set[] = "[_a-zA-Z]"
+string template[]  = "TEMPLATE"
+string console[]   = "CONIN$"
+string tsepro[]    = "TSE Pro-32"
+
+/*************************************************************************
+> Win32 miscellany
+*************************************************************************/
+
+#define WM_SYSCOMMAND   0x0112
+#define SC_MINIMIZE     0xF020
+#define SC_MAXIMIZE     0xF030
+#define SC_RESTORE      0xF120
+
+dll "<kernel32.dll>"
+  integer proc GetShortPathName(string inpath: cstrval, var string outpath: strptr, integer len) : "GetShortPathNameA"
+end
+
+dll "<user32.dll>"
+  integer proc SendMessage(integer hwnd, integer msg, integer wparam, integer lparam) : "SendMessageA"
+  integer proc IsMaximized(integer hwnd) : "IsZoomed"
+  integer proc IsMinimized(integer hwnd) : "IsIconic"
+end
+
+string proc mGetShortPathName(string inpath)
+  integer h, len
+  string short_path[_MAXPATH_] = format("":_MAXPATH_:chr(0))
+
+  h = iif(fileexists(inpath), -1, fcreate(inpath))
+  len = GetShortPathName(inpath, short_path, _MAXPATH_)
+  if h <> -1
+    fclose(h)
+    erasediskfile(inpath)
+  endif
+  return(iif(len > 0, short_path[1:pos(chr(0), short_path) - 1], inpath))
+end
+
+/*************************************************************************
+> Menu flag routines
+*************************************************************************/
+
+integer proc MFBlockInCurrFile()
+  return(iif(isblockincurrfile(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+// Most commands should use MFBlockInCurrFile
+integer proc MFBlockMarked()
+  return(iif(isblockmarked(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc MFBrowseActive()
+  return(iif(browsemode(), _MF_GRAYED_, _MF_CLOSE_ALL_BEFORE_))
+end
+
+integer proc MFBrowseMode()
+  return(iif(browsemode(), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+
+integer proc MFColumnBlockMode()
+  return(iif(column_block_mode, _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+integer proc MFColumnOverlayMode()
+  return(iif(column_overlay_mode, _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+// [was 04/02/02] CUA marking now in a sub-menu
+// Returns _MF_CHECKED_ if the CUA macro is active.
+//integer proc MFCUAActive()
+//  return(iif((getglobalint("CUA") & 1) <> 0, _MF_CHECKED_, _MF_UNCHECKED_))
+//end
+
+// Menu item is grayed if macro is not enabled or "persistent block" is active
+//integer proc MFCUATyping()
+//  integer status, ret = _MF_GRAYED_
+//  status = getglobalint("CUA")
+//  if (status & 1) <> 0
+//    ret = iif((status & 2) <> 0, _MF_CHECKED_, _MF_UNCHECKED_)
+//    if (status & 4) <> 0
+//      ret = ret | _MF_GRAYED_
+//    endif
+//  endif
+//  return(ret)
+//end
+//
+//integer proc MFCUAPersistent()
+//  return(iif((getglobalint("CUA") & 1) <> 0, iif((getglobalint("CUA") & 4) <> 0, _MF_CHECKED_, _MF_UNCHECKED_), _MF_GRAYED_))
+//end
+
+// Check for UseCurrLineIfNoBlock.
+integer proc MFCutCopy()
+  return(iif(isblockincurrfile() or query(usecurrlineifnoblock), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+// Used to toggle Hex View from the menus.
+integer proc MFDisplayMode()
+  return(iif(displaymode() == _DISPLAY_HEX_, _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+integer proc MFExpandTabs()
+  return(iif(query(expandtabs), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+integer proc MFFileEmpty()
+  return(iif(numlines() == 0, _MF_GRAYED_, _MF_CLOSE_ALL_BEFORE_))
+end
+
+integer proc MFFileExists()
+  return(iif(fileexists(currfilename()), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc MFLineDrawing()
+  return(iif(query(linedrawing), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+integer proc MFMakeBackups()
+  return(iif(query(makebackups), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+integer proc MFNumFiles()
+  return(iif(numfiles() > 1, _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc MFNumLines()
+  return(iif(numlines(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc MFNumWindows()
+  return(iif(numwindows() == 1, _MF_GRAYED_, _MF_CLOSE_ALL_BEFORE_))
+end
+
+integer proc MFPaste()
+  return(iif(getclipboardblocktype(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+// Used so that you can only "Paste Over" if the clipboard holds a column
+// block.
+integer proc MFPasteColumn()
+  return(iif(getclipboardblocktype() == _COLUMN_, _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc MFRecordKeyMacro()
+  return(iif(query(kbdmacrorecording), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+// Used in conjunction with "Revert to saved"
+//integer proc MFRevert()
+//  return(iif(filechanged() and fileexists(currfilename()), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+//end
+
+integer proc MFShowSyntaxHilite()
+  return(iif(query(showsyntaxhilite), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+// Shows the state of "Sort Descending" on the Util menu.
+integer proc MFSortDescending()
+  return(iif(sort_flags & _DESCENDING_, _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+// Shows the state of "Ignore Case" on the Util menu.
+integer proc MFSortIgnoreCase()
+  return(iif(sort_flags & _IGNORE_CASE_, _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+// [was 05/31/02] use internal tabshiftsblock variable
+integer proc MFTabShiftsBlock()
+  return(iif(query(tabshiftsblock), _MF_CHECKED_, _MF_UNCHECKED_))
+end
+
+// [was 03/20/01] fixed
+integer proc MFTemplateExpand()
+  integer rc
+
+  if ismacroloaded(template)
+    set(templateexpansion, ON)
+    rc = _MF_CHECKED_
+  else
+    set(templateexpansion, OFF)
+    rc = _MF_UNCHECKED_
+  endif
+  return(rc)
+end
+
+// Can we perform the GlobalUndelete or PasteUndelete commands?
+integer proc MFUndelete()
+  integer ret = _MF_GRAYED_
+
+  if createtempbuffer()
+    if pasteundelete()
+      ret = _MF_CLOSE_ALL_BEFORE_
+    endif
+    abandonfile()
+  endif
+  return(ret)
+end
+
+// If ViewFindsID returns 0, the ViewFinds() command won't work.
+integer proc MFViewFindsID()
+  return(iif(query(viewfindsid) == 0, _MF_GRAYED_, _MF_CLOSE_ALL_BEFORE_))
+end
+
+integer proc MFWinClipAvailable()
+  return(iif(not iswinclipavailable(), _MF_GRAYED_, _MF_CLOSE_ALL_BEFORE_))
+end
+
+integer proc MFWinClipColumnBlock()
+  return(iif(iswinclipavailable() <> _COLUMN_, _MF_GRAYED_, _MF_CLOSE_ALL_BEFORE_))
+end
+
+// [was 05/31/02] added
+integer proc MFGUI()
+  return(iif(isgui(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+// [was 05/31/02] added for LineDrawing mode
+integer proc MFOEMFont()
+  string font[32] = ""
+  integer pointsize, flags
+
+  getfont(font, pointsize, flags)
+  return(iif(not isgui() or (flags & _FONT_OEM_), _MF_DONT_CLOSE_, _MF_GRAYED_))
+end
+
+/*************************************************************************
+> Miscellaneous routines
+*************************************************************************/
+
+// Pass a zero (FALSE) argument to bypass error reporting if the macro
+// cannot be loaded.
+integer proc EnableCUAMarking(integer verbose)
+  integer ret, lvl
+
+  if verbose
+    ret = execmacro("CUA")
+  else
+    lvl = set(msglevel, _NONE_)
+    ret = execmacro("CUA")
+    set(msglevel, lvl)
+  endif
+
+  return(ret)
+end
+
+// [was 08/14/97] .BAT/.BTM added as a program type
+// [was 02/27/01] .cmd,.dpr,.inf,.kix,.vbs added
+// [was 04/02/02] added .cls and .frm as VB functions
+// [was 04/18/02] added .tex
+// [was 03/09/04] moved .h to cpp_fun, added .cs (C#) to java_fyn
+string proc GetFunctionStr()
+  case currext()   // this is returned in lowercase
+    when ".asm"
+      return(asm_fun)
+    when ".bas",".bi",".cls",".frm",".pb3",".pbi",".pbs",".vbs"
+      return(basic_fun)
+    when ".bat",".btm",".cmd",".kix"
+      return(bat_fun)
+    when ".c"
+      return(c_fun)
+    when ".cc",".cpp",".h",".hpp"
+      return(cpp_fun)
+    when ".ini",".inf"
+      return(ini_fun)
+    when ".cs",".java"
+      return(java_fun)
+    when ".inc",".s",".si",".ui"
+      return(sal_fun)
+    when ".dpr",".pas",".pp"
+      return(pas_fun)
+    when ".py"
+      return(python_fun)
+    when ".ch",".fmt",".frg",".lbg",".mpr",".prg",".qpr",".spr"
+      return(xbase_fun)
+    when ".tex"
+      return(tex_fun)
+  endcase
+  return("")
+end
+
+// Find[Next|Previous][Non]BlankLine routines used by FindPara.
+integer proc FindNextBlankLine()
+  repeat
+    if not down()
+      return(FALSE)
+    endif
+  until posfirstnonwhite() == 0
+  return(TRUE)
+end
+
+integer proc FindNextNonBlankLine()
+  repeat
+    if not down()
+      return(FALSE)
+    endif
+  until posfirstnonwhite()
+  return(TRUE)
+end
+
+integer proc FindPreviousBlankLine()
+  repeat
+    if not up()
+      return(FALSE)
+    endif
+  until posfirstnonwhite() == 0
+  return(TRUE)
+end
+
+integer proc FindPreviousNonBlankLine()
+  repeat
+    if not up()
+      return(FALSE)
+    endif
+  until posfirstnonwhite()
+  return(TRUE)
+end
+
+// Used by mPrevPara/mNextPara/mBegPara/mEndPara/mMarkPara
+// [was 04/18/02] increased length of s to maximum
+integer proc FindPara(integer previous)
+  integer col = currcol(), cline = currline()
+  string opt[1], s[255] = GetFunctionStr()
+
+  if length(s)
+    if previous
+      begline()
+      opt = "b"
+    else
+      endline()
+      opt = ""
+    endif
+    lfind(s, "ix+" + opt)
+  else
+    pushposition()
+    if previous
+      up()
+      repeat
+      until posfirstnonwhite() or not up()
+      repeat
+      until not up() or posfirstnonwhite() == 0
+      if posfirstnonwhite() == 0
+        down()
+      endif
+      if posfirstnonwhite()
+        killposition()
+      else
+        popposition()
+      endif
+    else
+      if (posfirstnonwhite() == 0 or FindNextBlankLine()) and FindNextNonBlankLine()
+        killposition()
+      else
+        popposition()
+      endif
+    endif
+  endif
+  gotocolumn(col)
+  return(currline() <> cline)
+end
+
+// used by mCReturn
+string proc GetFirstWord()
+  string word[32] = ""
+
+  pushposition()
+  gotopos(posfirstnonwhite())
+  word = lower(getword())
+  popposition()
+  return(" " + word + " ")
+end
+
+// Tells you if the name of the current buffer is an unsuitable filename;
+// used by mSaveFile and AfterUpdateDisplay (for RecentFiles processing)
+// [was 03/05/01] updated this
+integer proc InvalidFilename(string filename)
+  return(
+         pos("+", filename) or
+         pos("<", filename) or
+         pos(">", filename) or
+         pos("|", filename)
+        )
+end
+
+// Returns the last duplicate window on the screen; used by
+// mCloseDupWindows
+integer proc LastDupWindow(integer id)
+  integer nw = numwindows(), zoomed = iszoomed(), n = 2, windownum = 0,
+    cid = getbufferid(), wid = windowid()
+
+  if nw > 1                       // has to be more than one window
+    if zoomed
+      zoomwindow()                // unzoom current if zoomed
+    endif
+
+    gotowindow(1)                 // jump to first editing window
+    while getbufferid() <> id     // while current buffer <> passed buffer,
+      nextwindow()                // keep going
+    endwhile
+
+    while n <= nw                 // while 2 (initially) less than num,
+      nextwindow()                // get to the next window
+      if getbufferid() == id      // if current buffer == passed buffer,
+        windownum = windowid()    // current window is last duplicate
+      endif
+      n = n + 1                   // increment counter to keep going
+    endwhile
+
+    if zoomed                     // re-zoom if zoomed in the first place
+      zoomwindow()
+    endif
+
+  endif
+
+  gotowindow(wid)                 // get back to original window
+  gotobufferid(cid)               // get back to original buffer
+  return(windownum)               // return the window's number
+end
+
+keydef PickListKeys
+  <ctrl q><c> endfile()
+  <ctrl q><d> endline()
+  <ctrl q><r> begfile()
+  <ctrl q><s> begline()
+  <ctrl home> begfile()
+  <ctrl end>  endfile()
+  <ctrl pgup> rollleft()
+  <ctrl pgdn> rollright()
+end
+
+// Reads a number from the screen; used in menus
+integer proc ReadNum(integer n)
+  string s[5] = str(n)
+
+  return(iif(readnumeric(s), val(s), n))
+end
+
+// Returns the VarTabs editor variable as an editable string
+string proc VarTabsToStr()
+  string s[32] = query(vartabs), vs[255] = ""
+  integer i = 0
+
+  while (i < 256)
+    if getbit(s, i)
+      vs = vs + str(i, 10) + " "
+    endif
+    i = i + 1
+  endwhile
+  return(substr(vs, 1, length(vs) - 1))
+end
+
+// Bit-encodes a plain string for the VarTabs editor variable
+string proc VarTabSet(string ts)
+  string s[32] = format(chr(0):32:chr(0)), workstr[255] = ts
+  integer i, p = 1, q = length(workstr)
+
+  if q
+    while p <= q
+      if workstr[p] == " "
+        p = p + 1
+      else
+        i = val(substr(workstr, p, q), 10)
+        if i > 0 and i < 256
+          setbit(s, i)
+        endif
+        p = p + length(str(i, 10))
+      endif
+    endwhile
+  endif
+  return(s)
+end
+
+/*************************************************************************
+> Toggle commands
+*************************************************************************/
+
+proc mToggleBrowseMode()
+  browsemode(not browsemode())
+end
+
+proc mToggleColumnBlockMode()
+  column_block_mode = not column_block_mode
+end
+
+proc mToggleColumnOverlayMode()
+  column_overlay_mode = not column_overlay_mode
+end
+
+// [was 04/02/02] CUA marking now in a sub-menu
+//proc mToggleCUAMarking()
+//  iif(getglobalint("CUA"), execmacro("CUA off"), execmacro("CUA on"))
+//end
+//
+// For the CUA macro, "-t" alone indicates it should toggle the "typing
+// replaces block" state.
+//proc mToggleCUATyping()
+//  execmacro("CUA -t")
+//end
+//
+//proc mToggleCUAPersistent()
+//  execmacro("CUA -p")
+//end
+
+proc mToggleDisplayMode()
+  iif(displaymode() == _DISPLAY_TEXT_, displaymode(_DISPLAY_HEX_), displaymode(_DISPLAY_TEXT_))
+end
+
+// Tab and Shift-Tab use this to toggle hex edit mode
+proc ToggleHexEdit()
+  iif(hexedit(), hexedit(OFF), hexedit(ON))
+end
+
+// [was 05/31/02] beware of OEM fonts!
+proc mToggleLineDrawing()
+  string font[32] = ""
+  integer pointsize, flags
+
+  getfont(font, pointsize, flags)
+  if flags & _FONT_OEM_
+    toggle(linedrawing)
+  endif
+end
+
+// Toggles a sort flag (pass as which); either _IGNORE_CASE_ or
+// _DESCENDING_
+proc ToggleSortFlag(integer which)
+  if sort_flags & which
+    sort_flags = sort_flags & ~ which
+  else
+    sort_flags = sort_flags | which
+  endif
+end
+
+// Make sure to use _MF_CLOSE_ALL_BEFORE_ on menus with this command
+// because it forces a screen refresh
+proc mToggleSyntaxHilite()
+  toggle(showsyntaxhilite)
+  updatedisplay(_ALL_WINDOWS_REFRESH_)
+end
+
+/*************************************************************************
+> Enhanced save and close commands
+*************************************************************************/
+
+// [was 02/27/01] use openfileandwindow instead
+//proc mOpenSwitch()
+//  integer cid = getbufferid()
+//
+//  if numfiles() == 1              // one file open...
+//    if hwindow()                  // if we can create a window...
+//      if not editfile()           // if we don't want to edit...
+//        closewindow()             // close the window
+//      endif
+//    else                          // can't create a window, so...
+//      nextwindow()                // go to the next window...
+//      if getbufferid() == cid     // if same file in next window...
+//        nextfile()                // switch to the next file
+//      endif
+//    endif
+//  else                            // more than one file open...
+//    if numwindows() == 1          // if only one window open...
+//      nextfile()                  // switch to the next file
+//    else                          // more than one window open...
+//      nextwindow()                // switch to the next window
+//      if getbufferid() == cid     // if same file in next window...
+//        nextfile()                // switch to the next file
+//      endif
+//    endif
+//  endif
+//end
+
+// This replacement SaveAs doesn't just write out a buffer. It works like
+// ChangeCurrFilename followed by SaveFile. This is more like in Windows
+// apps.
+// [was 03/12/01] rewrite, now easier to read
+// [was 06/01/02] not needed, thanks to renameandsavefile()
+/*integer proc mSaveAs()
+  string fn[_MAXPATH_] = expandpath(currfilename(), TRUE)
+  integer rc
+
+  repeat
+    rc = 1
+    //if ask("Save as:", fn, _EDIT_HISTORY_) and length(fn)
+    //if askfilename("Save as:", fn, _WRITE_ACCESS_, _EDIT_HISTORY_) and length(fn)
+    if askfilename("Save as:", fn, _FULL_PATH_ | _WRITE_ACCESS_, _EDIT_HISTORY_) and length(fn)
+      if fileexists(fn)
+        rc = msgbox("", "Overwrite existing file?", _YES_NO_CANCEL_)
+      endif
+      case rc
+        when 0           // cancel or <escape>
+          return(FALSE)
+        when 1           // yes, or file doesn't exist
+          if InvalidFileName(fn)
+            msgbox("", "File name not valid")
+            rc = FALSE
+          else
+            //fn = expandpath(fn, TRUE)  // expand and respect case
+            //rc = changecurrfilename(fn, _DONT_PROMPT_ | _DONT_EXPAND_ | _OVERWRITE_)
+            rc = changecurrfilename(fn, _DONT_PROMPT_ | _OVERWRITE_)
+            if rc
+              rc = savefile()
+              if not rc
+                msgbox("", "Could not save file")
+              endif
+            else
+              msgbox("", "Could not change file name")
+            endif
+          endif
+        when 2           // no
+          rc = FALSE     // ask again
+      endcase
+    else                 // canceled the prompt box
+      return(FALSE)
+    endif
+  until rc
+
+  return(rc)
+end*/
+
+integer proc mSaveFile()
+  integer retval = 0
+
+  if InvalidFilename(currfilename())
+    // [was 06/01/02] use renameandsavefile() instead
+    //retval = mSaveAs()
+    retval = renameandsavefile()
+  else
+    retval = savefile()
+  endif
+  return(retval)
+end
+
+// mCloseDupWindows is later in the file...
+forward proc mCloseDupWindows()
+
+integer proc mQuitFile()
+  integer retval = 0
+
+  // use quitfile() instead of abandonfile(), below, so that the
+  // QuitToPrompt editor variable doesn't get ignored...
+
+  if filechanged()                 // if file has been modified,
+    case msgbox("", "Save changes to " + splitpath(currfilename(), _NAME_ | _EXT_) + "?", _YES_NO_CANCEL_)
+      when 0                       // Cancel...
+        retval = -1                // return -1 for mExit()
+      when 1                       // Yes...
+        retval = mSaveFile()       // save the file
+        if retval                  // if successful,
+          // if numfiles() == 1       // if we're quitting the last file,
+          //   execmacro("STATE -s")  // save editor state
+          // endif
+          retval = quitfile()      // quit the file
+        endif
+      when 2                       // No...
+        filechanged(FALSE)         // mark the file as unmodified
+        // if numfiles() == 1         // if we're quitting the last file,
+        //   execmacro("STATE -s")    // save editor state
+        // endif
+        retval = quitfile()        // and quit the file
+    endcase
+  else                             // ...file is not marked as modified
+    // if numfiles() == 1             // if we're quitting the last file,
+    //   execmacro("STATE -s")        // save editor state
+    // endif
+    retval = quitfile()            // quit the file
+  endif
+
+  if close_dup_windows
+    mCloseDupWindows()             // close duplicate editing windows
+  endif
+  return(retval)                   // return success or failure
+end
+
+integer proc mSaveAndQuitFile()
+  integer retval = TRUE
+
+  if filechanged()          // only save if the file has been changed
+    retval = mSaveFile()
+  endif
+  if retval                 // if we can save the current file,
+    retval = mQuitFile()    // quit the current file
+  endif
+  return(retval)
+end
+
+integer proc mExit()
+  integer retval = 0, n = 0, cid = 0, nonechanged = TRUE
+
+  for n = 1 to numfiles()      // traverse the file ring
+    if filechanged()           // if the file has been modified,
+      updatedisplay()          // update so we can see which one it is
+      retval = mQuitFile()     // try to quit the file
+      if retval == -1          // if -1 (cancel selected),
+        return(FALSE)          // stop NOW; exit was UNSUCCESSFUL
+      endif
+    endif
+    nextfile(_DONT_LOAD_)      // switch to the next file
+  endfor
+
+  if buffertype() == _NORMAL_          // if current buffer is normal,
+    cid = getbufferid()                // keep current buffer number
+    for n = 1 to numfiles()            // traverse file ring again
+      nonechanged = not filechanged()  // see if file is modified
+      if not nonechanged               // if a file is modified,
+        break                          // quit the for loop
+      endif
+      nextfile(_DONT_LOAD_)
+    endfor
+    gotobufferid(cid)                  // go back to original file
+  else                                 // ...current buffer isn't normal
+    filechanged(FALSE)                 // so flag as unmodified
+  endif
+
+  retval = nonechanged                 // TRUE if no files changed
+
+  if nonechanged                       // if all files are safe,
+    retval = exit()                    // exit gracefully from editor
+  endif
+
+  return(retval)                       // return proper exit code
+end
+
+integer proc mSaveAllFiles()
+  integer retval = 1, cid = getbufferid(), n = 0
+
+  for n = 1 to numfiles()     // traverse the file ring
+    if filechanged()          // if a file is modified,
+      retval = mSaveFile()    // attempt to save it
+    endif
+    nextfile(_DONT_LOAD_)     // switch to the next file
+  endfor
+  gotobufferid(cid)           // return to original file
+  return(retval)
+end
+
+integer proc mSaveAllAndExit()
+  integer retval = 0, cid = getbufferid()
+
+  retval = mSaveAllFiles()       // try to save all files
+  if retval                      // if successful,
+    retval = mExit()             // try to exit from the editor
+  else                           // we weren't able to exit, so
+    gotobufferid(cid)            // return to current file
+  endif
+  return(retval)
+end
+
+/*************************************************************************
+> Editing commands implemented as macros
+*************************************************************************/
+
+// [was 03/09/04] this function is not needed
+//proc mAbout()
+//  integer save_attr, cursor
+//
+//  cursor = set(cursor, off)
+//  save_attr = query(textattr)
+//  set(textattr, ((save_attr & 0x70) shr 4) | ((save_attr & 0x07) shl 4))
+//  signon()
+//  getkey()
+//  set(textattr, save_attr)
+//  set(cursor, cursor)
+//  updatedisplay(_ALL_WINDOWS_REFRESH_)
+//end
+
+proc mAboutThisUI()
+  integer cursorstatus = set(cursor, OFF),
+    x1 = query(screencols)/2 - 32,
+    y1 = query(screenrows)/2 - 2,
+    x2 = query(screencols)/2 + 33,
+    y2 = query(screenrows)/2 + 3,
+    textcolor = query(textattr), save_attr = query(attr)
+
+  set(attr, ((textcolor & 0x70) shr 4) | ((textcolor & 0x07) shl 4))
+  popwinopen(x1, y1, x2, y2, 1, "", query(attr))
+
+  clrscr()
+
+  putctrstr("Bill Stewart's WordStar UI for The SemWare Editor Professional", 2)
+  putctrstr(ui_version_string, 3)
+
+  getkey()
+
+  set(cursor, cursorstatus)
+  set(attr, save_attr)
+  popwinclose()
+  updatedisplay()
+end
+
+// [was 03/08/01]
+proc mAdjust(string adj)
+  if not isblockincurrfile()
+    pushblock()
+    unmarkblock()
+    case upper(adj)
+      when "LEFT"
+        markcolumn(currline(), query(leftmargin), currline(), poslastnonwhite())
+      when "RIGHT"
+        markcolumn(currline(), currpos(), currline(), query(rightmargin))
+      when "CENTER"
+        markline(currline(), currline())
+    endcase
+    if isblockincurrfile()
+      execmacro("ADJUST "+adj)
+    endif
+    popblock()
+  else
+    execmacro("ADJUST "+adj)
+  endif
+end
+
+integer chartid
+string chart_title[] = "DEC HEX CHAR"
+
+proc mAsciiChart()
+  integer i, ok, c, cur_id
+
+  c = currchar()
+  cur_id = getbufferid()
+  if createbuffer("*AsciiChart*", _SYSTEM_, chartid, _FORCE_NAME_)
+    if numlines() == 0
+      for i = 0 to 255
+        if not addline(format(i:7, str(i, 16):4, chr(i):3))
+            break
+        endif
+      endfor
+    endif
+    begfile()
+    if c > 0
+      gotoline(c + 1)
+    endif
+    ok = list(chart_title, length(chart_title) + 6)
+    i = currline() - 1
+    gotobufferid(cur_id)
+    if ok
+      inserttext(chr(i))
+    endif
+  endif
+end
+
+proc mChangeCase(integer type)
+  pushblock()
+  if not iscursorinblock()
+    if not markword()
+      popblock()
+      return()
+    endif
+  endif
+
+  case type
+    when UPPER_CASE upper()
+    when LOWER_CASE lower()
+    when FLIP_CASE flip()
+    when CAP_CASE execmacro("CAPITAL")
+  endcase
+
+  popblock()
+end
+
+proc mCloseDupWindows()
+  integer zoomed = iszoomed(), lastdup = 0, wid = windowid()
+
+  if zoomed                                 // unzoom current if zoomed
+    zoomwindow()
+  endif
+
+  repeat
+    lastdup = LastDupWindow(getbufferid())  // get last duplicate window id
+    if lastdup > 0                          // if > 0 (one exists),
+      gotowindow(lastdup)                   // jump to it
+      closewindow()                         // and close it
+    endif
+  until lastdup == 0                        // go till there's no more
+
+  gotowindow(wid)                           // go back to original window
+
+  if zoomed                                 // re-zoom if we started zoomed
+    zoomwindow()
+  endif
+end
+
+proc mCloseFileAndWindow()
+  if mQuitFile()
+     closewindow()
+  endif
+end
+
+proc mCompileCurrFile()
+  execmacro("COMPILE " + quotepath(currfilename()))
+end
+
+integer compress_hist, compress_option_hist
+
+proc mCompressView(integer show_functions)
+  string expression[100], options[12]
+
+  if compress_hist == 0
+    compress_hist = getfreehistory("UI:CompressViewFind")
+    compress_option_hist = getfreehistory("UI:CompressViewFindOptions")
+    // [was 08/14/97] Initialize CompressView's option history.
+    addhistorystr(query(findoptions), compress_option_hist)
+  endif
+
+  if show_functions
+    options = "ix"
+    expression = GetFunctionStr()
+    if length(expression) == 0
+      expression = "^" + ident_set
+    endif
+  else
+    expression = ""
+    options = ""
+    if not ask("String to list all occurrences of:", expression, compress_hist)
+      return()
+    endif
+    if length(expression) == 0
+      options = "x"
+      expression = "^" + ident_set
+    elseif not ask("Search options [IWXA] (Ignore-case Words reg-eXp All-files):", options, compress_option_hist)
+      return()
+    endif
+  endif
+
+  if not lfind(expression, options + "v")
+    message(expression + " not found.")
+  endif
+end
+
+proc mCopyBlock()
+  integer block_type = isblockmarked()
+
+  if block_type
+    // pushblock()  // to leave the original block marked
+    copyblock(iif((block_type == _COLUMN_) and column_overlay_mode, _OVERWRITE_, _DEFAULT_))
+    // popblock()   // to leave the original block marked
+  else
+    msgbox("", "No block to copy", _OK_)
+  endif
+end
+
+//proc mDateStamp()
+//  inserttext(getdatestr(), _INSERT_)
+//end
+
+proc mDateTimeStamp()
+  inserttext(getdatestr() + " " + gettimestr(), _INSERT_)
+end
+
+// The debugger can't handle filenames with spaces; add invalid filename support
+proc mDebugCurrFile()
+  string fn[_MAXPATH_]
+
+  fn = currfilename()
+  if pos(" ", fn)
+    if not InvalidFilename(fn)
+      if (filechanged() or (not fileexists(currfilename()))) and (not savefile())
+        msgbox("", "Error saving " + currfilename())
+        return()
+      endif
+      fn = mGetShortPathName(currfilename())
+    else
+      msgbox("", "Filename not valid")
+      return()
+    endif
+  endif
+  execmacro("DEBUG " + fn)
+end
+
+// [was 02/27/01] don't need to prompt
+proc mEmptyClipboard()
+  emptybuffer(query(clipboardid))
+end
+
+proc mExchangeWindows()
+  integer firstfileid = getbufferid(), secondfileid,
+    zoomed = iszoomed(), wid = windowid()
+
+  if numwindows() > 1                // only works with windows
+    if zoomed
+      zoomwindow()                   // unzoom if zoomed
+    endif
+
+    pushposition()                   // save position
+    nextwindow()                     // hop to next window
+    secondfileid = getbufferid()     // see what file's in there
+    if firstfileid <> secondfileid   // if the two don't match,
+      gotobufferid(firstfileid)      // switch to first file
+      gotowindow(wid)                // return to initial window
+      gotobufferid(secondfileid)     // switch to the second file
+      killposition()                 // don't return to position
+    else                             // files did match
+      gotowindow(wid)                // return to initial window
+      popposition()                  // and restore cursor position
+    endif
+
+    if zoomed                        // rezoom if we unzoomed
+      zoomwindow()
+    endif
+  endif
+end
+
+//proc mFilenameStamp()
+//  inserttext(currfilename(), _INSERT_)
+//end
+
+integer proc mFindWordAtCursor(string option)
+  if length(getword(1))
+    addhistorystr(getword(1), _FIND_HISTORY_)
+    return(find(getword(1), query(findoptions) + option))
+  endif
+  return(find())
+end
+
+// [was 02/27/01] use external "adjust" macro instead
+//proc mFlushRight()
+//  integer beg_line = query(blockbegline), end_line = query(blockendline),
+//    beg_pos = query(blockbegcol), end_pos = query(blockendcol), cid, tid
+//
+//  if not iscursorinblock()
+//    pushblock()
+//    unmarkblock()
+//    pushposition()
+//    gotopos(poslastnonwhite())
+//    right()
+//    if currpos() > query(rightmargin)
+//      popposition()
+//    else
+//      markcolumn()
+//      gotopos(query(rightmargin))
+//      markcolumn()
+//      popposition()
+//      copyblock()
+//      gotoblockend()
+//      right()
+//    endif
+//    popblock()
+//  else
+//    if iscursorinblock() <> _COLUMN_
+//      beg_pos = 1
+//    endif
+//    if (end_pos >= MAXLINELEN) or (iscursorinblock() <> _COLUMN_)
+//      end_pos = query(rightmargin)
+//    endif
+//    pushblock()
+//    unmarkblock()
+//    pushposition()
+//    markcolumn(beg_line, beg_pos, end_line, end_pos)
+//    cid = getbufferid()
+//    tid = createtempbuffer()
+//    if tid
+//      gotopos(beg_pos)
+//      copyblock()
+//      gotoblockbegin()
+//      repeat
+//        if posfirstnonwhite() > 0
+//          while poslastnonwhite() < query(blockendcol)
+//            shifttext(1)
+//          endwhile
+//        endif
+//      until not down()
+//      gotobufferid(cid)
+//      gotoline(beg_line)
+//      gotopos(beg_pos)
+//      copyblock(_OVERWRITE_)
+//      abandonfile(tid)
+//    else
+//      msgbox("", "Could not create temporary buffer")
+//    endif
+//    popposition()
+//    popblock()
+//  endif
+//end
+
+proc mGotoLineCol()
+  string reply[19] = "", sline[19] = "", scolumn[19] = ""
+  integer commapos = 0, line = 0, column = 0
+
+  if ask("Go to line, column:", reply, gotolinecol_history) and length(reply)
+    commapos = pos(",", reply)       // find the comma
+
+    // commapos == 0 if no column specified, or 1 if only a column specified
+    if (commapos == 0) or (commapos > 1)
+      sline = reply                  // copy the reply into a work variable
+      if commapos > 0                // if comma found, copy only up to it
+        sline = substr(reply, 1, commapos - 1)
+      endif
+      line = val(sline)              // copy into an integer variable
+      case sline[1]                  // see if relative operators specified
+        when "+"
+          line = currline() + val(substr(sline, 2, length(sline) - 1))
+        when "-"
+          line = currline() - val(substr(sline, 2, length(sline) - 1))
+          if line < 1
+            line = 1
+          endif
+      endcase
+      if line > 0
+        gotoline(line)
+      endif
+    endif
+
+    if commapos > 0                  // if comma was specified,
+      scolumn = substr(reply, commapos + 1, length(reply) - commapos)
+      column = val(scolumn)
+      case scolumn[1]                // handle relative operators
+        when "+"
+          column = currcol() + val(substr(scolumn, 2, length(scolumn) - 1))
+        when "-"
+          column = currcol() - val(substr(scolumn, 2, length(scolumn) - 1))
+          if column < 1
+            column = 1
+          endif
+      endcase
+      if column > 0
+        gotocolumn(column)
+      endif
+    endif
+  endif
+end
+
+// mHelp is later in the file...
+forward proc mHelp(string topic)
+
+// [was 02/23/01] expanded to use a marked block, if one is marked
+proc mHelpOnWordAtCursor()
+  string cur_word[64]
+
+  if not isblockincurrfile()   // [was 02/23/01]
+    cur_word = trim(gettext(currpos(), sizeof(cur_word)))
+    pushposition()
+    if isword() or lfind(ident_set, "xcb") or lfind(ident_set, "xc+")
+        cur_word = getword(TRUE)
+    endif
+    popposition()
+  else                         // [was 02/23/01]
+    cur_word = getmarkedtext() // [was 02/23/01]
+  endif                        // [was 02/23/01]
+  mHelp(cur_word)
+end
+
+proc mLiteral(integer show)
+  integer k
+
+  if show
+    message("Press character to insert (0 for ASCII chart): ")
+    vgotoxy(wherex(), wherey())
+  endif
+
+  k = getkey()
+  if (chr(k & 0xFF) == "0") or ((k shr 8) == 11)
+    updatedisplay(_STATUSLINE_REFRESH_)
+    mASCIIChart()
+  else
+    pushkey(k)
+    literal()
+    updatedisplay(_STATUSLINE_REFRESH_)
+  endif
+end
+
+proc mMarkBlockBegin()
+  unmarkblock()
+  iif(column_block_mode, markcolumn(), markchar())
+end
+
+proc mMarkBlockEnd()
+  if query(marking)
+    set(marking, OFF)
+  elseif isblockincurrfile() and (not iscursorinblock())
+    mark(isblockincurrfile())
+  endif
+end
+
+proc mMoveBlock()
+  integer block_type = isblockmarked()
+
+  if block_type
+    moveblock(iif((block_type == _COLUMN_) and column_overlay_mode, _OVERWRITE_, _DEFAULT_))
+  else
+    msgbox("", "No block to move", _OK_)
+  endif
+end
+
+integer proc mNextPara()
+  return(FindPara(FALSE))
+end
+
+integer proc mPrevPara()
+  return(FindPara(TRUE))
+end
+
+proc mBegPara()
+  integer cline, pline
+
+  cline = currline()
+  mPrevPara()
+  pline = currline()
+  mNextPara()
+  if cline <> currline()
+    gotoline(pline)
+  endif
+end
+
+proc mEndPara()
+  integer cline = currline()
+
+  if mNextPara()
+    FindPreviousBlankLine()
+    FindPreviousNonBlankLine()
+  else
+    endfile()
+    repeat
+    until currline() <= cline or posfirstnonwhite() or not up()
+  endif
+end
+
+proc mMarkPara()
+  pushposition()
+  unmarkblock()
+  mBegPara()
+  markline()
+  mEndPara()
+  markline()
+  popposition()
+end
+
+proc mNameClip()
+  pushblock()
+  execmacro("NAMECLIP")
+  popblock()
+end
+
+proc mOpenFileAndWindow()
+  // [was 03/09/04] changed to editthisfile()
+  if editthisfile()
+    prevfile()
+    hwindow()
+  endif
+end
+
+proc mPurgeKeyMacro()
+  if msgbox("", "Purge all keyboard macros?", _YES_NO_CANCEL_) == 1
+    purgekeymacro()
+  endif
+end
+
+// [was 02/27/01] no longer needed, now that we have undo()
+//integer proc mRevertToSaved()
+//  string currname[_MAXPATH_] = currfilename()
+//  integer ret = 0
+//
+//  if fileexists(currname) and filechanged()
+//    if msgbox("", "Abandon all changes to" + chr(13) +
+//       splitpath(currname, _NAME_ | _EXT_) + chr(13) +
+//       "and reload it from disk?", _YES_NO_CANCEL_) == 1
+//      pushposition()
+//      emptybuffer()
+//      ret = replacefile(currname, _OVERWRITE_)
+//      popposition()
+//    endif
+//  else
+//    msgbox("", "File not found, or file has not been changed", _OK_)
+//  endif
+//
+//  return(ret)
+//end
+
+proc mSaveSettings()
+  if msgbox("", "Save the current settings to the executable file?", _YES_NO_CANCEL_) == 1
+    if savesettings()
+      msgbox("", "The executable file was updated successfully", _OK_)
+    else
+      msgbox("", "Error updating the executable file", _OK_)
+    endif
+  endif
+end
+
+//proc mSendFormFeed()
+//  if not printchar(chr(12))
+//    msgbox("", "Error sending form feed", _OK_)
+//  endif
+//end
+//
+//proc mSendInitString()
+//  string s[60] = query(printinit)
+//  integer i
+//
+//  for i = 1 to length(s)
+//    if not printchar(s[i])
+//      msgbox("", "Error sending init string", _OK_)
+//      break
+//    endif
+//  endfor
+//end
+
+proc mSetLeftMargin()
+  integer ok
+  string margin[5]
+
+  repeat
+    margin = str(query(leftmargin))
+    if (not asknumeric(format("Left margin [0..", MAXLINELEN, "]:"), margin)) or (not length(margin))
+      break
+    endif
+    set(leftmargin, val(margin))
+    ok = val(margin) in 0..MAXLINELEN
+  until ok
+end
+
+proc mSetRightMargin()
+  integer ok
+  string margin[5]
+
+  repeat
+    margin = str(query(rightmargin))
+    if (not asknumeric(format("Right margin [0..", MAXLINELEN, "]:"), margin)) or (not length(margin))
+      break
+    endif
+    set(rightmargin, val(margin))
+    ok = val(margin) in 0..MAXLINELEN
+  until ok
+end
+
+proc mSetTabWidth()
+  integer ok
+  string width[2]
+
+  repeat
+    width = str(query(tabwidth))
+    if (not asknumeric(format("Tab width [1..", MAXTABWIDTH, "]:"), width)) or (not length(width))
+      break
+    endif
+    set(tabwidth, val(width))
+    ok = val(width) in 1..MAXTABWIDTH
+  until ok
+end
+
+proc mSetVarTabs()
+  string vs[255] = VarTabsToStr()
+
+  if ask("Variable Tab Stops:", vs)
+    set(vartabs, VarTabSet(vs))
+  endif
+end
+
+integer proc mShiftBlock(integer direction)
+  integer goal_line = currline(), btype = iscursorinblock(),
+    save_marking = set(marking, OFF), p = currpos()
+
+  pushposition()
+  if btype or (isblockincurrfile() and currline() >= query(blockbegline) and currline() <= query(blockendline))
+    goal_line = query(blockendline)
+    gotoblockbegin()
+  endif
+  repeat
+  until not shifttext(direction) or not rolldown() or currline() > goal_line
+  popposition()
+  gotopos(p)
+  set(marking, save_marking)
+  return(TRUE)
+end
+
+// [was 08/14/97] Temporarily disable the _AFTER_GETKEY_ hook for
+// compatibility with the CUA macro.
+proc mShift()
+  integer // k = set(equateenhancedkbd, ON),
+  state = sethookstate(OFF, _AFTER_GETKEY_)
+
+  loop
+    message("<Left>,<Right>,<Tab>,<Shift Tab> to shift text: ")
+    case getkey()
+      when <cursorleft>
+        mShiftBlock(-1)
+      when <cursorright>
+        mShiftBlock(1)
+      when <tab>
+        mShiftBlock(query(tabwidth))
+      when <shift tab>
+        mShiftBlock(-query(tabwidth))
+      otherwise
+        break
+    endcase
+    updatedisplay(_REFRESH_THIS_ONLY_ | _WINDOW_REFRESH_)
+  endloop
+
+  sethookstate(state, _AFTER_GETKEY_)
+  //set(equateenhancedkbd, k)
+  updatedisplay()
+end
+
+//proc mTimeStamp()
+//  inserttext(gettimestr(), _INSERT_)
+//end
+
+// [was 03/05/01]
+proc mToggleTemplateExpand()
+  if ismacroloaded(template)
+    set(templateexpansion, OFF)
+    purgemacro(template)
+  else
+    set(templateexpansion, iif(loadmacro(template), ON, OFF))
+  endif
+end
+
+proc mViewClipboard()
+  if createbuffer("", _HIDDEN_)
+    pushblock()
+    if paste() and numlines()
+      llist("Clipboard", query(screencols), query(screenrows), _ENABLE_SEARCH_ | _ENABLE_HSCROLL_)
+    else
+      msgbox("", "Clipboard is empty", _OK_)
+    endif
+    abandonfile()
+    popblock()
+  endif
+end
+
+proc mViewWindowsClipboard()
+  if createbuffer("", _HIDDEN_)
+    pushblock()
+    if iswinclipavailable() and pastefromwinclip() and numlines()
+      llist("Windows Clipboard", query(screencols), query(screenrows), _ENABLE_SEARCH_ | _ENABLE_HSCROLL_)
+    else
+      msgbox("", "Unable to paste from Windows clipboard", _OK_)
+    endif
+    abandonfile()
+    popblock()
+  endif
+end
+
+proc mViewFinds()
+  if query(viewfindsid) <> 0
+    viewfinds()
+  else
+    msgbox("", "View buffer does not exist", _OK_)
+  endif
+end
+
+/*************************************************************************
+> Native commands augmented by macros
+*************************************************************************/
+
+proc mBackspace()
+  if currpos() == 1
+    if prevchar()
+      joinline()
+    endif
+    return()
+  endif
+
+  if query(autoindent) and language
+    if currpos() <= posfirstnonwhite()
+      tableft()
+      return()
+    endif
+    pushposition()
+    gotocolumn(currcol() - distancetotab())
+    if currpos() > poslastnonwhite()
+      popposition()
+      tableft()
+      return()
+    endif
+    popposition()
+  endif
+
+  left()
+  if currchar() >= 0
+    if query(insert) or currpos() == currlinelen()
+      delchar()
+    else
+      inserttext(" ", _OVERWRITE_)
+      left()
+    endif
+  endif
+end
+
+proc mBegFile()
+  integer col = currcol(), xoff = currxoffset()
+
+  begfile()
+  if query(marking) and isblockincurrfile() == _COLUMN_
+    gotocolumn(col)
+    gotoxoffset(xoff)
+  endif
+end
+
+//proc mBegLine()
+//  if not begline()
+//    gotopos(posfirstnonwhite())
+//  endif
+//end
+
+proc mBegWindow()
+  begwindow()
+  begline()
+end
+
+proc mCloseBrace()
+  if cmode and posfirstnonwhite() == 0
+    tableft()
+  endif
+  selfinsert()
+end
+
+proc mCloseWindow()
+  if numwindows() > 1
+    closewindow()
+  else
+    mExit()
+  endif
+end
+
+// [was 02/26/01] updated based on SEM's 11/05/93 version
+integer proc mCReturn()
+  integer ok, save_tabtype, should_indent = FALSE
+  string first_word[32]
+
+  if language and currpos() > posfirstnonwhite()
+    first_word = lower(GetFirstWord())
+    should_indent = pos(first_word, keywords) or
+      (cmode and (pos('{', gettext(1, currpos())) or gettext(posfirstnonwhite(), 6) == "} else")) or
+      (sal and (first_word in " string ", " integer ") and gettext(length(first_word), 5) == "proc ")
+
+    if cmode and should_indent
+      if gettext(currlinelen(), 1) == ';'
+        should_indent = FALSE
+      endif
+    endif
+  endif
+
+  if not creturn()
+    return(FALSE)
+  endif
+
+  ok = TRUE
+  if should_indent and ((query(insert) and query(returneqnextline) == false) or posfirstnonwhite() == 0)
+    save_tabtype = query(tabtype)
+    if save_tabtype in _SMART_, _VARIABLE_
+        set(tabtype, _SOFT_)                // force fixed tabs
+    endif
+    ok = tabright()
+    set(tabtype, save_tabtype)              // restore tabtype
+  endif
+  return (ok)
+end
+
+integer proc mCopy(integer method)
+  integer result = 0
+
+  if isblockincurrfile() or query(usecurrlineifnoblock)
+    pushblock()
+    result = copy(method)
+    popblock()
+  endif
+  return(result)
+end
+
+integer proc mCopyAppendToWinClip()
+  integer rc = 0
+
+  if isblockincurrfile() or query(usecurrlineifnoblock)
+    pushblock()
+    rc = copyappendtowinclip()
+    popblock()
+  endif
+  return(rc)
+end
+
+integer proc mCopyToWinClip()
+  integer rc = 0
+
+  if isblockincurrfile() or query(usecurrlineifnoblock)
+    pushblock()
+    rc = copytowinclip()
+    popblock()
+  endif
+  return(rc)
+end
+
+integer proc mCut(integer method)
+  integer result = 0
+
+  if isblockincurrfile() or query(usecurrlineifnoblock)
+    result = cut(method)
+  endif
+  return(result)
+end
+
+integer proc mDelBlock()
+  integer result = 0
+
+  if isblockincurrfile()
+    result = delblock()
+  else
+    msgbox("", "No block in this file", _OK_)
+  endif
+
+  return(result)
+end
+
+integer proc mDelChar()
+  return(iif(currchar() >= 0, delchar(), joinline()))
+end
+
+proc mDelToBOL()
+  if currpos() > 1
+    pushblock()
+    markchar()
+    begline()
+    delblock()
+    popblock()
+  endif
+end
+
+proc mEndFile()
+  integer col = currcol(), xoff = currxoffset()
+
+  endfile()
+  if query(marking) and isblockincurrfile() == _COLUMN_
+    gotocolumn(col)
+    gotoxoffset(xoff)
+  endif
+end
+
+proc mEndWindow()
+  endwindow()
+  endline()
+end
+
+proc mHelp(string topic)
+  enable(PickListKeys)
+  help(topic, 1)
+  disable(PickListKeys)
+end
+
+proc mLeftBtn()
+  if not processhotspot()
+     MainMenu()
+  endif
+end
+
+// [was 06/04/02] added support for right-click and drag to mark column block.
+forward menu PopupMenu()
+
+proc mRightBtn()
+  if waitformouseevent(_MOUSE_HOLD_TIME_|_MOUSE_RELEASE_|_MOUSE_MOVE_) == _MOUSE_RELEASE_
+    PopupMenu()
+  else
+    mousemarking(_COLUMN_)
+  endif
+end
+
+// [was 06/02/02] added this one
+//proc mMarkFile()
+//  if numlines()
+//    pushposition()
+//    unmarkblock()
+//    begfile()
+//    markchar()
+//    endfile()
+//    markchar()
+//    popposition()
+//  endif
+//end
+
+// [was 08/14/97] Update the window title on new files
+// [was 03/08/01] Window title OK now...update display instead (useful with SL macro)
+proc mNewFile()
+  if newfile()
+    //setwindowtitle(splitpath(currfilename(), _NAME_ | _EXT_) + " - " + tsepro)
+    updatedisplay()
+  endif
+end
+
+// [was 02/27/01] use new command
+integer proc mPasteFromWinClip(integer overwrite)
+  integer rc = FALSE
+
+  if iswinclipavailable()
+    rc = pastefromwinclip(overwrite)
+  else
+    msgbox("", "Unable to paste from Windows clipboard")
+  endif
+  return(rc)
+end
+
+proc mPrevHelp()
+  enable(PickListKeys)
+  prevhelp()
+  disable(PickListKeys)
+end
+
+proc mPrintBlock()
+  if isblockincurrfile()
+    printblock()
+  else
+    msgbox("", "No block in this file", _OK_)
+  endif
+end
+
+// [was 06/02/02] use standard SaveAs() behavior now
+//proc mSaveBlock()
+//  if isblockincurrfile()
+//    saveblock()
+//  else
+//    msgbox("", "No block in this file", _OK_)
+//  endif
+//end
+
+proc mSearchHelp()
+  enable(PickListKeys)
+  searchhelp()
+  disable(PickListKeys)
+end
+
+proc mSort()
+  if isblockincurrfile()
+    execmacro("SORT " + str(sort_flags))
+  else
+    msgbox("", "No block in this file", _OK_)
+  endif
+end
+
+proc mSplitLine()
+  integer p = currpos(), currx = currxoffset(), ins = set(insert, ON)
+
+  if mCReturn()
+    up()
+    gotopos(p)
+    gotoxoffset(currx)
+  endif
+  set(insert, ins)
+end
+
+// [was 05/31/02] use internal tabshiftsblock editor variable for tableft and
+// tabright. Updated to respect Insert mode.
+proc mTabLeft()
+  if displaymode() == _DISPLAY_HEX_
+    ToggleHexEdit()
+  elseif query(tabshiftsblock) and iscursorinblock() and query(insert)
+    mShiftBlock(-query(tabwidth))
+  else
+    tableft()
+  endif
+end
+
+proc mTabRight()
+  if displaymode() == _DISPLAY_HEX_
+    ToggleHexEdit()
+  elseif query(tabshiftsblock) and iscursorinblock() and query(insert)
+    mShiftBlock(query(tabwidth))
+  else
+    tabright()
+  endif
+end
+
+proc mTrackMouseCursor()
+  if gotomousecursor()
+      trackmousecursor()
+  endif
+end
+
+// [was 03/09/04] added mShiftLeftBtn()
+proc mShiftLeftBtn()
+  integer blocktype = iscursorinblock()
+
+  if blocktype == 0
+    blocktype = _NONINCLUSIVE_
+    unmarkblock()
+    markchar()
+  endif
+  mTrackMouseCursor()
+  mark(blocktype)
+end
+
+/*************************************************************************
+> ListRecentFiles processing
+*************************************************************************/
+
+string recent_files_footer[] = " {Del}-Delete entry  {Alt-Del}-Cleanup List "
+string recent_files_title[] = "Recent Files"
+
+proc mCleanupList()
+  integer done, nlines
+
+  nlines = numlines()
+  pushposition()
+  begfile()
+  repeat
+//  message(gettext(1, currlinelen()))
+    done = currline() >= numlines()
+    if fileexists(gettext(1, currlinelen()))
+      down()
+    else
+      killline()
+    endif
+  until done
+  popposition()
+  updatedisplay()
+  msgbox("", str(nlines - numlines()) + " line(s) removed")
+end
+
+string proc RecentFilesStr()
+  return(loaddir() + "TSEFILES.DAT")
+end
+
+integer proc GotoRecentFilesBuffer()
+  if createbuffer("*Recent Files List*", _SYSTEM_, recent_files, _FORCE_NAME_)
+    binarymode(-1)
+    if numlines() == 0 and query(persistentrecentfiles)
+        loadbuffer(RecentFilesStr(), -1)
+    endif
+  endif
+  return(recent_files)
+end
+
+keydef RecentFilesKeys
+  <del>     killline()
+  <alt del> mCleanupList()
+end
+
+proc RecentFilesHelper()
+  if enable(RecentFilesKeys)
+    listfooter(recent_files_footer)
+  endif
+  unhook(RecentFilesHelper)
+  breakhookchain()
+end
+
+string proc mListRecentFilesStr()
+  integer start_id, maxl
+  string fn[_MAXPATH_]
+
+  fn = ""
+  start_id = getbufferid()
+
+  if not GotoRecentFilesBuffer() or numlines() == 0
+    gotobufferid(start_id)
+    msgbox("", "No Recent Files list", _OK_)
+    return("")
+  endif
+
+  maxl = longestlineinbuffer()
+  // [was 03/09/04] fix for "recent files list scrolling problem"
+  // gotoline(1 + (numfiles() <> 0))
+  begfile()
+  gotorow(1 + (numfiles() <> 0))
+
+  hook(_LIST_STARTUP_, RecentFilesHelper)
+  if list(recent_files_title, max(maxl + 1, length(recent_files_footer) + 6))
+    fn = quotepath(gettext(1, currlinelen()))
+  endif
+  gotobufferid(start_id)
+  return(fn)
+end
+
+integer proc mListRecentFiles()
+  string fn[_MAXPATH_] = mListRecentFilesStr()
+
+  return(iif(length(fn), editfile(fn), FALSE))
+end
+
+/*************************************************************************
+> Prompt box processing
+*************************************************************************/
+
+// [was 08/14/97] Don't do anything if there's no Recent Files list.
+proc mPromptRecentFiles()
+  string fn[_MAXPATH_] = mListRecentFilesStr()
+
+  if length(fn)
+    begline()
+    killtoeol()
+    inserttext(fn)
+  endif
+end
+
+proc mPromptBoxToggleQuotes()
+  string fn[_MAXPATH_] = gettext(1, currlinelen())
+
+  pushposition()
+  if fn[1] == '"' and fn[length(fn)] == '"'
+    begline()
+    delchar()
+    endline()
+    backspace()
+  elseif fn[1] <> '"' and fn[length(fn)] <> '"'
+    begline()
+    inserttext('"', _INSERT_)
+    endline()
+    inserttext('"', _INSERT_)
+    if not length(fn)            // [was 03/05/01] position cursor inside
+      popposition()              // quotes if the prompt box is empty
+      right()
+      return()
+    endif
+  endif
+  popposition()
+end
+
+proc mPromptChangeCase(integer type)
+  pushblock()
+  if not iscursorinblock()
+    if not markline()
+      popblock()
+      return()
+    endif
+  endif
+  case type
+    when UPPER_CASE upper()
+    when LOWER_CASE lower()
+  endcase
+  popblock()
+end
+
+menu PromptBoxPopupMenu()
+  nokeys
+
+  "&Copy",                         copy()
+  "&Paste",                        paste()
+  "",,                             _MF_DIVIDE_
+
+  "Copy to Windows Clip&board",    copytowinclip()
+  "P&aste from Windows Clipboard", pastefromwinclip()
+  "",,                             _MF_DIVIDE_
+
+  "&Recent Files",                 mPromptRecentFiles()
+end
+
+// [was 03/09/04] added this function
+integer proc IsEditFilePrompt()
+  return(query(currhistorylist) in _EDIT_HISTORY_, _NEWNAME_HISTORY_)
+end
+
+// [was 03/09/04] added this function
+proc mPromptPickFile()
+  string reply[_MAXPATH_]
+
+  if IsEditFilePrompt()
+    reply = gettext(1, currlinelen())
+    if pos("*", reply) == 0
+      case rightstr(reply, 1)
+        when "\", ":"
+          reply = reply + "*"
+        otherwise
+          reply = "*"
+      endcase
+    endif
+    begline()
+    killtoeol()
+    inserttext(reply)
+    pushkey(<enter>)
+  endif
+end
+
+keydef PromptKeys
+  // [was 03/09/04] added IsEditFilePrompt() check
+  <ctrl 0>          if IsEditFilePrompt() mPromptRecentFiles() endif
+  <ctrl c>          copy()
+  // [was 03/09/04] use windows clipboard for <ctrl ins>, <ctrl greyins>
+  <ctrl ins>        copytowinclip()
+  <ctrl greyins>    copytowinclip()
+  <ctrl v>          paste()
+  // [was 03/09/04] use windows clipboard for <shift ins>, <shift greyins>
+  <shift ins>       pastefromwinclip()
+  <shift greyins>   pastefromwinclip()
+  // [was 03/09/04] added cuttowinclip() with <shift del>, <shift greydel>
+  <shift del>       cuttowinclip()
+  <shift greydel>   cuttowinclip()
+  <shift backspace> backspace()
+  <ctrl '>          mPromptBoxToggleQuotes()
+  <ctrl g>          delchar()
+  <ctrl k><">       mPromptChangeCase(UPPER_CASE)
+  <ctrl k><'>       mPromptChangeCase(LOWER_CASE)
+  <ctrl k><]>       copytowinclip()
+  <ctrl k><ctrl ]>  copytowinclip()
+  <ctrl k><[>       pastefromwinclip()
+  <ctrl k><ctrl [>  pastefromwinclip()
+  <ctrl k><c>       copyblock()
+  <ctrl k><u>       mPromptBoxToggleQuotes()
+  <ctrl l>          mPromptChangeCase(LOWER_CASE)
+  <ctrl p>          mLiteral(FALSE)
+  <ctrl q><->       mDelToBOL()
+  <ctrl q><ctrl ->  mDelToBOL()
+  <ctrl q><s>       begline()
+  <ctrl q><y>       deltoeol()
+  <ctrl t>          delrightword()
+  <ctrl u>          mPromptChangeCase(UPPER_CASE)
+  // [was 03/09/04] added <ctrl x>
+  <ctrl x>          mCut(_DEFAULT_)
+  <ctrl y>          delline()
+  <f8>              shell()
+  <alt f8>          dos()
+  // [was 03/09/04] added <f10>
+  <f10>             mPromptPickFile()
+  <shift f10>       PromptBoxPopupMenu()
+end
+
+/*************************************************************************
+> Hook routines
+*************************************************************************/
+
+proc AddToTop(string s, integer max_count)
+  if lfind(s, "^$ig")
+    killline()
+  elseif numlines() >= max_count
+    endfile()
+    killline()
+  endif
+  begfile()
+  insertline(s)
+end
+
+proc AfterUpdateDisplay()
+  string fn[_MAXPATH_] = currfilename()
+  integer cid = getbufferid()
+
+  unhook(AfterUpdateDisplay)
+  setwindowtitle(splitpath(fn, _NAME_ | _EXT_) + " - " + tsepro)
+  if length(fn) and buffertype() == _NORMAL_
+    // [was 08/14/97] Don't add unnamed files to the Recent Files list.
+    if (not InvalidFilename(fn)) and GotoRecentFilesBuffer()
+      AddToTop(fn, query(maxrecentfiles))
+    endif
+    gotobufferid(cid)
+  endif
+end
+
+proc MaybeAutoWrap()
+  integer line
+
+  if query(wordwrap) > ON
+    line = currline()
+    pushposition()
+    endline()
+    if abs(currcol() - query(rightmargin)) > 1
+      wrappara()
+    endif
+    popposition()
+    gotoxoffset(0)
+    if line <> currline() and currline() < query(windowrows) / 2
+      scrollup()
+    endif
+  endif
+end
+
+proc OnChangingFiles()
+  hook(_AFTER_UPDATE_DISPLAY_, AfterUpdateDisplay)
+  language = FALSE
+  cmode = FALSE
+  sal = FALSE
+  case currext()
+    // [was 02/20/01] added .dpr,.kix,.pl,.pp,.vbs
+    // [was 04/02/02] added .cls and .frm as language types
+    // [was 03/09/04] added .cs
+    when ".inc",".s",".si",".ui"
+      language = TRUE
+      sal = TRUE
+    when ".c",".cc",".cpp",".cs",".h",".hpp",".java"
+      language = TRUE
+      cmode = TRUE
+    when ".asm",".bas",".cls",".dpr",".frm",".kix",".pas",".pl",".pp",".py",".prg",".vbs"
+      language = TRUE
+  endcase
+end
+
+proc OnDelChar()
+  MaybeAutoWrap()
+end
+
+proc OnFirstEdit()
+end
+
+// [was 05/31/02] added prompt window footers
+// [was 03/09/04] updated prompt window footers for _EDIT_HISTORY_, _NEWNAME_HISTORY_
+proc OnPromptStartup()
+  enable(PromptKeys)
+  case query(currhistorylist)
+    when _EDIT_HISTORY_, _NEWNAME_HISTORY_
+      windowfooter(" {F10}-PickFile {Tab}-Complete {Ctrl 0}-Recent Files ")
+    when _EXECMACRO_HISTORY_, _LOADMACRO_HISTORY_, _KEYMACRO_HISTORY_
+      windowfooter(" {Ctrl '}-Toggle Quotes {F8}-Shell {Alt F8}-OS Cmd ")
+    when _FIND_HISTORY_, _REPLACE_HISTORY_, _FILLBLOCK_HISTORY_
+      windowfooter(" {Ctrl L}-Lower {Ctrl U}-Upper {Ctrl P}-Literal ")
+  endcase
+end
+
+proc OnSelfInsert()
+  if query(wordwrap) == ON and currcol() > query(rightmargin) + 1
+    wrapline()
+  else
+    MaybeAutoWrap()
+  endif
+end
+
+proc PickListStartup()
+  enable(PickListKeys)
+end
+
+proc PickListCleanup()
+  disable(PickListKeys)
+end
+
+/*************************************************************************
+> Startup processing
+*************************************************************************/
+
+menu StartupMenu()
+  history
+  nokeys
+
+  // [was 03/09/04] changed to editthisfile()
+  "&Open...",         editthisfile()
+  "&New File",        mNewFile()
+  "&File Manager...", execmacro("F -r")
+  "List &Recent...",  mListRecentFiles()
+  "&Pick File...",    editfile("-a- *.*")
+  "Restore &State",   execmacro("STATE -r -q")
+//"&View...",         execmacro("VIEW")
+  "&Where...",        execmacro("WHERE")
+  "E&xit",            abandoneditor()
+end
+
+proc WhenLoaded()
+  string s[_MAXPATH_]
+  integer new_handle
+  integer rows, cols, changed
+
+  setwindowtitle(tsepro)
+  loadstartupmacros()
+  set(currvideomode, query(startupvideomode))
+  if query(startupvideomode) == _AUTO_DETECT_
+    changed = FALSE
+    rows = query(screenrows)
+    cols = query(screencols)
+    if rows < 25
+      rows = 25
+      changed = TRUE
+    endif
+    if cols < 80
+      cols = 80
+      changed = TRUE
+    endif
+    if changed
+      setvideorowscols(rows, cols)
+    endif
+  endif
+
+  // [was 08/14/97] get initial screen rows and columns; used in
+  // ToggleAppWindowSize command.
+  // screen_rows = query(screenrows)
+  // screen_cols = query(screencols)
+
+  // [was 08/14/97] Don't show the sign-on message here if we're using the
+  // startup menu; this avoids screen artifacts if the window is resized.
+//if query(startupflags) <> _STARTUP_MENU_
+//signon()
+//endif
+
+  // [was 03/05/01]
+  if query(templateexpansion)
+    set(templateexpansion, iif(loadmacro(template), ON, OFF))
+  endif
+
+  // [was 08/14/97] Turn on the CUA block marking macro by default
+  // (FALSE = don't display error messages if the macro cannot be loaded).
+  EnableCUAMarking(FALSE)
+
+  // [was 08/14/97] This is to "fix" some of the default key assignments.
+  // I didn't like some of the defaults in Help() and PickLists.
+  hook(_LIST_STARTUP_, PickListStartup)
+  hook(_LIST_CLEANUP_, PickListCleanup)
+  hook(_PICKFILE_STARTUP_, PickListStartup)
+  hook(_PICKFILE_CLEANUP_, PickListCleanup)
+  // [was 08/14/97] End of hook additions to WhenLoaded().
+
+  hook(_ON_CHANGING_FILES_, OnChangingFiles)
+  hook(_ON_FIRST_EDIT_, OnFirstEdit)
+  hook(_PROMPT_STARTUP_, OnPromptStartup)
+  hook(_ON_SELFINSERT_, OnSelfInsert)
+  hook(_ON_DELCHAR_, OnDelChar)
+
+  if ischardevice(_STDIN_) == FALSE and createbuffer("")
+    freadfile(_STDIN_)
+    begfile()
+    changecurrfilename("[<stdin>]", _DONT_EXPAND_)
+
+    new_handle = fopen(CONSOLE, _OPEN_READWRITE_)
+    if new_handle <> -1
+      fdup2(new_handle, _STDIN_)
+      fclose(new_handle)
+    endif
+  endif
+
+  s = query(doscmdline)
+  if length(s)
+    if not startedfromdosprompt()  // started from the desktop?
+      if pos(" ", s) <> 0          // spaces on the cmdline?
+        if pos('"', s) == 0        // and no double quotes?
+          if fileexists(s)         // is it an existing file?
+            s = quotepath(s)       // force it to load as one file
+          endif
+        endif
+      endif
+    endif
+    addhistorystr(s, _EDIT_HISTORY_)
+    // [was 06/03/02] signon moved here
+    signon()
+    // [was 03/09/04] check if started from command prompt and use editthisfile()
+    if startedfromdosprompt()
+      editfile(s, _FROM_CMDLINE_)
+    else
+      editthisfile(s, _FROM_CMDLINE_)
+    endif
+  elseif numfiles() == 0
+    case query(startupflags)
+      when _STARTUP_RESTORESTATE_
+        case query(savestate)
+          when _LOCAL_
+            execmacro("STATE -r -q -l")
+          when _ON_
+            execmacro("STATE -r -q -g")
+          otherwise
+            execmacro("STATE -r -q")
+        endcase
+      when _STARTUP_FILEMGR_
+        loop
+          execmacro("F -r")
+          if numfiles()
+            process(1)
+          else
+            return()
+          endif
+          // [was 08/14/97] Update the window title.
+          // setwindowtitle(tsepro)
+        endloop
+        return()
+      when _STARTUP_UNNAMED_
+        mNewFile()
+        return()
+      when _STARTUP_RECENTFILES_
+        mListRecentFiles()
+      when _STARTUP_PICKLIST_
+        editfile("-a- *.*")
+      when _STARTUP_MENU_
+        // [was 08/14/97] expand the window size on startup if no
+        // command-line parameters were specified.
+        // [was 01/02/98] found this to be annoying.
+        // mToggleAppWindowSize()
+        loop
+          setwindowtitle(tsepro)
+          lshowentryscreen()
+          signon()
+          // [was 08/14/97] adjusted x1 and y1 slightly.
+          // set(x1, (query(screencols) / 2) - 9)
+          // set(y1, (query(screenrows) / 2) - 6)
+          set(x1, (query(screencols) / 2) - 9)
+          // set(y1, (query(screenrows) / 2) - 5 + YAdjust())
+          case query(screenrows)
+            when 10..22     set(y1, query(screenrows) - 9)
+            when 23         set(y1, 14)
+            when 24         set(y1, 15)
+            when 25..10000  set(y1, 16)
+          endcase
+          // [was 03/09/04] fixes from 4.2 TSE.UI here
+          // if StartupMenu() == 0 and menuoption() == 0
+          //   return()
+          // elseif numfiles()
+          //   if numwindows() < 2 and (not iszoomed())
+          //     onewindow()
+          //   endif
+          //   process(1)
+          // endif
+          StartupMenu()
+          if menuoption() == 0
+            if not (query(key) in <leftbtn>, <rightbtn>)
+              return()
+            endif
+          endif
+          if numfiles()
+            if numwindows() < 2 and not iszoomed()
+              onewindow()
+            endif
+            process(1)
+          endif
+          onewindow()
+        endloop
+        return()
+    endcase
+  endif
+
+  if numfiles() == 0
+    signon()
+    // [was 03/09/04] changed to editthisfile()
+    // editfile()
+    editthisfile()
+  endif
+
+  // [was 08/14/97] If PersistentHistory is active, initialize the find
+  // and replace options.
+  if query(persistenthistory)
+    addhistorystr(query(findoptions), _FINDOPTIONS_HISTORY_)
+    addhistorystr(query(replaceoptions), _REPLACEOPTIONS_HISTORY_)
+  endif
+
+  // [was 08/14/97] Create a history for the mGotoLineCol command.
+  gotolinecol_history = getfreehistory("UI:GotoLineCol")
+
+  // [was 01/09/98] Create a history for the mChDir command.
+  // chdir_history = getfreehistory("UI:ChDir")
+
+  // [was 08/14/97] Default to case-insensitive sorting.
+  sort_flags = _IGNORE_CASE_
+end
+
+proc Main()
+end
+
+/*************************************************************************
+> Cleanup processing
+*************************************************************************/
+
+// [was 08/14/97] If the Recent Files list is empty, delete the file.
+proc WhenPurged()
+  pushposition()
+  if query(persistentrecentfiles) and gotobufferid(recent_files)
+    if not numlines()
+      erasediskfile(RecentFilesStr())
+    else
+      saveas(RecentFilesStr(), _OVERWRITE_ | _DONT_PROMPT_)
+    endif
+  endif
+  popposition()
+end
+
+/*************************************************************************
+> Pull-down Menus
+*************************************************************************/
+//
+menu FileMenu()
+  "Ne&w",                mNewFile()
+  // [was 03/09/04] changed to editthisfile()
+  "&Open...",            editthisfile()
+  "&Insert...",          insertfile(), MFBrowseActive()
+  "&File Manager",       execmacro("F -r")
+  "Change &Dir...",      execmacro("CD")
+  "",,                   _MF_DIVIDE_
+
+  "&Next",               nextfile(), MFNumFiles()
+  "&Previous",           prevfile(), MFNumFiles()
+  "Lis&t Open...",       execmacro("LISTOPEN")
+  "List &Recent...",     mListRecentFiles()
+
+  "Current File",,       _MF_DIVIDE_
+  "&Save",               mSaveFile(), MFBrowseActive()
+  "Save &As...",         renameandsavefile()
+  "Save && C&lose",      mSaveAndQuitFile(), MFBrowseActive()
+  "&Close",              mQuitFile()
+  "Chan&ge Name...",     changecurrfilename()
+  "Sho&w File Info...",  execmacro("FILEINFO"), MFFileExists()
+//"&Revert to Saved...", mRevertToSaved(), MFRevert()
+
+  "All Files",,          _MF_DIVIDE_
+  "Sa&ve All",           mSaveAllFiles()
+  "E&xit",               mExit()
+  "Save All && &Exit",   mSaveAllAndExit()
+end
+
+menu BlockMenu()
+  "Mark &Begin",          mMarkBlockBegin()
+  "Mar&k End",            mMarkBlockEnd(), MFBlockInCurrFile()
+  "M&ark Paragraph",      mMarkPara(), MFFileEmpty()
+//"&Mark File",           mMarkFile(), MFFileEmpty()
+  "&Unmark",              unmarkblock(), MFBlockMarked()
+  "&Copy",                mCopyBlock(), MFBrowseActive() | MFBlockMarked()
+  "Mo&ve",                mMoveBlock(), MFBrowseActive() | MFBlockMarked()
+  "&Delete",              mDelBlock(), MFBrowseActive() | MFBlockInCurrFile()
+  "Colum&n Mode",         mToggleColumnBlockMode(), MFColumnBlockMode() | _MF_CLOSE_ALL_BEFORE_
+  "Column Ove&rlay Mode", mToggleColumnOverlayMode(), MFColumnOverlayMode() | _MF_CLOSE_ALL_BEFORE_
+  "",,                    _MF_DIVIDE_
+
+  "&Shift...",            mShift(), MFBrowseActive()
+  "Fi&ll...",              fillblock(), MFBrowseActive() | MFBlockInCurrFile()
+//"&Write to File...",    mSaveBlock(), MFBlockInCurrFile()
+  "&Write to File...",    saveas()
+  "",,                    _MF_DIVIDE_
+
+  "U&pper",               mChangeCase(UPPER_CASE), MFBrowseActive()
+  "L&ower",               mChangeCase(LOWER_CASE), MFBrowseActive()
+  "&Flip",                mChangeCase(FLIP_CASE), MFBrowseActive()
+  "Capi&talize",          mChangeCase(CAP_CASE), MFBrowseActive()
+  "",,                    _MF_DIVIDE_
+
+  "CUA Block Mark&ing ", execmacro("CUA -c"), _MF_DONT_CLOSE_
+end
+
+menu TextMenu()
+  "&Delete Line",           delline(), MFBrowseActive() | MFNumLines()
+  "Delete to &End of Line", deltoeol(), MFBrowseActive()
+  "Delete Right &Word",     delrightword(), MFBrowseActive()
+  "",,                      _MF_DIVIDE_
+
+  "&Undo",                  undo(), MFBrowseActive() | iif(undocount(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_)
+  "&Redo",                  redo(), MFBrowseActive() | iif(redocount(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_)
+  "&Global Undelete",       globalundelete(), MFBrowseActive() | MFUndelete()
+  "L&ocal Undelete",        undelete(), MFBrowseActive()
+  "Paste U&ndelete",        pasteundelete(), MFBrowseActive() | MFUndelete()
+  "Restore Cursor &Line",   restorecursorline(), MFBrowseActive()
+  "",,                      _MF_DIVIDE_
+
+  "Wrap &Paragraph",        execmacro("WRAPPARA"), MFBrowseActive()
+  "&Center Line",           execmacro("CENTER"), MFBrowseActive()
+  "&Quote/Comment Line",    execmacro("QUOTE"), MFBrowseActive()
+  "&Flush Right" ,          mAdjust("RIGHT"), MFBrowseActive()
+
+// [was 04/02/02] CUA block marking now in a sub-menu
+// [was 05/31/02] CUA block marking now on Block menu
+//"",,                      _MF_DIVIDE_
+//"CUA &Block Marking",     mToggleCUAMarking(), MFCUAActive() | _MF_CLOSE_ALL_BEFORE_
+//"&Typing Replaces Block", mToggleCUATyping(), MFCUATyping() | _MF_CLOSE_ALL_BEFORE_
+//"Per&sistent Blocks",     mToggleCUAPersistent(), MFCUAPersistent() | _MF_CLOSE_ALL_BEFORE_
+end
+
+menu SearchMenu()
+  "&Find...",                 find()
+  "&Replace...",              replace(), MFBrowseActive()
+  "&Again",                   repeatfind()
+  "Find and &Do...",          execmacro("FIND&DO")
+  "",,                        _MF_DIVIDE_
+
+  "Find &Word at Cursor",     mFindWordAtCursor("+")
+  "&Incremental Search...",   execmacro("ISRCH")
+  "Ma&tch",                   execmacro("MATCH")
+  "",,                        _MF_DIVIDE_
+
+  "C&ompressed View...",      mCompressView(FALSE)
+  "F&unction List...",        mCompressView(TRUE)
+  "Grep i&n Files...",         execmacro("GREP")
+  "R&edisplay View PickList", mViewFinds(), MFViewFindsID()
+  "",,                        _MF_DIVIDE_
+
+  "Place Book&mark...",       placemark()
+  "&Go to Bookmark...",       gotomark()
+  "",,                        _MF_DIVIDE_
+
+  "Go to &Line/Column...",    mGotoLineCol()
+end
+
+menu WindowMenu()
+  "Split &Horizontally",      hwindow()
+  "Split &Vertically",        vwindow()
+  "&Resize...",               resizewindow(), MFNumWindows()
+  "&Go to...",                gotowindow(), MFNumWindows()
+  "&Zoom",                    zoomwindow(), MFNumWindows()
+  "&One",                     onewindow(), MFNumWindows()
+  "&Close...",                mCloseWindow()
+  "Close &Duplicates",        mCloseDupWindows(), MFNumWindows()
+  "",,                        _MF_DIVIDE_
+
+  "Open &File && Window...",  mOpenFileAndWindow()
+  "Close File && &Window...", mCloseFileAndWindow()
+//"Open/&Switch...",          mOpenSwitch()
+  "",,                        _MF_DIVIDE_
+
+  "Toggle S&ync Scrolling",   execmacro("SYNCHSCR")
+  "Togg&le Horiz/Vertical",   execmacro("TOGWIN"), iif(numwindows() == 2, _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_)
+  "E&xchange",                mExchangeWindows(), MFNumWindows()
+end
+
+menu WinClipMenu()
+  "Cu&t",         cuttowinclip(), MFBrowseActive() | MFBlockInCurrFile()
+  "C&ut Append",  cutappendtowinclip(), MFBrowseActive() | MFBlockInCurrFile()
+  "&Copy",        mCopyToWinClip(), MFBrowseActive() | MFBlockInCurrFile()
+  "Cop&y Append", mCopyAppendToWinClip(), MFCutCopy()
+  "&Paste",       mPasteFromWinClip(_DEFAULT_), MFBrowseActive() | MFWinClipAvailable()
+  "Paste &Over",  mPasteFromWinClip(_OVERWRITE_), MFBrowseActive() | MFWinClipColumnBlock()
+  "&Empty",       emptywinclip(), MFWinClipAvailable()
+  "&View...",     mViewWindowsClipboard(), MFWinClipAvailable()
+end
+
+menu ClipMenu()
+  "Cu&t",                  mCut(_DEFAULT_), MFBrowseActive() | MFCutCopy()
+  "C&ut Append",           mCut(_APPEND_), MFBrowseActive() | MFCutCopy()
+  "&Copy",                 mCopy(_DEFAULT_), MFCutCopy()
+  "Cop&y Append",          mCopy(_APPEND_), MFCutCopy()
+  "&Paste",                paste(), MFBrowseActive() | MFPaste()
+  "Paste &Over",           paste(_OVERWRITE_), MFBrowseActive() | MFPasteColumn()
+  "&Empty",                mEmptyClipboard(), MFPaste()
+  "&View...",              mViewClipboard(), MFPaste()
+  "",,                     _MF_DIVIDE_
+
+  "&Windows Clipboard  ", WinClipMenu(), _MF_DONT_CLOSE_
+  "",,                     _MF_DIVIDE_
+
+  "&Named ClipBoards  ",  mNameClip(), _MF_DONT_CLOSE_
+end
+
+// [was 05/31/02] added the editkbd command
+menu MacroMenu()
+  title = "Keyboard Macros"
+
+  "&Record Key Macro...", recordkeymacro(), MFRecordKeyMacro() | _MF_CLOSE_ALL_BEFORE_
+  "&Save Key Macro...",   savekeymacro()
+  "Load &Key Macro...",   loadkeymacro()
+  "Run Scrap &Macro    ", execscrapmacro()
+  "Edi&t Key Macro...",   execmacro("EDITKBD")
+  "Pur&ge Key Macro...",  mPurgeKeyMacro()
+//"T&ime Stamp",          mTimeStamp()
+//"Da&te Stamp",          mDateStamp()
+//"&Filename Stamp",      mFilenameStamp()
+
+  "Compiled Macros",,     _MF_DIVIDE_
+  "&Execute...",          execmacro()
+  "&Load...",             loadmacro()
+  "&Purge...",            purgemacro()
+  "&Compile",             mCompileCurrFile()
+  "&Debug...",            mDebugCurrFile()
+  "&AutoLoad List",       editautoloadlist()
+end
+
+menu PrintMenu()
+  "&File",             printfile(), MFFileEmpty()
+  "&Block",            mPrintBlock(), MFBlockInCurrFile()
+  "",,                 _MF_DIVIDE_
+
+// [was 05/31/02] use for 3.0 and earlier.
+//"&Send Formfeed",    mSendFormFeed()
+//"Send &Init String", mSendInitString()
+//"",,                 _MF_DIVIDE_
+
+  "Set &Options  ",   execmacro("ICONFIG PrintConfig"), _MF_DONT_CLOSE_
+end
+
+menu UtilMenu()
+  "L&ine Drawing",          toggle(linedrawing), MFLineDrawing() | MFOEMFont() | _MF_CLOSE_ALL_BEFORE_
+  "Li&ne Type  ",          linetypemenu(), MFOEMFont() | _MF_DONT_CLOSE_
+  "",,                      _MF_DIVIDE_
+
+  "&Sort",                  mSort(), MFBrowseActive() | MFBlockInCurrFile()
+  "Ignore &Case",           ToggleSortFlag(_IGNORE_CASE_), MFSortIgnoreCase() | _MF_CLOSE_ALL_BEFORE_
+  "Sort &Descending",       ToggleSortFlag(_DESCENDING_), MFSortDescending() | _MF_CLOSE_ALL_BEFORE_
+  "",,                      _MF_DIVIDE_
+
+  "Spe&ll Check...",        execmacro("SPELLCHK")
+  "&ASCII Chart...",        mASCIIChart()
+  "Date/Ti&me Stamp",       mDateTimeStamp(), MFBrowseActive()
+  "Sh&ell",                 shell()
+  "Captu&re OS Output...",  execmacro("CAPTURE")
+  "P&otpourri...",          execmacro("POTPOURR")
+  "Calc&ulator...",         execmacro("EXPR")
+  "",,                      _MF_DIVIDE_
+
+  "Change Display Si&ze ", execmacro("VIDEO"), _MF_DONT_CLOSE_
+  "Set &Font...",           setfont(), MFGUI()
+  "He&x View",              mToggleDisplayMode(), MFDisplayMode() | _MF_CLOSE_ALL_BEFORE_
+  "&Template Expansion",    mToggleTemplateExpand(), MFTemplateExpand() | _MF_CLOSE_ALL_BEFORE_
+  "Syntax&Hilite Mode",     mToggleSyntaxHilite(), MFShowSyntaxHilite() | _MF_CLOSE_ALL_BEFORE_
+end
+
+menu TabTypeMenu()
+  history = query(tabtype) + 1
+  command = set(tabtype, menuoption() - 1)
+
+  "&Hard",,     _MF_CLOSE_BEFORE_
+  "&Soft",,     _MF_CLOSE_BEFORE_
+  "Smar&t",,    _MF_CLOSE_BEFORE_
+  "&Variable",, _MF_CLOSE_BEFORE_
+end
+
+menu AutoIndentMenu()
+  history = query(autoindent) + 1
+  command = set(autoindent, menuoption() - 1)
+
+  "O&ff"   ,, _MF_CLOSE_BEFORE_
+  "O&n"    ,, _MF_CLOSE_BEFORE_
+  "&Sticky",, _MF_CLOSE_BEFORE_
+end
+
+menu WordWrapMenu()
+  history = query(wordwrap) + 1
+  command = set(wordwrap, menuoption() - 1)
+
+  "O&ff" ,, _MF_CLOSE_BEFORE_
+  "O&n"  ,, _MF_CLOSE_BEFORE_
+  "&Auto",, _MF_CLOSE_BEFORE_
+end
+
+menu EOLStrMenu()
+  history = query(eoltype) + 1
+  command = set(eoltype, menuoption() - 1)
+
+  "&As Loaded",,  _MF_CLOSE_BEFORE_
+  "&CR Only",,    _MF_CLOSE_BEFORE_
+  "&LF Only",,    _MF_CLOSE_BEFORE_
+  "&Both CR/LF",, _MF_CLOSE_BEFORE_
+end
+
+menu EOFStrMenu()
+  history = query(eoftype) + 1
+  command = set(eoftype, menuoption() - 1)
+
+  "&Nothing",,       _MF_CLOSE_BEFORE_
+  "^Z &Only",,       _MF_CLOSE_BEFORE_
+  "&EOL String",,    _MF_CLOSE_BEFORE_
+  "EOL &String/^Z",, _MF_CLOSE_BEFORE_
+end
+
+menu SaveStateMenu()
+  history = query(savestate) + 1
+  command = set(savestate, menuoption() - 1)
+
+  "O&ff",,                                _MF_CLOSE_BEFORE_
+  "O&n    (Saved in LoadDir)",,           _MF_CLOSE_BEFORE_
+  "&Local (Saved in current directory)",, _MF_CLOSE_BEFORE_
+end
+
+menu OptionsMenu()
+  "&AutoIndent"                [menustr(AutoIndentMenu, query(autoindent)+1):6], AutoIndentMenu(), _MF_DONT_CLOSE_
+  "&WordWrap"                  [menustr(WordWrapMenu, query(wordwrap)+1):4], WordWrapMenu(), _MF_DONT_CLOSE_
+  "&Right Margin"              [query(rightmargin):5], set(rightmargin, ReadNum(query(rightmargin))), _MF_DONT_CLOSE_
+  "&Left Margin"               [query(leftmargin):5], set(leftmargin, ReadNum(query(leftmargin))), _MF_DONT_CLOSE_
+  "",,                         _MF_DIVIDE_
+
+  "&Tab Type"                  [menustr(TabTypeMenu, query(tabtype)+1):8], TabTypeMenu(), _MF_DONT_CLOSE_
+  "Tab W&idth"                 [query(tabwidth):3], set(tabwidth, ReadNum(query(tabwidth))), _MF_DONT_CLOSE_
+  "Expand Ta&bs",              toggle(expandtabs), MFExpandTabs() | _MF_CLOSE_ALL_BEFORE_
+  "Tab S&hifts Block",         toggle(tabshiftsblock), MFTABShiftsBlock() | _MF_CLOSE_ALL_BEFORE_
+  "&Variable Tab Stops...",    mSetVarTabs(), _MF_DONT_CLOSE_
+  "",,                         _MF_DIVIDE_
+
+  "Browse &Mode",              mToggleBrowseMode(), MFBrowseMode() | _MF_CLOSE_ALL_BEFORE_
+  "Ba&ckups",                  toggle(makebackups), MFMakeBackups() | _MF_CLOSE_ALL_BEFORE_
+  "Save State on E&xit"        [substr(menustr(SaveStateMenu,query(savestate)+1),1,5):5], SaveStateMenu(), _MF_DONT_CLOSE_
+  "&EOL Type"                  [menustr(EOLStrMenu, query(eoltype)+1):10], EOLStrMenu(), _MF_DONT_CLOSE_
+  "E&OF Type"                  [menustr(EOFStrMenu, query(eoftype)+1):13], EOFStrMenu(), _MF_DONT_CLOSE_
+  "",,                          _MF_DIVIDE_
+
+  "&Full Configuration...",    execmacro("ICONFIG")
+  "&Save Current Settings...", mSaveSettings()
+end
+
+menu HelpMenu()
+  "&Table of Contents", mHelp("Table of Contents")
+  "&Key Assignments",   mHelp("Key Assignments")
+  "&Index",             mHelp("Index")
+  "&Word at Cursor",    mHelpOnWordAtCursor()
+  "&Previous Topic",    mPrevHelp()
+  "&Search...",         mSearchHelp()
+  "",,                  _MF_DIVIDE_
+
+  "&About...",          About()
+  "About the &UI...",   mAboutThisUI()
+end
+
+menu PopupMenu()
+//title = "File"
+  title = "Block"
+
+//"N&ext File",                    nextfile(), MFNumFiles()
+//"P&revious File",                prevfile(), MFNumFiles()
+
+//"Block",,                        _MF_DIVIDE_
+  "&Unmark",                       unmarkblock(), MFBlockMarked()
+  "&Delete",                       mDelBlock(), MFBrowseActive() | MFBlockInCurrFile()
+
+  "Clip",,                         _MF_DIVIDE_
+  "Cu&t",                          mCut(_DEFAULT_), MFBrowseActive() | MFCutCopy()
+  "&Copy",                         mCopy(_DEFAULT_), MFCutCopy()
+  "&Paste",                        paste(), MFBrowseActive() | MFPaste()
+  "Cut to Windows Clipboar&d",     cuttowinclip(), MFBrowseActive() | MFCutCopy()
+  "Copy to Windows Clip&board",    mCopyToWinClip(), MFBlockMarked()
+  "P&aste from Windows Clipboard", mPasteFromWinClip(_DEFAULT_), MFBrowseActive() | MFWinClipAvailable()
+end
+
+// [was 03/09/04] reordered menus
+menubar MainMenu()
+  "&File",    FileMenu()
+  "&Text",    TextMenu()
+  "&Search",  SearchMenu()
+  "&Block",   BlockMenu()
+  "&Clip",    ClipMenu()
+  "&Window",  WindowMenu()
+  "&Macro" ,  MacroMenu()
+  "&Print",   PrintMenu()
+  "&Util",    UtilMenu()
+  "&Options", OptionsMenu()
+  "&Help",    HelpMenu()
+end
+
+/*************************************************************************
+> Key assignments help
+*************************************************************************/
+
+helpdef KeyAssignments
+  title = "Key Assignments"
+  x = 1
+  y = 1
+
+  "                 ®B¯Bill Stewart's WordStar UI for TSE Pro/32 4.x®/B¯"
+  "                           ®B¯Version 5.7 ş Mar 10 2004®/B¯"
+  ""
+  'Linked topics are only for commands that directly execute a "native" editor'
+  "command."
+  ""
+  "All other commands in this topic are either 1) native commands augmented by"
+  "macros, or 2) entirely implemented as macros in the UI."
+  ""
+  "®B¯Menus®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "FileMenu                           <Alt F>"
+  "BlockMenu                          <Alt B>"
+  "TextMenu                           <Alt T>"
+  "SearchMenu                         <Alt S>"
+  "WindowMenu                         <Alt W>"
+  "ClipMenu                           <Alt C>"
+  "MacroMenu                          <Alt M>"
+  "PrintMenu                          <Alt P>"
+  "UtilMenu                           <Alt U>"
+  "OptionsMenu                        <Alt O>"
+  "HelpMenu                           <Alt H>"
+  "PopupMenu                          <Shift F10>, <RightBtn>"
+  ""
+  "®B¯Cursor Movement®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "®L¯Up®/L¯                                 <CursorUp>"
+  "®L¯Down®/L¯                               <CursorDown>"
+  "®L¯Left®/L¯                               <CursorLeft>"
+  "®L¯Right®/L¯                              <CursorRight>"
+  "®L¯BegLine®/L¯                            <Home>, <Ctrl Q S>"
+  "®L¯EndLine®/L¯                            <End>, <Ctrl Q D>"
+  "®L¯PageUp®/L¯                             <PgUp>"
+  "®L¯PageDown®/L¯                           <PgDn>"
+  "®L¯RollUp®/L¯                             <Ctrl CursorUp>"
+  "®L¯RollDown®/L¯                           <Ctrl CursorDown>"
+  "®L¯WordLeft®/L¯                           <Ctrl CursorLeft>"
+  "®L¯WordRight®/L¯                          <Ctrl CursorRight>"
+  "BegFile                            <Ctrl Home>, <Ctrl Q R>"
+  "EndFile                            <Ctrl End>, <Ctrl Q D>"
+  "®L¯RollLeft®/L¯                           <Ctrl PgUp>"
+  "®L¯RollRight®/L¯                          <Ctrl PgDn>"
+  "®L¯ScrollToCenter®/L¯                     <Ctrl O V>"
+  ""
+  "®B¯File®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "FileManager                        <Ctrl K F>"
+  "®L¯InsertFile®/L¯                         <Ctrl K R>"
+  "ListOpenFiles                      <Ctrl 0>"
+  "ListRecentFiles                    <Alt 0>"
+  "Save                               <F2>, <Ctrl K S>"
+  "®L¯RenameAndSaveFile®/L¯                  <Ctrl K T>"
+  "QuitFile                           <Ctrl K Q>"
+  "SaveAndQuitFile                    <Ctrl K D>"
+  "®L¯ChangeCurrFilename®/L¯                 <Ctrl K E>"
+  "ShowFileInfo                       <Ctrl O ?>"
+  "Exit                               <Alt F4>"
+  "SaveAllAndExit                     <Ctrl K X>"
+  "®L¯NextFile®/L¯                           <Ctrl O N>, <Ctrl F6>"
+  "®L¯PrevFile®/L¯                           <Ctrl O G>"
+  "ChangeDir                          <Ctrl K G>"
+  ""
+  "®B¯Block®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "MarkBlockBegin                     <Ctrl K B>"
+  "MarkBlockEnd                       <Ctrl K K>"
+  "MarkParagraph                      <Ctrl K A>"
+//"MarkFile                           <Ctrl A>"
+  "®L¯UnmarkBlock®/L¯                        <Ctrl K H>, <Ctrl K <>"
+  "CopyBlock                          <Ctrl K C>"
+  "MoveBlock                          <Ctrl K V>"
+  "®L¯DelBlock®/L¯                           <Ctrl K Y>"
+  "ToggleColumnBlockMode              <Ctrk K N>"
+  "ToggleColumnOverlayMode            <Ctrl K I>"
+  "Shift                              <Ctrl O S>"
+  "ShiftLeft                          <Ctrl [>"
+  "ShiftRight                         <Ctrl ]>"
+  "®L¯FillBlock®/L¯                          <Ctrl K L>"
+  "®L¯SaveBlock®/L¯                          <Ctrl K W>"
+  'Upper                              <Ctrl K ">'
+  "Lower                              <Ctrl K '>"
+  "Capitalize                         <Ctrl K .>"
+  "PrintBlock                         <Ctrl K P>"
+  "®L¯GotoBlockBegin®/L¯                     <Ctrl Q B>"
+  "®L¯GotoBlockEnd®/L¯                       <Ctrl Q K>"
+  ""
+  "®B¯Text®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "CReturn                            <Enter>"
+  "SplitLine                          <Ctrl N>"
+  "BackSpace                          <Backspace>, <Ctrl H>"
+  "DelChar                            <Del>, <Ctrl G>"
+  "®L¯DelLine®/L¯                            <Ctrl Y>"
+  "DelToBOL                           <Ctrl Q Del>, <Ctrl Q ->"
+  "®L¯DelToEol®/L¯                           <Ctrl Q Y>"
+  "®L¯DelRightWord®/L¯                       <Ctrl T>"
+  "®L¯Undo®/L¯                               <Alt Backspace>"
+  "®L¯Redo®/L¯                               <AltShift Backspace>"
+  "®L¯GlobalUnDelete®/L¯                     <Ctrl U>"
+  "®L¯RestoreCursorLine®/L¯                  <Ctrl Q U>"
+  "WrapPara                           <Ctrl B>"
+  "WrapPara with quoting              <CtrlShift B>"
+  "CenterLine                         <Ctrl O C>"
+  "QuoteLine                          <Ctrl K U>"
+  "FlushLeft                          <Ctrl O [>"
+  "FlushRight                         <Ctrl O ]>"
+  ""
+  "®B¯Search®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "®L¯Find®/L¯                               <Ctrl F>, <Ctrl Q F>"
+  "Again (®L¯RepeatFind®/L¯)                 <Ctrl L>"
+  "AgainReverse                       <CtrlShift L>"
+  "®L¯Replace®/L¯                            <Ctrl Q A>, <Ctrl R>"
+  "IncrementalSearch                  <Ctrl I>"
+  "Match                              <Ctrl Q [>, <Ctrl Q ]>"
+  "CompressView                       <Ctrl O O>"
+  "FunctionList                       <Ctrl O F>"
+  "RedisplayViewPickList (®L¯ViewFinds®/L¯)  <Ctrl Q V>"
+  "®L¯PlaceMark®/L¯                          <Ctrl K M>"
+  "®L¯GotoMark®/L¯                           <Ctrl Q M>"
+  "PlaceMark Q-Z                      <Ctrl K 0> .. <Ctrl K 9>"
+  "GotoMark Q-Z                       <Ctrl Q 0> .. <Ctrl Q 9>"
+  "GotoLineCol                        <Ctrl Q I>"
+  "®L¯PrevPosition®/L¯                       <Ctrl Q P>"
+  ""
+  "®B¯Window®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "®L¯HWindow®/L¯                            <F3>"
+  "®L¯VWindow®/L¯                            <Shift F3>"
+  "®L¯ResizeWindow®/L¯                       <Ctrl F5>, <Ctrl O M>"
+  "®L¯GotoWindow®/L¯ 1-9                     <Alt 1> .. <Alt 9>"
+  "®L¯ZoomWindow®/L¯                         <F5>"
+  "CloseWindow                        <Alt F3>"
+  "CloseDupWindows                    <Ctrl F3>"
+  "OpenFileAndWindow                  <Ctrl O K>"
+  "ToggleSyncScroll                   <Ctrl O Y>"
+  "ExchangeWindows                    <Ctrl O X>"
+  ""
+  "®B¯Clip®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "Cut                                <Ctrl X>, <Shift Del>"
+  "Copy                               <Ctrl C>, <Ctrl Ins>"
+  "®L¯Paste®/L¯                              <Ctrl V>, <Shift Ins>"
+  "CopyToWinClip                      <Ctrl K ]>"
+  "®L¯PasteFromWinClip®/L¯                   <Ctrl K [>"
+  ""
+  "®B¯Keyboard Macros®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "®L¯RecordKeyMacro®/L¯                     <Ctrl M R>"
+  "®L¯SaveKeyMacro®/L¯                       <Ctrl M D>"
+  "®L¯LoadKeyMacro®/L¯                       <Ctrl M L>"
+  "®L¯ExecScrapMacro®/L¯                     <Ctrl Enter>"
+  "PurgeKeyMacro                      <Ctrl M Y>"
+  ""
+  "®B¯Compiled Macros®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "®L¯ExecMacro®/L¯                          <Alt F9>"
+  "®L¯LoadMacro®/L¯                          <F9>"
+  "Compile                            <Ctrl F9>"
+  "CompileMenu                        <Shift F9>"
+  ""
+  "®B¯Util®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "Toggle ®L¯LineDrawing®/L¯                 <Ctrl O ->"
+  "Sort                               <Ctrl K Z>"
+  "SpellCheck                         <Ctrl Q L>"
+  "AsciiChart                         <Ctrl P 0>"
+  "Literal                            <Ctrl P>"
+  "DateTimeStamp                      <Ctrl M !>"
+//"®L¯Dos®/L¯                                <Ctrl K F>"
+  "Potpourri                          <Ctrl Q O>"
+//"ToggleAppWindowSize                <Ctrl O Z>"
+  "Toggle HexView (®L¯DisplayMode®/L¯)       <Ctrl O D>"
+  "Toggle ®L¯HexEdit®/L¯                     <Tab>, <Shift Tab> ®B¯*®/B¯"
+  "Toggle ®L¯ShowSyntaxHilite®/L¯            <Ctrl O H>"
+  "®L¯ShowEntryScreen®/L¯                    <Alt F5>"
+  "WordCount                          <Ctrl K ?>"
+  ""
+  "®B¯*®/B¯ Only when HexView is active"
+  ""
+  "®B¯Options®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "Set ®L¯AutoIndent®/L¯                     <Ctrl O A>"
+  "Set ®L¯WordWrap®/L¯                       <Ctrl O W>"
+  "Set ®L¯RightMargin®/L¯                    <Ctrl O R>"
+  "Set ®L¯LeftMargin®/L¯                     <Ctrl O L>"
+  "Set ®L¯TabType®/L¯                        <Ctrl O T>"
+  "Set ®L¯TabWidth®/L¯                       <Ctrl O I>"
+  "Toggle ®L¯ExpandTabs®/L¯                  <Ctrl O B>"
+  "Toggle ®L¯BrowseMode®/L¯                  <Ctrl O P>"
+  "Set ®L¯EOLType®/L¯                        <Ctrl O E>"
+  ""
+  "®B¯Help®/B¯"
+  "ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ"
+  "®L¯Table of Contents®/L¯                  <F1>"
+  "Key Assignments                    <Shift F1>"
+  "®L¯Index®/L¯                              <Ctrl J>"
+  "Word at Cursor                     <Ctrl F1>"
+  "Previous Topic                     <Alt F1>"
+  "®L¯lVersion®/L¯                           <CtrlAlt Spacebar>"
+end
+
+/*************************************************************************
+> HelpLines and key bindings
+*************************************************************************/
+
+<helpline>          "{F1}-Help {F2}-Save {F8}-Shell {F9}-LoadMacro {F10}-MainMenu"
+<shift helpline>    "{Shift: F9}-CompileMenu {F10}-PopupMenu"
+<ctrl helpline>     "{Ctrl: F6}-NextFile {F9}-Compile"
+<alt helpline>      "{Alt: F4}-Exit {F5}-ShowEntryScreen {F8}-OS Cmd {F9}-ExecMacro"
+
+// [was 03/09/04] added fancy two-key helplines
+<ctrl k><helpline>  "menu:{D}  Save and close file;{E}  Change file name;{G}  Change dir;{Q}  Close file;{R}  Insert file;{S}  Save file;{T}  Save as;{W}  Save block;{X}  Save all and exit;"
+<ctrl o><helpline>  "menu:{A}  Set AutoIndent;{B}  Toggle tab display;{D}  Toggle hex mode;{E}  Set EOL type;{H}  Toggle SyntaxHilite;{P}  Toggle browse mode;{T}  Set tab type;{W}  Set WordWrap;"
+<ctrl q><helpline>  "menu:{[}  Match braces;{C}  End of file;{D}  End of line;{E}  Beginning of window;{I}  Go to line/column;{P}  Previous position;{R}  Beginning of file;{S}  Beginning of line;{X}  End of window;"
+
+<cursorup>                  up()
+<cursordown>                down()
+<cursorleft>                left()
+<cursorright>               right()
+<home>                      begline()
+<end>                       endline()
+<pgup>                      pageup()
+<pgdn>                      pagedown()
+<ctrl cursorup>             rollup()
+<ctrl cursordown>           rolldown()
+<ctrl cursorleft>           wordleft()
+<ctrl cursorright>          wordright()
+<ctrl home>                mBegFile()
+<ctrl end>                 mEndFile()
+<ctrl pgup>                 rollleft()
+<ctrl pgdn>                 rollright()
+
+<f1>                       mHelp("Table of Contents")
+<f2>                       mSaveFile()
+<f3>                        hwindow()
+<f5>                        zoomwindow()
+<f6>                        nextwindow()
+<f8>                        shell()
+<f9>                        loadmacro()
+<f10>                       MainMenu()
+
+<shift f1>                 mHelp("Key Assignments")
+<shift f3>                  vwindow()
+<shift f6>                  prevwindow()
+<shift f9>                  execmacro("COMPILE -m")
+<shift f10>                 PopupMenu()
+
+<ctrl f1>                  mHelpOnWordAtCursor()
+<ctrl f3>                  mCloseDupWindows()
+<ctrl f5>                   resizewindow()
+<ctrl f6>                   nextfile()
+<ctrl f9>                  mCompileCurrFile()
+
+<alt f1>                   mPrevHelp()
+<alt f3>                   mCloseWindow()
+<alt f4>                   mExit()
+<alt f5>                    showentryscreen()
+<alt f8>                    dos()
+<alt f9>                    execmacro()
+
+<ctrl [>                   mShiftBlock(-1)
+<ctrl ]>                   mShiftBlock(1)
+
+<ctrl 0>                   mListRecentFiles()
+
+//<ctrl a>                   mMarkFile()
+
+<ctrl b>                    execmacro("WRAPPARA")
+<ctrlshift b>               execmacro("WRAPPARA quote")
+
+<ctrl c>                   mCopy(_DEFAULT_)
+<ctrl f>                    find()
+<ctrl g>                   mDelChar()
+<ctrl h>                   mBackspace()
+<ctrl i>                    execmacro("ISRCH")
+<ctrl j>                   mHelp("Index")
+
+<ctrl k><">                mChangeCase(UPPER_CASE)
+<ctrl k><'>                mChangeCase(LOWER_CASE)
+<ctrl k><?>                 execmacro("WORDCNT")
+<ctrl k><.>                mChangeCase(CAP_CASE)
+<ctrl k></>                 execmacro("WORDCNT")
+<ctrl k><ctrl />            execmacro("WORDCNT")
+<ctrl k><[>                mPasteFromWinClip(_DEFAULT_)
+<ctrl k><ctrl [>           mPasteFromWinClip(_DEFAULT_)
+<ctrl k><]>                mCopyToWinClip()
+<ctrl k><ctrl ]>           mCopyToWinClip()
+<ctrl k><0>                 placemark("Q")
+<ctrl k><1>                 placemark("R")
+<ctrl k><2>                 placemark("S")
+<ctrl k><3>                 placemark("T")
+<ctrl k><4>                 placemark("U")
+<ctrl k><5>                 placemark("V")
+<ctrl k><6>                 placemark("W")
+<ctrl k><7>                 placemark("X")
+<ctrl k><8>                 placemark("Y")
+<ctrl k><9>                 placemark("Z")
+<ctrl k><a>                mMarkPara()
+<ctrl k><b>                mMarkBlockBegin()
+<ctrl k><c>                mCopyBlock()
+<ctrl k><d>                mSaveAndQuitFile()
+<ctrl k><e>                 changecurrfilename()
+//<ctrl k><f>               dos()
+<ctrl k><f>                 execmacro("F -r")
+<ctrl k><g>                 execmacro("CD")
+<ctrl k><h>                 unmarkblock()
+<ctrl k><i>                mToggleColumnOverlayMode()
+<ctrl k><k>                mMarkBlockEnd()
+<ctrl k><l>                 fillblock()
+<ctrl k><m>                 placemark()
+<ctrl k><n>                mToggleColumnBlockMode()
+<ctrl k><o>                mNameClip()
+<ctrl k><p>                mPrintBlock()
+<ctrl k><q>                mQuitFile()
+<ctrl k><r>                 insertfile()
+<ctrl k><s>                mSaveFile()
+<ctrl k><t>                 renameandsavefile()
+<ctrl k><u>                 execmacro("QUOTE")
+<ctrl k><v>                mMoveBlock()
+<ctrl k><w>                 saveblock()
+<ctrl k><x>                mSaveAllAndExit()
+<ctrl k><y>                mDelBlock()
+<ctrl k><z>                mSort()
+<ctrl k><<>                 unmarkblock()
+<ctrl k><,>                 unmarkblock()
+<ctrl k><ctrl ,>            unmarkblock()
+
+<ctrl l>                    repeatfind()
+<ctrlshift l>               repeatfind(_REVERSE_)
+
+<ctrl m><!>                mDateTimeStamp()
+<ctrl m><1>                mDateTimeStamp()
+<ctrl m><ctrl 1>           mDateTimeStamp()
+//<ctrl m><!>              mTimeStamp()
+//<ctrl m><1>              mTimeStamp()
+//<ctrl m><@>              mDateStamp()
+//<ctrl m><2>              mDateStamp()
+//<ctrl m><\>              mFilenameStamp()
+<ctrl m><d>                 savekeymacro()
+<ctrl m><l>                 loadkeymacro()
+<ctrl m><r>                 recordkeymacro()
+<ctrl m><y>                mPurgeKeyMacro()
+
+<ctrl n>                   mSplitLine()
+
+// [was 05/31/02] beware of OEM fonts!
+<ctrl o><->                mToggleLineDrawing()
+<ctrl o><ctrl ->           mToggleLineDrawing()
+<ctrl o><[>                mAdjust("LEFT")
+<ctrl o><ctrl [>           mAdjust("LEFT")
+<ctrl o><]>                mAdjust("RIGHT")
+<ctrl o><ctrl ]>           mAdjust("RIGHT")
+<ctrl o><?>                 execmacro("FILEINFO")
+<ctrl o><a>                 AutoIndentMenu("AutoIndent")
+<ctrl o><b>                 toggle(expandtabs)
+<ctrl o><c>                 execmacro("CENTER")
+<ctrl o><d>                mToggleDisplayMode()
+<ctrl o><e>                 EOLStrMenu("EOL Type")
+<ctrl o><f>                mCompressView(TRUE)
+<ctrl o><g>                 prevfile()
+<ctrl o><h>                mToggleSyntaxHilite()
+<ctrl o><i>                mSetTabWidth()
+<ctrl o><k>                mOpenFileAndWindow()
+<ctrl o><l>                mSetLeftMargin()
+<ctrl o><m>                 resizewindow()
+<ctrl o><n>                 nextfile()
+<ctrl o><o>                mCompressView(FALSE)
+<ctrl o><p>                mToggleBrowseMode()
+<ctrl o><r>                mSetRightMargin()
+<ctrl o><s>                mShift()
+<ctrl o><t>                 TabTypeMenu("Tab Type")
+<ctrl o><v>                 scrolltocenter()
+<ctrl o><w>                 WordWrapMenu("WordWrap")
+<ctrl o><x>                mExchangeWindows()
+<ctrl o><y>                 execmacro("SYNCHSCR")
+<ctrl o><z>                 execmacro("TOGMAX")
+
+<ctrl p>                   mLiteral(TRUE)
+
+<ctrl q><del>              mDelToBOL()
+<ctrl q><ctrl del>         mDelToBOL()
+<ctrl q><->                mDelToBOL()
+<ctrl q><ctrl ->           mDelToBOL()
+<ctrl q><[>                 execmacro("MATCH")
+<ctrl q><ctrl [>            execmacro("MATCH")
+<ctrl q><]>                 execmacro("MATCH")
+<ctrl q><ctrl ]>            execmacro("MATCH")
+<ctrl q><0>                 gotomark("Q")
+<ctrl q><1>                 gotomark("R")
+<ctrl q><2>                 gotomark("S")
+<ctrl q><3>                 gotomark("T")
+<ctrl q><4>                 gotomark("U")
+<ctrl q><5>                 gotomark("V")
+<ctrl q><6>                 gotomark("W")
+<ctrl q><7>                 gotomark("X")
+<ctrl q><8>                 gotomark("Y")
+<ctrl q><9>                 gotomark("Z")
+<ctrl q><a>                 replace()
+<ctrl q><b>                 gotoblockbegin()
+<ctrl q><c>                mEndFile()
+<ctrl q><d>                 endline()
+<ctrl q><e>                mBegWindow()
+<ctrl q><f>                 find()
+<ctrl q><i>                mGotoLineCol()
+<ctrl q><k>                 gotoblockend()
+<ctrl q><l>                 execmacro("SPELLCHK")
+<ctrl q><m>                 gotomark()
+<ctrl q><o>                 execmacro("POTPOURR")
+<ctrl q><p>                 prevposition()
+<ctrl q><q>                 repeatcmd()
+<ctrl q><r>                mBegFile()
+<ctrl q><s>                 begline()
+<ctrl q><u>                 restorecursorline()
+<ctrl q><v>                mViewFinds()
+<ctrl q><x>                mEndWindow()
+<ctrl q><y>                 deltoeol()
+
+<ctrl r>                    replace()
+<ctrl t>                    delrightword()
+<ctrl u>                    globalundelete()
+
+<ctrl v>                    paste()
+<ctrl w>                    scrollup()
+<ctrl x>                   mCut(_DEFAULT_)
+<ctrl y>                    delline()
+<ctrl z>                    scrolldown()
+
+<alt 0>                     execmacro("LISTOPEN")
+<alt 1>                     gotowindow(1)
+<alt 2>                     gotowindow(2)
+<alt 3>                     gotowindow(3)
+<alt 4>                     gotowindow(4)
+<alt 5>                     gotowindow(5)
+<alt 6>                     gotowindow(6)
+<alt 7>                     gotowindow(7)
+<alt 8>                     gotowindow(8)
+<alt 9>                     gotowindow(9)
+
+<alt f>                     MainMenu("F")
+<alt b>                     MainMenu("B")
+<alt t>                     MainMenu("T")
+<alt s>                     MainMenu("S")
+<alt w>                     MainMenu("W")
+<alt c>                     MainMenu("C")
+<alt m>                     MainMenu("M")
+<alt p>                     MainMenu("P")
+<alt u>                     MainMenu("U")
+<alt o>                     MainMenu("O")
+<alt h>                     MainMenu("H")
+
+<}>                        mCloseBrace()
+<backspace>                mBackspace()
+<shift backspace>          mBackspace()
+<alt backspace>             undo()
+<altshift backspace>        redo()
+<tab>                      mTabRight()
+<shift tab>                mTabLeft()
+
+<enter>                    mCReturn()
+<ctrl enter>                execscrapmacro()
+
+<ins>                       toggleinsert()
+//<shift ins>               paste()
+//<ctrl ins>               mCopy(_DEFAULT_)
+
+<del>                      mDelChar()
+//<shift del>              mCut(_DEFAULT_)
+
+// [was 03/09/04] these keys use windows clipboard now
+<ctrl ins>                mCopyToWinClip()
+<shift ins>               mPasteFromWinClip(_DEFAULT_)
+<shift del>                cuttowinclip()
+
+<leftbtn>                 mLeftBtn()
+<ctrl leftbtn>             mousemarking(_COLUMN_)
+<alt leftbtn>              mousemarking(_LINE_)
+// [was 03/09/04] changed to mShiftLeftBtn()
+<shift leftbtn>           mShiftLeftBtn()
+<rightbtn>                mRightBtn()
+<wheelup>                  rollup(getwheelscrolllines())
+<wheeldown>                rolldown(getwheelscrolllines())
+
+<ctrlalt spacebar>         lversion()

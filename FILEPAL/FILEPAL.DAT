@@ -1,0 +1,31 @@
+ здддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд©
+ Ё Lines with a blank in column 1 are comments, except          Ё
+ Ё for Category Titles (FILES, EXTENSIONS, DIRECTORIES, DRIVES) Ё
+ Ё                 * DO NOT EDIT TITLE LINES *                  Ё
+ цдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддд╢
+ Ё DELIMITER DESCRIPTION:           иммммммммммммммммм╩         Ё
+ Ё ЧA[0]   AutoTrack is ON          ╨ [n]=fixed width ╨         Ё
+ Ё ЧP      Position: line + row[2]  хммммммммммммммммм╪         Ё
+ Ё ЧI[3]   Insert[1], AutoIndent[1], WordWrap[1]                Ё
+ Ё ЧL      Left margin                                          Ё
+ Ё ЧR      Right margin                                         Ё
+ Ё ЧT[4]   Tab type[1], width[2], expand[1]                     Ё
+ Ё ЧE[2]   EOF type[1], EOL Type[2]                             Ё
+ Ё Чa      bookmark 'a': line + row[2]   (same for b through z) Ё
+ Ё ЧM      linked macro                                         Ё
+ юдддддддддддддддддддддддддддддддддддддддддддддддддддддддддддддды
+
+ ЫFILESЫ
+
+ ЫEXTENSIONSЫ
+
+ ЫDIRECTORIESЫ
+
+ ЫDRIVESЫ
+
+
+
+
+
+
+

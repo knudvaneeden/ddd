@@ -1,0 +1,212 @@
+74
+Purpose                                                                   [  0]
+-------
+        Interactively configures extension information for a SYNHI
+        configuration file.
+
+        The following menu options are available:
+
+        Menu Option        Action
+        -------------      ---------------------------------------------
+          File             File related options.                          [  1]
+
+            Open           Open a configuration file.
+
+            Save           Save the currently open configuration file.
+
+            Compile        Compile the current configuration file.  This
+                           also allows the reloading of SYNHI, since
+                           SHCOM automatically presents this option.
+                           Thus, results are immediately visible.
+
+            Select         Select an extension list.  Only one extension
+                           from the list needs to be input.  If not
+                           found, the list will be created when Save
+                           List is selected.
+
+            Add            Add a list.  If the list already exists, it
+                           will not be added.
+
+            Delete         Delete a list.
+                           The deleted contents are appended to a file
+                           with the same path and name as the
+                           configuration file, with the extension,
+                           ".CUT".  The allows for restoring the
+                           contents manually, if the need should arise.
+
+            Save           Save the edited variables for the currently
+                           selected extension list.  If the list does
+                           not yet exist, it will be added.
+
+            Exit           Exits the SHCFG menu.
+
+          Edit             Edit the selected extension list.              [  2]
+
+            Syntax         Edit the syntax parsing information for the
+                           currently selected list.
+
+                           Strings should not include the escape
+                           character ("\") before reserved characters.
+                           SHCFG will take care of this for you.
+
+            Colors         Edit the syntax highlighting colors for the
+                           currently selected list.
+
+                           See Color Selection.
+
+          Word             Edit/Add the chosen word in the current list.  [  3]
+                           This both adds the word and edits the color
+                           associated with that word.
+
+                           See Color Selection.
+
+            Update         Updates a word in the current list.
+                           If found in the currently selected extension
+                           list, the word is edited; if not, the word is
+                           added at the proper location.
+
+              Input        Input a word or select from a list and edit
+                           its colors.  If input, and the word does not
+                           exist in the list, it will be added.
+                           Pressing <Enter> on a blank word presents a
+                           list of words from the currently selected
+                           extension list.
+
+              Screen       Grabs a word from the current cursor
+                           location, a allows editing of colors for that
+                           word.
+
+                           If the cursor is in a highlighted block, all
+                           words (one per line) in the block will be
+                           edited, on at a time.  After the first word,
+                           you can select to edit all the words with the
+                           colors of the current word and without
+                           further prompting, except in the case of
+                           words which already exist in the list.  This
+                           allows the addition of whole lists of words
+                           at once.
+
+            Delete         Deletes a word from the current list.
+                           If the word is not found, no action is taken
+                           and you are informed that the word was not
+                           deleted.
+
+              Input        Input a word, or select from a list, and
+                           delete it from the currently selected
+                           extension list.
+                           Pressing <Enter> on a blank word presents a
+                           list of words from the currently selected
+                           extension list.
+
+              Screen       Grabs a word from the current cursor location
+                           and deletes it from the current extension
+                           list.
+
+                           If the cursor is in a highlighted block, all
+                           words (one per line) in the block will be
+                           deleted, with confirmation for each one.
+                           This allows the deletion of whole lists of
+                           words at once.
+
+          Help                                                            [  4]
+
+            Help           Help information for SHCFG.
+
+========================================================================
+
+                            COLOR SELECTION
+
+        Menu Option     Key     Action
+        -------------  ------   ---------------------------------------
+
+        OK               O      Exits, keeping the information.
+
+        Color            C      Allows editing of the color for _COLOR_
+                                mode.
+
+        Mono             M      Allows editing of the color for _MONO_
+                                (alternate) mode.
+
+        Default          D      Changes colors to the defaults.  In the
+                                configuration file, these show as no
+                                color at all for either mode.
+
+        Cancel           A      Exits, with no changes.
+
+        All Items        I      Only available when adding multiple
+                                items.  Signals the calling macro that
+                                all further items can use the same
+                                values as the current item.
+
+        Move             V      Allows the user to move the color
+                                selection window, until Escape or Enter
+                                is pressed.
+
+                                Holding down the left button on the
+                                mouse on the top line of the window will
+                                also select this.  When released, the
+                                move is stopped.
+
+                       Space    Moves the menu cursor to the next item.
+
+                       Up       Moves the menu cursor to the item
+                                directly above the current item.
+
+                       Down     Moves the menu cursor to the item
+                                directly below the current item.
+
+                       Right    Moves the menu cursor to the item to the
+                                right of the current item.
+
+                       Left     Moves the menu cursor to the item to the
+                                left of the current item.
+
+        Any of the above selection can also be chosen by clicking the
+        left button of the mouse on the chosen menu item.
+
+
+        When in the color editing mode, the following is available:
+
+        Menu Option     Key     Action
+        -------------  ------   ---------------------------------------
+
+                       Escape   Exits the color selection with no
+                                changes.
+
+                       Enter    Exits the color selection, with the
+                                currently selected color.
+
+                       Up       Moves the cursor in the direction
+                       Down     chosen.
+                       Left
+                       Right    Clicking the left mouse button on the
+                                color desired will move the cursor to
+                                that location, selecting that color.
+
+                       Home     Goes to the left column of colors.
+
+                       End      Goes to the right column of colors.
+
+                       PgUp     Goes to the top row of colors.
+
+                       PgDn     Goes to the bottom row of colors.
+
+                       B        Toggles color values to/from blinking.
+                                Can also be chosen by clicking the left
+                                mouse button on the Blinking ON/OFF
+                                message.
+
+                       D        Selects the default colors for both
+                                Color and Mono (alternate) color
+                                modes.
+
+        OK             Left mouse button on the OK menu selection.
+
+        Cancel         Left mouse button on the Cancel menu selection.
+
+
+Key Assignments
+---------------
+        <CtrlShift Del>  Delete word from screen
+        <CtrlShift Ins>  Update word from screen
+

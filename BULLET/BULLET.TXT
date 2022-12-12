@@ -1,0 +1,64 @@
+                                    BULLET.S
+                   Bulleted list support for wordwrap macros.
+
+        þ This macro adds bulleted list support to TSE.  It also helps
+          wordwrap macros support bulleted lists so they don't trash
+          bulleted lists.
+
+        þ Just hit <Ctrl B> to access the handy bullet menu and select
+          the bullet character you want to use.  If you're using
+          WordWrap, the <Enter> key will automatically insert another
+          bullet character, making bulleted lists a breeze!  If you use
+          BULLET instead of WrapPara() when doing wordwrap, your
+          bulleted lists will even get automatically indented!  And best
+          of all, BULLET prevents wordwrap from destroying your bulleted
+          lists.  It figures out the first and last lines of the bullet
+          point you're editing and only wraps those lines.
+
+        þ Also enclosed is a macro called AUTOWRAP.  This macro uses
+          BULLET to wordwrap as you type, automatically adding a hanging
+          indent to bulleted lists as you type.  You may need to remove
+          another autowrap macro before loading AUTOWRAP, or you might
+          even have to modify your .UI file to remove existing autowrap
+          support.
+
+        þ This macro is designed as a wrapper for your current wordwrap
+          macro.  It's as easy as replacing the call to your wordwrap
+          macro (or WrapLine() or WrapPara() command).  Anywhere you use
+          WrapPara(), instead use ExecMacro("bullet -p").  Anywhere you
+          use WrapLine(), instead use ExecMacro("bullet -l"). Anywhere
+          you use ExecMacro("foo -x"), instead use ExecMacro("bullet
+          foo -x").
+
+        þ Keys:
+            ù <Ctrl B> - Bullet menu
+            ù <Enter> - Automatically continue a bulleted list (if
+              WordWrap is ON or _AUTO_)
+            ù NOTE:  To disable either the bullet menu or autobulleting,
+              just set the corresponding #define to 0 in BULLET.S
+
+        þ BULLET uses a Global String Variable to look up a list of
+          valid bullet characters.  The name of the Global String
+          Variable is "Bullets".  You can set the Bullets string in your
+          .UI file, or BULLET will automatically set it with a default
+          list of bullet characters if it is empty.  By changing the
+          Bullets string, you can set what the legal bullet characters
+          are.  You can also add new bullet characters to the bullet
+          menu.
+
+        þ Known goofiness:
+            ù If you want to insert a blank line after a bullet point,
+              you have to hit <Enter> twice, then go back and backspace
+              over the bullet point you didn't want.
+            ù In/Outdenting bullets is not automatic; you have to
+              backspace over the bullet and insert a new bullet where
+              you want it.
+            ù In very rare cases, paragraph reformatting may not
+              reformat a whole paragraph or bullet point.  This happens
+              if a "-" or "*" (or other legal bullet character) ends up
+              as the first character on a line in the paragraph/bullet
+              point.
+
+        þ Happy bulleting!
+            ù You can reach me at Chris Antos, chrisant@microsoft.com
+

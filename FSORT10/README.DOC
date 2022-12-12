@@ -1,0 +1,456 @@
+
+
+                              Shareware Information
+                                   Mike Albert
+                                    April 1993
+
+     1  Introduction
+
+        This file describes the shareware programs I currently publish, how
+        to contact me, and how to get current copies of the programs.
+
+        The programs currently available are:
+
+           Program    Ver.    Function
+           -------    ----    --------
+
+           CIPHER     1.5     Encrypt/decrypt files
+
+           FC         2.7     Compare ASCII files
+
+           FCDOC      2.4     Compare English documents
+
+           FCBIN      1.2     Compare files byte by byte
+
+           ZEROFREE   1.0     Clear disk free space so unerase utilities
+                              can't recover your data
+
+           ZIPFIND    1.2     Search ARC and ZIP files for text strings
+
+           FSORT      1.0     Sort ASCII files
+
+           D          1.1     Manage files, directories, and archives
+
+           ASCIIZE    1.2     Convert binary files to/from ASCII
+
+           SQUISH     1.0     Compress/decompress files
+
+
+
+     2  Program descriptions:
+
+        Program: Cipher
+
+        Version: 1.5
+
+        Files:   CIPHER.COM     Program
+                 CIPHER.DOC     Documentation
+
+        Purpose:
+
+           Cipher scrambles files so that no one can use them - unless they
+           have the correct key.  Cipher is designed to protect files on your
+           computer from misuse by others who may have access to your PC.
+           (The ZEROFREE program described below is also useful for this.)
+           Cipher provides the following benefits:
+
+        Features:
+
+           o  Cipher is easy to use - it protects you from mistakes and helps
+              you to remember keys.
+
+           o  Cipher is much faster than other programs that provide
+              comparable security.
+
+
+                                       - 1 -
+
+           o  Protection is provided by a reliable, documented method that is
+              highly resistant to attack - even by expert programmers and
+              cryptographic analysts.
+
+           o  Cipher can encrypt files in place, so unerase utilities can't
+              recreate them.
+
+           o  Cipher can also make a new encrypted file and leave the
+              original file untouched - this is useful when sending an
+              encrypted file to someone else.
+
+           o  Cipher checks when decrypting a file to ensure that the file
+              hasn't been corrupted.
+
+           o  Cipher can be used from batch files to provide security
+              automatically.
+
+           o  Cipher guards against changes to itself - you can be sure you
+              have an unmodified Cipher and also detect any subsequent
+              tampering.
+
+
+
+        Program: FC
+
+        Version: 2.7
+
+        Files:   FC.EXE         Program
+                 FC.DOC         Documentation
+
+        Purpose:
+
+           FC compares two text files and lists the differences between them
+           line by line.  FC provides the following benefits:
+
+        Features:
+
+           o  FC shows word by word differences between lines that have
+              changed.
+
+           o  FC can ignore white space changes.  This is useful when you
+              want to ignore format changes in "C" programs or other text.
+
+           o  FC never gets confused or "unsynchronized" (as some comparison
+              programs can).
+
+           o  FC always finds the smallest set of differences between files,
+              and never misses matching lines.
+
+           o  FC helps "C" programmers merge program changes.  FC can compare
+              two "C" programs containing separate sets of changes, and
+              combine them automatically to make a single program.
+
+           o  FC lets you do multiple comparisons in one run.
+
+           o  FC lets you list changes in ways that make sense to you by
+              providing multiple display options.  You can also customize FC
+              to use your favorite options automatically.
+
+
+
+
+
+                                      - 2 -
+
+        Program: FCDOC
+
+        Version: 2.4
+
+        Files:   FC.EXE         Program
+                 FC.DOC         Documentation
+
+        Purpose:
+
+           FCDOC compares two text English files and lists the differences
+           between them sentence by sentence.  FCDOC works with any ASCII
+           text file containing English text.
+
+        Features:
+
+           o  FCDOC ignores format differences, so changes in margins,
+              indentation, and white space are not shown.  This allows you to
+              look at content changes without being distracted by unimportant
+              details.
+
+           o  FCDOC can show word by word differences between sentences that
+              have changed.
+
+           o  FCDOC never gets confused or "unsynchronized" (as some
+              comparison programs can).
+
+           o  FCDOC always finds the smallest set of differences between
+              files, and never misses matching sentences.
+
+           o  FCDOC lets you do multiple comparisons in one run.
+
+           o  FCDOC lets you list changes in ways that make sense to you by
+              providing multiple display options.  You can also customize
+              FCDOC to use your favorite options automatically.
+
+
+
+        Program: FCBIN
+
+        Version: 1.2
+
+        Files:   FCBIN.EXE      Program
+                 FCBIN.DOC      Documentation
+
+        Purpose:
+
+           FCBIN compares two files and lists the differences between them
+           byte by byte.
+
+        Features:
+
+           o  FCBIN shows PER BYTE differences between files.  Line endings
+              are treated just like other characters.
+
+           o  Any type of file - ASCII, executable, data base, etc. - can be
+              compared.
+
+           o  FCBIN never gets confused or "unsynchronized" (as some
+              comparison programs can).
+
+
+
+
+                                      - 3 -
+
+           o  FCBIN always finds the smallest set of differences between
+              files, and never misses matching bytes.
+
+           o  FCBIN lets you do multiple comparisons in one run.
+
+           o  FCBIN can be customized to use your favorite options
+              automatically.
+
+
+
+        Program: ZEROFREE
+
+        Version: 1.0
+
+        Files:   ZEROFREE.EXE      Program
+                 ZEROFREE.DOC      Documentation
+
+        Purpose:
+
+           ZEROFREE protects your deleted files from access by others who
+           have access to your machine.  Without ZEROFREE, undelete utilities
+           and disk editors can recover data that is left in unused data
+           areas of your disk.
+
+        Features:
+
+           o  ZEROFREE zeroes the complete unallocated data area of a disk,
+              so undelete utilities, disk editors, and data recovery programs
+              cannot access data from deleted files.
+
+           o  ZEROFREE zeroes the directory entries of deleted files, so that
+              the names, sizes, or dates of deleted files are erased too.
+
+           o  ZEROFREE zeroes the unused space at the end of files, so that
+              disk editors can't recover data that may remain there.
+
+
+        Program: FSORT
+
+        Version: 1.0
+
+        Files:   FSORT.EXE      Program
+                 FSORT.DOC      Documentation
+
+        Purpose:
+
+           FSORT reads data from an input file, sorts it, and writes it to an
+           output file.
+
+        Features:
+
+        o  FSORT is faster than other sort programs, and MUCH faster than the
+           MS-DOS sort command.
+
+        o  FSORT sorts any size file.
+
+        o  FSORT is careful in it's use of disk space, so that files can be
+           sorted successfully even when there's little space available.
+
+        o  FSORT can handle any number of sort keys, sort in ascending or
+           descending order, and ignore the case (upper/lower) of letters.
+
+
+                                      - 4 -
+
+        o  FSORT can sort using character or numeric keys.
+
+        o  FSORT can remove duplicate lines.
+
+
+
+        Program: ZIPFIND
+
+        Version: 1.2
+
+        Files:   ZIPFIND.EXE    Program
+                 ZIPFIND.DOC    Documentation
+
+        Purpose:
+
+           ZIPFIND searches ZIP or ARC files for text strings, and displays
+           each line of each archived file that contains the desired string.
+
+        Features:
+
+           o  Any type of file stored in an ARC or ZIP file can be searched
+              for any text string.
+
+           o  You can use your own text search program to provide more
+              powerful search options.  Many programs (e.g. GREP variants)
+              provide pattern searches and special output options not
+              otherwise available.
+
+           o  You can use MS-DOS wildcards to search multiple ARC and ZIP
+              files.
+
+
+
+        Program: D
+
+        Version: 1.1
+
+        Files:   D.EXE          Program
+                 D.DOC          Documentation
+
+        Purpose:
+
+              D lets you manipulate directories, files, and archives in an
+              intuitive and direct way.
+
+        Features:
+
+           o  D provides all standard file operations (e.g. view, delete,
+              copy) plus more obscure operations (e.g. setting file date).
+
+           o  D provides all standard directory operations (e.g. make
+              directory) plus more obscure operations (e.g. delete a
+              directory and all files within it).
+
+           o  D handles ARC and ZIP files as if they were directories.
+
+           o  D provides many other features.
+
+
+
+
+
+
+                                      - 5 -
+
+        Program: ASCIIZE
+
+        Version: 1.2
+
+        Files:   ASCIIZE.EXE    Program
+
+        Purpose:
+
+           ASCIIZE transforms any file to or from an ASCII-encoded form.
+           This is useful when transferring a binary file via an ASCII-only
+           medium (e.g. an EMAIL message).
+
+        Features:
+
+           o  You can add an explanation to the front of the ASCII-encoded
+              file.
+
+           o  Any changes made to the ASCII-encoded text are detected when
+              the text is converted back to binary.
+
+
+
+        Program: SQUISH
+
+        Version: 1.0
+
+        Files:   SQUISH.EXE     Program
+
+        Purpose:
+
+           SQUISH compresses or decompresses files.
+
+        Features:
+
+           o  Squish uses standard input and output, so that file redirection
+              and pipes can be used.
+
+
+
+     3  Support, Ordering, and Licensing:
+
+        I support all programs via CompuServe mail.  Messages should
+        carefully describe your problem or question, and be sure to note the
+        version of the program you're using.  I support all registered users,
+        and usually reply to those who haven't yet decided whether or not to
+        register.  I'll also respond to queries via regular U.S. Mail.  My
+        CompuServe userid is [70325,1134], and my mailing address is:
+
+              Mike Albert
+              P. O. Box 535
+              Bedford, MA   01730
+
+
+        I welcome all comments and suggestions concerning my programs.  I'd
+        like to know how you are using them, where you got them, and what
+        problems, bugs, or weaknesses you find.  If you tell me about
+        enhancements or changes you're interested in, I'll make an effort to
+        provide them.
+
+        Anyone can order the latest version of my shareware programs directly
+        from me for a fee of $5.00.  Just send the order (make sure it
+
+
+                                      - 6 -
+
+        contains your mailing address) with your check to the above address.
+        You'll receive a 5 1/4 inch 360Kb floppy disk containing the latest
+        version of all my shareware products.  If you need other formats (5
+        1/4 inch 1.2Mb or 3 1/2 inch 720Kb or 1.44Mb) I can provide them.  If
+        you live outside North America, please send extra money for the
+        increased postage.
+
+        All my programs are distributed as shareware.  Registration payments
+        are donated to Oxfam America, an international development and
+        disaster relief agency.  It's a worthy charity that I've been
+        supporting for many years.  As stated in Oxfam literature,
+
+           "Oxfam America is an international agency that funds self-help
+           development projects and disaster relief in poor countries in
+           Africa, Asia, and Latin America, and also prepares and distributes
+           educational materials for people in the United States on the
+           issues of development and hunger.  The name "Oxfam" comes from the
+           Oxford Committee for Famine Relief, founded in England in 1942.
+           Oxfam America, based in Boston, was formed in 1970, and is one of
+           seven autonomous Oxfams around the world (Great Britain,
+           Australia, Belgium, Canada, Quebec, Hong Kong and the United
+           States).  Oxfam is a nonsectarian, nonprofit agency that neither
+           seeks or accepts U.S. government funds.  All contributions are
+           tax-deductible to the extent permitted by law."
+
+
+        For more information, you can phone Oxfam at 617-482-1211, or write
+        to them at:
+
+                  Oxfam America
+                  26 West Street
+                  Boston, MA  02111-1206
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                      - 7 -

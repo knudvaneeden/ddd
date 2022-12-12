@@ -1,0 +1,382 @@
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     1             .
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+                                                                                      MAT= 1170
+ I - dll "<user32.dll>"                                                               INS=  304 01171 01171
+ I -   integer proc ShowWindow(                                                                 01172
+ I -     integer hwnd,                                                                          01173
+ I -     integer ncmdshow) : "ShowWindow"                                                       01174
+ I - end                                                                                        01175
+ I -                                                                                            01176
+ I - #define SW_MAXIMIZE   3                                                                    01177
+ I - #define SW_RESTORE   9                                                                     01178
+ I -                                                                                            01179
+ I - integer current_rows = 0                                                                   01180
+ I - integer current_cols = 0                                                                   01181
+ I - integer full_screen_mode = 0                                                               01182
+ I -                                                                                            01183
+ I - proc save_current_video_mode()                                                             01184
+ I -  current_rows = Query(ScreenRows)                                                          01185
+ I -  current_cols = Query(ScreenCols)                                                          01186
+ I - end                                                                                        01187
+ I -                                                                                            01188
+ I - proc set_full_screen()                                                                     01189
+ I -  save_current_video_mode()                                                                 01190
+ I -  full_screen_mode = 1                                                                      01191
+ I -  ShowWindow(GetWinHandle(), SW_MAXIMIZE)                                                   01192
+ I -  SetVideoRowsCols(-1, -1)                                                                  01193
+ I - end                                                                                        01194
+ I -                                                                                            01195
+ I - proc restore_screen()                                                                      01196
+ I -  full_screen_mode = 0                                                                      01197
+ I -  ShowWindow(GetWinHandle(), SW_RESTORE)                                                    01198
+ I -  SetVideoRowsCols(current_rows, current_cols)                                              01199
+ I - end                                                                                        01200
+ I -                                                                                            01201
+ I - proc toggle_full_screen()                                                                  01202
+ I -  if (full_screen_mode == 0)                                                                01203
+ I -   set_full_screen()                                                                        01204
+ I -  else                                                                                      01205
+ I -   restore_screen()                                                                         01206
+ I -  endif                                                                                     01207
+ I - end                                                                                        01208
+ I -                                                                                            01209
+ I - proc dailylog()                                                                            01210
+ I -     //win 95 lDos("start c:\tse32\e32", "-edly_log", _DONT_CLEAR_|_DONT_PROMPT_)           01211
+ I -     //win NT Dos("start c:\tse32\e32 -edly_log", _RUN_DETACHED_)                           01212
+ I -     Dos("start c:\tse32\e32 -edly_log", _RUN_DETACHED_)                                    01213
+ I -     AbandonEditor()                                                                        01214
+ I - end dailylog                                                                               01215
+ I -                                                                                            01216
+ I - keydef EditPromptKeys2                                                                     01217
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     2
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ I -     <Alt +>         toggle_full_screen()                                                   01218
+ I - end EditPromptKeys2                                                                        01219
+ I -                                                                                            01220
+ I - proc mEditStartup2()                                                                       01221
+ I -     Enable(EditPromptKeys2)                                                                01222
+ I -     UnHook(mEditStartup2)                                                                  01223
+ I - end mEditStartup2                                                                          01224
+ I -                                                                                            01225
+ I - proc begin_full_screen()                                                                   01226
+ I -     string reply[80] = ""                                                                  01227
+ I -                                                                                            01228
+ I -     Hook(_PROMPT_STARTUP_, mEditStartup2)                                                  01229
+ I -     Set(X1, 1)                                                                             01230
+ I -     Set(Y1, 1)                                                                             01231
+ I -     PushKey(<Escape>)                                                                      01232
+ I -     PushKey(<Alt +>)                                                                       01233
+ I -     Ask("", reply)                                                                         01234
+ I -     Disable(EditPromptKeys2)                                                               01235
+ I - end                                                                                        01236
+ I -                                                                                            01237
+ I - proc processobj()                                                                          01238
+ I -     if  Query(MouseY) > 3                                                                  01239
+ I -     and Query(MouseY) < 7                                                                  01240
+ I -     and Query(MouseX) > 26                                                                 01241
+ I -     and Query(MouseX) < 38                                                                 01242
+ I -         dailylog()                                                                         01243
+ I -     endif                                                                                  01244
+ I -                                                                                            01245
+ I -     if  Query(MouseY) > 3                                                                  01246
+ I -     and Query(MouseY) < 7                                                                  01247
+ I -     and Query(MouseX) > 38                                                                 01248
+ I -     and Query(MouseX) < 52                                                                 01249
+ I -          begin_full_screen()                                                               01250
+ I -     endif                                                                                  01251
+ I -                                                                                            01252
+ I -     if  Query(MouseY) == 1                                                                 01253
+ I -             PushKey(<Enter>)                                                               01254
+ I -     endif                                                                                  01255
+ I - end processobj                                                                             01256
+ I -                                                                                            01257
+ I - keydef EditPromptKeys                                                                      01258
+ I -     <Alt F>         begin_full_screen()                                                    01259
+ I -     <Alt L>         dailylog()                                                             01260
+ I -     <LeftBtn>       processobj()                                                           01261
+ I - end EditPromptKeys                                                                         01262
+ I -                                                                                            01263
+ I - proc mEditStartup()                                                                        01264
+ I -     Enable(EditPromptKeys)                                                                 01265
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     3
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ I -     WindowFooter(" {Alt L}-Edit the Daily log  {Alt F}-Toggle Full Screen ")               01266
+ I - end mEditStartup                                                                           01267
+ I -                                                                                            01268
+ I - proc FullScreenMsg()                                                                       01269
+ I -     VGotoXY(41,8)                                                                          01270
+ I -     PutStr("Full Screen")                                                                  01271
+ I -     VGotoXY(40,7)                                                                          01272
+ I -     PutAttr(48, 13)                                                                        01273
+ I -     VGotoXY(40,8)                                                                          01274
+ I -     PutAttr(62, 13)                                                                        01275
+ I -     VGotoXY(40,9)                                                                          01276
+ I -     PutAttr(48, 13)                                                                        01277
+ I - end FullScreenMsg                                                                          01278
+ I -                                                                                            01279
+ I - proc DailyLogMsg()                                                                         01280
+ I -     VGotoXY(29,8)                                                                          01281
+ I -     PutStr("Daily Log")                                                                    01282
+ I -     VGotoXY(28,7)                                                                          01283
+ I -     PutAttr(48, 11)                                                                        01284
+ I -     VGotoXY(28,8)                                                                          01285
+ I -     PutAttr(62, 11)                                                                        01286
+ I -     VGotoXY(28,9)                                                                          01287
+ I -     PutAttr(48, 11)                                                                        01288
+ I - end DailyLogMsg                                                                            01289
+ I -                                                                                            01290
+ I - proc My_Logo()                                                                             01291
+ I -     Set(Attr, 31)                                                                          01292
+ I -     ClrScr()                                                                               01293
+ I -     VGotoXY(21, 1)                                                                         01294
+ I -     PutLine("Add your own menu, buttons, or hotkeys.", 39)                                 01295
+ I -     VGotoXY(20, 1)                                                                         01296
+ I -     PutAttr(223, 41)                                                                       01297
+ I -     VGotoXY(1,Query(ScreenRows)-12)                                                        01298
+ I -     PutLine(                                                                               01299
+ I - "      ﬁ€                                               ‹‹‹€€€€€‹‹‹"                       01300
+ I -     , Query(WindowCols))                                                                   01301
+ I -     VGotoXY(4,Query(ScreenRows)-12)                                                        01302
+ I -     PutAttr(18, 7)                                                                         01303
+ I -     VGotoXY(49,Query(ScreenRows)-12)                                                       01304
+ I -     PutAttr(30, 25)                                                                        01305
+ I -     VGotoXY(1,Query(ScreenRows)-11)                                                        01306
+ I -     PutLine(                                                                               01307
+ I - "   ‹  ﬁ€                                            ‹€€€€€€€€€€€€€€€‹"                    01308
+ I -     , Query(WindowCols))                                                                   01309
+ I -     VGotoXY(4,Query(ScreenRows)-11)                                                        01310
+ I -     PutAttr(18, 7)                                                                         01311
+ I -     VGotoXY(49,Query(ScreenRows)-11)                                                       01312
+ I -     PutAttr(30, 25)                                                                        01313
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     4
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ I -     VGotoXY(1,Query(ScreenRows)-10)                                                        01314
+ I -     PutLine(                                                                               01315
+ I - "   €  ﬁ€ €                                        ‹€€€€€€€€€€€€€€€€€€€‹"                  01316
+ I -     , Query(WindowCols))                                                                   01317
+ I -     VGotoXY(4,Query(ScreenRows)-10)                                                        01318
+ I -     PutAttr(18, 7)                                                                         01319
+ I -     VGotoXY(49,Query(ScreenRows)-10)                                                       01320
+ I -     PutAttr(30, 25)                                                                        01321
+ I -     VGotoXY(1,Query(ScreenRows)-9)                                                         01322
+ I -     PutLine(                                                                               01323
+ I - "   €  ﬁ€ €                                       ‹€€€€€€€€€€€€€€€€€€€€€‹"                 01324
+ I -     , Query(WindowCols))                                                                   01325
+ I -     VGotoXY(4,Query(ScreenRows)-9)                                                         01326
+ I -     PutAttr(18, 7)                                                                         01327
+ I -     VGotoXY(49,Query(ScreenRows)-9)                                                        01328
+ I -     PutAttr(30, 25)                                                                        01329
+ I -     VGotoXY(1,Query(ScreenRows)-8)                                                         01330
+ I -     PutLine(                                                                               01331
+ I - "   €  ﬁ€ €                                      ‹€€€€€€€€€€€€€€€€€€€€€€€‹"                01332
+ I -     , Query(WindowCols))                                                                   01333
+ I -     VGotoXY(4,Query(ScreenRows)-8)                                                         01334
+ I -     PutAttr(18, 7)                                                                         01335
+ I -     VGotoXY(49,Query(ScreenRows)-8)                                                        01336
+ I -     PutAttr(30, 25)                                                                        01337
+ I - //  PutAttr(28, 25)                                                                        01338
+ I -     VGotoXY(1,Query(ScreenRows)-7)                                                         01339
+ I -     PutLine(                                                                               01340
+ I - "ƒƒƒ€‹€€‹€ƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒƒ                         ƒƒƒƒƒƒƒ"         01341
+ I -     , Query(WindowCols))                                                                   01342
+ I -     VGotoXY(1,Query(ScreenRows)-7)                                                         01343
+ I -     PutAttr(24, Query(WindowCols))                                                         01344
+ I -     VGotoXY(4,Query(ScreenRows)-7)                                                         01345
+ I -     PutAttr(18, 3)                                                                         01346
+ I -     VGotoXY(7,Query(ScreenRows)-7)                                                         01347
+ I -     PutAttr(120, 1)                                                                        01348
+ I -     VGotoXY(8,Query(ScreenRows)-7)                                                         01349
+ I -     PutAttr(18, 3)                                                                         01350
+ I -     VGotoXY(49,Query(ScreenRows)-7)                                                        01351
+ I -     PutAttr(65, 25)                                                                        01352
+ I -     VGotoXY(1,Query(ScreenRows)-6)                                                         01353
+ I -     PutLine(                                                                               01354
+ I - "   ﬂ€€€€ﬂ"                                                                                01355
+ I -     , Query(WindowCols))                                                                   01356
+ I -     VGotoXY(1,Query(ScreenRows)-6)                                                         01357
+ I -     PutAttr(98, Query(WindowCols))                                                         01358
+ I -     VGotoXY(1,Query(ScreenRows)-5)                                                         01359
+ I -     PutLine(                                                                               01360
+ I - "     €€"                                                                                  01361
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     5
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ I -     , Query(WindowCols))                                                                   01362
+ I -     VGotoXY(1,Query(ScreenRows)-5)                                                         01363
+ I -     PutAttr(98, Query(WindowCols))                                                         01364
+ I -     VGotoXY(1,Query(ScreenRows)-4)                                                         01365
+ I -     PutLine(                                                                               01366
+ I - "     €€"                                                                                  01367
+ I -     , Query(WindowCols))                                                                   01368
+ I -     VGotoXY(1,Query(ScreenRows)-4)                                                         01369
+ I -     PutAttr(98, Query(WindowCols))                                                         01370
+ I -     VGotoXY(1,Query(ScreenRows)-3)                                                         01371
+ I -     PutLine(                                                                               01372
+ I - "     €€"                                                                                  01373
+ I -     , Query(WindowCols))                                                                   01374
+ I -     VGotoXY(1,Query(ScreenRows)-3)                                                         01375
+ I -     PutAttr(98, Query(WindowCols))                                                         01376
+ I -     VGotoXY(1,Query(ScreenRows)-2)                                                         01377
+ I -     PutLine(                                                                               01378
+ I - "     €€"                                                                                  01379
+ I -     , Query(WindowCols))                                                                   01380
+ I -     VGotoXY(1,Query(ScreenRows)-2)                                                         01381
+ I -     PutAttr(98, Query(WindowCols))                                                         01382
+ I -     VGotoXY(1,Query(ScreenRows)-1)                                                         01383
+ I -     PutLine(                                                                               01384
+ I - "     €€"                                                                                  01385
+ I -     , Query(WindowCols))                                                                   01386
+ I -     VGotoXY(1,Query(ScreenRows)-1)                                                         01387
+ I -     PutAttr(98, Query(WindowCols))                                                         01388
+ I -     VGotoXY(1,Query(ScreenRows))                                                           01389
+ I -     PutLine(                                                                               01390
+ I - "    ∞∞∞"                                                                                  01391
+ I -     , Query(WindowCols))                                                                   01392
+ I -     VGotoXY(1,Query(ScreenRows))                                                           01393
+ I -     PutAttr(96, Query(WindowCols))                                                         01394
+ I - end                                                                                        01395
+ I -                                                                                            01396
+ I - proc mSignOn()                                                                             01397
+ I -     integer signleftedge = (70 - Query(WindowCols)) / 2                                    01398
+ I -                          + Query(WindowCols) - 69                                          01399
+ I -     string s1[70] = '', a1[80] = ''                                                        01400
+ I -           ,s2[70] = '', a2[80] = ''                                                        01401
+ I -           ,s3[70] = '', a3[80] = ''                                                        01402
+ I -           ,s4[70] = '', a4[80] = ''                                                        01403
+ I -           ,s5[70] = '', a5[80] = ''                                                        01404
+ I -           ,s6[70] = '', a6[80] = ''                                                        01405
+ I -           ,s7[70] = '', a7[80] = ''                                                        01406
+ I -                                                                                            01407
+ I -     SignOn()                                                                               01408
+ I -                                                                                            01409
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     6
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ I -     GetStrAttrXY(signleftedge, 8, s1, a1, sizeof(s1))                                      01410
+ I -     GetStrAttrXY(signleftedge, 9, s2, a2, sizeof(s2))                                      01411
+ I -     GetStrAttrXY(signleftedge, 10, s3, a3, sizeof(s3))                                     01412
+ I -     GetStrAttrXY(signleftedge, 11, s4, a4, sizeof(s4))                                     01413
+ I -     GetStrAttrXY(signleftedge, 12, s5, a5, sizeof(s5))                                     01414
+ I -     GetStrAttrXY(signleftedge, 13, s6, a6, sizeof(s6))                                     01415
+ I -     GetStrAttrXY(signleftedge, 14, s7, a7, sizeof(s7))                                     01416
+ I -                                                                                            01417
+ I -     My_Logo()                                                                              01418
+ I -     DailyLogMsg()                                                                          01419
+ I -     FullScreenMsg()                                                                        01420
+ I -                                                                                            01421
+ I -     PutStrXY(11, Query(ScreenRows)-6, s1, 103)                                             01422
+ I -     PutStrXY(11, Query(ScreenRows)-5, s2, 103)                                             01423
+ I -     PutStrXY(11, Query(ScreenRows)-4, s3, 103)                                             01424
+ I -     PutStrXY(11, Query(ScreenRows)-3, s4, 103)                                             01425
+ I -     PutStrXY(11, Query(ScreenRows)-2, s5, 103)                                             01426
+ I -     PutStrXY(11, Query(ScreenRows)-1, s6, 103)                                             01427
+ I -     PutStrXY(11, Query(ScreenRows)-0, s7, 103)                                             01428
+ I - end                                                                                        01429
+ I -                                                                                            01430
+ I - proc mSignOnPrompt()                                                                       01431
+ I -     integer start_id                                                                       01432
+ I -                                                                                            01433
+ I -     mSignOn()                                                                              01434
+ I -     UnHook(mSignOnPrompt)                                                                  01435
+ I -     DelHistoryStr(_EDIT_HISTORY_, 1)                                                       01436
+ I -     Set(X1, 1)                                                                             01437
+ I -     Set(Y1, 2)                                                                             01438
+ I -                                                                                            01439
+ I -     if EditFile()                                                                          01440
+ I -         UnHook(mEditStartup)                                                               01441
+ I -     else                                                                                   01442
+ I -         AbandonEditor()                                                                    01443
+ I -     endif                                                                                  01444
+ I -                                                                                            01445
+ I -     PrevFile()                                                                             01446
+ I -     AbandonFile()                                                                          01447
+ I -     start_id = GetBufferId()                                                               01448
+ I -                                                                                            01449
+ I -     if GotoBufferId(recent_files)                                                          01450
+ I -         KillLine()                                                                         01451
+ I -     endif                                                                                  01452
+ I -                                                                                            01453
+ I -     GotoBufferId(start_id)                                                                 01454
+ I -     Dos("EXIT", _DONT_PROMPT_|_DONT_CLEAR_)                                                01455
+ I -     UpdateDisplay(_ALL_WINDOWS_REFRESH_)                                                   01456
+ I - end mSignOnPrompt                                                                          01457
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     7
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LISTING OUTPUT SECTION (LINE COMPARE)
+
+ ID      SOURCE LINES                                                                 TYPE  LEN N-LN# O-LN#
+     ----+----1----+----2----+----3----+----4----+----5----+----6----+----7----+----8
+ I -                                                                                            01458
+ I - proc mSignOnEdit()                                                                         01459
+ I -     EditFile("[quittoprompthook]")                                                         01460
+ I -     PushKey(<Enter>)                                                                       01461
+ I -     PushKeyStr("[quittoprompthook]")                                                       01462
+ I -     UnHook(mSignOnEdit)                                                                    01463
+ I -     Hook(_IDLE_, mSignOnPrompt)                                                            01464
+ I - end mSignOnEdit                                                                            01465
+ I -                                                                                            01466
+ I - proc mSignOnReturn()                                                                       01467
+ I -     if NumFiles() == 1                                                                     01468
+ I -     and Query(QuitToPrompt)                                                                01469
+ I -         Hook(_PROMPT_STARTUP_, mSignOnEdit)                                                01470
+ I -         Hook(_PROMPT_STARTUP_, mEditStartup)                                               01471
+ I -     endif                                                                                  01472
+ I - end mSignOnReturn                                                                          01473
+ I -                                                                                            01474
+                                                                                      MAT=  107
+ I -         mSignOn()                                                                INS=    2 01582 01278
+ I -         Hook(_PROMPT_STARTUP_, mEditStartup)                                               01583
+ D -         SignOn()                                                                 DEL=    1 01582 01278
+                                                                                      MAT=    1
+ I -         Dos("EXIT", _DONT_PROMPT_|_DONT_CLEAR_)                                  INS=    7 01585 01280
+ I -         UnHook(mEditStartup)                                                               01586
+ I -         Disable(EditPromptKeys)                                                            01587
+ I -                                                                                            01588
+ I -         if Query(QuitToPrompt)                                                             01589
+ I -             Hook(_ON_FILE_QUIT_, mSignOnReturn)                                            01590
+ I -         endif                                                                              01591
+                                                                                      MAT=  691
+1  SUPERC - VM/PDF FILE/LINE/WORD/BYTE/SFOR COMPARE UTILITY - V2.12(12/90)  00/05/15    13.38                PAGE     8
+ NEW:  SIGNON   UI       A                                    OLD:  TSE      UI       A
+
+                       LINE COMPARE SUMMARY AND STATISTICS
+
+    1969 NUMBER OF LINE MATCHES             313  TOTAL CHANGES (PAIRED+NONPAIRED CHNG)
+       0 REFORMATTED LINES                    1  PAIRED CHANGES (REFM+PAIRED INS/DEL)
+     313 NEW FILE LINE INSERTIONS           312  NON-PAIRED INSERTS
+       1 OLD FILE LINE DELETIONS              0  NON-PAIRED DELETES
+    2282 NEW FILE LINES PROCESSED
+    1970 OLD FILE LINES PROCESSED
+
+ LISTING-TYPE = DELTA  COMPARE-COLUMNS =    1:80     LONGEST-LINE = 80
+ PROCESS OPTIONS USED: NONE
+

@@ -1,0 +1,133 @@
+// Monday, 29 March 1993
+/************************************************************************/
+/*
+Proc ErrorOut(String msg)  // a clean error exit for debugging
+
+   PopWinClose()
+   PopWinClose()
+   Warn(msg)
+   Halt
+End
+*/
+
+/**************************** Help Screen *******************************/
+
+Proc CalcHelp()      // minimum help.
+
+Integer
+   OldAttr = Set(Attr,Query(MenuTextAttr))
+
+HelpFlag = True   // let GetInput know to trap keys entered here.
+PopWinOpen(1,1,42,25,1,'Calculator Help',Query(MenuBorderAttr))
+VgotoXY(1,1)
+ClrScr()
+/* Put help text in help box */
+VgotoXY(1,2)                              // get video cursor in box
+PutLine('Active function keys are hi-lighted',40)
+
+VgotoXY(1,4)
+PutLine('Stack Manipulation:',40)
+VgotoXY(1,5)
+PutLine('Last X  XY   RollUp   RollDn',40)
+VgotoXY(1,6)
+PutLine('Enter: Place X in Y',40)
+
+VgotoXY(1,8)
+PutLine('Base Toggles:',40)
+VgotoXY(1,9)
+PutLine('Hex,  W: Binary,  Octal,  T: Decimal',40)
+
+VgotoXY(1,11)
+PutLine('Editing:',40)
+VgotoXY(1,12)
+PutLine('Backspace: Delete X register Rt to Lt.',40)
+VgotoXY(1,13)
+PutLine('Delete: Clear X,    Clear Stack',40)
+
+VgotoXY(1,15)
+PutLine('Math:',40)
+VgotoXY(1,16)
+PutLine('< Shl  > Shr  & And  | Or  ^ Xor  Not',40)
+VgotoXY(1,17)
+PutLine('+ Add  - Subtract  * Multiply  / Divide',40)
+VgotoXY(1,18)
+PutLine('\ Mod',40)
+
+VgotoXY(1,20)
+PutLine('Other:',40)
+VgotoXY(1,21)
+PutLine('Get number under cursor into X',40)
+VgotoXY(1,22)
+PutLine('Paste X into Current edit buffer',40)
+
+VgotoXY(1,23)
+PutLine('Word size [0FEDCBA987654321] (0=10h)',40)
+
+/* Highlight the hotkeys */
+VGotoXY(1,5)
+PutAttr(Query(MenuTextLtrAttr),1)   //LastX
+VGotoXY(10,5)
+PutAttr(Query(MenuTextLtrAttr),2)   // x<>y
+VGotoXY(15,5)
+PutAttr(Query(MenuTextLtrAttr),1)   // rollup
+VGotoXY(25,5)
+PutAttr(Query(MenuTextLtrAttr),1)   // rolldn
+VGotoXY(1,6)
+PutAttr(Query(MenuTextLtrAttr),5)   // Enter
+
+VGotoXY(3,9)
+PutAttr(Query(MenuTextLtrAttr),1)   // hex
+VGotoXY(7,9)
+PutAttr(Query(MenuTextLtrAttr),1)   // binary
+VGotoXY(19,9)
+PutAttr(Query(MenuTextLtrAttr),1)   // octal
+VGotoXY(27,9)
+PutAttr(Query(MenuTextLtrAttr),1)   // decimal
+
+VGotoXY(1,12)
+PutAttr(Query(MenuTextLtrAttr),9)   // backspace
+VGotoXY(1,13)
+PutAttr(Query(MenuTextLtrAttr),6)   // delete
+VGotoXY(27,13)
+PutAttr(Query(MenuTextLtrAttr),1)   // Clear stack
+
+
+VGotoXY(1,16)
+PutAttr(Query(MenuTextLtrAttr),1)   // <
+VGotoXY(8,16)
+PutAttr(Query(MenuTextLtrAttr),1)   // >
+VGotoXY(15,16)
+PutAttr(Query(MenuTextLtrAttr),1)   // &
+VGotoXY(22,16)
+PutAttr(Query(MenuTextLtrAttr),1)   // |
+VGotoXY(28,16)
+PutAttr(Query(MenuTextLtrAttr),1)   // ^
+VGotoXY(35,16)
+PutAttr(Query(MenuTextLtrAttr),1)   // Not
+
+VGotoXY(1,17)
+PutAttr(Query(MenuTextLtrAttr),1)   // +
+VGotoXY(8,17)
+PutAttr(Query(MenuTextLtrAttr),1)   // -
+VGotoXY(20,17)
+PutAttr(Query(MenuTextLtrAttr),1)   // *
+VGotoXY(32,17)
+PutAttr(Query(MenuTextLtrAttr),1)   // '/'
+VGotoXY(1,18)
+PutAttr(Query(MenuTextLtrAttr),1)   // MOD
+
+VGotoXY(1,21)
+PutAttr(Query(MenuTextLtrAttr),1)   // Get
+VGotoXY(1,22)
+PutAttr(Query(MenuTextLtrAttr),1)   // Paste
+
+VGotoXY(3,23)
+PutAttr(Query(MenuTextLtrAttr),1)   // WordSize
+
+Repeat until keypressed()           // keep waiting for a keypress
+Set(Attr,OldAttr)                   // restore previous attr
+PopWinClose()                 // close up the box
+UpdateRegs()                  // update regs - completes partial ops
+End
+
+/*************************** EOF 'calc.inc' *****************************/

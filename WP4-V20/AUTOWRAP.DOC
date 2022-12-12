@@ -1,0 +1,93 @@
+/**************************************************************************
+     AutoWrap ... a macro that, when Hooked to _IDLE_, provide
+     automatic paragraph wrapping.
+
+     Version .91 ... a slightly refined version of the original.
+ **************************************************************************
+
+     û Enable AutoWrap by:
+
+          (a) Compiling autowrap.s using the sc compiler and placing
+              the compiled macro wherever it is you usually place
+              compiled macro files.
+
+          (b) Adding the line
+                    loadmacro('autowrap')
+              to your TSE WhenLoaded() macro.
+
+          (c) (optional) If you want to be able to turn autowrap on and off
+              manually, adding this menu selection to your TSE config menu:
+
+                    "Auto &Paragraph Wrap"
+                         [OnOffStr(GetGlobalInt('AutoWrapOnOff')): 3],
+                         SetGlobalInt('AutoWrapOnOff',
+                                       NOT GetGlobalInt('AutoWrapOnOff')),
+                         DontClose
+
+              and add this proc to your TSE configuration file preceding
+              the above menu:
+
+                    string proc OnOffStr(string i)
+                         return(iif(GetGlobalInt('AutoWrapOnOff'),
+                                    'On',
+                                    'Off')
+                               )
+                    end
+
+          (d) Recompiling TSE.
+
+     û Wrapping is always suppressed if:
+          þ The Global integer AutoWrapOnOff is set to 0 or is not set.
+          þ TSE WordWrap is turned OFF or Insert mode is OFF.
+          þ The cursor is in a block.
+          þ Cursor is at or beyond last non-white character, i.e.,
+            typing at the end of a line, even if the line is a short one in
+            the middle of a paragraph. If you want TSE to wrap under this
+            circumstance, delete the line
+                  OR CurrPos() > PosLastNonwhite()    // at end of line
+            from this file.
+          þ The current file extension is not found in the
+            autowrap_allowed list in this macro.
+          þ The current line has NO non-white character
+          þ A key has been pressed.
+          þ The proc excluded_paragraph return FALSE. (Customize this proc
+            to return false within any paragraph you do not want wrapped.
+            Note the the current paragraph is marked as a block before this
+            is called, so you can use the 'l' option in lFIND when testing
+            for non-wrap conditions.)
+
+     û To avoid screen flicker, wrapping is attempted only every 1/10 second.
+
+     û Wrapping can be forced to happen immediately after selected TSE
+       commands (such as DelRtWord, DelBlock, etc.) by use of this small
+       proc:
+
+          proc mAutoWrap()
+               SetGlobalInt('AutoWrapNOW', 1)
+               execmacro('autowrap')
+               SetGlobalInt('AutoWrapNOW', 0)
+          end
+
+       Include this proc in your main TSE configuration file. Then, for the
+       commands that you want to have perform an immediate autowrap--subject
+       to the conditions listed above, define them like this:
+
+          <ctrl y>       DelLine() mAutoWrap()
+
+       If you execute commands such as this from the menu, you can create
+       commands such as:
+
+          proc mDelLine()
+               DelLine()
+               mAutoWrap()
+          end
+
+       and substitute them for the 'vanilla' commands in the TSE menus.
+
+       Note:
+
+          AutoWrap.s includes a key definition for <ctrl enter>. When you are
+          in a paragraph that is subject to auto wrapping and want to insert
+          a blank line in the middle of the paragraph, use this key.
+
+ **************************************************************************/

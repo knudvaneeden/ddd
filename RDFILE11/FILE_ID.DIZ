@@ -1,0 +1,6 @@
+ReadFile() is a substitute for TSE's
+InsertFile command. The differences are:
+  * It inserts the file as a line block.
+  * It uses default extensions.
+Prompts for file name if file name not used
+as an argument. Updated for 1.52b.

@@ -1,0 +1,79 @@
+    NOTE: New macro Q2TSE26.MAC is included in this ZIP file.  Q2TSE26.MAC
+    is for use in coverting TSE Jr. information using TSE Pro/32 2.6 Console
+    Mode.
+
+
+                                 Q2TSE
+
+    Q2TSE is a TSE version 2.5 macro designed to assist with upgrading from
+    TSE Jr./TSE Jr to TSE Pro.  This macro will not completely convert
+    TSE Jr./TSE Jr to TSE Pro due to the major difference in the the
+    products and their macro languages. However, it will convert enough
+    to give a good base to build upon.
+
+    Depending on the complexity of your TSE Jr. macros, this macro may be
+    able to convert on average: 90 percent.  Following are a few of the
+    things that the macro cannot convert:
+
+        - Any macro that uses the "Pause" command.
+        - Any macro that has repeated commands.
+        - Any macro that has commands being used within prompts.
+           (i.e.  EditFile EndLine Backspace Backspace Backspace "$$$" Return)
+
+    Q2TSE will work with TSE Jr. versions 2.07a and greater, and TSE Jr
+    4.0.  To use the macro, change to the directory where the Q2TSE.MAC
+    file is located and enter the following at the DOS prompt:
+
+            e -eq2tse
+
+    If you have renamed your TSE executable (E.EXE) to something else, then
+    replace the 'e' in the line above with the new name of your E.EXE.
+
+    The Q2TSE MainMenu is as follows:
+
+                   Ú TSE Jr./TSE Jr to TSE Pro conversion utility ¿
+                   ³ Select Conversion type:      (F1=Help)     ³
+                   ³   Configuration Options only               ³
+                   ³   Macros only                              ³
+                   ³   Both configuration and macros            ³
+                   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    CONFIGURATION OPTIONS ONLY:
+
+    This part of the Q2TSE macro will read the configuration settings
+    directly from the specified TSE Jr. executable file and write them to The
+    SemWare Editor executable file.  You will then have the option to write
+    the settings out to an ASCII file in the same format that is produced by
+    the IConfig macro.  See the documentation on configuring the editor for
+    more details on how this file can be used.  NOTE: It is not necessary to
+    generate this file.  The options read from the TSE Jr. executable will be
+    written directly to the TSE executable.  Most of them will also
+    immediately take effect.  It is suggested that you exit the editor and
+    restart to force all of the options to take effect.
+
+
+    MACROS ONLY:
+
+    This part of the Q2TSE macro will convert a TSE Jr. configuration file into
+    a TSE user interface file.  After supplying the names for the files, the
+    macro will then parse the TSE Jr. configuration file and generate the TSE
+    file.  Due to the vast difference between the macro languages, there are
+    MANY things that cannot be mechanically converted.  Anytime something
+    cannot be converted, an appropriate "Warn(...)" statement will be
+    assigned in the TSE file.  Once the conversion is complete, you should
+    review the new TSE file, find each of the "Warn(...)" statements and
+    manually convert the macro.
+
+    You may also use this to convert any external TSE Jr. macros.  When you are
+    conversion external macros, be sure to use a ".S" extension for the TSE
+    filename.  The default filename has a ".UI" extension which is used for
+    TSE User Interface files.  You should only use the ".UI" extension when
+    creating files that you wish to "burn-in" to the TSE executable.
+
+
+    BOTH CONFIGURATION AND MACROS:
+
+    Selecting this option will invoke both of the previous options beginning
+    with the Configuration Options, then the Macros option.
+
+End of Q2TSE documentation.

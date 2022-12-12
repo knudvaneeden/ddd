@@ -1,0 +1,9 @@
+(03-17-03) ShowCurr macro for TSE Pro v4.0
+I've taken the liberty to extend the ShowCurr
+macro with the following:
+1. Hex value of character under the cursor
+2. Total amount of lines in the file
+3. The flags of that file
+4. The total lines in current marked block
+Author: H. Pikaar
+Replaces showcurr.zip dated 12-04-02

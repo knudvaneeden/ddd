@@ -1,0 +1,65 @@
+                                   REMIND
+                                Version 1.0
+                             Richard Hendricks
+                       The Semware Editor (TSE) Macro
+
+REMIND is Reminder or ToDo Macro for the The Semware Editor (TSE). REMIND
+checks the computer system clock and then searches in the REMIND.DAT file to
+see if any days fall within the designated date range.
+
+Files included:
+
+    REMIND.S    -- Reminder Macro
+    REMIND.DAT  -- Sample data file
+    REMIND.BAT  -- Batch file to execute REMIND
+    REMIND.TXT  -- Documentation for REMIND
+
+REMIND.BAT uses a DOS Environment Variable (MACPATH) to find REMIND.MAC and
+REMIND.DAT. The value of this variable is the path to these files including
+the trailing '\'. For example: c:\tse\
+
+Current settings within REMIND:
+
+
+proc MAIN() // line 134 in REMIND.S
+  integer MinDateColumn = 1    // Event dates are found in columns
+                               //    MinDateColumn to MaxDateColumn
+  integer MaxDateColumn = 15   // Event dates are found in columns
+                               //    MinDateColumn to MaxDateColumn
+  integer MaxDateAdder  = 7    // curr date + MaxDateAdder = MaxDate
+                               // valid range 0 to 10
+
+REMIND will only search columns 1 to 15 for the date of the event. This can
+ be changed by editing the program and recompiling.
+
+REMIND searches a 7 day date range. The MaxDateAdder can be set to 0 through
+10. Numbers less than 0 or larger than 10 will probably produce funny results.
+
+Date format:
+
+The dates are in month, day and year format (mm/dd/yyyy). The separator can
+be a '.', '/' or '\'. The century can be left off of the year.
+
+REMIND.BAT:
+
+REMIND.S can easily be used on any file as long as the dates are within the
+columns that REMIND.S is configured to search and in the proper date format
+(month, day and year). REMIND.S does not have any file designations
+specified within it, so the file that is searched depends on when you
+execute the REMIND Macro.
+
+Below is the REMIND.BAT file.
+
+@echo off
+rem REMIND.BAT 06/12/1993 06/12/1993
+%MACPATH%e.exe %MACPATH%remind.dat -eremind
+
+FIND History:
+
+The History for the FIND command is loaded with the regular expression for
+the current date range. This makes searching for additional dates easier.
+
+I hope that you find this useful
+    Richard // 07/21/1993
+
+// end-of-file

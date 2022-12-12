@@ -1,0 +1,15 @@
+RECONFIG.S
+Version Mar 30, 1996
+-
+TSE macro for use of different
+configurations. Corrected version.
+
+Overview:
+
+This macro loads specific configurations
+'on the fly' when the editor is already
+running.
+Can be used for adaptation to specific
+tasks or to set preferences for
+different users.
+Should work with network version also.

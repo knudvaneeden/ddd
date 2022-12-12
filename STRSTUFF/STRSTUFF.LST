@@ -1,0 +1,411 @@
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 1
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Preliminaries
+
+      1					     IDEAL
+      2				     ;******************************************************************************;
+      3				     ;										    ;
+      4				     ;		     CRAZY JACK'S ADDITIONAL STRING SUPPORT ROUTINES		    ;
+      5				     ;										    ;
+      6				     ; (c)Copyright 1993 by Jack Hazlehurst					    ;
+      7				     ; Author :	Jack Hazlehurst							    ;
+      8				     ; Date   :	07/01/93							    ;
+      9				     ;										    ;
+     10				     ; Use  the	binary to your heart's content when you	customize your copy of The  ;
+     11				     ; Semware Editor.	If you modify it (creating a  derivative  work)	 you  MUST  ;
+     12				     ; retain the copyright notice, and	add your own if	you wish.  Just	don't make  ;
+     13				     ; anyone pay any more for its use than I charge you (which	is nothing).	    ;
+     14				     ;------------------------------------------------------------------------------;
+     15				     ; These are routines that set and clear bits in bit sets and replace existing  ;
+     16				     ; characters in strings.  SAL is not good for doing stuff like that!	    ;
+     17				     ;										    ;
+     18				     ; The routines are	defined	by:						    ;
+     19				     ;	 binary	["strstuff.bin"]						    ;
+     20				     ;	     integer proc TestBitSetBit( var string BitSet, integer Which )    :  0 ;
+     21				     ;	     integer proc SetBitSetBit(	var string BitSet, integer Which )     :  2 ;
+     22				     ;	     integer proc ClrBitSetBit(	var string BitSet, integer Which )     :  4 ;
+     23				     ;	     integer proc FlipBitSetBit( var string BitSet, integer Which )    :  6 ;
+     24				     ;	     integer proc PlantChar( var string	CharStr, integer Where,		    ;
+     25				     ;							 integer What )	       :  8 ;
+     26				     ;	     proc ClearBitSet( var string BitSet )			       : 10 ;
+     27				     ;	 end									    ;
+     28				     ;										    ;
+     29				     ; Further details are given below with each routine.			    ;
+     30				     ;										    ;
+     31				     ; This assembles with the Turbo Assembler v 3.2 and better	(and maybe worser). ;
+     32				     ;										    ;
+     33				     ;******************************************************************************;
+     34
+     35	0000				     SEGMENT _TEXT
+     36					     ASSUME  CS:_TEXT
+     37					     LOCALS
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 2
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+The Entry Vector
+
+     38
+     39				     ;
+     40				     ; These routines are so small that	all can	be reached with	two-byte jumps!
+     41				     ;
+     42	0000				     PROC    VECTORS
+     43
+     44	0000  EB 1B			     JMP     SHORT TSTBTSTBT	   ;TestBitSetBit()
+     45	0002  EB 2B			     JMP     SHORT STBTSTBT	   ;SetBitSetBit()
+     46	0004  EB 3F			     JMP     SHORT CLBTSTBT	   ;ClrBitSetBit()
+     47	0006  EB 55			     JMP     SHORT FLBTSTBT	   ;FlipBitSetBit()
+     48	0008  EB 69			     JMP     SHORT PLNTCHR	   ;PlantChar()
+     49				     ;	     JMP     SHORT CLRBTST	   ;ClearBitSet() (not real jump - just	falls
+     50				     ;										  in)
+     51
+     52	000A				     ENDP    VECTORS
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 3
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Routine	To Clear A Bit Set
+
+     53				     ;===============================================================================
+     54				     ;
+     55				     ;	     proc ClearBitSet( var string BitSet )   : 6
+     56				     ;
+     57				     ;	     Clears  all  bytes	in the string given by the parameter "BitSet" to
+     58				     ;	     all bits off and sets the length f	the string equal to its	 maximum
+     59				     ;	     length.
+     60				     ;
+     61				     ;-------------------------------------------------------------------------------
+     62
+     63	000A				     PROC    CLRBTST FAR
+     64
+     65					     ; The stack:
+     66	      =	[DWORD BP+6]	     @@Set   EQU    [DWORD BP+6]	     ;Pointer to the string.
+     67	      =	[WORD BP+4]	     @@MaxL  EQU    [WORD BP+4]		     ;Maximum length of	the string.
+     68				     ; ret address   BP	+ 0
+     69
+     70	000A  8B EC			     MOV     BP, SP		     ;Address parameters.
+     71	000C  C4 7E 06			     LES     DI, @@Set		     ;Address the set.
+     72	000F  8B 46 04			     MOV     AX, @@MaxL		     ;Get maximum length.
+     73	0012  32 E4			     XOR     AH, AH		     ;Enforce high-order zero.
+     74	0014  8B C8			     MOV     CX, AX		     ;Make copy	for count.
+     75	0016  FC			     CLD
+     76	0017  AB			     STOSW			     ;Set length in set	string.
+     77	0018  32 C0			     XOR     AL, AL		     ;We're gonna fill it with zeros.
+     78	001A  F3>			     REP			     ;Fill it.
+     79	001B  AA			     STOSB
+     80
+     81	001C  CB			     RETF			     ;All done.
+     82
+     83	001D				     ENDP    CLRBTST
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 4
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Routine	To Test	A Bit In A Bit Set
+
+     84				     ;===============================================================================
+     85				     ;
+     86				     ;	     integer proc TestBitSetBit( var string BitSet, integer Which ) : 0
+     87				     ;
+     88				     ;	     This  test	 the  bit  number given	by "Which" in the bit set string
+     89				     ;	     "BitSet".	It returns 0 if	the bit	is NOT set, > 0	otherwise.
+     90				     ;
+     91				     ;	     If	the bit	is outside the hit set,	-1 is returned.
+     92				     ;
+     93				     ;-------------------------------------------------------------------------------
+     94
+     95	001D				     PROC    TSTBTSTBT FAR
+     96
+     97					     ;The stack:
+     98	      =	[DWORD BP+10]	     @@BtSt  EQU     [DWORD BP+10]	     ;Address of set string containing bit.
+     99				     ; Max length word for BtSt	is ignored.
+    100				     ; upper word of @@Which is	ignored.
+    101	      =	[WORD BP+4]	     @@Which EQU     [WORD BP+4]	     ;Bit to test.
+    102				     ; ret address   BP	+ 0
+    103
+    104	001D  8B EC			     MOV     BP, SP		     ;Address parameters.
+    105	001F  C5 76 0A			     LDS     SI, @@BtSt		     ;Get address of set.
+    106	0022  8B 4E 04			     MOV     CX, @@Which	     ;Get bit number.
+    107
+    108	0025  E8 006B			     CALL    CALCOBIT		     ;Get offset and bit.
+    109
+    110	0028  8A C5			     MOV     AL, CH
+    111	002A  22 00			     AND     AL, [SI+BX]	     ;Leaves 0 if bit off, else	non-zero.
+    112	002C  8A E6			     MOV     AH, DH		     ;Ready result for caller.
+    113
+    114	002E  CB			     RETF			     ;Done.
+    115
+    116	002F				     ENDP    TSTBTSTBT
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 5
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Routine	To Set A Bit In	A Bit Set
+
+    117				     ;===============================================================================
+    118				     ;
+    119				     ;	     integer proc SetBitSetBit(	var string BitSet, integer Which )   : 2
+    120				     ;
+    121				     ;	     This routine turns	ON the bit specified by	"Which"	in the	bit  set
+    122				     ;	     string "BitSet".
+    123				     ;
+    124				     ;	     It	 returns  > 0  if the previous value of	the bit	selected was ON,
+    125				     ;	     0 if it was OFF, and -1 if	it was OUTSIDE the given string.
+    126				     ;
+    127				     ;-------------------------------------------------------------------------------
+    128
+    129	002F				     PROC    STBTSTBT FAR
+    130
+    131					     ;The stack:
+    132	      =	[DWORD BP+10]	     @@BtSt  EQU     [DWORD BP+10]	     ;Address of set string where bit goes.
+    133				     ; Max length word for BtSt	is ignored.
+    134				     ; upper word of @@Which is	ignored.
+    135	      =	[WORD BP+4]	     @@Which EQU     [WORD BP+4]	     ;Bit to set.
+    136				     ; ret address   BP	+ 0
+    137
+    138	002F  8B EC			     MOV     BP, SP		     ;Address parameters.
+    139	0031  C5 76 0A			     LDS     SI, @@BtSt		     ;Get address of set.
+    140	0034  8B 4E 04			     MOV     CX, @@Which	     ;Get bit number.
+    141
+    142	0037  E8 0059			     CALL    CALCOBIT		     ;Get offset and bit.
+    143
+    144	003A  8A 00			     MOV     AL, [SI+BX]	     ;Get original data.
+    145	003C  0A E8			     OR	     CH, AL		     ;Set the bit.
+    146	003E  88 28			     MOV     [SI+BX], CH	     ;Put back result.
+    147	0040  22 C1			     AND     AL, CL		     ;Mask off original	bit value.
+    148	0042  8A E6			     MOV     AH, DH		     ;Ready return to caller.
+    149
+    150	0044  CB			     RETF			     ;Done.
+    151
+    152	0045				     ENDP    STBTSTBT
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 6
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Routine	To Clear A Bit In A Bit	Set
+
+    153				     ;===============================================================================
+    154				     ;
+    155				     ;	     integer proc ClrBitSetBit(	var string BitSet, integer Which )   : 2
+    156				     ;
+    157				     ;	     This routine turns	OFF the	bit specified by "Which" in the	bit  set
+    158				     ;	     string "BitSet".
+    159				     ;
+    160				     ;	     It	 returns  > 0  if the previous value of	the bit	selected was ON,
+    161				     ;	     0 if it was OFF, and -1 if	it was OUTSIDE the given string.
+    162				     ;
+    163				     ;-------------------------------------------------------------------------------
+    164
+    165	0045				     PROC    CLBTSTBT FAR
+    166
+    167					     ;The stack:
+    168	      =	[DWORD BP+10]	     @@BtSt  EQU     [DWORD BP+10]	     ;Address of set string where bit goes.
+    169				     ; Max length word for BtSt	is ignored.
+    170				     ; upper word of @@Which is	ignored.
+    171	      =	[WORD BP+4]	     @@Which EQU     [WORD BP+4]	     ;Bit to clear.
+    172				     ; ret address   BP	+ 0
+    173
+    174	0045  8B EC			     MOV     BP, SP		     ;Address parameters.
+    175	0047  C5 76 0A			     LDS     SI, @@BtSt		     ;Get address of set.
+    176	004A  8B 4E 04			     MOV     CX, @@Which	     ;Get bit number.
+    177
+    178	004D  E8 0043			     CALL    CALCOBIT		     ;Get offset and bit.
+    179
+    180	0050  F6 D5			     NOT     CH			     ;Make bit mask.
+    181	0052  8A 00			     MOV     AL, [SI+BX]	     ;Get original data.
+    182	0054  0A E8			     OR	     CH, AL		     ;Clear the	bit.
+    183	0056  88 28			     MOV     [SI+BX], CH	     ;Put back result.
+    184	0058  22 C1			     AND     AL, CL		     ;Mask off original	bit value.
+    185	005A  8A E6			     MOV     AH, DH		     ;Ready return to caller.
+    186
+    187	005C  CB			     RETF			     ;Done.
+    188
+    189	005D				     ENDP    CLBTSTBT
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 7
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Routine	To Flip	A Bit In A Bit Set
+
+    190				     ;===============================================================================
+    191				     ;
+    192				     ;	     integer proc ClrBitSetBit(	var string BitSet, integer Which )   : 2
+    193				     ;
+    194				     ;	     This  routine turns inverts the bit specified by "Which" in the bit
+    195				     ;	     set string	"BitSet".
+    196				     ;
+    197				     ;	     It	 returns  > 0  if the previous value of	the bit	selected was ON,
+    198				     ;	     0 if it was OFF, and -1 if	it was OUTSIDE the given string.
+    199				     ;
+    200				     ;-------------------------------------------------------------------------------
+    201
+    202	005D				     PROC    FLBTSTBT FAR
+    203
+    204					     ;The stack:
+    205	      =	[DWORD BP+10]	     @@BtSt  EQU     [DWORD BP+10]	     ;Address of set string where bit goes.
+    206				     ; Max length word for BtSt	is ignored.
+    207				     ; upper word of @@Which is	ignored.
+    208	      =	[WORD BP+4]	     @@Which EQU     [WORD BP+4]	     ;Bit to clear.
+    209				     ; ret address   BP	+ 0
+    210
+    211	005D  8B EC			     MOV     BP, SP		     ;Address parameters.
+    212	005F  C5 76 0A			     LDS     SI, @@BtSt		     ;Get address of set.
+    213	0062  8B 4E 04			     MOV     CX, @@Which	     ;Get bit number.
+    214
+    215	0065  E8 002B			     CALL    CALCOBIT		     ;Get offset and bit.
+    216
+    217	0068  8A 00			     MOV     AL, [SI+BX]	     ;Get original data.
+    218	006A  32 E8			     XOR     CH, AL		     ;Flip the bit.
+    219	006C  88 28			     MOV     [SI+BX], CH	     ;Put back result.
+    220	006E  22 C1			     AND     AL, CL		     ;Mask off original	bit value.
+    221	0070  8A E6			     MOV     AH, DH		     ;Ready return to caller.
+    222
+    223	0072  CB			     RETF			     ;Done.
+    224
+    225	0073				     ENDP    FLBTSTBT
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 8
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Routine	To Replace A Character In A String
+
+    226				     ;===============================================================================
+    227				     ;
+    228				     ;	     integer proc PlantChar( var string	CharStr, integer Where,
+    229				     ;							 integer What )	    :  4
+    230				     ;
+    231				     ;	     You  give	this routine a pointer to a string (that's what	the "var"
+    232				     ;	     does), the	index to one of	the characters (Where) and the	character
+    233				     ;	     (as an integer) that you want stored there	(What) and PlantChar puts
+    234				     ;	     What into Where in	the CharStr.  It does:
+    235				     ;
+    236				     ;	     CharStr[Where] = Chr(What)
+    237				     ;
+    238				     ;	     --in other	words.	This is	something SAL doesn't support directly.
+    239				     ;
+    240				     ;	     It	 returns  the  previous	contents of the	byte being changed if the
+    241				     ;	     byte specified is within the string, and -1 otherwise.
+    242				     ;
+    243				     ;-------------------------------------------------------------------------------
+    244
+    245	0073				     PROC    PLNTCHR FAR
+    246
+    247					     ; The stack:
+    248	      =	[DWORD BP+14]	     @@Str   EQU    [DWORD BP+14]	     ;Pointer to the string.
+    249				     ; Max string length not used (word	at BP+12)
+    250				     ; Upper word of Whr not used
+    251	      =	[WORD BP+8]	     @@Whr   EQU    [WORD BP+8]		     ;Index into string.
+    252				     ; Upper three bytes of Wht	not used
+    253	      =	[BYTE BP+4]	     @@Wht   EQU    [BYTE BP+4]		     ;Character	to store.
+    254				     ; ret address   BP	+ 0
+    255
+    256	0073  8B EC			     MOV     BP, SP		     ;Address parameters.
+    257	0075  33 D2			     XOR     DX, DX		     ;Ready high-order word of return.
+    258	0077  8B 5E 08			     MOV     BX, @@Whr		     ;Get index.
+    259	007A  0B DB			     OR	     BX, BX		     ;It must be greater than zero.
+    260	007C  74 12			     JZ	     @@NDXBAD		     ;Jump if not.
+    261	007E  C5 76 0E			     LDS     SI, @@Str		     ;Get address of string.
+    262	0081  AD			     LODSW			     ;Get string length.
+    263	0082  3B C3			     CMP     AX, BX		     ;Is index within string?
+    264	0084  72 0A			     JB	     @@NDXBAD		     ;Jump if it's not.
+    265
+    266	0086  8A 46 04			     MOV     AL, @@Wht		     ;Get the data.
+    267	0089  88 40 FF			     MOV     [SI+BX-1],	AL	     ;Store the	data.
+    268	008C  B8 0001			     MOV     AX, 1		     ;Return TRUE.
+    269	008F  CB			     RETF			     ;Back to caller.
+    270
+    271	0090			     @@NDXBAD:
+    272	0090  8B C2			     MOV     AX, DX		     ;Return FALSE to caller.
+    273	0092  CB			     RETF
+    274
+    275	0093				     ENDP    PLNTCHR
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 9
+STRSTUFF.ASM
+Additional String Support For Semware Editor Macros
+Additional Material
+
+    276				     ;===============================================================================
+    277				     ;
+    278				     ;	     Helper routine
+    279				     ;
+    280				     ;-------------------------------------------------------------------------------
+    281
+    282				     ;
+    283				     ; Calculate offset	in string and create testing/setting bit
+    284				     ;	     * Put bit number in CX before calling
+    285				     ;	     * Put pointer to string in	DS:SI.
+    286				     ;	     * Returns offset to byte IN SET in	BX, and	bit in proper position in CH.
+    287				     ;	     * Clears DX.
+    288				     ;	     * Takes error exit	if byte	outside	the string.
+    289				     ;	     * Adjusts DS:SI to	point at beginning of actual string data.
+    290				     ;
+    291
+    292	0093				     PROC    CALCOBIT NEAR
+    293
+    294	0093  8B D9			     MOV     BX, CX		     ;We need to locate	byte and bit.
+    295	0095  D1 EB			     SHR     BX, 1		     ;<sigh> --	we must	use only 8088
+    296	0097  D1 EB			     SHR     BX, 1		     ;instructions.
+    297	0099  D1 EB			     SHR     BX, 1		     ;Offset in	string ready.
+    298
+    299	009B  80 E1 07			     AND     CL, 7		     ;Get bit number mod 8.
+    300	009E  B5 01			     MOV     CH, 1		     ;Use it to	position a bit.
+    301	00A0  D2 E5			     SHL     CH, CL
+    302	00A2  8A CD			     MOV     CL, CH		     ;Make an extra copy.
+    303
+    304	00A4  33 D2			     XOR     DX, DX		     ;Clear DX (high-order word	of return).
+    305	00A6  AD			     LODSW			     ;Get string length.
+    306	00A7  3B C3			     CMP     AX, BX		     ;Be sure bit is within the	string.
+    307	00A9  76 01			     JBE     BADNDX		     ;Jump if not.
+    308
+    309	00AB  C3			     RETN			     ;Stuff ready for user.
+    310
+    311	00AC			     BADNDX:				     ;Bit is outside the string.
+    312	00AC  58			     POP     AX			     ;Toss return from CALCOBIT.
+    313	00AD  4A			     DEC     DX
+    314	00AE  8B C2			     MOV     AX, DX		     ;Return -1.
+    315	00B0  CB			     RETF			     ;Short-cut	back to	caller.
+    316
+    317	00B1				     ENDP    CALCOBIT
+    318
+    319
+    320	00B1				     ENDS    _TEXT
+    321
+    322					     END
+Turbo Assembler	 Version 3.2	    07/08/93 22:15:20	    Page 10
+Symbol Table
+Additional String Support For Semware Editor Macros
+
+
+
+Symbol Name		Type   Value			   Cref	(defined at #)
+
+??DATE			Text   "07/08/93"
+??FILENAME		Text   "STRSTUFF"
+??TIME			Text   "22:15:19"
+??VERSION		Number 0314
+@@BTST			Text   [DWORD BP+10]		   #98	105
+@@BTST			Text   [DWORD BP+10]		   #132	 139
+@@BTST			Text   [DWORD BP+10]		   #168	 175
+@@BTST			Text   [DWORD BP+10]		   #205	 212
+@@MAXL			Text   [WORD BP+4]		   #67	72
+@@NDXBAD		Near   _TEXT:0090		   260	264  #271
+@@SET			Text   [DWORD BP+6]		   #66	71
+@@STR			Text   [DWORD BP+14]		   #248	 261
+@@WHICH			Text   [WORD BP+4]		   #101	 106
+@@WHICH			Text   [WORD BP+4]		   #135	 140
+@@WHICH			Text   [WORD BP+4]		   #171	 176
+@@WHICH			Text   [WORD BP+4]		   #208	 213
+@@WHR			Text   [WORD BP+8]		   #251	 258
+@@WHT			Text   [BYTE BP+4]		   #253	 266
+@CPU			Text   0101H
+@CURSEG			Text   _TEXT			   #35
+@FILENAME		Text   STRSTUFF
+@WORDSIZE		Text   2			   #35
+BADNDX			Near   _TEXT:00AC		   307	#311
+CALCOBIT		Near   _TEXT:0093		   108	142  178  215  #292
+CLBTSTBT		Far    _TEXT:0045		   46  #165
+CLRBTST			Far    _TEXT:000A		   #63
+FLBTSTBT		Far    _TEXT:005D		   47  #202
+PLNTCHR			Far    _TEXT:0073		   48  #245
+STBTSTBT		Far    _TEXT:002F		   45  #129
+TSTBTSTBT		Far    _TEXT:001D		   44  #95
+VECTORS			Near   _TEXT:0000		   #42
+
+Groups & Segments	Bit Size Align	Combine	Class	   Cref	(defined at #)
+
+_TEXT			16  00B1 Para	none		   #35	36
+

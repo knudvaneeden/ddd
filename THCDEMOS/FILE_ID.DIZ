@@ -1,0 +1,5 @@
+These demo a simple data retrieval capability
+based on text search tools.  They use MATCH
+to find lines and PPM to find paragraphs.
+See THCDEMOS.DOC (included) for installation
+help.

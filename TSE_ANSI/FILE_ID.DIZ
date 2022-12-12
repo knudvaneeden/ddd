@@ -1,0 +1,14 @@
+ANSI.S
+Version 1.1
+-
+This is an attempt at programming an inter-
+preter or viewer for ANSI files for TSE.
+Version 1.1 corrects some problems with
+cursor positioning contained in the previous
+posting.
+(Text output did not move the cursor proper-
+ly, default parameter values were improperly
+interpreted as 0 instead of 1, newlines did
+not wrap to column 1.)
+There's still the line length limitation to
+255 characters maximum.

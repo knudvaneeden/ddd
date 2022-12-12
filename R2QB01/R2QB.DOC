@@ -1,0 +1,504 @@
+I'm releasing these macros as "freeware". I hope someone can use them!
+
+DISCLAIMER AND CAUTIONS:
+I caution anyone using the macros to work on *copies* of files, at least
+until you are certain that the macros work properly for you. I've had only
+minor problems- and they were mostly caused by discrepancies in the source
+text. I can't check for every possible type of error. Use these at your
+own risk. I will not be responsible for any loss of data suffered from the
+use of these macros.
+
+After doing the conversion, use the 'Process Done Recipes' function to
+view the titles. Occasionally problems will show up here. The line number
+in the original file precedes the recipe title. You should exit the macro
+and edit your original file to correct any problems found *before* moving
+the recipes to another file. After moving the recipes, I suggest looking
+at the original file before deleting it. Occasionally a recipe is missed.
+I'll try to correct that when I find out what's causing it. Also, there
+might have been some text in a message (outside of a recipe) that you may
+want to save.
+
+"BETA" RELEASE NOTES:
+
+I'm still working on these macros, but I feel that they're close enough to
+completion that (hopefully) someone else might find them useful. I
+apologize for not having a complete list of "Credits" in these docs, but I
+don't have copies of all of the recipe database programs mentioned. I'll
+try to pick up copies before the "final release" so I can properly credit
+the authors. I also plan on improving this documentation... it's only
+partial, but along with the help screens for the major functions should be
+adequate.
+
+For this beta release, I'm including a small file of messages exported
+from the message reader I use, along with a HDRCFG.DAT file set up to read
+the messages so that you can try the macro. I'll change the names of the
+participants, in case they might object to having them included. These
+files will be in a separate .ZIP file contained within the macro zip.
+Extract them from MESSAGES.ZIP to use.
+
+For those not familiar with the program, QBook (Quick Book) is a DOS
+application written primarily to be a "recipe database". Its completely
+freeform format, however, allows it to be used for storage of any type of
+information. Entries are indexed by title and "keywords". Searches can be
+performed on title, keywords, or both. AND/OR/NOT logic can also be used
+in the searches. Data can be stored as individual text files, or in
+compressed files using built in data compression or a (configurable)
+external compression utility.
+
+Even though these macros may seem to be limited in use, I think that some
+of the procedures might be useful (if modified) for other purposes. The
+separate macro 'HDRCFG' for setting up a message header configuration
+file, and the associated functions in R2QB for reading the data into
+variables could be used for writing a more general message reader. The
+KEYWORD macro could be rewritten to display any user defined list of words
+(with the same functions to add/delete words from the list) and the code
+rewritten to (perhaps) just insert the selected word at the current cursor
+location. Maybe the list could contain those strange words you seldom use,
+and never remember how to spell correctly? Or, if the code to sort the
+list is eliminated, maybe use the list as a simple thesaurus? (oops,
+there's one of those strange words I never was sure how to spell!) Both
+HDRCFG and KEYWORD are standalone macros, though they are also called from
+within the R2QB macro. I also like the FixTitle procedure in R2QB. I may
+be nitpicking, but I *hate* recipe titles which are ALL CAPS. I also don't
+care for titles which have every word capitalized- such as: "Veal With
+Mushrooms And Shallots In A Marsala Cream Sauce". The FixTitle procedure
+capitalizes all words in the title except those contained in an "exclude"
+list. I'm not sure what else that could be used for, but I liked it! I
+based that function on the INITCAPS macro I downloaded from here. (I
+should also note that I borrowed considerably from the source code for
+several procedures supplied with TSE... thanks to all for the help!)
+
+Known 'features' ;)
+
+I have no idea why but after finishing work on one file, saving the
+changes, and then loading a new file, the macro no longer works. I've had
+to exit TSE and re-enter to edit the new file. I'll post this one in the
+TSE support conference to see if anyone has any ideas.
+
+Be careful using the edit function- I'm not doing a lot of error checking.
+If any of the recipe header, footer or title lines are deleted, and the
+changes saved, the results will be unpredictable. All of the procedures in
+the macro depend on being able to find these lines.
+
+At present the only way to re-process messages marked skipped is to edit
+the file to remove the 'Skip' lines. Remove the 2 lines, make any needed
+changes to the message, then re-run 'Convert Recipes'.
+
+At the present time, the 'Process Skipped Messages' function on the main
+menu is not working. I'm not sure why, but I haven't had time to work on
+the functions I planned to implement anyhow, so it doesn't really matter.
+I commented out the code in 'ProcessRecipeMenu' (the main menu) for this
+function.
+
+I guess I should make a comment here on why you'd want to mark a message
+as skipped in the first place. Many times I've found multiple recipes
+within one message. If these are in a 'standard' format, such as QBook or
+Meal-Master, with recognizable recipe header and footer lines, there is no
+problem. If the recipes are plain text (or the header and/or footer lines
+are missing), and there are not at least 2 blank lines between the recipes
+you won't be able to define a footer line for the first recipe and a
+header line for the second. I included code to add extra lines to the
+start of a message, but not after the end of a recipe. I may do that, but
+this macro is already pushing the 16k limit. Another reason you might want
+to mark a message as skipped is for speed. If nothing resembling a recipe
+title exists, it's much quicker to just process the easily convertable
+recipes, move them to a file, and then go back and edit the skipped
+messages.
+
+Keep all of the messages/recipes in the original file until you are
+finished with the whole file, then use the function to move 'Done' recipes
+to another file. I plan to write another macro which will enable the
+'Recipe Edit' function to work on files of recipes, rather than on files
+of messages, but it isn't finished yet.
+
+
+end of "BETA" RELEASE NOTES
+
+
+R2QB.MAC - macro for The Semware Editor
+
+This macro will scan a file of messages saved from FidoNet style messages
+areas for recipes, then convert them for import into the QBook recipe
+database program. A utility macro is included for configuring different
+message header types.
+
+CURRENT LIMITATIONS:
+
+1. All messages in a single file must be from the same message area or
+conference, and from the same message reader.
+
+2. The message reader you use must put an identical header on each message
+you export from any given message area. The first line of the header must
+be identical for each message, and the field positions of the information
+in the other header lines must remain constant. (ie: 'From:' field,
+'Time/Date', etc.)
+
+3. Only conversion to QBook format is currently supported.
+
+4. Some menu items are currently not implemented. I left them in to show
+future plans, as this macro is a "work in progress". Selecting them will
+cause a message to be displayed on the status line, and you will be
+returned to the menu after you press <Escape>.
+
+FUTURE PLANS/ENHANCEMENTS:
+
+1. Conversion from any recognized recipe format to *any other* recipe
+format. As I've nearly reached the maximum macro size limit, this ability
+will probably require another separate macro.
+
+2. User configurable recipe database types (for adding new programs).
+
+3. Better formatting of recipes. Better recognition of things like number
+of servings and recipe source.
+
+4. Automatic recognition/addition of keywords based on the recipe
+ingredients (using a user-defined list of words to search for).
+
+CURRENTLY SUPPORTED RECIPE DATABASE FORMATS:
+
+1. QBook
+
+2. Meal-Master
+
+3. Compu Chef
+
+4. Kitchen Assistant/2
+
+5. MasterCook II
+
+6. Plain ASCII text and unsupported database formats (in interactive mode)
+
+(as I find other recipe database formats, I will add support for them to
+the macro, if possible.)
+
+CAUTIONS AND MISCELLANEOUS NOTES:
+
+1. If messages in a single file are *not* from the same message reader and
+message area, the results will be extremely erratic. Messages will appear
+to be combined. No data should be lost, but the "From" line I add to each
+recipe will most likely be wrong.
+
+2. At no point do I save the original file to disk. In case something goes
+wrong, you can exit the file without saving changes and your original file
+will be intact.
+
+3. I should comment on the logic I used to determine whether a recipe is
+in 'Meal-Master' format. As this is a very popular recipe database
+program, I've seen many recipes posted which have been 'formatted' to work
+with Meal-Master, using a text editor. Many of the attempts are only
+successful to a degree and result in improper header and/or footer lines.
+Meal-Master itself allows different formats for these lines, and of course
+there are many different versions of the Meal-Master program still being
+used. All of the above adds up to a mess when trying to write a macro to
+reliably recognize the format! Rather than mistakenly attempting to format
+text which is not a Meal-Master recipe, I chose to be quite rigid in the
+macro code as to what constitutes a proper header and footer. The search
+criteria for the header is:
+
+    IF the word Meal-Master is found, THEN
+        IF either MMMMM, OR mmmmm, OR ----- is found on the same line,
+            AND starting in column 1 of the line,
+            THEN the line is a valid header
+    OTHERWISE prompt for the header line
+
+Note that this will find the word 'Meal-Master' if it exists anywhere in
+the text of the message, and you will get a prompt that the header line
+was not found, even though the message may contain a valid Meal-Master (or
+other) format recipe. In this case, you will also have to select the
+footer line. (see below).
+
+The search criteria for the footer line is:
+
+    IF a valid header line was found, THEN
+        IF either MMMMM, OR mmmmm, OR ----- is found on a subsequent line
+            AND starts in column 1 of the line,
+            AND is the only text on the line,
+            THEN the line is a valid footer
+    OTHERWISE prompt for the footer line
+
+
+HOW TO USE THIS MACRO:
+
+Required files:
+R2QB.MAC - the main convert recipe macro
+R2QB.DAT - include (data) file for above
+HDRCFG.MAC - configuration utility for message headers
+HDRCFG.DAT - message header info (if it doesn't exist, it will be created)
+R2QEDIT.MAC - Recipe/Message edit and format utility
+Other files:
+R2QB.S - Macro source code
+HDRCFG.S - Macro source code
+R2QEDIT.S - Macro source code
+EXCLWORD.DAT - list of 'exclude' words for FixTitle procedure in R2QB.
+               This is a list of words which won't be capitalized in the
+               recipe title. A default file will be created if it doesn't
+               exist. To add words to the list, edit the file manually.
+
+Place the above files in a directory in your TSEPath. They must all be in
+the same directory.
+
+I assigned this macro to the key <Ctrl F2>. If you want it assigned to a
+different key, edit the R2QB.S key assignment and recompile the source.
+
+Load R2QB from the TSE "Macro" menu (or add it to your AutoLoad list).
+Load a file containing messages into the editor. If necessary, edit this
+file so that it contains messages from only one message reader/message
+area. Press <Ctrl F2>. If this is the first time you've run the macro, the
+message header configuration file HDRCFG.DAT will not be found, and the
+header configuration macro (HDRCFG.MAC) will be run. Read the help text
+for hdrcfg (press F1). Full documentation for its usage is contained in
+the help text. Follow the prompts to configure the message header for the
+current file being edited.
+
+The 'Main Menu' is displayed when R2QB is run. First, be sure that the
+correct message header type is selected for the message file you have
+loaded. The current type is contained within '[]' on the 'Select Header
+Type' menu line. If it is not correct, selecting this menu option will
+display a picklist of header types contained in the HDRCFG.DAT file. You
+can configure a new message header type by selecting 'Add new header type'
+from the menu.
+
+Select 'Convert recipes' to begin recipe conversion. If a recognized
+format is found, the recipe header, footer, and title lines will be
+formatted automatically. If the recipe header, footer, and/or title lines
+cannot be found, a window will be displayed containing the entire message.
+The bottom line of the window will contain a prompt indicating which line
+is missing. Place the cursor on the appropriate line and press <Enter> to
+select it. Pressing <F1> will display a help screen containing more
+information. The conversion utility requires that a recipe header (such
+as: -Begin Recipe Export-), footer (such as: -End Recipe Export-), and
+title line exist. If any of those lines are missing (such as in a plain
+ascii recipe) simply place the cursor on a blank or unneeded line in the
+location you want the missing line to be. The line selected for the header
+and footer *will* be deleted, so don't select a line containing needed
+information. Any information contained outside the lines selected (or
+found automatically) as the header and footer will not be included in the
+recipe. There is a function in the 'Edit' utility which can be used to
+copy lines from the original message to the recipe, however. The line
+selected as the 'Title' line will not be deleted. It will just have
+'Title: ' placed at the beginning. If there is no title for the recipe, I
+placed a copy of the message 'Subject' line below the message header which
+can be used as a 'temporary' title and later edited. In this case, you
+should select the blank line above it as the recipe header line.
+
+If you press <Escape> when prompted for any of the above lines, a pop-up
+menu will be displayed. You have the options: 'Mark as Skipped', 'Edit
+Recipe', and 'Abort Formatting'. I don't have the edit function linked to
+this menu yet, so you actually only have 2 options. Marking as 'Skipped'
+will place markers in the message for use later by the 'Process Skipped
+Messages' option of the 'Main Menu'. 'Abort Formatting' will return you to
+the main menu.
+
+If the <Delete> key is pressed while you're being prompted for either the
+header or footer lines, the entire contents of the window will be deleted
+(and with no 'Are you sure?' prompt!) from the original message. This
+enables you to delete a whole message, if desired. Use caution however!
+
+A 'Categories/Keywords' line may also be prompted for. This is an
+'optional' line. Pressing escape at this prompt will just add a default
+keywords line to the recipe.
+
+The method I use to search for more than one recipe in the same message
+will now display the lines found between the end of the recipe which was
+just formatted and the end of the message in a window with the prompt
+"HEADER line not found..." at the bottom. At this point you can press
+<Escape> to go on to the next message, or <Delete> to delete these lines.
+Again, if a whole message is displayed, pressing delete will delete the
+whole message, not just the lines at the end! You can also move the cursor
+to a line and press <Tab> to 'steal' a tagline. The same end of message
+lines are re-displayed, and you can press escape to continue to the next
+message, or <Delete> to delete the displayed lines. The tagline steal
+function is very basic. It just writes the selected line to a file named
+TAGLINES.TXT in the current directory. No attempt at formatting, checking
+for dupes, etc, is done. The 'steal tagline' function only works when
+viewing lines at the end of the message, not while viewing the whole
+message.
+
+During the recipe conversion, any time a window is displayed with a prompt
+to select a line, <Shift Escape> can be pressed to abort formatting and
+return to the main menu. The shift escape key is only available if you
+have the extended keyboard enabled. I assigned the abort function to this
+key instead of <Alt Escape>, as I run OS/2 which uses alt escape. If you
+can't use the extended keyboard driver for some reason, you can reassign
+the abort function to another key and recompile the source code. The
+keydef ('SelectKeys') is in the R2QB.DAT file.
+
+After the basic recipe formatting is completed, marker lines will be
+placed around the recipe denoting it as 'Done'. As with the 'Skipped'
+lines, they are used by the 'Process Done Recipes' option of the main
+menu. The process skipped and process done main menu options work
+similarly. A pop-up picklist of recipe titles (if 'Process Done...'), or
+message subject lines (if 'Process Skipped...') will be displayed.
+Pressing <Enter> on a line in the list allows viewing the recipe or
+message. Pressing <Alt E> calls the 'Edit' function. I will eventually
+write better documentation for 'Edit', but for now just press <F1> while
+editing a message or recipe for help on functions available. There are
+'HelpLines' at the bottom of the screen for the key assignments of the
+basic functions. I also loaded most of the TSE default editing keys. You
+can change the keys by editing the keydef 'REditKeys' in the R2QEDIT
+source file. I intentionally removed all key definitions which dealt with
+saving or quitting files, and changing to another file or buffer. These
+functions will cause the macro to function improperly or not at all! There
+are functions within the edit macro for save and exit assigned to keys.
+(See listing in the help screen).
+
+While editing a message or recipe from within the 'Edit' function, you can
+press <Alt N> to exit and load the next message or recipe without
+re-displaying the list. If you exit by pressing <F10> or <Alt X>, you will
+return to the list. In either case, if the changes have not been saved,
+you will be prompted whether or not to save. Note: the 'save' function
+only writes the changes made to your original file. At no point do I save
+the original file to disk.
+
+The final 'Main Menu' option is 'Move Done Recipes to file'. Since the
+edit function (and recipe formatting sub-functions) only work on recipes
+in message files, this option should only be selected after all work on
+the recipes is finished. Currently, I haven't added a function to prompt
+for a filename. You will be prompted:
+
+Save to default file: No = select new filename
+
+with choices of 'Yes', 'No', and 'Cancel'. Selecting 'Yes' will save to
+the default filename, SAVED.QBF, which will be placed in the current
+directory. 'No' will pop up a picklist of files located in the current
+directory. 'Cancel' will return to the main menu.
+
+
+HDRCFG.DAT NOTES:
+
+Currently there is not a function for deleting or editing a message header
+configuration contained in the HDRCFG.DAT file. You can edit this file to
+remove a header configuration if you wish. Each configured area starts
+with a separator line:
+
+~~~~~~~~~~
+
+Starting at this line, delete it and the following lines until the next
+separator line is found. Do NOT delete the next separator line! Also, the
+first line of the file must be a valid "area tag". If you deleted the
+configuration for this area tag, you *must* change the name to another
+valid one. For each configuration, the area tag is the line immediately
+following the separator line. Copy one of these lines to the first line of
+the file, and delete the original line. Be sure there are no blank lines
+at the top of the file. Be extremely careful while editing the HDRCFG.DAT
+file. If any lines are missing, or incorrect, the R2QB macro will either
+abort, or will behave erratically. If necessary, delete HDRCFG.DAT and
+reconfigure your message areas. NOTE: I haven't added checking for 0 lines
+in this file. If the file exists and contains no valid message
+configurations, the R2QB macro will abort with an error message. The
+HDRCFG macro can be run by itself by using load/execute from the TSE
+"Macro" menu, or it will be run automatically if you execute R2QB and
+HDRCFG.DAT is not found.
+
+Following is a sample header configuration. Some of the lines are
+currently not used by R2QB, but may be in a future version. Following the
+sample is an explanation of what the various lines contain.
+
+//begin HDRCFG.DAT file sample (this line *not* included)
+GECooking
+~~~~~~~~~~
+GECooking
+� COOKING (1:116/3000.10) 컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴 COOKING �
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+5
+� COOKING (1:116/3000.10) 컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴 COOKING �
+0
+3
+9
+ From : Debbie Carlson                      1:202/1317      Mon 17 Oct 94 13:13
+2
+9
+39
+ To   : Lance Barrett                                       Tue 18 Oct 94 18:13
+3
+9
+39
+ Subj : Muffins *CR* 1/10
+4
+9
+39
+ From : Debbie Carlson                      1:202/1317      Mon 17 Oct 94 13:13
+2
+61
+79
+//end HDRCFG.DAT file sample (this line *not* included)
+
+The first line of the file (GEHomeCooking, in this sample) contains the
+area tag for the default message area configuration to load when the
+R2QB macro is run. The configuration information for this area tag will
+be loaded into variables for use by the macro.
+
+The second line is the configuration "separator" line (~~~~~~~~~~). Its
+purpose is to separate the data for the different message area
+configurations contained in the file.
+
+For clarity (?!?) of explanation of the data format, I will refer to each
+line following the separator line as a line number.
+
+Line 1: Contains the area tag name for the following data.
+
+Line 2: The first line of the message header. This is the line R2QB
+        searches for to indicate the "start of message" (StartMsg
+        variable).
+
+Line 3: The last line of the message header.
+
+Line 4: The offset of the last line of the message header from the first
+        message header line.
+
+Line 5: The line containing the message area info. In this case, it is the
+        same line as the first message header line.
+
+Line 6: The offset of the area info line from the first message header
+        line.
+
+Line 7: The starting column number of the area info.
+
+Line 8: The ending column number of the area info.
+
+Line 9: The line containing the "From:" info (the sender of the message)
+
+Lines 10, 11, 12: Same as data for the area info (offset, starting column,
+        ending column)
+
+Line 13: The line containing the "To:" info (the recipient of the message)
+
+Lines 14, 15, 16: "To:" line offset, starting column, ending column
+
+Line 17: The line containing the "Subject:" info (the message subject
+        field)
+
+Lines 18, 19, 20: "Subject:" line offset, starting column, ending column
+
+Line 21: The line containing the "Date/Time" info
+
+Lines 22, 23, 24: "Date/Time" line offset, starting column, ending column
+
+Note that the column values are the starting and ending columns of the
+DATA for the respective fields, not the field header. During the
+configuration, the expected maximum field width needed should be used as
+the ending column value, not the actual end of the field data displayed,
+as this will result in the truncation of field data by R2QB if the
+message being processed contains a longer data field than that configured.
+
+
+CREDITS:
+
+The SemWare(R) Editor
+   SemWare Corporation
+   4343 Shallowford Road, Suite C3A
+   Marietta, GA  30062-5022  USA
+CompuServe (GO SEMWARE, Section 6)
+Email:
+CIS         75300,2710
+InterNet    sales@semware.com
+            tech.support@semware.com
+Fax: (770) 640-6213
+
+
+QBook Recipe Manager, Version 1.00
+Copyright (C) 1989-1994 by:
+Robert J. Butler
+2023 38th Street NW
+Rochester, MN  55901
+

@@ -1,0 +1,118 @@
+1. Synopsis
+-----------
+
+TseShExt includes files and macros which allow you to tightly integrate
+TSE32 (v2.8 or later) into the Windows 95/98 and NT4 shell. This includes
+additional context menu entries and a shell new entry for some editor
+related file types.
+
+
+2. What's New
+-------------
+
+Version 2 has been redesigned from ground up. Configuring and installing
+the shell extensions is now wrapped into an installation program. The latter
+queries options, generates an inf file and installs the new settings. This
+makes manually editing an inf file unnecessary. Moreover, this version
+allows you to add "Open With TSE" entries to existing associations. See
+OpenWith.doc for details.
+
+
+3. Installation
+---------------
+
+Installing the TSE shell extension is simple and straight forward.
+
+(1) Copy the files to some temporary folder. It is essential that the name
+    of this folder doesn't include any spaces, otherwise the INF interpreter
+    of Windows 95 will fail.
+
+(2) Make sure that both E32.EXE and SC32.EXE are found on your path. Run the
+    INSTALL batch file and choose whatever options you want from the menu.
+    C.f. section 5 to see what each options does. Finally, choose install
+    and close the dialog. If you find that the install option is disabled,
+    try uninstalling the package first.
+
+(3) NEVER (o.k. unless you know exactly what you're doing) change the files
+    within the folder TseShExt, because this might disable the uninstall
+    feature of this package.
+
+If the installation routine should terminate with an error message, upgrade
+your copy of TSE to version 2.8. A free patch that upgrades version 2.6 to
+version 2.8 is available at SemWare's web site. The shell extensions do not
+work with the DOS version of TSE (version 2.5 or earlier).
+
+
+4. Un-Installing
+----------------
+
+Run the install utility and choose uninstall in the menu. Alternatively,
+open the software control panel and search for the "Tse Shell Extensions"
+entry. Highlight it and click the Add/Remove button... Finished.
+
+
+5. Using the TSE Shell Extensions
+---------------------------------
+
+Using this package is the easiest part. After installation the windows shell
+and explorer include some new file types and associations, e.g. you can
+double click an associated file in the explorer and thereby start TSE and
+and simultaneously load the file. Furthermore, these files also have
+additional entries added to their context menus within the explorer, e.g.
+"print", "compile", etc.
+
+Using "print" from the explorer's context menu will let you choose between
+two printer setups, namely "Small Font" and "Large Font" (you can also abort
+the print job entirely). The catch is, that neither I nor the macro which
+initiates the print job know what brand of printer you own. The macro
+assumes it is controlling a HP-LaserJet. I don't know, whether the init
+strings will work with other printers (Well, at least I know that it does
+not work with IBM Proprinters.) If your printer should get the hiccups when
+using TSE to print files from the shell, you must adapt the initialization
+strings in the ShPrint macro. Consult the documentation of your printer
+which escape and control sequences are required.
+
+Here's a short list of the file types and their corresponding extension
+which are created by this package.
+
+file type           ext     default action    install option
+---------           ---     --------------    --------------
+TSE Text File       (1)     load file         Associate TSE Text Files
+"unknown files"     (2)     load file         Open Unknown Files with TSE
+TSE Project         dat     restore state     Restore State from Explorer
+Macro               s       load file         Macro Language Package
+Macro Include       si      load file         ditto
+User Interface      ui      load file         ditto
+Compiled Macro      mac     execute macro     ditto
+Dialog Script       d       execute DE (3)    Dialogs Library Package
+Dialog Resource     dlg     execute DD (3)    ditto
+
+(1) user defined file extensions
+(2) c.f. next paragraph
+(3) dialogs macro package (available at SemWare's FTP site)
+
+The installation macro can create additional associations for the "unknown"
+file type. This file type is responsible for the "Open With" dialog which
+pops up whenever you double click a file whose type Window doesn't
+recognize. The first of the new entries "Open" loads the file into TSE as a
+text file. This also becomes the new default action, the one which is
+executed by double clicking the file. The other new entry loads the file in
+binary mode (-h -b16 switches). You can still use the "Open With" dialog:
+right click the file and choose "Open With" from the context menu.
+
+The installation macro also allows you to define "TSE Text Files". These
+will be associated with TSE and accordingly marked in the Windows shell. To
+do this you have to set the option "Associate TSE Text Files" to ON and add
+some file extensions to "Extensions for Text Files". You can customize the
+default extensions shown in the dialog by editing the file INSTALL.DAT.
+
+
+6. Disclaimer
+-------------
+
+These programs are thereby donated to the public domain. Use them or even
+alter them as you see fit, but ENTER AT YOUR OWN RISK!
+
+If you should find some bugs or have comments, please let me know. My
+address is DieterKoessl@csi.com.
+

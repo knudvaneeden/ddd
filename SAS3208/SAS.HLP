@@ -1,0 +1,121 @@
+
+                          ษออออออออออออออออออออออป
+                        ษออออออออออออออออออออออป บ
+                        บ SPLIT & SCROLL MACRO บ บ
+                        บ     version 3.2      บ บ
+                        บ       H E L P        บ บ
+                        บ         for          บ บ
+                        บ     TSE Pro/32       บ บ
+                        บ        v2.80         บ บ
+                        บ                      บ บ
+                        ศออออออออออออออออออออออผ บ
+                          ศออออออออออออออออออออออผ
+
+
+
+Menu items displaying [ ] are toggle or user defined options and show the
+current status for that option.
+
+Menu items displaying < > indicate the keys required to action the option
+OUTWITH the menu.
+
+Each menu item also has a quick-key letter which is highlighted. This can
+be used to action the menu option WITHIN the menu.
+
+Function:               Description
+Keys
+-------                 -----------
+Windows:
+Ctrl Alt S              Toggle the Split Windows feature.
+Split Type              The windows may be split Horizontally or Vertically.
+                        This option toggles the setting.
+Maximum files to split  This controls the number of files SAS will split.
+Minimum files to split  Controls the minimum files that SAS will split.
+Split when Loaded       Toggles option to split the windows automatically
+                        when the macro or file is loaded.
+Switch Windows/Files    Switches between open windows or files.
+                        Two key options are available; Shift TAB or ALT N.
+Scrolling:
+Scroll Type             This option allows you to toggle between
+                        Roll:   uses RollUp(), RollDown()
+                                     RollRight(), RollLeft()
+                        Scroll: uses ScrollUp(), ScrollDown()
+                                     ScrollRight(), ScrollLeft()
+                        Page:   uses PageUp(), PageDown()
+
+Scroll lines/pages      0 will enable continuous scrolling in all modes of
+                        scroll type. Any other value entered equals the
+                        number of lines that will be scrolled before
+                        stopping. If Scroll Type = Page then the number is
+                        equal to the number of pages scrolled
+
+Reset Scroll Lines      This option is only available when scroll lines is
+                        greater than 0. The option determines if the counter
+                        is reset if the user aborts the autoscrolling. ie if
+                        scrolllines = 20 and the user aborts the scroll at 9,
+                        if reset scroll lines is YES, the next autoscroll
+                        will start from 10.
+
+Key Scrolling Options:  SubMenu
+
+Shift                  Scroll the text in the windows up simultaneously.
+Shift                  Scroll the text in the windows down simultaneously.
+Shift                  Scroll the text in the windows to the right simultaneously.
+Shift                  Scroll the text in the windows to the left simultaneously.
+
+Auto Scrolling Options: SubMenu
+
+Set AutoScroll Speed    Controls the speed of autoscrolling.
+                        The current setting is displayed in the menu.
+
+Ctrl                   Auto Scroll the text in the current window up.
+Ctrl                   Auto Scroll the text in the current window down.
+Ctrl                   Auto Scroll the text in the current window to the right.
+Ctrl                   Auto Scroll the text in the current window to the left.
+
+Ctrl PgUp               Auto Scroll the text in all windows up.
+Ctrl PgDn               Auto Scroll the text in all windows down.
+Ctrl Alt               Auto Scroll the text in all windows to the right.
+Ctrl Alt               Auto Scroll the text in all windows to the left.
+
+Scroll Keys             The keys assigned for scrolling may be toggled ON
+<Ctrl Alt K>            or OFF. Included because Ctrl PgUp and Ctrl PgDn
+                        have other useful standard file navigation
+                        functions in TSE. The current status of the keys
+                        is displayed in the menu.
+                        If the keys are set to OFF, scrolling may still be
+                        used from within the menu
+
+Ctrl Alt H              Views help file if installed.
+View Macro Document     Views the macro document file if installed.
+
+
+Save Current Settings   Save the current SAS settings to ini File
+                        for macro loading.
+
+Save Settings on Exit   Toggle to save the macro settings when the editor is
+                        exited.
+
+Menu mode               Use Single or Bar type menu.
+<CtrlAlt M>
+
+Menu Close              Close menu on toggle options.
+
+About                   Tells you what you are using and how to contact me.
+
+Other keys:
+
+
+-                       Reduces the autoscroll speed when autoscrolling is
+                        in progress.
++ or =                  Increases the autoscroll speed when autoscrolling is
+                        in progress.
+
+Esc                     Stop AutoScrolling. (not available from Menu)
+
+Mouse Buttons           Pressing a mouse button when AutoScrolling will
+                        pause the scrolling. While paused, pressing the
+                        other mouse button will scroll the windows one
+                        line at a time.
+
+END

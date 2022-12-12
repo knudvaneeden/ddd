@@ -1,0 +1,14 @@
+(Sep 4, 2005) SynCase v6 for TSE Pro 2.5 and 2.8 thru 4.4.
+When you are typing it formats known sets of keywords to their predefined
+combination of upper and lower case letters.
+Or you can "case" a whole file at once.
+From TSE Pro 2.8 upwards it uses TSE's own syntax hiliting keywords to
+determine their predefined casing.
+For TSE Pro 2.5 it is preconfigured for TSE's own macro language and Cobol.
+For higher TSE Pro versions it contains a "cased" SAL syntax hiliting file
+wich in SynCase v5 was updated for TSE Pro 4.4.
+SynCase v6 makes SynCase clean up its _edit_file_ history, which was
+disturbing the OpenType macro.
+Needs: Global.zip, MacPar3.zip, ClipBor2.zip.
+Author: Carlo Hogeveen.
+Replaces Syncase5.zip dated Aug 22, 2004.

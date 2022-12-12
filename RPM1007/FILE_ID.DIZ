@@ -1,0 +1,23 @@
+rpm.s - Version 1 Revision 7 - Replace()
+Protection Macro - Written with TSE-PRO GUI
+4.0. This macro protects text to the right of
+a column block from being pulled into the
+block when a replace text is shorter than the
+find text in a Replace() operation. This is
+for the specific instances where large
+amounts of find text (typically spaces) are
+removed using Replace(). Normally, when this
+is done in a column block, the text outside
+the block to the right is pulled into the
+block as the reducing replacements take
+place, and the pulled in text becomes part of
+the find text and replacement is done there,
+too. This macro is particularly beneficial
+when doing columns of text or data, since a
+properly marked column block will completely
+protect all columns to the right of the block
+from movement or change. See the Comments in
+the source for more information. Contact the
+author or get the latest revision at:
+http://groups.msn.com/asemwareusersgroup
+Author: Hayes Smith

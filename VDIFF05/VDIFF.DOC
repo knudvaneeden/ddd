@@ -1,0 +1,107 @@
+
+                   VDiff v0.50 Documentation 04/04/93
+
+                          A Full Screen Visual
+
+            Line-By-Line DIFF Utility For The SemWare Editor
+
+                          Written By Jim Susoy
+
+
+All suggestions/bug reports are welcome, please send them to me via internet
+mail at susoy@qdeck.com or through the SemWare support BBS.
+
+If you make any interesting changes, please send them to me and I'll
+incorporate them into the next release.
+
+Description:
+
+	This macro set provides a line-by-line diff of two files.  It highlights
+	all the differences currently on the screen at once, providing a
+	"visual" diff. As you move down through the files, unresolved differences
+	scroll of the top of the screen and new differences (if any) become
+	highlighted as they come onto the screen.
+
+Features:
+
+	o	Highlights all visible differences at once.
+	o	Displays both files side by side in vertical windows (file1 & file2)
+	o	Scrolling of files is syncronized
+	o	file2 may be scrolled independently of file1
+	o	file2 may be edited directly to resolve differences
+
+
+Usage:	mVisualDiff(integer highattr)
+
+			Vdiff will prompt you for the two files to diff.
+			highattr is the attribute VDiff should use to
+			highlight the DIFFs betweeen the files.
+
+			When envoked, VDIFF will prompt for file1, this is the file that
+			you want to compare from (not the file that differences will
+			be resolved in).  file2 is the file that differences are resolved
+			in (though you can copy lines from file2 to file1, you can't
+			directly edit file1).  After file2's filename has been entered,
+			VDIFF will display both files on the screen in vertical window.
+         The window on the left is file1, and the window on the right is
+         file2.  All differences between the two files that are currently
+         visible on the screen are automatically highlighted in file2 (the
+         right window).  This means that if 12 lines do not match, 12 lines
+         will be highlighted in file2 simultaneously.
+
+         You can then cursor or page down to the line and replace the line
+         in file2 with the line in file1 by pressing <CTRL CursorRight>.
+         If you wanted to copy the line the other way, (file2 to file1) you
+         would press <CTRL CursorLeft>.
+
+         I use this alot to compare functions within files.  Since other
+         changes in the files may mean that a given function may not start
+         on the same line in both files, you can scroll file2 independently
+         of file1.  This allows you to get to the start of the function you
+         want in file1, then adjust file2 (using <ALT CursorUp> and
+         <ALT CursorDown>) so that both are starting on the same screen row.
+         Once they are in sync on the screen, you can use the syncronized
+         command to move through the functions and resolve the differences.
+
+         That's all there is to it.  It's real simple to use (No Fluff At ALL!)
+         I am currently working on a version that takes the output from a
+         DIFF utility (Currently GNU's DIFF) and uses that information to
+         highlight (and resolve) differences between files.  This will be a
+         TRUE byte-by-byte diff when it is done (as opposed to a line DIFF).
+
+Keys:
+
+	The following keys are available when you are viewing/resolving the
+	differences between files:
+
+<Escape>             Done
+
+Syncronized Actions:
+<CursorUp>           Moves Syncronized cursor up
+<CursorDown>			Moves syncronized cursor down
+<CursorRight>        Moves Syncronixed cursor right
+<CursorLeft>			Moves Syncronixed cursor left
+<PgUp>               Moves syncronized cursor one page up
+<PgDn>               Moves syncronized cursor one page down
+<CTRL PgUp>          Moves syncronized cursor to the start of the file
+<CTRL PgDn>          Moves syncronized cursor to the end of the file
+<CTRL Home>				Moves syncronized cursor to the first line in the window
+<CTRL End>           Moves syncronized cursor to the last line in the window
+<CTRL CursorRight>   Moves the line on the syncronized cursor in the file1
+							(the left window) to the corresponding line in file2
+							(the right window)
+<CTRL CursorLeft>		Moves the line on the syncronized cursor in file2
+							(the right window) to the corresponding line in file1
+							(the left window)
+<CTRL CursorUp>      Rolls the text up in both windows through the
+							syncronized cursor (cursor doesn't move)
+<CTRL CursorDown>		Rolls the text down in both windows through the
+							syncronized cursor (cursor doesn't move)
+
+Actions That Only Affect file2:
+<ALT CursorUp>			Rolls the text in file2 up one line through the cursor
+<ALT CursorDown>		Rolls the text in file2 down one line through the cursor
+<All Standard Keys>	That are not remapped as above
+
+
+

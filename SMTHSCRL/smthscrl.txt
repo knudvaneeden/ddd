@@ -1,0 +1,42 @@
+SMTHSCRL -- Smooth scrolling scrollbar macro for TSE.
+
+
+Description:
+
+	SmthScrl only works on the 32-bit versions of TSE (v2.6 and higher); 
+	it does not work on the DOS-based TSE 2.5 or lower.
+
+	This macro gives you a pixel-based scrollbar when windowed.  When in 
+	character mode, your scrollbar won't work anymore.  Hey, that's the 
+	breaks.
+
+	When windowed, you can click the little thumb tab on the vertical 
+	scroll bar and drag it up and down, and the file will scroll a bit for 
+	each pixel position you move the mouse.  It is significantly less 
+	jerky than the default character-based scrollbar.
+
+	Note that when scrolling with the scrollbar, the cursor line remains 
+	on the same row.  This is because TSE doesn't allow the cursor line to 
+	be scrolled out of visibility, so as an alternative it seems better to 
+	leave the cursor line row unchanged.
+
+	Put it in your AutoLoad list.
+
+
+Known limitations:
+
+	It doesn't work in full-screen character mode; the scrollbar is 
+	disabled, and gets drawn funny if you try to use it.  There is 
+	unfortunately nothing that can be done about that.
+
+	SmthScrl totally overrides TSE's built-in scrollbar and draws a custom 
+	scrollbar appearance.  When scrolling using the cursor keys TSE draws 
+	the scrollbar, and then SmthScrl draws the custom appearance.  As a 
+	side effect, the scrollbar flickers until you finish scrolling.
+
+
+History:
+
+	v1.2 -- July 24, 2004 -- Public release.
+
+

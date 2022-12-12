@@ -1,0 +1,8 @@
+(06-02-04) SetCmFnt.s - TSE Pro GUI versions.
+When starting CharMap, the standard Windows
+character chart, from within TSE, it starts
+for the last font selected in CharMap.
+By always running this macro first, CharMap
+starts for the current TSE font instead.
+Also works before Dieter Koessl's WinDlgs.
+Author: Carlo.Hogeveen@xs4all.nl.

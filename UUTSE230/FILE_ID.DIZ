@@ -1,0 +1,9 @@
+<12-29-00> - TSE Pro v2.5 and TSE Pro/32 v2.x
+This posting of UUTSE230.ZIP includes source.
+You will need to compile the included source
+with "sc" or "sc32" (as appropriate) to use.
+uuTSE -> UU/XX/MIME64 encode/decode v2.30 for
+TSE Pro v2.50 and TSE Pro/32 v2.8.  This
+package contains macros to decode and encode
+files.
+Author: Fabio Ferrero

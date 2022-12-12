@@ -1,0 +1,67 @@
+FNEXP.TXT - Filename Completion
+by Chris Antos, chrisant@microsoft.com
+v1.05
+
+
+
+Description:
+
+    FNEXP provides filename completion in TSE prompt boxes, similar to
+    the same way that 4DOS does at the DOS prompt.  FNEXP works in all
+    TSE prompts, not just the ones that expect filenames.  This is great
+    especially for the "DOS command:" prompt.
+
+    ù When you use <Ctrl Tab> or <Ctrl Spacebar> to pop up the picklist,
+      the first file or directory matching what you typed is hilited,
+      and you can continue typing to narrow down the match!
+
+    ù When pressing <Tab>, first it cycles through the filenames with
+      default extensions, then through the remaining filenames in
+      alphabetical order.
+
+
+
+Keys:
+
+    <Tab>               - Inserts the next filename that matches what
+                          you've typed so far (appending "*.*" when
+                          needed).
+
+    <Shift Tab>         - Inserts the previous matching filename.
+
+    <Ctrl Tab>          - Pops up the filename picklist (like TSE used
+                          to do when you pressed <Tab>).
+
+    <Ctrl Spacebar>     - Same as <Ctrl Tab>.
+
+
+
+Setting Options:
+
+    To get to the options menu, pick Macro->Execute... from the TSE main
+    menu.  When it prompts you "Execute macro:", enter "FNEXP -o".
+
+    ù Picklist Always:  this controls whether to use 4DOS-like filename
+      completion, or to always use the normal TSE picklist.
+
+    ù AutoEnter:  when this is ON and the picklist is up, pressing
+      <Enter> will select the highlighted filename, close the prompt
+      box, and continue with the command in progress.  When this is OFF
+      and the picklist is up, <Enter> simply inserts the filename into
+      the prompt box, and leaves the prompt box open so you can continue
+      to edit your response.
+
+
+
+Notes:
+
+    FNEXP is compatible with the EDITFILE macro that comes with TSE.  As
+    long as AutoEnter is turned on, then when you execute the EDITFILE
+    macro and hit <Ctrl Tab>, FNEXP will pass it along to EDITFILE as if
+    you had pressed <Tab>, and you can tag multiple files to load,
+    delete, etc.
+
+
+
+Enjoy!
+//chris

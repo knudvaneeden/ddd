@@ -1,0 +1,35 @@
+Installing the WP4PROG Interface
+
+1) First, you need to have a copy of Tessie installed on your machine. I
+will assume you did the default installation, which created a directory
+called UI underneath the main TSE subdirectory. This is where the standard
+Tessie User Interface files are located.
+
+2) Make a directory under your TSE directory named WP4 or something like
+that, and change to this directory. This is where the WP4PROG files will go,
+and where you will doctor Tessie by "burning in" this new User Interface.
+(So you should have a path something like C:\TSE\WP4 )
+
+3) Copy the SC.EXE and E.EXE files from the TSE subdirectory to the WP4
+directory you should be in. You don't want to change your current copy
+of E.EXE, the main editor, in case you don't like this interface!
+
+4) Unzip or copy the files listed above (wp4prog.*) into this WP4
+subdirectory.
+
+5) Give the following command to install the interface:
+
+                        sc -b wp4prog
+
+You should see a message followed by a lot of dots, then the message
+"Burning configuration into e.exe".
+
+6) That's it! You're done. To run the editor, just give the command
+
+                        e
+
+Most of the keys are WP-standard, although there are some important
+exceptions and many, many enhancements. Look at the bottom line for initial
+help; the F1 key gets you into the Help system.
+
+

@@ -1,0 +1,308 @@
+/*
+   This is the integer array implementation from Sammy Mitchell's webpage
+   at Semware's website, copied 21 June 2001.
+
+   Changes by carlo.hogeveen@xs4all.nl at 21 June 2001:
+   Modified GetIntArray() to return a value instead of a status.
+   Modified FillIntArray() to return a value instead of a status.
+*/
+
+/**************************************************************************
+  To create an array, and assign odd numbers to the first 100 entries:
+
+  integer a, o, i
+
+    a = CreateIntArray()
+    for i = 1 to 100
+        SetIntArray(a, i, i * 2 - 1)
+    endfor
+
+  To retrieve a value:
+
+    if GetIntArray(a, i, value)
+        // value is valid
+    else
+        // failure - see possible reasons in GetIntArray comments.
+    endif
+
+  To fill an array with a specific value:
+
+    FillIntArray(a, i, 999)     // sets the first i entries of a to 999
+
+  Important!!!
+
+  When finished with an array, delete it with:
+
+    DeleteIntArray(a)
+
+  --Creates an array.  Returns array identifier
+  integer proc CreateIntArray()
+
+  --Returns highest index, or the size of the array
+  integer proc GetIntArrayNumItems(integer a, var integer num_items)
+
+  --Returns data at index, foo = a[index]
+  integer proc GetIntArray(integer a, integer index, var integer value)
+
+  --sets data at index to value, a[index] = value
+  integer proc SetIntArray(integer a, integer index, integer value)
+
+  --inserts data before entry index, higher numbered entries slide up
+  integer proc InsertIntArray(integer a, integer index, integer value)
+
+  --removes item at index, higher numbered entries slide down
+  integer proc DeleteIntArrayItem(integer a, integer index)
+
+  --sets 1 through index entries to value
+  integer proc FillIntArray(integer a, integer index, integer value)
+
+  --removes the array
+  proc DeleteIntArray(integer a)
+
+ **************************************************************************/
+
+/**************************************************************************
+  Returns array identifier (non-zero), or 0 on failure
+ **************************************************************************/
+integer proc CreateIntArray()
+    integer id = GetBufferId()
+    CreateTempBuffer()
+    return (GotoBufferId(id))
+end
+
+/**************************************************************************
+  Returns non-zero for success, 0 on failure.
+  If non-zero return, num_items is set to number of items in the array
+
+  example:
+
+  n = GetIntArrayNumItems(a)
+
+  Causes for errors:
+
+  Array does not exist.
+ **************************************************************************/
+// integer proc GetIntArrayNumItems(integer a, var integer num_items)
+integer proc GetIntArrayNumItems(integer a)
+    integer ok = FALSE, id = GetBufferId()
+
+    if GotoBufferId(a)
+//      num_items = NumLines()
+        ok        = NumLines()
+//      ok = TRUE
+        GotoBufferId(id)
+    endif
+    return (ok)
+end
+
+
+/**************************************************************************
+  Returns non-zero for success, 0 on failure.
+  If non-zero return, value is set to value at associated index.
+
+  example:
+
+  integer value
+
+  if GetIntArray(a, i, value)       // value = a[i]
+    // value is now set to item at position i.
+
+  Causes for errors:
+
+  Array does not exist.
+  Index 'index' does not exist (e.g., > num_items)
+  Index is < 1
+  Virtual memory exhausted
+ **************************************************************************/
+// integer proc GetIntArray(integer a, integer index, var integer value)
+integer proc GetIntArray(integer a, integer index)
+    integer ok = FALSE, id = GetBufferId()
+
+    if index > 0 and GotoBufferId(a)
+        if NumLines() >= index
+            GotoLine(index)
+            if CurrLineLen()
+//              value = Val(GetText(1, CurrLineLen()), 16)
+                ok = Val(GetText(1, CurrLineLen()), 16)
+//              ok = TRUE
+            endif
+        endif
+        GotoBufferId(id)
+    endif
+    return (ok)
+end
+
+/**************************************************************************
+  Returns non-zero for success, 0 on failure.
+  If non-zero return, item at index is is set to value.
+
+  example:
+
+  integer value
+
+  if SetIntArray(a, i, value)       // a[i] = value
+    // item i is now set to value
+
+  Array does not exist.
+  Index is < 1
+  Virtual memory exhausted
+ **************************************************************************/
+integer proc SetIntArray(integer a, integer index, integer value)
+    integer ok = FALSE, id = GetBufferId()
+
+    if index > 0 and GotoBufferId(a)
+        if index > NumLines()
+            EndFile()
+            repeat until index <= NumLines() or not AddLine()
+        endif
+
+        if NumLines() >= index
+            GotoLine(index)
+            BegLine()
+            if InsertText(Str(value, 16), _OVERWRITE_)
+                KillToEOL()
+                ok = TRUE
+            endif
+        endif
+        GotoBufferId(id)
+    endif
+    return (ok)
+end
+
+/**************************************************************************
+  Returns non-zero for success, 0 on failure.
+  If non-zero return, value is inserted before item at index.
+
+  example:
+
+  integer value
+
+  if InsertIntArray(a, i, value)       // value is inserted before a[i]
+
+  Array does not exist.
+  Index is < 1
+  Virtual memory exhausted
+ **************************************************************************/
+integer proc InsertIntArray(integer a, integer index, integer value)
+    integer ok = FALSE, id = GetBufferId()
+
+    if index > 0 and GotoBufferId(a)
+        if index > NumLines()
+            ok = SetIntArray(a, index, value)
+        else
+            GotoLine(index)
+            if InsertLine(Str(value, 16))
+                ok = TRUE
+            endif
+        endif
+        GotoBufferId(id)
+    endif
+    return (ok)
+end
+
+/**************************************************************************
+  Returns non-zero for success, 0 on failure.
+  If non-zero return, item at index is deleted
+
+  example:
+
+  DeleteIntArrayItem(15)        // removes the 15th item from the array
+
+  Array does not exist.
+  Index is < 1, or greater than num items
+  Virtual memory exhausted
+ **************************************************************************/
+integer proc DeleteIntArrayItem(integer a, integer index)
+    integer ok = FALSE, id = GetBufferId()
+
+    if index > 0 and GotoBufferId(a)
+        if NumLines() >= index
+            GotoLine(index)
+            KillLine()
+            ok = TRUE
+        endif
+        GotoBufferId(id)
+    endif
+    return (ok)
+end
+
+/**************************************************************************
+  Returns non-zero for success, 0 on failure.
+  If non-zero return, array all items up to index are set to value
+
+  example:
+
+  integer value
+
+  if FillSetIntArray(a, i, value)       // a[i] = value
+    // all items up to i are set to value
+
+  Array does not exist.
+  Index is < 1
+  Virtual memory exhausted
+ **************************************************************************/
+integer proc FillIntArray(integer a, integer index, integer value)
+    integer MsgLevel, ok = FALSE, id = GetBufferId()
+    string value_str[32]
+
+    if index > 0 and GotoBufferId(a)
+        if index > NumLines()
+            EndFile()
+            repeat until index <= NumLines() or not AddLine()
+        endif
+
+        if NumLines() >= index
+            msglevel = Set(MsgLevel, _NONE_)
+            value_str = Str(value, 16)
+            PushBlock()
+            MarkColumn(1, Length(value_str) + 1, NumLines(), MAXLINELEN)
+            KillBlock()
+            MarkColumn(1, 1, NumLines(), Length(value_str))
+            ok = FillBlock(value_str)
+            PopBlock()
+            Set(MsgLevel, msglevel)
+        endif
+        GotoBufferId(id)
+    endif
+    return (ok)
+end
+
+proc DeleteIntArray(integer a)
+    AbandonFile(a)
+end
+
+//----------------------------------------------------------------------------
+
+/* Print all primes below max_primes, using the "Sieve or Eratosthenes" algorithm */
+/*
+proc main()
+    constant MAX_PRIMES = 1000
+    integer i, j, value, a
+
+    Set(Break, On)
+
+    Set(Attr, 7)
+    PopWinOpen(1, 1, 19, Query(ScreenRows), 1, "Primes", 7)
+    ClrScr()
+
+    a = CreateIntArray()                // create the array
+    FillIntArray(a, MAX_PRIMES, TRUE)   // initialize the array
+
+    for i = 2 to MAX_PRIMES - 1
+        if GetIntArray(a, i, value) and value   // value = a[i]
+            WriteLine(i)
+            // filter all multiples of this "prime" from the list
+            for j = 2 * i to MAX_PRIMES - 1 by i
+                SetIntArray(a, j, FALSE)        // a[j] = value
+            endfor
+        endif
+    endfor
+
+    WriteLine("...Press a Key...")
+    GetKey()
+    PopWinClose()
+
+    DeleteIntArray(a)                   // delete the array
+end
+*/
+

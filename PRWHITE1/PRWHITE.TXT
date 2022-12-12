@@ -1,0 +1,67 @@
+                                PRint WHITE
+                       The Semware Editor (TSE) Macro
+                                Version 1.0
+                             Richard Hendricks
+
+Every once and awhile - I'm asked to provide a quote or estimate about how
+long it will take and how much money it will cost to do some work
+(programming, installation, etc)
+
+What I do is to put together a work sheet (pencil and paper or
+electronically) that identifies my concerns, work elements, etc. This work
+sheet is then used to write the final quote. The problem that I have is that
+the work sheet and the quote get physically separated, sometimes lost and
+inconsistent.
+
+So, I wrote PRWHITE.S. In military or government related businesses we have
+WHITE Programs and BLACK Programs (ie, secret). PRWHITE stands for Print
+White (or print the non-secret) portion of the document.
+
+The BLACK or secret portion of the document are surrounded with '[[[' and
+']]]'. PRWHITE skips these portions of the document during the printing
+process.
+
+So, here is an example...
+Main Document --
+
+[[[
+  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+  ³ Note this document contains quoting information -- Use PRWHITE to  ³
+  ³ print the copy for the customer                                    ³
+  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+]]]
+The enhancement to the XYZ program will take 8 man weeks[[[ make sure they
+know this is 8 weeks of work and not 8 weeks elapsed time ]]] of effort.
+
+[[[
+    * a lot of review will be required
+    * be sure to talk to Sam Smith
+
+    * poorly written program, no comments, poor variable names
+
+    * review the current program     1.0 man weeks
+    * implement the changes          5.0 man weeks
+    * test                           1.0 man weeks
+    * document                       0.5 man weeks
+    * train and distribute           0.5 man weeks
+
+    ** total                         8.0 man weeks
+]]]
+Thank you
+    Richard
+
+Printed Document (ie, notes not included)
+
+The enhancement to the XYZ program will take 8 man weeks of effort.
+
+
+Thank you
+    Richard
+
+When you execute PRWHITE, you will be asked for Print Device and number of
+copies. You can enter a filename for the Print Device.
+
+I hope you find this useful
+    Richard // 07/21/1993
+
+// end-of-file

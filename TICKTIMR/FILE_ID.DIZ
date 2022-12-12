@@ -1,0 +1,10 @@
+'timdat02.zip' Examples of PUBLIC macros for
+the TSE (The Semware Editor).  Examples are
+in the form of seven(7) different time, or
+time and date formats.
+
+11/09/93, Tuesday -  November 9, 1993
+Tuesday -  November 9, 1993 at 1518 hrs.
+1519, 3:19 pm, 11/09/93  1519 hrs.,
+15:19 EST/CDT
+Sequel to the original 'timedate.s'

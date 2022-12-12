@@ -1,0 +1,78 @@
+uuTSE -> UU/XX/MIME64 encode/decode v2.30 for TSE Pro v2.5x and
+TSE Pro/32 v2.x
+
+by Fabio Ferrero
+
+This package contains macros to decode and encode files,
+for TSE Pro v2.5 and TSE Pro/32 2.x.
+
+------------------------------------------------------------------------
+
+Please send me hints and wishes (and bugs!) at my internet address:
+
+                 nutella@cavazza.it or nutella@tin.it
+
+------------------------------------------------------------------------
+
+UUDEC.MAC is a decode macro, it's decode an encoded file with UU, XX or
+    MIME64 method into original archive. To decode a file, simply load
+    it with TSE, then execute my macro and follow the menus. Now this
+    macro tries to autodetect the encoded method (uuencoded, xxencoded
+    or MIME64) by analizing file content (not file extension).
+
+UUENC.MAC is a encode macro, it's encode a file into UU, XX or MIME64
+    encoded file. To encode a file, run my macro, then follow the menus
+    and select method. Encoded file is written to disk and not loaded
+    into TSE, but it's added to edit history list.
+
+UUTSE.S is a simple menu to select decode or encode. You can add it to
+    autoload list. Compile it with SC UUTSE for normal macro load, or
+    with SC -dFAST=1 UUTSE to load UUENC and UUDEC macro at startup
+    (please check the source file).
+
+------------------------------------------------------------------------
+
+My macros are compatible with:
+
+- mpack/munpack version 1.5, available from ftp.andrew.cmu.edu into
+  directory pub/mpack/
+
+- uudeview/uuenview version 0.4pl17, written by Frank Pilhofer,
+  available at www http://www.uni-frankfurt.de/~fp/uudeview/
+
+- uuexe version 5.40 written by Richard Marks.
+  WARNING!!!
+  UUEXE encode program use '-' character instead of '/' in MIME64, my
+  macro correctly decode it, but uses standard '/' character in encoding.
+
+------------------------------------------------------------------------
+
+Future features:
+
+- add INI file to save options and preferences
+
+------------------------------------------------------------------------
+
+History:
+
+2.30    -   version for both TSE Pro v2.5 and TSE Pro/32 v2.x
+            in TSE32 don't adjust filenames to dos format
+2.21    -   UUDEC adjusts filenames to 8.3 dos format
+2.20    -   added crc16 add/check
+            fixed a bug in mime decode (append ALT-255 chars at EOF)
+            fixed a bug in decode (sometimes loop if missing last line)
+            added simple menu macro UUTSE
+2.11    -   added shortcut keys to select method menus
+2.10    -   added encoding method autodetect to UUDEC macro
+            added compatibility with mpack/munpack to UUENC macro
+            fixed a bug in sum checking in UUDEC macro
+2.00    -   added MIME64 encode/decode
+            create/check sum -r in MIME64 encode/decode
+            now it's possible to abort selection method menu
+1.02    -   release for TSE Pro 2.50
+            now UUENC add encoded file name to _EDIT_HISTORY_
+1.01    -   added rename of output file
+1.00    -   now UUDEC add sum -r at the end of output file
+            UUENC check for sum -r value
+0.99    -   added XX encode/decode with menu selection
+0.10    -   first version, only UU encode/decode

@@ -1,0 +1,14 @@
+<10-01-05> v1.2 - COMPLETE macro for TSE Pro/32.
+This macro will 'complete' a word based on
+the starting letters. Similar to Semware's
+Expand.s but doesn't display a picklist.
+Extremely useful when trying to recall a
+constant or variable used elsewhere in your
+loaded files. It also finds two word
+sequences. To try it add it to your Autoload
+list and restart TSE. Type the letters 'pro'
+and then hit <Ctrl h> to cycle through the
+existing word completions. Hit <Alt h> to
+reverse the cycle. Works in both GUI and
+Console editors.
+Author: Andrew Bovett, revised by Ross Boyd

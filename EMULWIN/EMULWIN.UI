@@ -1,0 +1,2312 @@
+/****************************************************************************
+                Keyboard Emulation of Windows Word Processors
+
+   This interface gives The SemWare Editor most of the key bindings familiar
+        in the Windows 95/98/NT environment without losing any of the
+             strengths of a text editor intended for programming.
+
+       Based on SemWare supplied tse32 and tse jr user interface files.
+      Supplied to you free of charge.  You are free to use and modify as
+     desired. No warrantee or guarantee of any kind implied or intended.
+ ***************************************************************************/
+
+
+//#include ["tse.cfg"]      // config-endconfig definitions
+
+#ifdef WIN32
+    constant MAXPATH = 255
+    string CONSOLE[] = "CONIN$"
+#else
+    constant MAXPATH = 80
+    string CONSOLE[] = "CON"
+
+    integer proc isCharDevice(integer handle)
+        register r
+
+        r.ax = 0x4400
+        r.bx = handle
+        intr(0x21, r)
+        return ((r.dx & 0x80) <> 0)
+    end
+
+    integer proc fDup2(integer oldhandle, integer newhandle)
+        register r
+
+        r.ax = 0x4600
+        r.bx = oldhandle
+        r.cx = newhandle
+        intr(0x21, r)
+        return (0)
+    end
+
+    /****************************************************************************
+      Empties the current buffer
+      sets the binary mode to reclen
+      Loads fn into it
+      returns true(non-zero)/false(zero)
+
+      No hooks are called
+     ****************************************************************************/
+    integer proc LoadBuffer(string fn, integer reclen)
+        integer ok
+
+        EmptyBuffer()
+        BinaryMode(reclen)
+        PushBlock()
+        ok = InsertFile(fn, _DONT_PROMPT_)
+        PopBlock()
+        return (ok)
+    end
+
+    /****************************************************************************
+      Creates a new temporary buffer of type flags (_SYSTEM_ if not passed)
+      sets the binary mode to reclen
+      Loads fn into it
+      makes it the current buffer
+      returns id
+
+      No hooks are called
+     ****************************************************************************/
+    integer proc EditBuffer(string fn, integer flags, integer reclen)
+        integer id
+
+        id = CreateBuffer("", iif(flags == 0, _SYSTEM_, flags))
+        if id
+            LoadBuffer(fn, reclen)
+        endif
+        return (id)
+    end
+
+    integer proc LongestLineInBuffer()
+        integer maxlen = 0
+
+        PushPosition()
+        BegFile()
+        repeat
+            maxlen = Max(maxlen, CurrLineLen())
+        until not Down()
+        PopPosition()
+        return (maxlen)
+    end
+
+    string proc QuotePath(string path)
+        return (path)
+    end
+
+#endif
+
+/****************************************************************************
+  Some definitions / notes
+
+  Macros used as commands (that are assigned to keys or menus sequences)
+  are prefixed with lower case "m" to distinguish them from built-in
+  commands, e.g., mDelChar() is a macro, DelChar() is a builtin command.
+
+  Current character - The character at the cursor position in the
+  currently edited file.  Where the next typed character will be
+  inserted or replaced.
+ ***************************************************************************/
+
+// Global variables - assumes globals initialized to 0.
+
+integer cmode               // (internal) used to invoke C-mode
+integer language            // (internal) used to invoke language package
+integer sort_flags          // (internal) used for Sorting
+
+integer recent_files        // (internal) id of the recent_files
+integer save_wordwrap       // (internal) used in toggling wordwrap mode
+integer save_autoindent     // (internal) used in toggling autoindent mode
+
+string KeyWords[] = " case do else elseif for if loop otherwise proc repeat switch when while "
+
+string c_fun[]      = "^_@[a-zA-Z][a-zA-Z0-9_* \t]@([~;]*$"
+// Note that c++ allows a few extra characters in function names.
+//string cpp_fun[]    = "^_|~@[a-zA-Z:~][a-zA-Z0-9_* \t:~]@([~;]*$"
+string cpp_fun[]    = "^{extern[ \t]+\x22C\x22[ \t]+}?_|~@[a-zA-Z:][a-zA-Z0-9_+\-*/%^&|~!=<>,\[\] \t:~]@([~;]*$"
+string sal_fun[]    = "^{menu}|{{public #}?{{integer #}|{string #}}@proc} +[a-zA-Z_]"
+string pas_fun[]    = "{procedure}|{function} +[a-zA-Z_]"
+string xbase_fun[]  = "^{static }?{{procedure}|{function}} +[a-zA-Z_]"
+string basic_fun[]  = "{^ @def fn}|{^ @sub}"
+string ini_fun[]    = "\[.*\]"      // .ini files
+string ident_set[]  = "[_a-zA-Z]"
+string TEMPLATE[]   = "template"
+
+/****************************************************************************
+  A simple language indenting package, providing the following:
+
+  When AutoIndent is on,
+
+  BackSpace, when the cursor is on a blank line or the first
+  non-blank character of a line, issues  TabLeft(), in
+  effect doing an outdent.
+
+  Return, causes an extra indent when the first word of the line
+  is one of the following:
+
+  if else elseif while repeat loop for switch case when
+
+  Additionally, special handling of {} is provided for C
+  programmers.
+
+  To make this package work:
+
+  Assign mBackSpace() to <backspace>
+  Assign mCReturn() to <Enter>          // special handling for C
+  Assign  TabLeft() to <shift tab>
+  Assign mCloseBrace() to <shift ]>      // For C files
+
+  The _ON_CHANGING_FILES_ hook sets this mode (language) for files with
+  extensions of s, c, and h.
+  cmode is also set for files with extensions of c and h.
+
+ ***************************************************************************/
+
+/****************************************************************************
+  Fancy backspace() command.
+  Sort of like Borlands environment.  In language mode, backspace
+  does a "outdent" when there is only white space before the cursor.
+
+  Also does special handling for overwrite mode.  In overwrite mode,
+  does a "rubout" instead of a backspace.
+ ***************************************************************************/
+proc mBackSpace()
+    if CurrPos() == 1       // at beg-of-line, just join to previous
+        if PrevChar()
+            JoinLine()
+        endif
+        return ()
+    endif
+
+    // if from here to prev-tabstop is 'white', then TabLeft()
+
+    if Query(AutoIndent) and language
+        if CurrPos() <= PosFirstNonWhite()
+            TabLeft()
+            return ()
+        endif
+        PushPosition()
+        GotoColumn(CurrCol() - DistanceToTab())
+        if CurrPos() > PosLastNonWhite()
+            PopPosition()
+            TabLeft()
+            return ()
+        endif
+        PopPosition()
+    endif
+
+    // Finally, do either rubout or backspace based on InsertMode
+
+    Left()
+    if CurrChar() >= 0
+        if Query(Insert) or CurrPos() == CurrLineLen()
+            DelChar()
+        else
+            InsertText(" ", _OVERWRITE_)
+            Left()
+        endif
+    endif
+end
+
+/****************************************************************************
+   Return the first word on the line as string - '' if not there.
+ ***************************************************************************/
+string proc GetFirstWord()
+    string word[32] = ''
+
+    PushPosition()                  // Save where we're at
+    GotoPos(PosFirstNonWhite())     // Go to first non white
+    word = Lower(GetWord())         // Now get the word there
+    PopPosition()                   // Restore saved position
+    return (' ' + word + ' ')       // And return the word
+end
+
+/****************************************************************************
+  Fancy CarriageReturn command.  Works if language mode is on.
+
+  11-05-93 SEM Handle SmartTabs
+ ***************************************************************************/
+integer proc mCReturn()
+    integer ok, save_tabtype, found = FALSE
+
+    if language and CurrPos() > PosFirstNonWhite()
+        found = Pos(Lower(GetFirstWord()), KeyWords) <> 0
+            or (cmode and Pos('{', GetText(1, CurrPos())) <> 0)
+    endif
+    if not CReturn()
+        return (FALSE)
+    endif
+
+    ok = TRUE
+    if found and ((Query(Insert) and Query(ReturnEqNextLine) == FALSE)
+            or PosFirstNonWhite() == 0)
+
+        save_tabtype = Set(TabType, _SOFT_)     // force fixed tabs
+        ok = TabRight()
+        Set(TabType, save_tabtype)              // restore tabtype
+    endif
+    return (ok)
+end
+
+/****************************************************************************
+  Special handling of } for C programmers
+ ***************************************************************************/
+integer proc mCloseBrace()
+    if cmode and PosFirstNonWhite() == 0
+        TabLeft()
+    endif
+    return (InsertText("}"))
+end
+
+/****************************************************************************
+  Helper macros/Subroutines
+
+  These routines are:
+
+   not intended for use as commands by themselves
+   not intended to be assigned to keys or menus
+   intended to be called from other macros
+ ***************************************************************************/
+
+/****************************************************************************
+   Returns the string "On" or "Off" based on the logical value of i.
+
+   Used by menus to display on/off strings.
+ ***************************************************************************/
+string proc OnOffStr(integer i)
+    return (iif(i, "On", "Off"))
+end
+
+/****************************************************************************
+   Helper routines for Sort on the Options menu.
+
+   Return the appropriate string.
+ ***************************************************************************/
+string proc ShowSortFlag()
+    return (iif(sort_flags & _DESCENDING_, "Descending", "Ascending"))
+end
+
+/****************************************************************************
+   Helper routines for Sort on the Options menu.
+
+   Toggle the sort order or case significance.
+ ***************************************************************************/
+proc ToggleSortFlag(integer which)
+    if sort_flags & which
+        sort_flags = sort_flags & ~ which
+    else
+        sort_flags = sort_flags | which
+    endif
+end
+
+/****************************************************************************
+   Read command that returns the numeric value of the user input.
+ ***************************************************************************/
+integer proc ReadNum(integer n)
+    string s[5] = str(n)
+
+    return (iif(ReadNumeric(s), val(s), n))
+end ReadNum
+
+integer proc CutCopyMenuFlags()
+    return (iif(IsBlockInCurrFile() or Query(UseCurrLineIfNoBlock), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc PasteMenuFlags()
+    return (iif(GetClipBoardBlockType(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc BlockMenuFlags()
+    return (iif(IsBlockMarked(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc WindowMenuFlags()
+    return (iif(NumWindows() > 1, _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc NumFilesMenuFlags()
+    return (iif(NumFiles() > 1, _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+integer proc MoreLinesFlags()
+    return (iif(CurrLine() < NumLines(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_))
+end
+
+///////////////////// End Help Macros/Subroutines ///////////////////////
+
+/****************************************************************************
+  Macros that follow can:
+
+   be assigned to keys and menus as commands
+   therefore, can be directly executed by the user
+
+  Commands implemented in the macro langauge:
+
+     mCopyCharAbove
+     mShift [ShiftBlock]
+     mFindWordAtCursor
+     mCompressView
+     mAsciiChart
+     mListRecentFiles
+     mSwapLines
+     mSendFormFeed
+     SendInit
+     mDateTimeStamp
+
+  Commands augmented via macros:
+
+     mDelChar()
+     mUpper()
+     mLower()
+     mFlip()
+     mWrapPara
+     mBegFile
+     mEndFile
+ ***************************************************************************/
+
+/****************************************************************************
+  The GetPrev command.
+
+  Copy the character on the line above to the current position
+ ***************************************************************************/
+integer proc mCopyCharAbove()
+    integer c, sv = Set(RemoveTrailingWhite, OFF)
+
+    PushPosition()                  // save position
+    c = iif(up(), CurrChar(), -1)   // Try for char on line above
+    PopPosition()                   // back to where we were
+    Set(RemoveTrailingWhite, sv)
+    return (c >= 0 and InsertText(Chr(c)))
+end mCopyCharAbove
+
+/****************************************************************************
+  The GetPrevToEOL command.
+
+  Copy the character on the line above to the current position, and keep
+  copying until the eol is reached (on the line above)
+ ***************************************************************************/
+proc mCopyCharAboveToEol()
+    repeat
+    until not mCopyCharAbove()
+end
+
+constant SHIFTLEFT = -1, SHIFTRIGHT = 1
+
+/****************************************************************************
+  Shift text left/right
+
+  If in a block, shift the entire block.
+
+   11-05-93 SEM Handle WordStar-style line blocks better
+ ***************************************************************************/
+integer proc mShiftBlock(integer direction)
+    integer goal_line = CurrLine(),
+            btype     = isCursorInBlock(),
+            save_marking   = Set(Marking, off),
+            p = CurrPos()
+
+    PushPosition()
+    if btype or (isBlockInCurrFile() and CurrLine() >= Query(BlockBegLine)
+            and CurrLine() <= Query(BlockEndLine))
+        goal_line = Query(BlockEndLine)
+        GotoBlockBegin()
+    endif
+    repeat until not ShiftText(direction)
+            or   not RollDown()
+            or   CurrLine() > goal_line
+    PopPosition()
+    GotoPos(p)
+    Set(Marking, save_marking)
+    return (TRUE)
+end
+
+/****************************************************************************
+  The standard Shift command.
+
+  Shift text left/right based on the keys pressed.
+ ***************************************************************************/
+proc mShift()
+    integer k = Set(EquateEnhancedKbd, ON)
+
+    loop
+        Message("<Left>,<Right> or <Tab>,<Shift Tab> to shift text; <Enter> when done")
+        case GetKey()
+            when <CursorLeft>
+                mShiftBlock(-1)
+            when <CursorRight>
+                mShiftBlock(1)
+            when <Tab>
+                mShiftBlock(Query(TabWidth))
+            when <Shift Tab>
+                mShiftBlock(-Query(TabWidth))
+            when <Escape>, <Enter>, <Alt x>
+                break
+            when <Alt U>
+                if isCursorInBlock()
+                    UnMarkBlock()
+                    break
+                endif
+        endcase
+        UpdateDisplay(_REFRESH_THIS_ONLY_ | _WINDOW_REFRESH_)
+    endloop
+    Set(EquateEnhancedKbd, k)
+    UpdateDisplay()
+end
+
+/****************************************************************************
+  Search for the word at the cursor, using the value of FindOptions
+ ***************************************************************************/
+integer proc mFindWordAtCursor(string option)
+    if Length(GetWord(1))
+        AddHistoryStr(GetWord(1), _FINDHISTORY_)
+        return (Find(GetWord(1), Query(FindOptions) + option))
+    endif
+    return (Find())
+end mFindWordAtCursor
+
+/****************************************************************************
+  Helper routine, called by FunctionList and the next/prev/Beg/End paragraph
+  movement routines.
+
+  This function returns a regular expression that can be used to find
+  functions in the current source file.
+
+  04/19/96 SEM ignore case of files for WIN32
+ ***************************************************************************/
+string proc GetFunctionStr()
+    case Lower(CurrExt())
+        when ".c", ".h"
+            return (c_fun)
+        when ".cpp", ".hpp", ".java"
+            return (cpp_fun)
+        when ".s", ".ui", ".si"
+            return (sal_fun)
+        when ".pas"
+            return (pas_fun)
+        when ".prg",".spr",".mpr",".qpr",".fmt",".frg",".lbg",".ch"
+            return (xbase_fun)
+        when ".bas"
+            return (basic_fun)
+        when ".ini"
+            return (ini_fun)
+    endcase
+    return ("")
+end
+
+/************************************************************************
+  The CompressView command.
+
+  If called with a non-zero value, becomes the FunctionList command.
+ ************************************************************************/
+integer compress_hist, compress_option_hist
+proc mCompressView(integer show_functions)
+    string expression[100], options[12]
+
+    if compress_hist == 0
+        compress_hist = GetFreeHistory("UI:CompressViewFind")
+        compress_option_hist = GetFreeHistory("UI:CompressViewFindOptions")
+    endif
+    if show_functions
+        options = "ix"
+        expression = GetFunctionStr()
+        if Length(expression) == 0
+            expression = "^" + ident_set
+        endif
+    else
+        expression = ''
+        options = ''
+        if not ask("String to list all occurrences of:", expression, compress_hist)
+            return ()
+        endif
+        if Length(expression) == 0
+            options = "x"
+            expression = "^" + ident_set
+        elseif not ask("Search options [IWXA] (Ignore-case Words reg-eXp All-files):", options, compress_option_hist)
+            return ()
+        endif
+    endif
+    if not lFind(expression, options + 'v')
+        Warn(expression, " not found.")
+    endif
+end
+
+integer proc FindPreviousBlankLine()
+    repeat
+        if not Up()
+            return (FALSE)
+        endif
+    until PosFirstNonWhite() == 0
+    return (TRUE)
+end
+
+integer proc FindPreviousNonBlankLine()
+    repeat
+        if not Up()
+            return (FALSE)
+        endif
+    until PosFirstNonWhite()
+    return (TRUE)
+end
+
+integer proc FindNextBlankLine()
+    repeat
+        if not Down()
+            return (FALSE)
+        endif
+    until PosFirstNonWhite() == 0
+    return (TRUE)
+end
+
+integer proc FindNextNonBlankLine()
+    repeat
+        if not Down()
+            return (FALSE)
+        endif
+    until PosFirstNonWhite()
+    return (TRUE)
+end
+
+integer proc FindPara(integer previous)
+    integer col = CurrCol(), cline = CurrLine()
+    string opt[1], s[80] = GetFunctionStr()
+
+    if Length(s)
+        if previous
+            BegLine()
+            opt = 'b'
+        else
+            EndLine()
+            opt = ''
+        endif
+        lFind(s, "ix+" + opt)
+    else    // unknown type, use line delimited chunks
+        PushPosition()
+        if previous
+            Up()
+            repeat until PosFirstNonWhite() or not Up()
+            repeat until not Up() or PosFirstNonWhite() == 0
+            if PosFirstNonWhite() == 0
+                Down()
+            endif
+            if PosFirstNonWhite()
+                KillPosition()
+            else
+                PopPosition()
+            endif
+        else
+            if (PosFirstNonWhite() == 0 or FindNextBlankLine())
+                    and FindNextNonBlankLine()
+                KillPosition()
+            else
+                PopPosition()
+            endif
+        endif
+    endif
+    GotoColumn(col)
+    return (CurrLine() <> cline)
+end
+
+integer proc mPrevPara()
+    return (FindPara(TRUE))
+end
+
+integer proc mNextPara()
+    return (FindPara(FALSE))
+end
+
+proc mBegPara()
+    integer cline, pline
+
+    cline = CurrLine()
+    mPrevPara()
+    pline = CurrLine()
+    mNextPara()
+    if cline <> CurrLine()
+        GotoLine(pline)
+    endif
+end
+
+proc mEndPara()
+    integer cline = CurrLine()
+
+    if mNextPara()
+        FindPreviousBlankLine()
+        FindPreviousNonBlankLine()
+    else
+        EndFile()
+        repeat until CurrLine() <= cline or PosFirstNonWhite() or not Up()
+    endif
+end
+
+proc mMarkPara()
+    PushPosition()
+    Unmarkblock()
+    mBegPara()
+    MarkLine()
+    mEndPara()
+    MarkLine()
+    PopPosition()
+end
+
+proc mInsertLine()
+   InsertLine()
+   BegLine()
+end
+
+integer chartid
+string chart_title[] = "DEC HEX CHAR"
+/****************************************************************************
+  Display an ascii chart.
+ ***************************************************************************/
+proc mAsciiChart()
+    integer
+        i,
+        ok = FALSE,
+        c = CurrChar()
+
+    PushPosition()
+    if chartid == 0
+        chartid = CreateTempBuffer()
+        if chartid
+            for i = 0 to 255
+                if not AddLine(format(i:5, str(i, 16):4, chr(i):4))
+                    break
+                endif
+            endfor
+        endif
+    endif
+    if GotoBufferId(chartid)
+        BegFile()
+        if c > 0
+            GotoLine(c + 1)
+        endif
+        ok = List(chart_title, Length(chart_title) + 6)
+        i = CurrLine() - 1
+    endif
+    PopPosition()
+    if ok
+        InsertText(chr(i))
+    endif
+end mAsciiChart
+
+//********* List Recent Files helper and command routines *******************
+
+string proc RecentFilesStr()
+    return (LoadDir() + "tsefiles.dat")
+end
+
+// Create the recent files buffer, if needed
+// BOOL Return
+integer proc GotoRecentFilesBuffer()
+    if not GotoBufferId(recent_files)
+        if Query(PersistentRecentFiles)
+            recent_files = EditBuffer(RecentFilesStr(), _SYSTEM_, -1)
+        else
+            if CreateTempBuffer()
+                BinaryMode(-1)
+                recent_files = GetBufferId()
+            endif
+        endif
+    endif
+    return (recent_files)
+end
+
+string recentfiles_footer[] = " {Del}-Delete entry "
+string recent_files_title[] = "Recent Files"
+
+keydef RecentFilesKeys
+<del>   KillLine()
+end
+
+proc RecentFilesHelper()
+    if Enable(RecentFilesKeys)
+        ListFooter(recentfiles_footer)
+    endif
+    Unhook(RecentFilesHelper)
+    BreakHookChain()
+end
+
+// Display the recent files list
+string proc mListRecentFilesStr()
+    integer start_id, maxl
+    string fn[MAXPATH]
+
+    fn = ""
+    start_id = GetBufferId()
+
+    if not GotoRecentFilesBuffer() or NumLines() == 0
+        GotoBufferId(start_id)
+        Warn("No Recent Files list")
+        return ("")
+    endif
+
+    maxl = LongestLineInBuffer()
+    GotoLine(1 + (NumFiles() <> 0))
+
+    Hook(_LIST_STARTUP_, RecentFilesHelper)
+    if List(recent_files_title, max(maxl + 1, Length(recent_files_title) + 6))
+       fn = GetText(1, CurrLineLen())
+    endif
+    GotoBufferId(start_id)
+    return (fn)
+end
+
+proc mPromptRecentFiles()
+    BegLine()
+    KillToEol()
+    InsertText(mListRecentFilesStr())
+end
+
+integer proc mListRecentFiles()
+    string fn[MAXPATH] = mListRecentFilesStr()
+    return (iif(Length(fn), EditFile(QuotePath(fn)), FALSE))
+end
+
+/****************************************************************************
+  Swap the current line with the next line.
+ ***************************************************************************/
+proc mSwapLines()
+    integer km, y = CurrRow()
+
+    if Down()
+        km = Set(KillMax, 1)
+        DelLine()
+        Up()
+        UnDelete()
+        Set(KillMax, km)
+        ScrollToRow(y)
+    endif
+end
+
+proc mCloseWindow()
+    if NumWindows() > 1
+        CloseWindow()
+    else
+        Exit()
+    endif
+end
+
+proc mCompileCurrFile()
+    ExecMacro("Compile " + QuotePath(CurrFilename()))
+end
+
+proc mDebugCurrFile()
+    ExecMacro("debug " + QuotePath(CurrFilename()))
+end
+
+/*************************************************************************
+   External macro support.
+ *************************************************************************/
+menu ExecLoadPurge()
+    Title = "Macro Menu"
+    Width = 16
+
+    "&Execute..."   , ExecMacro()
+    "&Load..."      , LoadMacro()
+    "&Purge..."     , PurgeMacro()
+    "&Compile"      , mCompileCurrFile()
+    "&Debug..."     , mDebugCurrFile()
+end
+
+proc mSendFormFeed()
+    if not PrintChar(chr(12))
+        warn("Error sending formfeed")
+    endif
+end
+
+proc mSendInitString()
+    string s[60] = Query(PrintInit)
+    integer i
+
+    for i = 1 to Length(s)
+        if not PrintChar(s[i])
+            break
+        endif
+    endfor
+end
+
+proc mDateTimeStamp()
+    InsertText(GetDateStr(), _INSERT_)
+    InsertText(" ", _INSERT_)
+    InsertText(GetTimeStr(), _INSERT_)
+end
+
+proc mOpenFileAndWindow()
+    if EditFile()
+        PrevFile()
+        HWindow()
+    endif
+end
+
+proc mCloseFileAndWindow()
+    if QuitFile()
+        CloseWindow()
+    endif
+end
+
+/****************************************************************************
+  Commands augmented by macros:
+ ***************************************************************************/
+
+// Augment delchar by joining lines if at or passed eol
+// integer proc mDelChar()
+//     return(iif(CurrChar() >= 0, DelChar(), JoinLine()))
+// end
+
+/**************************************************************************
+   Macro to delete block of one is active, if not delete character at
+   cursor.  Augments mDelChar() in the standard UI
+ **************************************************************************/
+integer proc mDelChar2()
+    integer result
+    integer iBlock
+    iBlock = isBlockInCurrFile()
+    if iBlock
+       result = delBlock()
+       if iBlock == _LINE_
+          BegLine()
+       endif
+    else
+       // Augment delchar by joining lines if at or passed eol
+       result = iif(CurrChar() >= 0, DelChar(), JoinLine())
+    endif
+    return (result)
+end
+
+/**************************************************************************
+  mSpike() and mPasteSpike(): Macros to emulate the spike feature found
+  in some windows word processors.
+
+  mSpike() creates new unnamed cumulative append buffer.  mPasteSpike
+  inserts the cumulative contents of the buffer at the cursor position.
+
+  Highlight a block and push F3: the block is cut and appended to a
+  temporary buffer that is independent of existing scratch, named and
+  WinClip buffers.
+
+  Repeat for several other blocks then move the cursor to the desired
+  position in any file and push CtrlShift F3.  The cumulative contents
+  of the temporary buffer is moved to the current file.  The temporary
+  buffer is then destroyed.
+
+  Keys: <Ctrl F3>        mSpike()
+        <CtrlShift F3>   mPasteSpike()
+ **************************************************************************/
+
+proc mSpike()
+   integer iCurr      = GetBufferId()
+   integer iInsert    = Set(InsertLineBlocksAbove,FALSE)
+   integer iBlockType = 0
+   integer iSpike     = 0
+
+   iBlockType = isBlockInCurrFile()
+   if iBlockType
+      if not ExistGlobalVar("gSpikeFlag")
+         SetGlobalInt("gSpikeFlag",0)
+      endif
+
+      iSpike = GetGlobalInt("gSpikeFlag")
+      if iSpike == 0
+         iSpike = CreateTempBuffer()
+         SetGlobalInt("gSpikeFlag",iSpike)
+      endif
+
+      GoToBlockEnd()              // Mark end of block if still marking
+      if iSpike
+        GoToBufferID(iSpike)
+        EndFile()
+        if iBlockType <> _LINE_
+           Addline()
+           BegLine()
+        endif
+        MoveBlock(_DEFAULT_)
+        if iBlockType <> _LINE_
+           GoToBlockEnd()
+           BegLine()
+        endif
+      endif
+
+      GoToBufferID(iCurr)
+   endif
+
+   Set(InsertLineBlocksAbove,iInsert)
+end
+
+proc mPasteSpike()
+   integer iCurr = GetBufferID()
+   integer iInsert = Set(InsertLineBlocksAbove,TRUE)
+   integer iSpike = GetGlobalInt("gSpikeFlag")
+
+   if iSpike
+      PushBlock()
+      UnMarkBlock()
+      GoToBufferId(iSpike)
+      BegFile()
+      MarkLine()
+      EndFile()
+      MarkLine()
+      GoToBufferID(iCurr)
+      MoveBlock()
+      AbandonFile(iSpike)
+      iSpike = 0
+      PopBlock()
+   endif
+
+   DelGlobalVar("gSpikeFlag")
+   Set(InsertLineBlocksAbove,iInsert)
+end
+
+/**************************************************************************
+  Macro to implement cut block in current file to Windows clipboard
+ **************************************************************************/
+proc mCutToWinClip()
+   if isBlockInCurrFile()
+      GoToBlockEnd()       // Mark EOB if user is still marking
+      PushBlock()
+      CopyToWinClip()
+      PopBlock()
+      DelBlock()
+      UnMarkBlock()
+   endif
+end
+
+/**************************************************************************
+  Macro to open file at cursor.
+
+  If file name includes spaces it must be enclosed in quotes
+  format for string at cursor is "New File.txt" or NewFile.txt
+  Drive and path may be included as in "C:\TSE32\New File.txt".
+
+  Key:  <ShiftCtrl O>
+ **************************************************************************/
+
+integer proc mEditFileAtCursor()
+   integer isQuoted = 0
+   integer result
+   string  Prevset[32]
+
+   PushBlock()
+   UnMarkBlock()
+
+   // Scan to see of we have a quoted string
+   PushPosition()
+   repeat
+      if CurrChar() == asc('"')
+         isQuoted = 1
+      endif
+   until not Left()
+   PopPosition()
+
+   if isQuoted
+      PrevSet = Set(WordSet, ChrSet(" A-Za-z0-9_!#$%&`()./\\@{}~:^'-"))
+   else
+      PrevSet = Set(WordSet, ChrSet("A-Za-z0-9_!#$%&`()./\\@{}~:^'-"))
+   endif
+   MarkWord()
+   Result = EditFile(QuotePath(GetMarkedText()))
+   Set(WordSet, PrevSet)
+   PopBlock()
+   return(result)
+end
+
+/**************************************************************************
+  Macro to emulate Split Window in found some windows word processors
+  From standard UI documentation.
+
+  Key: <CtrlAlt S>
+ **************************************************************************/
+proc mSplitWindow()
+   if HWindow()
+      PrevFile()
+   endif
+end
+
+/**************************************************************************
+  Macro and keydef to emulate block move in found in some windows word processors
+  Bypasses clipboard and WinClip.
+
+  Key: <Shift F3>
+ **************************************************************************/
+keydef ArrowKeys
+   <CursorUp>       Up()
+   <CursorDown>     Down()
+   <CursorLeft>     Left()
+   <CursorRight>    Right()
+   <home>           BegLine()
+   <end>            EndLine()
+   <Enter>          EndProcess()
+end
+
+integer proc mMoveCopy(string M)
+   integer result = 0
+   if isBlockInCurrFile() and Enable(ArrowKeys, _EXCLUSIVE_)
+      GotoBlockEnd()   // Close block if required
+      if upper(M) == 'MOVE'
+         Message("Move block to ? (Use cursor keys then press Enter)")
+         Process()
+         result = MoveBlock()
+      else
+         Message("Copy block to ? (Use cursor keys then press Enter)")
+         Process()
+         result = CopyBlock()
+      endif
+      UnmarkBlock()
+      Disable(ArrowKeys)
+   endif
+   return (result)
+end
+
+// Augment BegFile() by maintaining the current column if a column block is open.
+proc mBegFile()
+    integer col = CurrCol(), xoff = CurrXoffset()
+
+    BegFile()
+    if Query(Marking) and isBlockInCurrFile() == _COLUMN_
+        GotoColumn(col)
+        GotoXoffset(xoff)
+    endif
+end
+
+// Augment EndFile by maintaining the current column if a column block is open
+proc mEndFile()
+    integer col = CurrCol(), xoff = CurrXoffset()
+
+    EndFile()
+    if Query(Marking) and isBlockInCurrFile() == _COLUMN_
+        GotoColumn(col)
+        GotoXoffset(xoff)
+    endif
+end
+
+constant WORDCASE  = 1, LINECASE = 2, BLOCKCASE = 3
+constant UPPER_CASE = 0, LOWER_CASE = 1, FLIP_CASE = 2, CAP_CASE = 3
+
+integer casetype
+
+// Assume type is always one of WORDCASE, LINECASE or BLOCKCASE.
+proc ChangeCase(integer type)
+    PushBlock()
+    if type <> BLOCKCASE
+        UnMarkBlock()
+        if type == LINECASE
+            MarkLine()
+        elseif not MarkWord()
+            goto done
+        endif
+    elseif not isCursorInBlock()
+        goto done
+    endif
+    case casetype
+        when UPPER_CASE
+            Upper()
+        when LOWER_CASE
+            Lower()
+        when FLIP_CASE
+            Flip()
+        otherwise
+            ExecMacro("capital")
+    endcase
+    done:
+
+    PopBlock()
+end
+
+menu CaseMenu()
+    Command = ChangeCase(MenuOption())
+
+    "&Word at Cursor"                       // if the order of these options is changed,
+    "Current &Line"                         // Change to order of the constants
+    "&Block"            ,,BlockMenuFlags()  // WORDCASE, LINECASE, and BLOCKCASE
+end
+
+proc mUpper()
+    casetype = UPPER_CASE
+    CaseMenu("Upper Case")
+end
+
+proc mLower()
+    casetype = LOWER_CASE
+    CaseMenu("Lower Case")
+end
+
+proc mFlip()
+    casetype = FLIP_CASE
+    CaseMenu("Flip Case")
+end
+
+proc mCapital()
+    casetype = CAP_CASE
+    CaseMenu("Capitalize")
+end
+
+menu ChangeCaseMenu()
+   Title="Change Case Menu"
+   "&Upper   ",                     mUpper()
+   "&Lower   ",                     mLower()
+   "&Flip    ",                     mFlip()
+   "&Capitalize"                 ,  mCapital()             ,   DontClose
+end
+
+proc mChangeCase()
+   ChangeCaseMenu()
+end
+
+
+integer proc mSaveSettings()
+    if YesNo("Overwrite existing config?") == 1
+        return (iif(SaveSettings(), TRUE, Warn("Error updating executable")))
+    endif
+    return (FALSE)
+end
+
+proc mHelpOnWordAtCursor()
+    string word[64]
+
+    word = Trim(GetText(CurrPos(), sizeof(word)))
+    PushPosition()
+    if isWord() or lFind(ident_set, "xcb") or lFind(ident_set, "xc+")
+        word = GetWord(TRUE)
+    endif
+    PopPosition()
+    Help(word, TRUE)
+end
+
+integer proc misTemplateLoaded()
+    return (isMacroLoaded(TEMPLATE))
+end
+
+proc mToggleTemplateExpand()
+    if isMacroLoaded(TEMPLATE)
+        PurgeMacro(TEMPLATE)
+    else
+        LoadMacro(TEMPLATE)
+    endif
+end
+
+proc ToggleHexEdit()
+    if HexEdit(TRUE)
+        HexEdit(FALSE)
+    endif
+end
+
+proc mFancyTabRight()
+    if DisplayMode() == _DISPLAY_HEX_
+        ToggleHexEdit()
+    else
+        TabRight()
+    endif
+end
+
+proc mToggleAutoIndent()
+    if Query(AutoIndent)
+        save_autoindent = Set(AutoIndent, OFF)
+    else
+        if save_autoindent == OFF
+            save_autoindent = ON
+        endif
+        Set(AutoIndent, save_autoindent)
+    endif
+end
+
+proc mToggleWordWrap()
+    if Query(WordWrap)
+        save_wordwrap = Set(WordWrap, OFF)
+    else
+        if save_wordwrap == OFF
+            save_wordwrap = ON
+        endif
+        Set(WordWrap, save_wordwrap)
+    endif
+end
+
+proc AddToTop(string s, integer max_count)
+    if lFind(s, "^$ig")
+        KillLine()
+    elseif NumLines() >= max_count
+        EndFile()
+        KillLine()
+    endif
+    BegFile()
+    InsertLine(s)
+end
+
+/****************************************************************************
+  TSE-called macros, including:
+
+  WhenLoaded
+  Main
+  Hooked functions
+ ***************************************************************************/
+// This is a hooked macro
+// Be careful not to add files without names!
+// 04/19/96 SEM ignore case of files for WIN32
+proc AfterUpdateDisplay()
+    string fn[MAXPATH] = CurrFilename()
+    integer cid = GetBufferId()
+    Unhook(AfterUpdateDisplay)
+#ifdef WIN32
+    SetWindowTitle("E32 " + SplitPath(CurrFilename(), _NAME_|_EXT_))
+#endif
+    if Length(fn) and BufferType() == _NORMAL_
+        if GotoRecentFilesBuffer()
+            AddToTop(fn, Query(MaxRecentFiles))
+        endif
+        GotoBufferId(cid)
+    endif
+end
+
+/****************************************************************************
+  This macro is called everytime EditFile() or Next/PrevFile() is called.
+
+  This is a hooked macro.
+
+  04/19/96 SEM ignore case of files for WIN32
+ ***************************************************************************/
+proc OnChangingFiles()
+    // For 'RecentFiles' processing, only show files that are displayed
+    Hook(_AFTER_UPDATE_DISPLAY_, AFterUpdateDisplay)
+    language = FALSE
+    cmode = FALSE
+    case Lower(CurrExt())
+        when ".ui",".s", ".si", ".asm",".pas",".inc",".prg", ".bas"
+            language = TRUE
+        when ".c",".h",".cpp",".hpp", ".java"
+            language = TRUE
+            cmode = TRUE
+    endcase
+end
+
+keydef AdditionalKeys
+    <Ctrl A>    mAsciiChart()
+    <Ctrl 0>    mPromptRecentFiles()
+end
+
+// This is a hooked macro
+proc OnPromptStartup()
+    Enable(AdditionalKeys)
+end
+
+/****************************************************************************
+  This macro is called the first time a file is loaded into the editor.
+
+  This is a hooked macro
+ ***************************************************************************/
+proc OnFirstEdit()
+end
+
+// This is a hooked macro
+proc MaybeAutoWrap()
+    integer line
+
+    if Query(WordWrap) > ON
+        line = CurrLine()
+        PushPosition()
+        EndLine()
+        if Abs(CurrCol() - Query(RightMargin)) > 1
+            WrapPara()
+        endif
+        PopPosition()
+        GotoXoffset(0)
+        if line <> CurrLine() and CurrLine() < Query(WindowRows) / 2
+            ScrollUp()
+        endif
+    endif
+end
+
+// called on delchar/bs/drw/dlw
+// This is a hooked macro
+proc OnDelChar()
+    MaybeAutoWrap()
+end
+
+// Called on each char insert.
+// This is a hooked macro
+proc OnSelfInsert()
+    if Query(WordWrap) == ON and CurrCol() > Query(RightMargin) + 1
+        WrapLine()
+    else
+        MaybeAutoWrap()
+    endif
+end
+
+// This macro is automatically called by TSE just before the _ON_ABANDON_EDITOR_
+// hook is called.
+proc WhenPurged()
+    PushPosition()
+    if Query(PersistentRecentFiles) and GotoBufferId(recent_files) and NumLines()
+        SaveAs(RecentFilesStr(), _OVERWRITE_ | _DONT_PROMPT_)
+    endif
+    PopPosition()
+end
+
+/****************************************************************************
+  This macro is automatically called by TSE just after the editor has
+  initialized all necessary processes and managers.
+
+  Minimally, this macro should call EditFile() if the command line is empty,
+  or EditFile(Query(DosCmdLine)) if the command line is non-empty.
+
+  Many additional 'startup' tasks should be performed here.
+
+  The following are performed in this version:
+
+  - The initial video mode is set
+  - The signon screen is displayed
+  - TSEStart is executed
+  - The autoload macros are loaded
+  - Various events are hooked
+  - If the output of a command has been piped to us, load it as a file
+  - Process the DOS command line, by calling EditFile
+  - If the DOS command line is empty, use the StartupFlags editor variable
+    to determine what to do
+ ***************************************************************************/
+#ifdef WIN32
+menu StartupMenu()
+    history
+    nokeys
+
+    "&Open...",         EditFile()
+    "&New File",        NewFile()
+    "&File Manager...", ExecMacro("f -r")
+    "List &Recent...",  mListRecentFiles()
+    "&Pick File...",    EditFile("-a- *.*")
+    "Restore &State",   ExecMacro("state -r -q")
+    "&Where",           ExecMacro("where")
+    "E&xit",            AbandonEditor()
+end
+
+#endif
+
+proc WhenLoaded()
+    string s[MAXPATH]
+    integer new_handle
+#ifdef WIN32
+    integer rows, cols, changed
+#endif
+
+    Set(CurrVideoMode, Query(StartupVideoMode))
+#ifdef WIN32
+    // if rows/cols < 25/80, force video mode
+    changed = FALSE
+    rows = Query(ScreenRows)
+    cols = Query(ScreenCols)
+    if rows < 25
+        rows = 25
+        changed = TRUE
+    endif
+    if cols < 80
+        cols = 80
+        changed = TRUE
+    endif
+    if changed
+        SetVideoRowsCols(rows, cols)
+    endif
+#endif
+
+    SignOn()
+
+    LoadStartupMacros()                         // tsestart and autoload macros
+
+#ifdef WIN32
+    if Query(TemplateExpansion) and misTemplateLoaded() == FALSE
+        LoadMacro(TEMPLATE)
+    endif
+#endif
+
+    // Hook the events we want to get control of
+    Hook(_ON_CHANGING_FILES_,   OnChangingFiles)
+    Hook(_ON_FIRST_EDIT_,       OnFirstEdit)
+    Hook(_PROMPT_STARTUP_,      OnPromptStartup)
+    Hook(_ON_SELFINSERT_,       OnSelfInsert)
+    Hook(_ON_DELCHAR_,          OnDelChar)
+
+    // See if input is redirected, if so, read it in as a file
+    if isCharDevice(_STDIN_) == FALSE and CreateBuffer("")
+        fReadFile(_STDIN_)
+        BegFile()
+        ChangeCurrFilename("[<stdin>]", _DONT_EXPAND_)      // call ON_FIRST_EDIT and ON_CHANGING_FILES hooks
+
+        new_handle = fOpen(CONSOLE, _OPEN_READWRITE_)
+        if new_handle <> -1
+            fDup2(new_handle, _STDIN_)
+            fClose(new_handle)
+        endif
+    endif
+
+    // Finally, process the command line
+    s = Query(DosCmdLine)
+    if Length(s)
+        AddHistoryStr(s, _EDIT_HISTORY_)
+        EditFile(s, _FROM_CMDLINE_)
+    elseif NumFiles() == 0
+        case Query(StartupFlags)
+            when _STARTUP_RESTORESTATE_
+                ExecMacro("state -r -q")
+            when _STARTUP_FILEMGR_
+                loop
+                    ExecMacro("f -r")
+                    if NumFiles()
+                        Process(1)
+                    else
+                        return ()
+                    endif
+                endloop
+                return ()
+            when _STARTUP_UNNAMED_
+                NewFile()
+                return ()
+            when _STARTUP_RECENTFILES_
+                mListRecentFiles()
+            when _STARTUP_PICKLIST_
+                EditFile("-a- *.*")
+#ifdef WIN32
+            when _STARTUP_MENU_
+                loop
+                    SignOn()
+                    Set(X1, (Query(ScreenCols) / 2) - 9)
+                    Set(Y1, (Query(ScreenRows) / 2) -  5)
+                    StartupMenu()
+                    if MenuOption() == 0
+                        return ()
+                    elseif NumFiles()
+                        if NumWindows() < 2 and not isZoomed()
+                            OneWindow()
+                        endif
+                        Process(1)
+                    endif
+                    OneWindow()
+                    lShowEntryScreen()
+                endloop
+                return ()
+#endif
+        endcase
+    endif
+
+    // _STARTUP_PROMPT_ case and error loading specified file cases come here
+    if NumFiles() == 0
+        SignOn()
+        EditFile()
+    endif
+end
+
+/**************************************************************************
+  Macro to create a find list if one does not exist
+ **************************************************************************/
+proc mViewFinds()
+   integer HaveList = Query(ViewFindsId)
+   if HaveList
+      ViewFinds()
+   else
+      mCompressView(0)
+   endif
+end
+
+
+/****************************************************************************
+   This macro is called just after the first file is loaded, but before the
+   user is given control, and before any hook functions are called.
+ ***************************************************************************/
+proc Main()
+end
+
+/****************************************************************************
+  TSE Pull-down Menus
+ ***************************************************************************/
+
+menu FileMenu()
+    history
+
+    "&Open..."                      ,   EditFile()
+    "Open File At C&ursor"          ,   mEditFileAtCursor()
+    "Ne&w File"                     ,   NewFile()
+    "&Insert..."                    ,   InsertFile()
+    "&File Manager..."              ,   ExecMacro("f -r")
+    ""                              ,                       ,   Divide
+    "&Next"                         ,   NextFile()          ,   NumFilesMenuFlags()
+    "&Previous"                     ,   PrevFile()          ,   NumFilesMenuFlags()
+    "Lis&t Open..."                 ,   ExecMacro("listopen")
+    "List &Recent..."               ,   mListRecentFiles()
+    "Current File"                  ,                       ,   Divide
+    "&Save"                         ,   SaveFile()
+    "Save &As..."                   ,   SaveAs()
+    "Save && C&lose"                ,   SaveAndQuitFile()
+    "&Close"                        ,   QuitFile()
+    "Chan&ge Name..."               ,   ChangeCurrFilename()
+    "S&how File Info"               ,   ExecMacro("fileinfo")
+    "All Files"                     ,                       ,   Divide
+    "Sa&ve All"                     ,   SaveAllFiles()
+    "Save All && &Exit"             ,   SaveAllAndExit()
+    "E&xit"                         ,   Exit()
+end
+
+// Cut a block, back-filling with spaces
+public integer proc CutWipe()
+    integer copied
+
+    PushBlock()
+    copied = Copy()
+    PopBlock()
+    if copied
+        FillBlock(' ')
+        UnmarkBlock()
+    endif
+    return (copied)
+end
+
+// Move a block, back-filling with spaces
+public proc MoveWipe()
+    integer curr_id, save_clip_id, save_state, tmp
+
+    curr_id = GetBufferId()
+    tmp = CreateTempBuffer()
+    GotoBufferId(curr_id)
+    if tmp
+        save_clip_id = Set(ClipBoardId, tmp)
+
+        if CutWipe()
+            save_state = Set(UnMarkAfterPaste, OFF)
+            Paste(_OVERWRITE_)
+            Set(UnMarkAfterPaste, save_state)
+        endif
+
+        Set(ClipBoardId, save_clip_id)
+        AbandonFile(tmp)
+    endif
+end
+
+
+menu ClipMenu()
+    history
+
+    "Cu&t"              ,   Cut()               , CutCopyMenuFlags()
+    "Cut&Fill"          ,   CutWipe()           , CutCopyMenuFlags()
+    "C&ut Append"       ,   Cut(_APPEND_)       , CutCopyMenuFlags()
+    "&Copy"             ,   Copy()              , CutCopyMenuFlags()
+    "Cop&y Append"      ,   Copy(_APPEND_)      , CutCopyMenuFlags()
+    ""                  ,                       , Divide
+    "&Paste"            ,   Paste()             , PasteMenuFlags()
+    "Paste &Over"       ,   Paste(_OVERWRITE_)  , PasteMenuFlags()
+    ""                  ,                       , Divide
+    "Cut to Windows Clipboar&d"    , mCutToWinClip(), CutCopyMenuFlags()
+    "Copy to Windows Clip&board"   , CopyToWinClip(), CutCopyMenuFlags()
+    "P&aste from Windows Clipboard", PasteFromWinClip()
+    ""                  ,                       , Divide
+    "&Named ClipBoards  ", ExecMacro("nameclip"),DontClose
+end
+
+menu WindowMenu()
+    history
+
+    "&Split Window"         ,   mSplitWindow()
+    "&Horizontal"           ,   HWindow()
+    "&Vertical"             ,   VWindow()
+    "&Resize..."            ,   ResizeWindow()          , WindowMenuFlags()
+    "&Go to..."             ,   GotoWindow()            , WindowMenuFlags()
+    "&Zoom"                 ,   ZoomWindow()            , WindowMenuFlags()
+    "&One"                  ,   OneWindow()             , WindowMenuFlags()
+    "&Close..."             ,   mCloseWindow()
+    ""                          ,                       , Divide
+    "Open &File && Window"  ,   mOpenFileAndWindow()
+    "Close File && &Window" ,   mCloseFileAndWindow()
+    ""                          ,                       , Divide
+    "&Toggle Sync Scrolling",  ExecMacro("synchscr")    , WindowMenuFlags()
+end
+
+menu BlockMenu()
+    history
+
+    "Mark &Line"                ,   MarkLine()
+    "Mark Ch&aracter"           ,   MarkStream()
+    "Mar&k Column"              ,   MarkColumn()
+    "Mark to &EOL"              ,   MarkToEOL()
+    "Mark Para&graph"           ,   mMarkPara()
+    "&UnMark"                   ,   UnMarkBlock()       , BlockMenuFlags()
+    ""                          ,                       , Divide
+    "&Copy"                     ,   CopyBlock()         , BlockMenuFlags()
+    "&Move"                     ,   MoveBlock()         , BlockMenuFlags()
+    "&Shift..."                 ,   mShift()            , BlockMenuFlags()
+    "&Write to File..."         ,   SaveBlock()
+    "&Fill..."                  ,   FillBlock()         , BlockMenuFlags()
+    "&Delete"                   ,   DelBlock()          , BlockMenuFlags()
+    ""                          ,                       , Divide
+    "U&pper  "                 ,   mUpper()            , DontClose
+    "Lowe&r  "                 ,   mLower()            , DontClose
+    "Fl&ip   "                 ,   mFlip()             , DontClose
+    "Capitali&ze  "            ,   mCapital()          , DontClose
+end
+
+menu SearchMenu()
+    history
+
+    "&Find..."                      ,   find()
+    "&Replace..."                   ,   replace()
+    "&Again"                        ,   repeatfind(_FORWARD_)
+    "Find and &Do..."               ,   ExecMacro("find&do")
+    ""                              ,                       , Divide
+    "Find &Word at Cursor"          ,   mFindWordAtCursor('+')
+    "&Incremental Search..."        ,   ExecMacro("isrch")
+    "&Match"                        ,   ExecMacro("match")
+    ""                              ,                       , Divide
+    "Compressed &View..."           ,   mCompressView(0)
+    "F&unction List..."             ,   mCompressView(1)
+    "R&edisplay View PickList"      ,   mViewFinds()
+    ""                              ,                       , Divide
+    "&Place Bookmark..."            ,   placemark()
+    "&Go to Bookmark..."            ,   gotomark()
+    ""                              ,                       , Divide
+    "Go to &Line..."                ,   GotoLine()
+    "Go to &Column..."              ,   GotoColumn()
+end
+
+menu PrintMenu()
+    history
+
+    "&File"                 ,   PrintFile()
+    "&Block"                ,   PrintBlock(), BlockMenuFlags()
+    "&Send Formfeed"        ,   mSendFormFeed()
+    "Send &Init String"     ,   mSendInitString(), DontClose
+    "Set &Options  "       ,   ExecMacro("Iconfig PrintConfig"), DontClose
+end PrintMenu
+
+menu MacroMenu()
+    Title = "Keyboard Macros"
+    history
+
+    "&Record Key Macro..."          ,   RecordKeyMacro()
+    "&Save Key Macro..."            ,   SaveKeyMacro()
+    "Load &Key Macro..."            ,   LoadKeyMacro()
+    "Run Scrap &Macro"              ,   ExecScrapMacro()
+    "Pur&ge Key Macro"              ,   PurgeKeyMacro()
+    "Compiled Macros"               ,                   ,   Divide
+    "&Execute..."                   ,   ExecMacro()
+    "&Load..."                      ,   LoadMacro()
+    "&Purge..."                     ,   PurgeMacro()
+    "&Compile"                      ,   mCompileCurrfile()
+    "&Debug..."                     ,   mDebugCurrfile()
+    "&AutoLoad List"                ,   EditAutoLoadList()
+end
+
+menu TextMenu()
+    history
+
+    "&Insert Line (above)"      ,   mInsertLine()
+    "&Add Line (below)"         ,   AddLine()
+    "D&up Line"                 ,   DupLine()
+    "&Join Line"                ,   JoinLine()      ,   MoreLinesFlags()
+    "Spli&t Line"               ,   SplitLine()
+    "&Swap Lines"               ,   mSwapLines()    ,   MoreLinesFlags()
+    ""                          ,                   ,   Divide
+    "&Delete Line"              ,   DelLine()       ,   iif(NumLines(), _MF_CLOSE_ALL_BEFORE_, _MF_GRAYED_)
+    "Delete to &End of Line"    ,   DelToEol()
+    "Delete Right &Word"        ,   DelRightWord()
+    ""                          ,                   ,   Divide
+    "&Global UnDelete"          ,   GlobalUnDelete()
+    "&Local UnDelete"           ,   UnDelete()
+    "Paste U&nDelete"           ,   PasteUnDelete()
+    "&Restore Cursor Line"      ,   RestoreCursorLine()
+    ""                          ,                   ,   Divide
+    "Wrap &Paragraph"           ,   ExecMacro("wrappara")
+    "&Center Line"              ,   ExecMacro("center")
+    "&Quote/Comment Line"       ,   ExecMacro("quote")
+    "Insert &Multi-Line Comment",   ExecMacro("quote cmt")
+end
+
+menu UtilMenu()
+    history
+
+    "&Line Drawing" [OnOffStr(Query(LineDrawing)):3], Toggle(LineDrawing), DontClose
+    "Li&ne Type  "         ,   LineTypeMenu()      ,   DontClose
+    ""                          ,                   ,   Divide
+    "&Sort"                 ,   ExecMacro("sort " + Str(sort_flags)), BlockMenuFlags()
+    "Sort &Order"   [ShowSortFlag() : 10], ToggleSortFlag(_DESCENDING_), DontClose
+    "&Case-Sensitive Sort" [OnOffStr((sort_flags & _IGNORE_CASE_) == 0):3], ToggleSortFlag(_IGNORE_CASE_), DontClose
+    ""                          ,                   ,   Divide
+    "S&pell Check  "       ,   ExecMacro("SpellChk")
+    "&ASCII Chart..."       ,   mAsciiChart()
+    "&Date/Time Stamp"      ,   mDateTimeStamp()
+    "S&hell"                ,   Shell()
+    "Captu&re OS Output"    ,   ExecMacro("Capture")
+    "Potpo&urri..."         ,   ExecMacro("Potpourr")
+    ""                          ,                   ,   Divide
+    "Change &Video Mode  " ,   ExecMacro("Video")     ,DontClose
+    "He&x View" [OnOffStr(DisplayMode() == _DISPLAY_HEX_):3],
+            DisplayMode(iif(DisplayMode() == _DISPLAY_TEXT_, _DISPLAY_HEX_, _DISPLAY_TEXT_))
+
+    "&Template Expansion" [OnOffStr(misTemplateLoaded()):3], mToggleTemplateExpand(), DontClose
+end
+
+menu AutoIndentMenu()
+    command = Set(AutoIndent, MenuOption() - 1)
+    history = query(AutoIndent) + 1
+
+    "O&ff"      ,, CloseBefore
+    "O&n"       ,, CloseBefore
+    "&Sticky"   ,, CloseBefore
+end
+
+menu WordWrapMenu()
+    command = Set(WordWrap, MenuOption() - 1)
+    history = Query(WordWrap) + 1
+
+    "O&ff"      ,, CloseBefore
+    "O&n"       ,, CloseBefore
+    "&Auto"     ,, CloseBefore
+end
+
+menu SaveStateMenu()
+    command = Set(SaveState, MenuOption() - 1)
+    history = Query(SaveState) + 1
+
+    "O&ff"                                  ,, CloseBefore
+    "O&n    (Saved in loaddir)"             ,, CloseBefore
+    "&Local (Saved in current directory)"   ,, CloseBefore
+end
+
+menu TabTypeMenu()
+    history = query(tabtype) + 1
+    command = Set(TabType,MenuOption()-1)
+
+    "&Hard"     ,, CloseBefore
+    "&Soft"     ,, CloseBefore
+    "Smar&t"    ,, CloseBefore
+    "&Variable" ,, CloseBefore
+end
+
+menu OptionsMenu()
+    history
+
+    "&AutoIndent"           [MenuStr(AutoIndentMenu,query(AutoIndent)+1) : 6],
+                            AutoIndentMenu()            ,   DontClose
+    "&WordWrap"             [MenuStr(WordWrapMenu,query(WordWrap)+1) : 4],
+                            WordWrapMenu()            ,   DontClose
+    "&Right Margin"         [query(RightMargin) : 5],
+                            set(RightMargin, ReadNum(Query(RightMargin))),   DontClose
+    "&Left Margin"          [query(LeftMargin) : 5],
+                            set(LeftMargin, ReadNum(Query(LeftMargin))),   DontClose
+    ""                          ,                   ,   Divide
+    "Tab Ty&pe"             [MenuStr(TabTypeMenu,query(TabType)+1) : 8],
+                            TabTypeMenu()               ,   DontClose
+    "&Tab Width"            [query(TabWidth) : 5],
+                            set(TabWidth, ReadNum(Query(TabWidth))),   DontClose
+    ""                          ,                   ,   Divide
+    "&Backups"              [OnOffStr(Query(MakeBackups)) : 3],
+                            Toggle(MakeBackups)         ,   DontClose
+    "Save State on &Exit"   [SubStr(MenuStr(SaveStateMenu,query(SaveState)+1), 1, 5) : 5],
+                            SaveStateMenu()            ,   DontClose
+    ""                          ,                   ,   Divide
+    "&Full Configuration  ",          ExecMacro("iconfig"),DontClose
+    "&Save Current Settings  ",       mSaveSettings()
+end
+
+proc mAbout()
+    integer save_attr, cursor
+
+    cursor = Set(Cursor, OFF)
+    save_attr = Query(TextAttr)
+    Set(TextAttr, ((save_attr & 0x70) shr 4) | ((save_attr & 0x07) shl 4))
+    SignOn()
+    GetKey()
+    Set(TextAttr, save_attr)
+    Set(Cursor, cursor)
+    UpdateDisplay(_ALL_WINDOWS_REFRESH_)
+end
+
+menu HelpMenu()
+    history
+
+    "Table of &Contents" ,   Help()
+    "&Key Assignments"   ,   Help("Key Assignments")
+    "&Index"             ,   Help("Index")
+    "&Word at Cursor"    ,   mHelpOnWordAtCursor()
+    "&Previous Topic"    ,   PrevHelp()
+    "&Search"            ,   SearchHelp()
+    "&About..."          ,   mAbout()
+end
+
+menubar MainMenu()
+    history
+
+    "&File"    ,    FileMenu()
+    "&Block"   ,    BlockMenu()
+    "&Text"    ,    TextMenu()
+    "&Search"  ,    SearchMenu()
+    "&Window"  ,    WindowMenu()
+    "&Clip"    ,    ClipMenu()
+    "&Macro"   ,    MacroMenu()
+    "&Print"   ,    PrintMenu()
+    "&Util"    ,    UtilMenu()
+    "&Options" ,    OptionsMenu()
+    "&Help"    ,    HelpMenu()
+end
+
+// Mouse functions:
+
+menu MouseMenu()
+   Title="Mouse Menu"
+   "Cu&t",                           Cut()                  ,   BlockMenuFlags()
+   "&Copy",                          Copy()                 ,   BlockMenuFlags()
+   "&Paste",                         Paste()                ,   PasteMenuFlags()
+   "Paste &Over",                    Paste(_OVERWRITE_)     ,   PasteMenuFlags()
+   "&UnMark",                        UnmarkBlock()          ,   BlockMenuFlags()
+      ""                          ,                         ,   Divide
+   "Copy to Windows Clip&board",     CopyToWinClip()        ,   CutCopyMenuFlags()
+   "P&aste from Windows Clipboard",  PasteFromWinClip()
+      ""                          ,                         ,   Divide
+   "Cop&y Block",                    CopyBlock()            ,   BlockMenuFlags()
+   "Copy O&ver Block",               CopyBlock(_OVERWRITE_) ,   BlockMenuFlags()
+   "&Move Block",                    MoveBlock()            ,   BlockMenuFlags()
+   "&Delete Block",                  DelBlock()             ,   BlockMenuFlags()
+   "&Fill Block",                    FillBlock()            ,   BlockMenuFlags()
+   "&Sort",                          ExecMacro("sort " + Str(sort_flags)),  BlockMenuFlags()
+      ""                          ,                         ,   Divide
+   "Open File at Cursor",            mEditFileAtCursor()
+      ""                          ,                         ,   Divide
+   "Uppe&r   ",                     mUpper()
+   "&Lower   ",                     mLower()
+   "Fl&ip    ",                     mFlip()
+   "Capitali&ze"                 ,  mCapital()             ,   DontClose
+end
+
+proc mLeftBtn()
+    if not ProcessHotSpot()
+       MainMenu()
+    endif
+end
+
+proc mTrackMouseCursor()
+    if GotoMouseCursor()
+        TrackMouseCursor()
+    endif
+end
+
+
+//*** Key-assignment Help screen ********************************************
+helpdef KeyAssignments
+    title = "Key Assignments"
+    x = 10
+
+    " ------------------ Windows Emulation -----------------"
+    " Center Line                           Ctrl E"
+    " Change Case                           Shift F3"
+    " Close File/Quit                       Ctrl F4/Alt F4"
+    " Cut to Spike/Paste Spike              Ctrl F3/CtrlShift F3"
+    " Cut/Copy/Paste                        Ctrl X / Ctrl C /  Ctrl V"
+    " Delete Block or Character             Delete"
+    " Delete Word                           Ctrl Delete"
+    " Extend Selection                      F8"
+    " Find                                  Ctrl F"
+    " Find and Replace                      Ctrl H"
+    " Go To Book Mark/Place Book Mark       F5 / CtrlShift F5"
+    " Go to Begin/End File                  Ctrl Home / Ctrl End"
+    " Go to Begin/End Window                CtrlAlt PgUp/PgDn"
+    " Go to Line                            Ctrl G"
+    " Go to Previous Position               Shift F5"
+    " Insert Date                           AltShift D"
+    " Main Menu                             F10"
+    " Move/Copy Block                       F2/Shift F2"
+    " New File                              Ctrl N"
+    " Next Pane / Next File                 F6 / Ctrl F6"
+    " Open File                             Ctrl O"
+    " Print                                 Ctrl P"
+    " Record Macro                          Alt M"
+    " Repeat Command                        F4"
+    " Repeat Find                           Shift F4"
+    " Save & Return                         Ctrl S"
+    " Spelling                              F7"
+    " Split Window                          CtrlAlt S"
+    " Undelete                              Ctrl Z"
+    " ------------------- Other Keys -----------------------"
+    " Sort                                  Alt F11"
+    " ----------------------------"
+    " View Existing Find List               F12"
+    " Create New Find List                  Shift F12"
+    " Function List                         Ctrl F12"
+    " ----------------------------"
+    " Find Word at Cursor - Forward         Alt ="
+    " Find Word at Cursor - Backward        ShiftAlt ="
+    " Find Word at Cursor - Global          CtrlAlt ="
+    " Repeat Find Forward/Backward          Alt Cursor Up/Down"
+    " ----------------------------"
+    " Change Display Lines & Cols           AltShift     F12"
+    " Display Max Lines                     CtrlShift    F12"
+    " Display Max Columns                   CtrlAlt      F12"
+    " ----------------------------"
+    " Block   SubMenu                       Alt B"
+    " Clip    SubMenu                       Alt C"
+    " File    SubMenu                       Alt F"
+    " Help    SubMenu                       Alt H"
+    " Option  SubMenu                       Alt O"
+    " Print   SubMenu                      Ctrl P"
+    " Search  Submenu                       Alt S"
+    " Text    SubMenu                       Alt T"
+    " Window  SubMenu                       Alt W"
+    " ----------------------------"
+    " Close Brace                           Shift ] or }"
+    " Comment                               Ctrl 9"
+    " Copy Char Above/To EOL                Ctrl - / Alt -"
+    " Erase Current File from Disk          Ctrl KZ"
+    " Fill Block                            ^kf"
+    " Go to Begin,End Block                 Alt [, Alt ]"
+    " Go to Window   1..9                   Alt 1..9"
+    " Incremental Search                    Ctrl I"
+    " Insert Next Char Literally            CtrlShift P"
+    " Join Line                             AltShift J"
+    " Line Draw Toggle On/Off               Ctrl F9"
+    " Line Draw Type                        Alt  F9"
+    " MarkChar (exclude cursor position)    Alt I"
+    " Match Bracket                         Ctrl ["
+    " Named ClipBoard Menu                  Ctrl B"
+    " Open File at Cursor                   CtrlShift O"
+    " Overlay Column Block                  Ctrl KO"
+    " Quote                                 Ctrl 8"
+    " Roll Left/Right                       CtrlAlt  Cursor Left/Right"
+    " Roll Up/Down                          CtrlAlt  Cursor Up/Down"
+    " Scroll Up/Down                        ShiftAlt Cursor Up/Down"
+    " Shift Block                           ^km"
+    " Shift Text or Block Left/Right        Ctrl F5 / Alt F5"
+    " Show Entry Screen                     Alt F10"
+    " Split Line                            ShiftAlt S"
+    " Tab Left                              Shift Tab"
+    " Toggle AutoIndent                     Ctrl QI"
+    " Toggle WordWrap                       Ctrl QW"
+    " Undo Delete                           Ctrl U"
+    " Undo Line                             Ctrl QL"
+    " Unmark Block                          <Esc>"
+    " ----------------------------"
+    " Place Bookmark 1..0                   Ctrl K1..K0"
+    " Go to Bookmark 1..0                   Ctrl Q1..Q0"
+    " WordStar Commands                     ^KB ^KC ^KK ^KR ^KT ^KV ^KW ^KY"
+    "                                       ^QB ^QK ^QP ^QY ^T  ^Y"
+end
+
+
+//
+// Keyboard bindings...
+//
+
+keydef PromptKeys
+end
+
+/****************************************************************************
+  Available keys include:
+
+    Alt Escape, Alt Enter
+    Alt BackSpace
+    Ctrl Ins
+    Alt Tab, Ctrl Tab
+    Alt [, Alt ]
+    Alt h, Alt q, Alt y
+    Ctrl e, Ctrl s, Ctrl h
+    F3, F7, F8
+    Ctrl-F3, Ctrl-F4, Ctrl-F5, Ctrl-F6, Ctrl-F8
+    Alt F7, Alt F8
+    Shift F2, Shift F6, Shift F9
+ ***************************************************************************/
+
+//*** HelpLine assignments **************************************************
+
+<HelpLine>        "{F1}-Help {F2}-Move {F3}-InsLine {F4}-Repeat {F5}-GoTo {F9}-WrapPara {F11}-DupLin {F12}-ViewFinds"
+<Alt HelpLine>    "{Alt: F1}-Index {F3}-AddLin {F5}-ShiftRt {F8}-Macro {F9}-LineDraw {F10}-EntryScr {F11}-Sort"
+<Ctrl HelpLine>   "{Ctrl: F1}-HelpWrd {F4}-Close {F5}-ShiftLft {F6}-NxtFil {F8}-ExMac {F9}-LinDraw {F12}-ListFuncs"
+<Shift HelpLine>  "{Shift: F1}-Keys {F2}-CopyBlk {F3}-ChgCase {F4}-RepFnd {F5}-PrevPos {F11}-SwapLin {F12}-ListFinds"
+
+//*** Cursor Movement commands **********************************************
+
+<CtrlAlt CursorUp>      RollUp()
+<CtrlAlt CursorDown>    RollDown()
+<AltShift CursorUp>     Scrolldown()
+<AltShift CursorDown>   Scrollup()
+<CtrlAlt CursorLeft>    RollLeft()
+<CtrlAlt CursorRight>   RollRight()
+
+
+<CursorUp>              Up()
+<CursorDown>            Down()
+<CursorLeft>            Left()
+<CursorRight>           Right()
+<Ctrl CursorLeft>       Wordleft()
+<Ctrl CursorRight>      Wordright()
+
+<Home>                  BegLine()
+<End>                   EndLine()
+<CtrlAlt PgUp>          BegWindow()
+<CtrlAlt PgDn>          EndWindow()
+
+<PgUp>                  PageUp()
+<PgDn>                  PageDown()
+<Ctrl Home>             mBegFile()
+<Ctrl End>              mEndFile()
+
+<Ctrl CursorUp>         mPrevPara()
+<Ctrl CursorDown>       mNextPara()
+
+<Alt PgUp>              ScrollToTop()
+<Alt PgDn>              ScrollToCenter()
+
+<Shift F5>              PrevPosition()
+<Ctrl q><p>             PrevPosition()
+
+//*** Text editing commands ****************************************
+
+<Alt t>                 MainMenu('T')      // Bring up Text SubMenu
+
+<Alt F3>                AddLine()
+<F3>                    mInsertLine()
+<F11>                   DupLine()
+
+<CtrlShift p>           Literal()
+<Ctrl ->                mCopyCharAbove()
+<Alt ->                 mCopyCharAboveToEol()
+
+<BackSpace>             mBackSpace()
+<Del>                   mDelChar2()
+<Ctrl BackSpace>        DelLeftWord()
+<Ctrl Del>              DelRightWord()
+<Ctrl t>                DelRightWord()
+<Ctrl q><y>             DelToEol()
+<Ctrl y>                DelLine()
+
+<Enter>                 mCreturn()
+<AltShift s>            SplitLine()
+<AltShift j>            JoinLine()
+
+<Shift Tab>             TabLeft()
+<Tab>                   mFancyTabRight()
+
+<Ctrl F5>               mShiftBlock(SHIFTLEFT)
+<Alt  F5>               mShiftBlock(SHIFTRIGHT)
+
+<Alt F11>               ExecMacro("sort " + Str(sort_flags))
+<Shift F11>             mSwapLines()
+
+<Shift F3>              mChangeCase()
+//<Ctrl k><l>           mLower()
+//<Ctrl k><u>           mUpper()
+//<Ctrl k><a>           mCapital()
+
+<Ctrl e>                ExecMacro("center")
+<F9>                    ExecMacro("wrappara")
+
+<Ctrl q><l>             RestoreCursorLine()
+<Ctrl z>                UnDelete()
+<Ctrl u>                UnDelete()
+
+<Ctrl 8>                ExecMacro("quote")
+<Ctrl 9>                ExecMacro("quote cmt")
+
+//*** Block commands ***********************************************
+
+<Alt b>                 MainMenu('B')
+<Alt c>                 MainMenu('C')
+
+<Ctrl c>                Copy()
+<CtrlShift c>           CopyToWinClip()
+
+<Ctrl x>                Cut()
+<CtrlAlt x>             CutWipe()
+<CtrlShift x>           mCutToWinClip()
+
+//#ifdef WIN32
+//<Ctrl F3>             CutAppend()
+//<CtrlAlt F3>          CopyAppend()
+//#else
+<Ctrl F3>               mSpike()
+//#endif
+
+<Ctrl v>                Paste()
+<CtrlShift F3>          mPasteSpike()
+<CtrlShift v>           PasteFromWinClip()
+<CtrlAlt v>             Paste(_OVERWRITE_)
+
+<Alt [>                 Gotoblockbegin()
+<Alt ]>                 Gotoblockend()
+<Ctrl q><b>             Gotoblockbegin()
+<Ctrl q><k>             Gotoblockend()
+
+<Alt a>                 MarkStream()
+<F8>                    MarkStream()
+<Alt i>                 MarkChar()
+<Alt k>                 MarkColumn()
+<Alt l>                 MarkLine()
+<Ctrl k><t>             MarkWord()
+<Shift End>             MarkToEOL()
+<Escape>                UnmarkBlock()
+
+<Ctrl k><c>             CopyBlock()
+<F2>                    mMoveCopy('Move')
+<Shift F2>              mMoveCopy('Copy')
+<Ctrl k><o>             CopyBlock(_OVERWRITE_)
+<Ctrl k><v>             MoveBlock()
+
+<CtrlAltShift V>        MoveWipe()
+
+<Ctrl k><y>             DelBlock()
+
+<Ctrl k><w>             SaveBlock()
+<Ctrl k><f>             FillBlock()
+<Ctrl k><m>             mShift()        // Block/Text shifting
+
+<Ctrl b>                ExecMacro("nameclip Named ClipBoards")
+
+//*** Window commands **********************************************
+
+<alt w>                 MainMenu('W')
+<F6>                    NextWindow()
+<Shift F6>              PrevWindow()
+<CtrlAlt S>             mSplitWindow()
+
+// Alt 1..9 goto the numbered window
+
+<Alt 1>                 GotoWindow(1)
+<Alt 2>                 GotoWindow(2)
+<Alt 3>                 GotoWindow(3)
+<Alt 4>                 GotoWindow(4)
+<Alt 5>                 GotoWindow(5)
+<Alt 6>                 GotoWindow(6)
+<Alt 7>                 GotoWindow(7)
+<Alt 8>                 GotoWindow(8)
+<Alt 9>                 GotoWindow(9)
+
+//*** BookMark commands ********************************************
+
+<F5>                    GotoMark()
+<CtrlShift F5>          PlaceMark()
+
+<Ctrl q><0>             GotoMark("q")
+<Ctrl q><1>             GotoMark("r")
+<Ctrl q><2>             GotoMark("s")
+<Ctrl q><3>             GotoMark("t")
+<Ctrl q><4>             GotoMark("u")
+<Ctrl q><5>             GotoMark("v")
+<Ctrl q><6>             GotoMark("w")
+<Ctrl q><7>             GotoMark("x")
+<Ctrl q><8>             GotoMark("y")
+<Ctrl q><9>             GotoMark("z")
+
+<Ctrl k><0>             PlaceMark("q")
+<Ctrl k><1>             PlaceMark("r")
+<Ctrl k><2>             PlaceMark("s")
+<Ctrl k><3>             PlaceMark("t")
+<Ctrl k><4>             PlaceMark("u")
+<Ctrl k><5>             PlaceMark("v")
+<Ctrl k><6>             PlaceMark("w")
+<Ctrl k><7>             PlaceMark("x")
+<Ctrl k><8>             PlaceMark("y")
+<Ctrl k><9>             PlaceMark("z")
+
+//*** Find/Replace commands ****************************************
+
+<Alt f>                 MainMenu('F')  // Bring up the FileMenu
+<Alt s>                 MainMenu('S')  // Bring up the SearchMenu
+<Ctrl f>                Find()
+<Ctrl q><f>             Find()
+<Ctrl i>                ExecMacro("isrch")
+
+<Alt CursorDown>        Repeatfind(_FORWARD_)
+<Alt CursorUp>          RepeatFind(_REVERSE_)
+<Shift F4>              Repeatfind(_FORWARD_)
+
+<Ctrl h>                Replace()
+
+<Alt =>                 mFindWordAtCursor('+')
+<AltShift = >           mFindWordAtCursor('b')
+<CtrlAlt =>             mFindWordAtCursor('g')
+
+<Shift F12>             mCompressView(0)      // Make New Find List
+<F12>                   mViewFinds()          // View Existing List
+<Ctrl F12>              mCompressView(1)      // List Functions
+
+<Ctrl g>                GotoLine()
+<CtrlAlt g>             GotoColumn()
+
+<Ctrl [>                ExecMacro("match")
+
+//*** Macro commands ***********************************************
+
+<Ctrl Enter>            ExecScrapMacro()
+<Alt  m>                RecordKeyMacro()
+
+<Ctrl F8>               ExecMacro()     // Execute SAL macro
+<Alt F8>                ExecLoadPurge() // Macro (SAL) manipulation
+
+<CtrlAlt F9>            mCompileCurrFile()
+<CtrlShift F9>          ExecMacro("Compile -m")
+
+//*** File commands ************************************************
+
+<Alt o>                 MainMenu('O')  // Bring up the FileMenu
+
+<Ctrl o>                Editfile()
+<CtrlShift o>           mEditFileAtCursor()
+
+<Ctrl F6>               Nextfile()
+<CtrlShift F6>          Prevfile()
+
+<CtrlShift L>           ExecMacro("listopen")
+<CtrlAlt L>             mListRecentFiles()
+
+<Ctrl k><r>             Insertfile()
+
+<Ctrl n>                NewFile()
+
+<Ctrl k><z>             Killfile()
+
+<Ctrl F4>               QuitFile()
+<Ctrl s>                SaveFile()
+//                      SaveAndQuitFile()
+
+<Alt F4>                Exit()
+
+//*** Other commands ***********************************************
+
+<AltShift F12>          ExecMacro("Video")
+<CtrlShift F12>         Set(CurrVideoMode, _MAX_LINES_)
+<CtrlAlt F12  >         Set(CurrVideoMode, _MAX_COLS_)
+
+<F10>                   MainMenu()
+<Ctrl p>                MainMenu('P')
+<Alt H>                 MainMenu("H")
+
+<F1>                    Help()
+<Ctrl F1>               mHelpOnWordAtCursor()
+<CtrlShift F1>          PrevHelp()
+<Shift F1>              Help("Key Assignments")
+<Alt F1>                Help("Index")
+
+<AltShift d>            mDateTimeStamp()
+<CtrlAlt a>             mAsciiChart()
+
+<Ins>                   Toggleinsert()
+
+<Ctrl q><w>             mToggleWordWrap()
+<Ctrl q><i>             mToggleAutoIndent()
+
+<Ctrl F9>               Toggle(LineDrawing)
+<Alt F9>                LineTypeMenu()
+
+#ifdef WIN32
+<}>                     mCloseBrace()
+#else
+<Shift ]>               mCloseBrace()
+#endif
+
+<F4>                    RepeatCmd()
+
+<Alt F10>               ShowEntryScreen()
+<Alt F2>                ExecMacro("Capture")
+<CtrlShift F2>          Shell()
+<AltShift F2>           Dos()
+
+<F7>                    ExecMacro("SpellChk")
+<Shift F10>             ExecMacro("Potpourr")
+
+<CtrlAlt SpaceBar>      lVersion()
+
+//*** Mouse keys ***************************************************
+
+<LeftBtn>               mLeftBtn()
+<Ctrl LeftBtn>          MouseMarking(_COLUMN_)
+<Alt LeftBtn>           MouseMarking(_LINE_)
+<Shift LeftBtn>         mTrackMouseCursor()
+<RightBtn>              MouseMenu()
+
+

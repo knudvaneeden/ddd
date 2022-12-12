@@ -1,0 +1,83 @@
+Name         Length  Method   Size  Ratio    Date     Time    CRC-32  Attr
+----         ------  ------   ----- -----    ----     ----   -------- ----
+ADDER.EXE     11085  DeflatX  10853   3%  12-15-2002  11:39  b8ee3a61 --wa
+An onscreen adding machine tape.  Specify operation after entering number.
+
+6CLOCKS.BAT     381  DeflatX    225  41%  04-30-1996  20:48  c0ff392a --wa
+A primitive system benchmark obtained by calling the clock program 6 times.
+
+CALENDAR.EXE  12900  DeflatX  12639   3%  01-17-2004  08:56  99c4de5f --wa
+A calendar generator.  Call with no argument for scrollable help.
+
+CLOCK.EXE     14774  DeflatX  14496   2%  04-18-1999  15:52  9a47e4a8 --wa
+Generates day date and time to prepend to note files or time execution.
+See NOTE.BAT and 6clocks.bat
+
+COLORMSG.EXE  15282  DeflatX  15016   2%  12-12-2003  08:13  5983ec8b --wa
+A utility to include colored messages in your batch scripts.  No ANSI needed.
+Call with no argument for help.
+
+drivechk.bat    104  DeflatX     73  30%  12-27-2000  10:00  bf6bdc5c --wa
+Uses LS to list drives from A to Z showing Invalid Drive if doesn't exit
+
+LINESTAT.EXE  17592  DeflatX  17344   2%  03-02-1996  22:26  c8cce49e --wa
+Examines text files optionally providing statistics, call without arg for help.
+
+LL.BAT           92  DeflatX     60  35%  12-21-1995  22:13  0cbdd6f7 --wa
+Calls LS with -l option already specified
+
+LS.EXE        17856  DeflatX  17596   2%  06-20-1997  14:13  52837d2f --wa
+Somewhat unixlike directory lister.  Use LS -? for help.
+
+match.exe     18393  DeflatX  18124   2%  07-04-2004  07:21  631b3c98 --wa
+match.w2k     18398  DeflatX  18141   2%  07-04-2004  15:27  e92ca210 --wa
+A Windows98 and a version for later versions of Windows.  The 98 version
+fixes a problem of the last retrieved line being overwritten by the command
+prompt if you use the W2K version on a W98 system.  Provides a somewhat
+greplike pattern matching capability with improvements making it suitable
+in combination with colormsg.exe as a data access tool.  The demo files are
+submitted separately as THCDEMOS.ZIP.  Rename match.exe to match.w98 and
+match.w2k to match.exe if you have a Windows ME or later version.  The program
+provides help when called with no arguments.
+
+NOTE.BAT        737  DeflatX    432  42%  08-21-2005  14:20  86627793 --wa
+Takes date and time stamped notes for retrieval by QNOTE.BAT.  Uses CLOCK.EXE.
+
+QNOTE.BAT       626  DeflatX    359  43%  08-21-2005  14:24  23061a5d --wa
+Retrieves notes to your display.  Uses PPM.EXE.
+
+PRTNOTE.BAT     209  DeflatX    170  19%  08-21-2005  14:27  7c21e816 --wa
+Retrieves notes to your printer.
+
+FF.COM           16  Stored      16   0%  10-02-1988  18:05  3b9f3c8c --wa
+Sends a formfeed to your printer.
+
+RTPBACK.EXE   14730  DeflatX  14475   2%  05-25-2000  04:43  11e27cf6 --wa
+A handy utility to generate multiple dated zipped backups of specified files.
+Requires PKZIP be on a path.  Shows help with no argument supplied.
+
+UNIQUE.EXE    15395  DeflatX  15103   2%  06-08-2004  18:38  f006e539 --wa
+Removes duplicate lines from a previously sorted file.
+
+PPM.EXE       17970  DeflatX  17686   2%  04-24-1996  22:52  357e04a8 --wa
+Paragraph Pattern Match.  Retrieves entire paragraphs containing matching
+text.  Used by QNOTE.BAT.  See the F demo in THCDEMOS.ZIP.
+
+TIMER.BAT        55  DeflatX     53   4%  09-19-1992  19:26  eda12399 --wa
+Shows the amount of time from when it is started until you press a key.
+
+TY.EXE        16210  DeflatX  15947   2%  05-21-2000  22:55  ee689b45 --wa
+Like DOS TYPE but with green text and automatic pause.  Shows help with no
+argument.
+
+USAGE.BAT        33  Stored      33   0%  03-30-1991  22:20  9b6f2215 --wa
+Uses LS.EXE to show just the usage of the current or a specified drive.
+
+XGREP.COM      3380  DeflatX   2798  18%  06-17-1994  01:03  eb3465b7 --wa
+XGREP.DOC     25545  DeflatX   8860  66%  06-17-1994  01:03  bdab1178 --wa
+An outstanding GREP utility developed by a man in South Africa.  I use it
+as a preprocessor for one of the demo files in THCDEMOS.ZIP since it is
+slightly faster than MATCH (3x faster on slower systems, not that much on
+faster system)
+-------      ------          ------  ---
+     23      221763          200499  10%

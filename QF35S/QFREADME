@@ -1,0 +1,106 @@
+Welcome to the Quiet Flight Macros for TSE Pro v2.5
+
+INSTALLATION
+컴컴컴컴컴컴
+
+Copy the QF macro files into your TSE Pro macros sub-directory.  Don't worry,
+all of our macros start with the letters QF, so you'll be able to
+quickly uninstall them with a DEL QF*.*.
+
+** IMPORTANT **
+Please set a DOS ENVIRONMENT variable, QFPATH, to your TSE Pro
+macros subdirectory.  This is essential for proper
+operation.
+
+In your autoexec.bat, insert a line like this:
+
+SET QFPATH=[Your TSE Pro macro sub-directory]
+
+For instance, since our TSE Pro macros are located in C:\TSE\MAC, our
+autoexec has:
+
+SET QFPATH=C:\TSE\MAC
+
+You can also type in the QFPATH from the DOS prompt too.  Just type in
+what you would have inserted in the Autoexec.bat.
+
+** ANOTHER IMPORTANT! **
+Copy the file: QFX.EXE to the TSE Pro macros sub-directory.
+
+To have the QF macros to start up automatically, you have 3 choices:
+
+   - CHOICE 1:
+
+     Edit TSESTART.S  and add the line ExecMacro("QF") in the main()
+     procedure.  For instance:
+                     proc main()
+                          ExecMacro("QF")
+                     end main
+
+   - CHOICE 2:
+
+     Edit TSE.UI (or your own User Interface file), search
+     for "proc WhenLoaded()" and add the line ExecMacro("QF") just before
+     the end of the procedure.  For instance:
+
+        proc WhenLoaded()
+            integer cid = GetBufferId()
+
+            pick_buffer = CreateTempBuffer()
+            GotoBufferId(cid)
+            Hook(_ON_CHANGING_FILES_, OnChangingFiles)
+            Hook(_ON_FIRST_EDIT_, OnFirstEdit)
+            ExecMacro("QF")   <--- *** ADD THIS LINE ***
+        end
+
+      If you choose this route, remember to re-burn your editor in with
+      the SC -b[Executable] TSE (or your configuration file).   Here's
+      our line, as an example:
+
+          SC -bE TSE
+
+   - CHOICE 3:
+
+     Load QF from your command line using TSE Pro's "-e"
+     command-line option.  For example:
+
+        E test.prg -eQF
+
+     You can put this inside a batch file to have TSE Pro always load
+     the Quiet Flight macros.
+
+     **  Special Note **
+
+     Please do not use TSE Pro's AUTOLOAD to initialize QF.
+
+To load QF from inside the editor:
+
+   Access the Macro/Execute menu or press the key assigned to
+   ExecMacro() (the default is <Ctrl X>).  Then enter "QF" for
+   the macro to execute.
+
+BEGIN REGISTERED USERS ONLY:
+
+The source code has been included.  So, you can change the key
+assignments to your own preferences.  You'll find the QF key definitions
+in QFKEY.INC.  When you modify the key definitions, don't forget to
+modify your menu listings in QFMENU.INC.  After any changes you make to
+these two files, make sure you recompile QF.S to update the macros.  To
+recompile, type in SC QF.S at the DOS prompt.
+
+Remember: To compile your QF macros, we've included a simple batch file
+called QFCOMP.BAT.  To recompile your QF macros, change to the
+sub-directory where your QF macros are and type in: QFCOMP
+
+END OF REGISTERED USERS ONLY:
+
+** Three Keys to Remember:
+   Alt \ will toggle Quiet Flight On and Off.
+   Alt / will bring up a menu for the Quiet Flight macros.
+   Ctrl F1 will bring up a list of your keyword expansion
+   for the current file you are editing.
+
+
+Thank you for your support.
+
+Randy Wallin and Ryan Katri.

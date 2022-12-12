@@ -1,0 +1,31 @@
+SLIDER
+컴컴컴
+
+Macro to slide a block across surrounding text
+Keywords: SLIDER TSE 2.0 MACRO BLOCK MOVE SLIDE PASTE OVER
+
+Slide a column block over existing text. When it reaches its destination,
+ENTER to paste it in place. The sliding block doesn't affect the layout of
+text around it, making this macro well suited for modifying cloumnar data
+such as menus and tables.
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+Usage:
+
+
+Load the macro. Mark a column block and run macro by hitting F12.
+
+        CURSOR KEYS, TAB, SHIFT-TAB, PGUP, PGDN:  move the block.
+        ENTER:  paste it over underlying text.
+        ESC:  cancel the whole operation.
+
+To assign macro to a key other than F12, edit lines 88 and 91 in SLIDER.S
+
+컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴컴
+
+Public Domain.
+
+Jean Heroux, Compuserve 73257,2074
+
+94-11-04

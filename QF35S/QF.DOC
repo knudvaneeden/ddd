@@ -1,0 +1,1550 @@
+Quiet Flight Macros for TSE Pro v2.5
+Copyright, COB Systems Designs, Inc.  All Rights Reserved.
+
+
+INTRODUCTION
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+Welcome to the Quiet Flight macros written specifically for
+The Semware Editor Professional (TSE Pro) v2.5 and the productive
+programmer.
+
+These macros are TSE Pro extensions for FoxPro, dBase, & Clipper
+programmers. They're much more than that because they work well with C,
+ASM, Pascal and, of course, TSE Pro files.
+
+The Quiet Flight macros were created by a couple of programmers who
+do software development in dBASE every day.  The macros range from
+extremely simple ("Show Changed") to full-fledged programs ("Flow").
+As a whole, they provide a very powerful and efficient development
+environment.
+
+Excerpt from the original Quiet Flight for BRIEF documentation:
+
+     "By the way, the name 'Quiet Flight' might seem strange for some
+     BRIEF macros that speed up dBase programming.  Aren't you dtired
+     of dThis and dThat dnames for dBase oriented products?  We are,
+     so we got bold and reached back into the past and came up with a
+     name that would best suit our fancy.  We chose "Quiet Flight"
+     because it reminds us of the days when we still had the time for
+     fun things like an afternoon of surfing or frisbee.  Maybe one
+     day these macros will make us productive enough for those good
+     old "spare" hours of fun and leisure.
+
+                            Peace & Joy to you!"
+
+We still hope this is true with the TSE Pro macros we have provided for
+your use.
+
+    DREADED LEGAL, But Necessary, SECTION
+
+    COB System Designs, Inc. hereby disclaims all warranties relating to
+    this software, whether expressed or implied, including without
+    limitation any implied warranties of merchantability or fitness for
+    a particular purpose. COB System Designs, Inc. will not be liable
+    for any special, incidental, consequential, indirect or similar
+    damages due to loss of data or any other reason, even if COB System
+    Designs, Inc. or an agent of COB System Designs, Inc. has been
+    advised of the possibility of such damages.  In no event shall COB
+    System Designs, Inc. liability for any damages ever exceed the price
+    paid for the license to use this software, regardless of the form of
+    the claim. The person using the software bears all risk as to the
+    quality and performance of the software.
+
+    END OF DREADED LEGAL SECTION
+
+
+REGISTRATION
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+If you have downloaded Quiet Flight from a BBS or obtained it from
+a friend, then you are using an UNREGISTERED version of Quiet
+Flight which is intended for evaluation purposes only.
+
+Registering Quiet Flight entitles you to these benefits:
+
+   - Full source code for all of the Quiet Flight macros written in
+     SAL (SemWare Applications Language).
+
+   - Ability to change key definitions for Quiet Flight functions.
+
+   - Technical support via e-mail, telephone, fax, or mail.
+
+   - Discounts on future updates.
+
+Quiet Flight v3.5 sells for $69.00 (plus shipping).
+
+To register, print out the QFORDER.DOC file, fill it out and send it in.
+Satisfaction is guaranteed--we have a 90-day return policy.
+
+
+INSTALLATION
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+Copy the QF macro files into your TSE Pro macros sub-directory.  Don't
+worry, all of our macros start with the letters QF, so you'll be able to
+quickly uninstall them with a DEL QF*.*.
+
+
+It's *IMPORTANT* also to set an environment variable QFPATH to the
+location of the macros.  We suggest you do this in your autoexec.bat
+file.
+
+For example, add this line to your autoexec.bat file:
+
+   SET QFPATH=[Directory name]
+
+In place of [Directory name], place the directory where you have
+stored the QF files.  If you've set up QF files in the C:\TSE
+sub-directory, then the line would look like this:
+
+   SET QFPATH=C:\TSE
+
+This change will not take effect until you restart your system or
+manually type in the QFPATH statement at the DOS prompt.
+
+Also, please make sure to copy QFX.EXE to a sub-directory in
+your path. Or if you prefer, add the QF sub-directory to
+your path.   This file is used by Quiet Flight to assist you
+with displaying your index keys.
+
+
+To have the QF macros to start up automatically, you have 3 choices:
+
+   - CHOICE 1:
+
+     Modify (or create a new) TSESTART.S file to load Quiet
+     Flight.  TSESTART is executed before any other macros
+     when TSE Pro is loaded.  Here is what our TSESTART.S
+     file looks like:
+
+        proc main()
+           execmacro("c:\tse\qf\qf.mac")
+           return()
+        end main
+
+     Don't forget to compile the file using SC:
+
+        SC tsestart.s
+
+
+   - CHOICE 2:
+
+     Edit TSE.UI (or your own TSE Pro configuration file), search for
+     "proc WhenLoaded()" and add the line ExecMacro("QF") just before
+     the end of the procedure.  For instance:
+
+        proc WhenLoaded()
+           integer cid = GetBufferId()
+           pick_buffer = CreateTempBuffer()
+           GotoBufferId(cid)
+           ExecMacro("qf")                 <-- Add this line
+        end
+
+   - CHOICE 3:
+
+     Load QF from your command line using TSE Pro's "-e" command-line
+     option.  For example:
+
+        E.EXE test.prg -eQF
+
+     You can put this inside a batch file to have TSE Pro always load
+     the Quiet Flight macros.
+
+        Example contents of a QF.BAT:
+        @echo off
+        echo.
+        echo Loading TSE Pro with Quiet Flight
+        echo.
+        E.EXE %1 %2 %3 %4 %5 %6 %7 %8 %9 -eQF
+
+        Using this file you could start the editor like this:
+        QF test.prg
+
+Quiet Flight does not load properly when added to TSE Pro's AutoLoad
+list.
+
+To load QF from inside the editor:
+
+   Access the Macro/Execute menu or press the key assigned to ExecMacro(),
+   default is <Ctrl X>.  Then enter "QF" for the macro to execute.
+
+    ÚÄÄ QF TIP! ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Three Keys to Remember:                                        ³
+    ³                                                                ³
+    ³ Alt \   -  Toggle Quiet Flight On and Off                      ³
+    ³ Alt /   -  Bring up a menu for the Quiet Flight macros         ³
+    ³ Ctrl F1 -  Bring up a list of your keyword expansions for      ³
+    ³            the current file you are editing.                   ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+CONFIGURING QUIET FLIGHT
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+We have tried to make Quiet Flight as extensible and flexible as
+possible.  This allows for support of a multitude of programming
+languages and--most importantly--allows Quiet Flight to work to your
+tastes and preferences.
+
+
+ş QF.CFG
+
+The primary means of configuring Quiet Flight is through the QF.CFG
+file.  This file should be located in the same directory as your
+Quiet Flight macros.
+
+QF.CFG is composed of several sections which delineate related
+settings.  If you are familiar with how the Microsoft Windows .INI
+files are grouped, you will have no trouble grasping the format of
+QF.CFG.  The following format is used in both environments:
+
+[Section Name]
+KeyName=value
+
+The brackets ([]) are part of the section name, so must be included.
+A section name may be followed by an equals sign (=) and a list of
+extensions separated by spaces.  That means the following settings
+apply only to files of the named extensions.  For example, the
+following [GENERAL] section applies only to .C and .CPP extensions:
+
+[GENERAL=.C .CPP]
+
+
+A KeyName is a alphanumeric string (upper or lower case), immediately
+followed by an equals sign (=) and the value setting.  The following
+example turns the QF Restore feature off for all undefined extensions,
+and sets the default comment string to be "**".
+
+[GENERAL]
+Restore=OFF
+CommentStart=**
+
+Configuration settings which require on/off values should be set to
+values of "ON" or "OFF" (as in the example above).  Settings which
+require strings or numbers should be entered as-is with NO quotation
+marks.
+
+Lines which begin with a semicolon (;) are treated as comments.
+Comment lines are ignored by Quiet Flight.
+
+    ÚÄÄ QF TIP! ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³  All of the Quiet Flight settings are documented within the    ³
+    ³  QF.CFG file.  Review QF.CFG and the default settings to       ³
+    ³  configure QF to your preferences.                             ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+ş Multiple Configurations
+
+You may be in an environment where you need to use more than one
+QF.CFG file.  A perfect example is if two people are sharing one
+machine, or TSE Pro is being run off a network and the Quiet Flight
+files are stored in a common directory.
+
+You may specify an alternate configuration file by setting the
+DOS environment variable QFCFG.  Quiet Flight will append the
+value of the variable QFCFG to "QF" to arrive at the configuration
+filename.  For example, if I set QFCFG=JEN, then Quiet Flight will
+look for a configuration file named QFJEN.CFG.
+
+If "Mark" logs in and sets QFCFG=MARK, then Quiet Flight looks
+to the file QFMARK.CFG for its configuration information.
+
+
+
+KEY ASSIGNMENTS
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+SHAREWARE USERS:  Key assignments may not be changed in the shareware
+version of Quiet Flight.  Register Quiet Flight to receive full source
+code to the product, enabling the redefinition of key assignments.
+
+Key assignments for the Quiet Flight macros are embedded in the source
+code.  To modify the default settings you should edit QFKEY.INC and
+search for "KeyDef QFKeys".  Edit the assignments as necessary and save
+the QFKEY.INC.  You must recompile QF.S and reload Quiet Flight for the
+changes to take effect.
+
+You may also want to edit QFMENU.INC to reflect your changes on the
+Quiet Flight menu.
+
+In defining the default key assignment for QF, we made every effort to
+choose keys which would not interfere with your current operation of TSE
+Pro The following keys are the default assignments for the Quiet Flight
+macros:
+
+   <Alt />         Quiet Flight Menu
+   <Alt 1>         Comment/Uncomment Block
+   <Alt 2>         Screen Counter
+   <Alt 3>         Flow
+   <Alt 6>         Index Key List
+   <Alt 7>         DBF Structure
+   <Alt 8>         ZIP View
+   <Alt 9>         Directory Management
+   <Alt 0>         Project Manager
+   <Alt B>         Buffer List
+   <Alt F>         Display File Info
+   <CenterCursor>  Where Am I?
+
+   <Spacebar>      Shorthand Expansion (if first word on line)
+   <Alt BackSpace> Unconditional Shorthand Expansion
+   <Ctrl F1>       Shorthand Expansion Help
+
+   <Ctrl 2>        Show Changed
+   <Ctrl E>        Quiet Flight Load File Routine
+   <Ctrl K>        Kill Restore
+   <Ctrl N>        New Header
+   <Ctrl S>        Save All Modified
+   <Ctrl T>        Notepad
+   <Alt F5>        Add LOCAL declaration
+   <Alt F6>        Add PRIVATE declaration
+   <Alt F11>       Edit QF.CFG
+   <Alt F12>       Reload QF.CFG
+   <Alt \>         Toggle Quiet Flight On/Off
+   <Ctrl Enter>    Save File Routine
+
+   <Del>           Delete Character/Block
+   <Shift '>       Quote Pair - ""
+   <Shift 9>       Parenthesis Pair - ()
+   <Shift [>       Curly Brace Pair - {}
+   <[>             Brace Pair - []
+
+If you forget any of these key assignments, there is a Quiet Flight menu
+to bail you out.  Press <Alt /> to bring it up.
+
+    ÚÄÄ QF TIP! ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³  With Quiet Flight's toggle command (default Alt \), you can   ³
+    ³  have the best of both worlds.  You can have your own key      ³
+    ³  assignments and Quiet Flight's share the same keys.  By       ³
+    ³  pressing <Alt \>, you will toggle back and forth from your    ³
+    ³  key assignments and QF's.                                     ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+ALL-PURPOSE MACROS
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+ş Unload/Reload QF      <Alt \>
+
+At times you may wish to disable the Quiet Flight macros, thus
+recovering the key assignments used by QF.  You can do this quite
+easily by pressing <Alt \>.  Press <Alt \> again to return to normal
+Quiet Flight operation.
+
+
+ş Quiet Flight Menu     <Alt />
+
+If you forget the key assignment for a Quiet Flight function, press
+<Alt /> to pop up a menu of commands.  Every major QF function is
+listed, along with its corresponding key assignment.
+
+
+ş Edit QF.CFG           <Alt F11>
+
+This is simply a hotkey for loading the QF.CFG file.  It locates
+and loads QF.CFG, making it the current buffer.
+
+
+ş Re-load QF.CFG         <Alt F12>
+
+After you have made changes to QF.CFG, you most likely will want
+them to take effect without having to exit TSE Pro.  Executing this
+function will force Quiet Flight to reload the changes you have
+made to the configuration file.
+
+
+ş Directory Lister      <Alt 9>
+
+Quiet Flight's Directory Lister (QFDir) makes it easy to navigate
+directories and maintain files.  Some of the features of the QFDir
+are:
+
+   - Directory names placed at top of directory list
+   - Speedkey searching
+   - Tag multiples files to load into TSE Pro
+   - Delete single/tagged files
+   - View modes for text files, dBASE database & index structures,
+     binary files, and .ZIP files
+   - Sort directories by name, size, extension, or date
+   - Set home directory
+
+The first thing QFDir requests for upon executing is a file specification.
+The default is all files (*.*) in the same directory as the current file
+in TSE Pro's buffer.
+
+After entering a file specification, a list of all sub-directories
+and matching files are displayed in a new window.  Sub-directories are
+always grouped at the top.  Use the arrow keys, <Home>, <End>,
+<PgUp>, and <PgDn> to scroll through the directory list.  Hotkeys
+are defined for all actions in QFDir:
+
+   - <F1> = Help
+     This presents a menu of available actions.  Press <Enter> on a
+     menu item to execute the function, or <Esc> to exit the menu.
+
+   - <Ctrl S> = Sort Order
+     You can change the sort order with this function.  QFDir
+     can sort files by name, date, extension, or size.
+
+   - <Spacebar> = Toggle Tag
+     QFDir allows you to tag files for editing or deleting.  Press
+     <Spacebar> to toggle a tag on a file.  Keep in mind that tags
+     only exist for the current directory--you may not have tags
+     spanning across different directories.
+
+   - <Ctrl T> = Tag All
+     Use this function to tag all files in the current directory.
+
+   - <Ctrl U> = Untag All
+     Remove all tags by pressing <Ctrl U>.
+
+   - <Ctrl R> = Reverse Tags
+     Reversing tags will untag all tagged files, and tag the
+     files which were previously untagged.
+
+   - <Enter> = Load hilited/tagged
+     If the hilite bar is positioned on a directory entry, <Enter>
+     will automatically change directories, updating the display
+     to show the files in the new directory.  All tags will be
+     lost.
+
+     If there are no tags defined and the hilite bar is resting on
+     a filename, then that file is loaded into TSE Pro's buffer ring.
+     However, if there are tags defined, QFDir will prompt whether
+     to load the current file or the tagged files.
+
+     QFDir quits after loading files, returning to TSE Pro's editing
+     screen.
+
+   - <Del> = Delete Current File
+     Press <Del> to delete the currently hilited file.  For safety,
+     you are prompted before QFDir performs the deletion.
+
+   - <Ctrl D> = Delete Tagged Files
+     To delete all tagged files, press <Ctrl D>.  You are first
+     asked whether or not to confirm each deletion.  If you answer
+     "Yes," then QFDir will prompt you before deleting each file.
+     Otherwise, QFDir performs the deletions in batch without
+     confirmation.
+
+   - <Ctrl V> = View File
+     You can view the currently hilited file without loading it by
+     pressing <Ctrl V>.  QFDir recognizes dBASE database/index
+     structures and .ZIP files, displaying them in the appropriate
+     format.  Some binary extensions, such as .EXE and .COM, are
+     also recognized as such and displayed in TSE Pro's binary mode.
+
+     ***VERY IMPORTANT***
+     In order for the specialized viewers to work, these
+     files must be available in the DOS path:  QFX.EXE and
+     PKWARE's PKZIP.
+
+   - <Ctrl B> = Binary View
+     You can force a binary view (rather than an Ascii view) with
+     this function.
+
+   - <Ctrl L> = Log New Directory
+     Quickly change directories or file specifications by pressing
+     <Ctrl L>.  For example, if you are currently listing all
+     files (*.*) but wish to see only your C++ files, change the
+     file specification to: *.CPP.
+
+    ÚÄÄ QF TIP! ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ The only way to log into a new drive with QFDir is through     ³
+    ³ the Log New Directory command.  Press <Ctrl L> and enter       ³
+    ³ the new drive letter and directory. ie A:\                     ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+   - <Ctrl H> = Set Home Directory
+     You can make the directory being viewed the TSE Pro default
+     directory with the Set Home Directory function.  Setting the home
+     directory means that TSE Pro will default to that directory when
+     shelling to DOS, creating new files, etc.
+
+   - <Esc> = Exit QFDir
+     If you wish to exit QFDir without loading any files, press <Esc>.
+
+Speedkey is enabled in QFDir.  So, if you start typing a filename,
+it jumps to the closest match.  Precede your entry with a backslash (\)
+to jump to directory names.
+
+
+ş Zip View              <Alt 8>
+
+Quiet Flight Zip View (QFZip) allows you to maintain existing .ZIP
+files from within TSE Pro.
+
+***VERY IMPORTANT***
+In order for QFZip to work, PKWARE's PKZIP and PKUNZIP must be
+available in the DOS path.
+
+
+The first thing QFZip requests for upon executing is a file
+specification. The default is all .ZIP files (*.ZIP) in the same
+directory as the current file in TSE Pro's buffer.
+
+After entering a file specification, a list of all sub-directories and
+matching files are displayed in a new window.  Sub-directories are
+always grouped at the top.  Use the arrow keys, <Home>, <End>,
+<PgUp>, and <PgDn> to scroll through the directory list.  Press <Enter>
+to select a ZIP file to view, or <Esc> to return to TSE Pro.
+
+The Zip View Window displays a list of the files contained in the
+selected ZIP file.  You may perform any of these functions on
+the current ZIP archive:
+
+   - <F1> = Help
+     This present a menu of available actions.  Press <Enter> on a
+     menu item to execute the function, or <Esc> to exit the menu.
+
+   - <Ctrl S> = Sort Order
+     You can change the sort order with this function.  QFZip
+     can sort entries by name, date, extension, or size.
+
+   - <Spacebar> = Toggle Tag
+     QFZip allows you to tag entries.  Press <Spacebar> to toggle a
+     tag on a ZIP entry.
+
+   - <Ctrl T> = Tag All
+     Use this function to tag all entries contained in the ZIP file.
+
+   - <Ctrl U> = Untag All
+     Remove all tags by pressing <Ctrl U>.
+
+   - <Ctrl R> = Reverse Tags
+     Reversing tags will untag all tagged entries, and tag the
+     entries which were previously untagged.
+
+   - <Enter> = Extract Current File
+     Extract a single entry of the ZIP file by hiliting the entry
+     and pressing <Enter>.  You will be prompted before the extraction
+     is performed.
+
+   - <Ctrl E> = Extract Tagged
+     You may extract multiple files from a ZIP archive by tagging
+     the selected entries and pressing <Ctrl E>.
+
+   - <Ctrl A> = Extract All
+     Extract all files (tagged or untagged) from a ZIP archive with
+     this function.
+
+   - <Ins> = Insert File(s)
+     Files may be inserted into a ZIP archive by pressing <Ins>.
+     A new directory window is displayed in which you may tag the files
+     to insert.  Press <Enter> when done.
+
+   - <Del> = Delete File
+     Delete the hilited ZIP entry by pressing <Del>.
+
+   - <Ctrl D> = Delete Tagged
+     Remove all tagged entries from the ZIP archive with the <Ctrl D>
+     key.
+
+   - <Ctrl F> = Freshen Zip
+     Freshen the entries in the ZIP with this function.  This updates
+     the ZIP with any newer versions of the member files.
+
+   - <Ctrl V> = View File
+     You may view a ZIP entry, without extracting it, by pressing
+     <Ctrl V> on the hilited file.  Keep in mind that there must
+     be enough free disk space to hold a temporary version of the
+     file being viewed.
+
+   - <Ctrl P> = Set Password
+     If an entry in a ZIP has a password attached, you can still
+     access it with QFZip using the Set Password function.  If a
+     password is set using <Ctrl P>, then any files inserted with
+     QFZip will acquire that password as well.
+
+   - <Ctrl O> = Toggle Overwrite
+     By default, PKWARE's PKUNZIP will prompt you if try to overwrite
+     an existing file when extracting.  You can have toggle this
+     safety feature on and off with QFZip's <Ctrl O> key.
+
+   - <Esc> = Exit QFZip View mode
+     To close the ZIP View window and select another ZIP file to view,
+     press <Esc>.
+
+
+-Configuring Zip View-
+
+If you have renamed PKZIP.EXE and/or PKUNZIP.EXE to alternate file
+names, you may specify the new names in QF.CFG.  Under the heading
+[ZIP] look for the keynames "ZipFile" and "UnZipFile" and set these
+to the appropriate filenames.  For example, if PKZIP.EXE is called
+ZIP.EXE and PKUNZIP.EXE is UNZIP.EXE on your system, the keynames
+would be defined as follows:
+
+ZipFile=ZIP
+UnZipFile=UNZIP
+
+
+ş Quick Commenter       <Alt 1>
+
+The Quiet Flight commenter allows you to quickly comment/uncomment a
+block of code.  To use, simply mark the lines you want to comment (using
+either a line or character block) and press <Alt 1>.  The blocked lines
+are commented out, and a header is inserted documenting the time and date.
+
+There are two ways to uncomment code commented out by the QF commenter.
+The easiest method is to position the cursor on the line of the comment
+header and press <Alt 1>.  The entire block of commented code is
+uncommented, and the header is removed.  The comment header looks
+something like this for xBASE code:
+
+    ** Commented out 11/30/92 at 03:26 pm
+
+However, if you wish to uncomment just a portion of the commented code,
+mark the lines you wish to uncomment and press <Alt 1>.  Quiet Flight will
+only uncomment those lines which are included in the mark.
+
+
+-Configuring Quick Commenter-
+
+Quiet Flight provides built-in support for commenting these file types:
+
+   C/C++         --> .C   .CPP .H
+   xBASE code    --> .PRG .CH  .FRG .SPR .MPR .FMT
+   SAL Macros    --> .S   .INC .UI
+   Batch/System  --> .BAT .SYS .INI
+
+If you wish to define comment characters for a new file extension, or
+wish to change the default characters for a pre-defined extension, you
+can do so through QF.CFG.  Beneath a [GENERAL=<extensions>] section
+you may add "CommentStart" and "CommentEnd" keynames.
+
+Suppose I wished to change the comment characters for C++ files from the
+default // to the more traditional /*..*/.  Here is an abstract of my
+[GENERAL] section for .CPP files:
+
+[GENERAL=.CPP]
+CommentStart=/*
+CommentEnd=*/
+
+
+ş Where Am I?           <Num 5>
+
+To find out what procedure or function you are currently positioned in,
+use the Where Am I function of Quiet Flight.  The procedure/function is
+displayed on the TSE Pro message line.
+
+If you keep the default key assignment (<Num 5>), keep in mind that
+NumLock must be turned off for this to work.
+
+
+ş Project Manager       <Alt 0>
+
+The Quiet Flight Project Manager allows you to group related files
+in order to load them together.  For example, you could create a
+project called SYSTEM.PRJ which automatically loads AUTOEXEC.BAT and
+CONFIG.SYS.
+
+The Project Manager presents a menu with three options.  Each of these
+is discussed below:
+
+   - Open Project:  Select this option to open an existing project or
+     create a new Project.
+
+     If the project exists, all files associated with that project
+     are loaded into TSE Pro's buffer ring.  If an associated file is
+     not found, you are asked if that file should be removed from
+     the project.
+
+     If the project does not exist, QF assumes it is a new project.
+     You can add files to the project through Quiet Flight's Buffer
+     List (detailed in the next section).
+
+     If a project is already open when you open or create a project,
+     the previous project is automatically closed.
+
+   - Close Project:  To close a project--but leave the associated
+     files open in the TSE Pro ring--select this option.
+
+   - Close Project w/Files:  A project and all associated files may
+     be closed using this option.
+
+    ÚÄÄ QF TIP! ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ You can load projects from any TSE Pro Edit File prompt by     ³
+    ³ specifying the project name with the .PRJ extension.  This     ³
+    ³ includes loading projects from the command line.  For example, ³
+    ³ if you wanted to run TSE Pro and load the SYSTEM project at the³
+    ³ same time, you would enter this DOS command: E SYSTEM.PRJ      ³
+    ³ Or, at the TSE Pro "File(s) to edit:" prompt, enter SYSTEM.PRJ ³
+    ³ to automatically load the project files.                       ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+-Configuring Project Manager-
+
+The default directory for storing project files may be set in the QF.CFG
+file.  Look under the [GENERAL] section in QF.CFG for a keyname titled
+"ProjectDir".  If you do not want project files stored in the current
+directory, then you must set this keyname to the directory in which
+to store the .PRJ files.  For example, you might set it to store project
+files in C:\TSE\PROJECT\:
+
+ProjectDir=C:\TSE\PROJECT\
+
+It is highly recommended that you set this option so that project files
+are not strewn about your hard disk and unlocatable by the Project
+Manager.
+
+
+ş Buffer List           <Alt B>
+
+Although there is a buffer list included with TSE Pro, Quiet Flight
+provides enhancements with its own buffer list.
+
+Like TSE, Quiet Flight lists all files in the edit ring and displays a
+"*" next to files which have been modified but not saved.  In addition,
+the following keys are defined:
+
+   - <F1> = Help
+     Press F1 for help when using QF's Buffer List.
+
+   - <Enter> = Edit
+     To make a file the current edit buffer, hilite it and press <Enter>.
+
+   - <Ctrl C>, <F10> = Close File & Remove from Ring
+     Delete the current file from the TSE Pro buffer ring by pressing
+     either <Ctrl C>, <F10>.  If the file has been modified, you are
+     asked whether to save the changes or not before closing.
+
+   - <Ctrl W>, <Ctrl Enter> = Write Changes
+     Save the changes to a buffer by pressing <Ctrl W> or <Ctrl Enter>
+     on the selected file.  Notice that the "*" is immediately removed,
+     indicating that the file no longer needs to be saved.
+
+If a QF Project is open, the QF Buffer List displays a separate list
+of project files below the normal buffer list.  All project files are
+displayed, even if they are not currently in the TSE Pro buffer ring.
+Project files not in the ring are listed in parenthesis.
+
+In the following example, CONFIG.SYS is in the TSE Pro ring but AUTOEXEC.BAT
+is not, although both are part of the SYSTEM project.  WIN.INI is also
+loaded in the TSE Pro ring (and has been modified) but is *NOT* part of the
+project:
+
+   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ QF Buffer List ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+   ³* WIN.INI        c:\windows\                               ³
+   ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ Project SYSTEM ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+   ³ (AUTOEXEC.BAT)  c:\                                       ³
+   ³  CONFIG.SYS     c:\                                       ³
+   ÀÄÄÄÄÄ ENTER: Edit  F10: Close  ESC: Cancel  F1: Help ÄÄÄÄÄÄÙ
+
+
+In addition to the keys listed above, the following keys are defined if
+a QF Project is open:
+
+   - <Ins> = Insert into Project
+     Additions may be made to a project with this function.  When a
+     non-project file is hilited, press <Ins> to immediately add it to
+     the project list.  From then on, the selected file will be loaded
+     as part of the project.
+
+   - <Del> = Delete from Project
+     To remove a file from the current project, hilite the project file
+     to remove and press <Del>.  The file is then moved to the upper
+     window of the QF Buffer List window and out of the project list.
+
+   - <TAB> = Switch Windows
+     Quickly switch between the upper and lower halves of the Buffer
+     List window with the <TAB> key.
+
+
+ş New Header            <Ctrl N>
+
+We know you know what program headers are.  That's why you have
+the capability of adding your own header to any file you edit. Just
+press Ctrl N.  Here's one installed in a PRG file.
+
+* Program....: qf.prg
+* Version....: 1.01
+* Author.....: Randy Wallin
+* Date.......: August 4, 1993     Last Modified: 08/04/93 @ 11:40 pm
+* Notice.....: Copyright (c) 1993 COB System Designs, Inc., All Rights Reserved.
+* QFRestore..: ¯0,0®
+* Compiler...: FoxPro 2.5
+* Abstract...: qf.prg
+* Changes....:
+
+We also know that you have a particular style of header that you like to
+use.  If you'll take a minute to look through the QF.CFG file, you'll
+find our example headers under HEADER.  You can modify them to your own
+specifications.
+
+Here's the QF.CFG fragment that's responsible for creating our PRG
+headers:
+
+HEADER={
+* Program....: ##FILE##
+* Version....: ##VERSION##
+* Author.....: ##NAME##
+* Date.......: ##FILEDATE##     Last Modified: ##DATE## @ ##TIME##
+* Notice.....: Copyright (c) ##YEAR## ##COMPANY##, All Rights Reserved.
+* QFRestore..: ¯0,0®
+* Compiler...: ##PRG_COMPILER##
+* Abstract...: ##FILE## ~
+* Changes....:
+}
+
+Each of the keywords is surrounded by double pound signs (##).
+This is a list of the keywords used in this header:
+
+  ##FILE##       = File Name + File Ext
+  ##VERSION##    = Version #
+  ##NAME##       = Author's Name
+  ##FILEDATE##   = IF this is an existing file - use the last date saved
+                   ELSE use DATESTR
+  ##DATE##       = Today's Date - 11/09/92
+  ##TIME##       = Current Time
+  ##DATESTR##    = Today's Date String - November 11, 1992
+  ##YEAR##       = Year (for Copyright usually)
+  ##COMPANY##    = Company name in Copyright.
+
+ş Edit New File         <Ctrl E>
+
+Being a developer means that we work in many different directories
+during the day.  The standard Edit File prompt in TSE Pro always assumes
+you want to edit a file in the startup directory.  The QF Edit New File
+will assume the directory of the currently edited code as well as the
+current extension.
+
+-How we use QF's Edit New File-
+
+I start up TSE Pro in the C:\TSE sub-directory and edit files in several
+of my projects directories (c:\jli\admin, c:\dmi\service,
+c:\marlins\scout, etc.).  When I am editing SCOUT.PRG in MARLINS\SCOUT -
+when I press CTRL-E and type in TEAM - QF assumes I am looking for
+C:\MARLINS\SCOUT\ TEAM.PRG.  When I am editing c:\JLI\ADMIN\USER.DOC and
+press CTRL-E and enter ADMIN - QF assumes I am attempting to edit
+C:\JLI\ADMIN\ADMIN.DOC.
+
+ş Kill Restore File     <Ctrl K>
+
+There are many times when you start editing a file and realize that
+you need to go back to the original file (before modifications).
+Normally you have to quit the file (saying NO to save changes) and
+then re-load the original.  With Quiet Flight's Kill Restore macro,
+you just press the hotkey for Kill Restore (default <Ctrl K>).  After
+confirmation, the changes on the current file are killed, and the file
+is restored to its original state.
+
+
+-How We Use Kill Restore-
+
+We run Microsoft Windows on all of our development machines, thus
+allowing us to load FoxPro in one session and TSE Pro in another.
+Sometimes we end up making a change to a .PRG within FoxPro while the
+file is still loaded in TSE Pro.  To update the file in TSE Pro with
+the changes made in FoxPro, we simply run Kill Restore.
+
+
+ş Save All Modified     <Ctrl S>
+
+Quiet Flight assigns to a single key the process of saving all files
+without exiting TSE Pro.  Press <Ctrl S> and all *modified* files in
+the edit ring are saved.  The number of saved files is displayed on the
+TSE Pro message line.
+
+ş Display File Info     <Alt F>
+
+Display File Info shows on the message line relevant information about
+the current file being edited.  This includes:  full path, modification
+status, original file size (as stored on disk), file date and time.
+
+
+ş Show Changed          <Ctrl 2>
+
+Show Changed is a simple aide for documenting changes to your source
+code.  Pressing <Ctrl 2> inserts a comment at the cursor line which
+details the date a change was made.
+
+   ** Changed on 11/30/92
+
+By assigning this little comment to a single keystroke, you may be more
+likely to document the changes to your code.
+
+
+ş Window Size           (via QF menu)
+
+How many times have you had a block of text and needed to insert it in
+a Window?  After marking the area you want measured (we suggest a
+Column Block), invoke the Window Size macro (default <Alt S>).  The
+message line will then display the Window Size.
+
+For example, let's find the coordinates necessary to enclose
+the following block of text (taken from TSE Pro's manual) in a window:
+
+   x
+     PARAMETER_TYPE is the type (INTEGER or STRING) of the identifier
+     which follows. If VAR prefixes the type, the parameter must be a
+     variable (as opposed to an expression or constant), which may
+     possibly be altered by the command.
+                                                                      x
+
+Place the cursor on the (x) above the word PARAMETER_TYPE, then begin
+your column mark.  End your column mark where the lower right hand
+corner of the Window will be (the x to the right of the last
+sentence).
+
+Press <Alt S> and note the message bar looks similar to the following:
+
+   Current Block:  Rows, Cols 6,68 *OR* FROM 2,3 TO 7,70
+
+The Rows, Columns are Physical Size of the block (6 x 68).  The
+information to the right of *OR* are the window coordinates (the
+window coordinates will vary depending on the position of the block
+relative the the top/left of the TSE Pro window).  You would use these
+coordinates for your window definition.  For example:
+
+   DEFINE WINDOW <WinName> FROM 2,3 TO 7,70
+
+
+ş Screen Counter        <Alt 2>
+
+The screen counter establishes the correct position of an unknown
+position relative to a known one.  For example, the code says:
+
+   @ 12,30 SAY "Your Choice? " GET ans PICTURE [#]
+
+Let's say you need another prompt--"Valid choices are 1-5"--to be
+positioned just past the GET statement.
+
+Place the cursor on the "Y" in "Your", invoke the screen counter
+(default <Alt 2>), initialize the row as 12 and the column as 30. Move
+your cursor key to position it where you want the coordinates and
+press the ESC key.
+
+In this case, the column number would be 46.
+
+Now you can add:
+
+@ 12,46 SAY "Valid choices are 1-5"
+
+You may use all the directional keys to get to the exact location for
+the coordinates.
+
+
+ş Special Keys
+
+   - To help keep you out of trouble with mismatched braces, quotes, and
+     parenthesis, Quiet Flight enters them as a pair.  When you enter (,
+     [, ", or { you will automatically get the closing ), ], ", or }.
+
+   - <Spacebar> activates the QF Shorthand facility when the cursor is
+     positioned immediately following the first word on a line.  To
+     expand an abbreviation which is not the first word on a line, press
+     <Alt Backspace>. QF always looks for an abbreviation immediately to
+     the left of the cursor.
+
+
+ş Shorthand Abbreviations
+
+QF.CFG is Quiet Flight's configuration file.  It should be
+located in your QFPATH sub-directory.
+
+Within QF.CFG you will find a place for your abbreviations, a
+very powerful extension for all your programming.
+
+For instance, in an xBase program file, on a new line you type in
+the following:
+
+   dow <Spacebar>
+
+You are then prompted for the expression.  You enter:
+
+   nLine=ROW()
+
+The "dow" line is replaced with
+
+  DO WHILE nLine=ROW()
+     _ <-- this is where your cursor will be waiting for further input
+  ENDDO &&* nLine=ROW()
+
+You can create your own abbreviations.  They can be inline
+abbreviations ( ie ACW(space) -> ACTIVATE WINDOW ) or full code
+blocks, like DOW above.
+
+The configuration file is setup in the following format:
+
+[HEADER DESCRIPTION]
+Configuration Items
+Use the semicolon (;) to delimit comments
+
+
+For example:
+
+[EXPANSION=.SPR .PRG .MPR .QPR .FMT .CH]
+ALS=ALLTRIM(STR(~))
+DEW=DEACTIVATE WINDOW ~
+OKL=ON KEY LABEL ~
+PAR=PARAMETERS ~
+PKC=PUSH KEY CLEAR
+POK=POP KEY
+PRI=PRIVATE ~
+
+FOR={
+FOR ##FOR Expression eg i=1 to 50##
+    ~
+ENDFOR &&* ##FOR Expression eg i=1 to 50##
+}
+
+
+Now, let's decipher this:
+
+[EXPANSION=.SPR .PRG .MPR .QPR .FMT .CH]
+
+The first line determines what file extensions will use the
+following abbreviations.  In this case, we want it to be any file
+with the extension of SPR, PRG, MPR, QPR, etc.
+
+The subsequent lines determine what you'd like to happen when
+you enter the abbreviation and press <Spacebar>.
+
+ALS=ALLTRIM(STR(~))
+                    QF will insert ALLTRIM(STR()) then place the
+                    cursor where the tilde (~) is placed.
+
+POK=POP KEY
+                    QF will insert POP KEY when you type in POK
+                    and press <Spacebar>
+
+
+Now for the good stuff, the multi-line expansions:
+
+FOR={
+FOR ##FOR Expression eg i=1 to 50##
+    ~
+ENDFOR &&* ##FOR Expression eg i=1 to 50##
+}
+
+When you type in FOR<Spacebar> on a new line, you will be prompted
+with "For Expression eg i=1 to 50" -- that's everything between
+the double pound signs (##).
+
+Type in your FOR expression and press <Enter>.  The expansion macro
+will do the rest.  Let's say you enter i=1 to nCharacters, this is
+the result.
+FOR i=1 TO nCharacters
+    - cursor would be waiting here
+ENDFOR &&* i=1 TO nCharacters
+
+Follow these steps to create your own abbreviations:
+
+   1. Locate the EXPANSION file extension you want to place your
+      abbreviations.  Or create a new [EXPANSION=<extensions>] section
+      for extensions that are not already defined.
+
+   2. Decide whether it will be a single or multi-line abbreviation.
+
+      a. Single-Line Abbreviation
+         The characters to the left of the equals sign determines
+         the abbreviation--immediately followed by an equals sign (=),
+         then the expansion phrase.  The following:
+
+              STS=STORE STR() TO
+
+         will insert "STORE STR() TO".
+
+         If you add the tilde (~) between the parenthesis (), the
+         cursor will return there after the expansion:
+
+              STS=STORE STR(~) TO
+
+      b. Multi-line Abbreviation
+
+         Again, we have the first characters to the left of the equals
+         to determine the abbreviation--immediately followed by =, then
+         the open curly brace {.
+
+         Here's an example:
+
+            DON={
+            DO WHILE .NOT. EOF()
+               ~
+            ENDDO &&* .NOT. EOF()
+            }
+
+          When you type in DON and press <Spacebar>, the DON will be
+          replaced by the code block within the curly braces ({}).
+
+          Now, to add "user" (that's you in this case) input, just
+          add an Input Prompt, preceded by a dollar sign ($) and
+          terminated with a period (.).
+
+          Another example:
+
+             DOW={
+             DO WHILE ##Expression##
+                ~
+             ENDDO &&* ##Expression##
+             }
+
+          The Input Prompt can be simple--like the one above--or more
+          elaborate, like:  ##Your DO WHILE Expression, Sir##
+
+There are several other special expressions you can add to
+your keyboard expansion configuration file.
+
+   1. If you place a variable within % (ie %VARIABLE%), Quiet
+      Flight will grab that value from the DOS environment
+      variable and insert it into your expansion.
+
+      A simple example would be a multi-programmer shop, if each
+      programmer sets their name up as a DOS environment variable
+      (SET AUTHOR=STEVE), then %AUTHOR% would expand to STEVE.  On
+      Patty's machine, AUTHOR would expand to PATTY.
+
+   2. If you place your expansion variable in a $Variable^,
+      QF will Hilite the variable, and delete it if a non-movement
+      (cursor) key pressed.
+
+      This is handy when you have a default answer but want the
+      ability to change it on the fly.
+
+         RVW=This code was reviewed by $Korie^
+
+      When you expand RVW, Korie's name will be highlighted--if
+      you press <Enter>, Korie's name remains.  Typing anything
+      else will replace Korie's name with your input.
+
+    ÚÄÄ QF TIP! ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³  Use the Expansion Help (Ctrl F1) to bring up a list of your   ³
+    ³  keyword expansion for the current file you are editing.       ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+dBASE/CLIPPER/FOXPRO MACROS
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+ş Add LOCAL/PRIVATE Declaration  <Alt F5/F6>
+
+Adding LOCAL and PRIVATE declarations to your code has never
+been easier.  You usually add these declarations to your code
+when you use the variable.  This entails finding the top of
+the procedure/function, adding the declaration, and then finding
+your place again where the variable is used.  It is so cumbersome
+that you might even be tempted to skip doing a declaration at all.
+
+Quiet Flight solves the problem.  With your cursor positioned
+anywhere on the variable to declare (or immediately following it),
+press Alt-F5.  Quiet Flight automatically adds the variable to
+your LOCAL list.  Pressing Alt-F6 adds it to your PRIVATE list.
+If such a list doesn't already exist, then one is started.
+
+For example, suppose your code looks like this, and your cursor
+is positioned at the caret (^):
+
+   PROCEDURE MsgBox
+   PARAMETERS cMsg
+
+   PRIVATE nReturnVal
+
+   nReturnVal
+             ^
+
+After pressing Alt-F6, your code now contains the PRIVATE declaration:
+
+   PROCEDURE MsgBox
+   PARAMETERS cMsg
+   PRIVATE nReturnVal
+
+   PRIVATE nReturnVal
+
+   nReturnVal
+             ^
+
+If the PRIVATE list already exists, the variable is appended to the
+existing list.
+
+
+ş Flow                  <Alt 3>
+
+The Flow program will reindent and comment your source code to make
+it more readable.  Features include:
+
+   - Code indentation.  Reformat your .PRG files with proper
+     indentation.  Handles FoxPro, dBase IV, and Clipper dialects.
+
+   - Conditionals Commenting.  Puts same-line comments on all
+     end-conditional statements.  For example, take the following
+     code fragment:
+                    DO WHILE !EOF()
+                      .
+                      .
+                    ENDDO
+
+     After processing by Flow it will look like this:
+
+                    DO WHILE !EOF()
+                      .
+                      .
+                    ENDDO && !EOF()    <-- notice the same-line comment
+
+   - Error Checking.  Flow can verify that your code does not have
+     mismatched conditional statements.  For example, you are notified if
+     you have an ENDIF without a corresponding IF, or a DO without an
+     ENDDO.
+
+   - Full configuration.  You control the indentation level,
+     whether to use tabs or spaces, the type of DO CASE and
+     function indenting, and whether or not errors should be reported.
+
+
+When invoked, Flow present a menu of actions and configuration
+options. The first two options ("Procedure/Function" and "File") start
+the Flow process. Select "Procedure/Function" to process the current
+procedure or function the cursor is currently positioned in.  If you
+are not positioned in a procedure/function, then Flow will start at
+the beginning of the file and proceed until the start of a
+procedure/function or end of file.
+
+Select "File" to start processing an entire .PRG file.  Flow starts at
+the beginning of the file and continues to the end, processing every
+function and procedure along the way.
+
+The rest of the options on the Flow menu are for configuration.  They
+are detailed below:
+
+   - Indentation:  Select this option to change the indentation level.
+     For example, if you set it to 3, then three spaces will be
+     inserted for each level of indentation.  If Hard Tabs (see below)
+     is set to ON then this indentation level is ignored.
+
+   - Function Indent:  If set to ON, code beneath a function/procedure
+     is indented an additional one level.  If OFF, indentation starts
+     at column 0.  The following procedure was "Flowed" with Function
+     Indent OFF:
+
+        PROCEDURE Hello
+        PARAMETERS cMsg
+
+        * Print out the message 10 times
+        FOR i = 1 TO 10
+           ? cMsg
+        ENDFOR &&* i = 1 TO 10
+
+        RETURN
+
+     The same code fragment is shown with Function Indent ON:
+
+        PROCEDURE Hello
+           PARAMETERS cMsg
+
+           * Print out the message 10 times
+           FOR i = 1 TO 10
+              ? cMsg
+           ENDFOR &&* i = 1 TO 10
+
+           RETURN
+
+
+   - CASE Indent:  If you like the CASE statements beneath your DO CASE
+     structures indented an extra level, set this option ON.  If you
+     want your CASE statements to line up directly beneath the DO CASE,
+     set it to OFF.  For example, code with CASE Indent set ON will look
+     like this:
+
+        DO CASE
+           CASE x = 1
+              ? "1"
+           CASE x = 2
+              ? "2"
+        ENDCASE
+
+     If CASE Indent is OFF, the same code would be formatted as follows:
+
+        DO CASE
+        CASE x = 1
+           ? "1"
+        CASE x = 2
+           ? "2"
+        ENDCASE
+
+
+   - Error Check:  Flow will alert you of mismatched conditionals if you
+     set this option ON.  Note that with this option turned ON, Flow
+     will stop processing when an error is encountered.  With Error
+     Check OFF, Flow ignores any errors.
+
+   - Add Comments:  Conditional commenting is controlled with this
+     option.  If you do not want Flow to override comments you have
+     already put on the end conditional statement, make sure to turn
+     this option OFF.
+
+     The following IF/ENDIF fragment:
+
+        IF cEditor == "TSE"
+           WAIT WINDOW "You should be using Quiet Flight!"
+        ENDIF
+
+     will look like this after adding a conditional comment:
+
+        IF cEditor == "TSE"
+           WAIT WINDOW "You should be using Quiet Flight!"
+        ENDIF && cEditor == "TSE"
+
+   - Use Hard Tabs:  Set to ON if you want Flow to insert hard tabs
+     rather than spaces for indentation.  This is a life-saver if you
+     must work on someone else's code who did not use your preferences.
+     Just run the all the .PRGs through Flow to change hard tabs to
+     spaces, or vice-versa.
+
+
+-How We Use Flow-
+
+Flow is different than most pretty-printing programs in that you can run
+it on a single procedure/function.  Combined with the fact the Flow is
+blazingly FAST, running it on-the-fly is a snap. When our indenting gets
+thrown off by adding or removing conditional statements, rather than
+trying to re-indent the code by hand, we simply press two keys:  <Alt 3>
+and <Enter>.  Voila!  The function is immediately re-indented.
+
+
+-Configuring Flow-
+
+The default options for Flow may be set in the QF.CFG file.  If you
+look under the [FLOW] section in QF.CFG, you will see these options
+(provided the default values have not been previously changed):
+
+   - Indent=3
+     Set this to the indentation level you wish to use.
+
+   - MultiIndent=2
+     Level to indent (beyond the current level) subsequent lines of
+     code when a statement spans more than one line
+
+   - FuncIndent=OFF
+     ON  = Indent an additional level beneath function headers
+     OFF = Start all indentation below header at column 0
+
+   - CaseIndent=ON
+     ON  = Indent an extra level beneath the DO CASE
+     OFF = Indent CASE statements to same level as DO CASE
+
+   - Errorcheck=ON
+     ON  = Flag structural errors
+     OFF = Ignore structural errors
+
+   - Comment=ON
+     ON  = Add conditional commenting
+     OFF = No conditional commenting
+
+   - CommentStr=&&*
+     Specify a unique comment prefix to use for conditional comments
+
+
+ş Color Table           (via QF Menu Alt /)
+
+Can you ever remember the cryptic dBASE color codes? The QF Color Table
+eliminates the need to, letting you visually choose colors.  After invoking
+the color table, use your cursor keys to move to the color you're
+looking for.  Notice how the "Quiet Flight" heading changes to reflect
+the current color.
+
+Press the <B> key to toggle blinking colors on/off.
+
+Press <Enter> to insert the color code into your current file.  For
+example, suppose you have positioned the cursor on "Bright Cyan on Red"
+and pressed <Enter>.  "BG+/R" will be inserted.
+
+<Escape> will exit the QF Color Table without inserting the color code.
+
+
+
+ş DBF Structure         <Alt 7>
+
+The DBF Structure macro of Quiet Flight allows you to examine the
+structure of your database files "on the fly."  In addition, you can
+build field lists and SQL Create Tables for insertion into your program
+files.
+
+When DBF Structure is invoked, a picklist of .DBF files is displayed.
+Note that Quiet Flight goes to the directory of the current edit file
+to retrieve database files.
+
+After selecting a database to view, a menu appears.  Each menu option is
+detailed below:
+
+   - Screen Output:  This option creates a file of the database
+     structure and displays it in a new horizontal window.  The name of
+     the structure file is <filename>.LST, where <filename> is the name
+     of the .DBF file.
+
+     The .LST file is not saved to disk unless you explicitly instruct
+     TSE Pro to do so.
+
+   - Printer Output:  Quiet Flight will send the database structure
+     immediately to the printer when this option is selected.
+
+   - Build Field List:  Select this option to build a comma-delimited
+     field list within the current file.  The database structure is
+     shown in a pop-up window where you can tag the fields to include in
+     this list.  Press <Spacebar> to toggle tagged fields on and off.
+     <Enter> will begin the insertion of the selected fields at the
+     cursor position, while <Esc> cancels the operation.
+
+     For example, suppose you want to scatter selected fields.  You
+     would first type the following in your .PRG file:
+
+        SCATTER FIELDS
+
+     Then, press <Alt 7> to bring up the DBF Structure program, and
+     select "Build Field List".  Tag the fields you want to scatter and
+     press <Enter>.  If these fields were LASTNAME, FIRSTNAME, and CITY,
+     your code will now read:
+
+        SCATTER FIELDS LASTNAME, FIRSTNAME, CITY
+
+     The fields will always be inserted into the file, regardless of the
+     insert/overwrite mode.  Long field lists will be broken at column
+     80 with a semi-colon for easier reading.
+
+   - Build SQL Table:  Building an SQL table operates like the "Build
+     Field List" option up to the point where you press <Enter>.  After
+     tagging the fields and pressing <Enter>, you will be prompted for a
+     table name.  Quiet Flight will generate the code for a CREATE TABLE
+     using the tagged fields and the table name specified.
+
+     Suppose we tag the fields LASTNAME, FIRSTNAME, and CITY.  If we
+     name our table "Accounts", the resulting output will be:
+
+        CREATE TABLE Accounts ;
+           (Lastname   C(30), ;
+            Firstname  C(30), ;
+            City       C(25))
+
+
+ş Index Key Lister        <Alt 6>
+
+    This macro gives you a listing of your index keys.  It doesn't matter
+    if they are FoxPro, dBase (II,III,IV) or Clipper - QF index macro will
+    work for you.
+
+    After you press Alt-6 or choose Index Key Lister from the QF Menu, you
+    will be prompted for the location of the index files.
+
+    Then you will be asked if you would like to process either all the
+    indexes (Full Listing) or just one(Partial).  If you choose Partial
+    you will have the opportunity to pick the index you would like a
+    report on.
+
+    Ú Process All or one? ¿
+    ³ Full Listing        ³
+    ³ Partial             ³
+    ³ Cancel              ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+    The next popup will look like this:
+
+    ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+    ³ Screen Output        ³
+    ³ Printer Output       ³
+    ³ Build Index Key List ³
+    ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ´
+    ³ Cancel               ³
+    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+     Choosing Screen Output will split the screen and load a listing like
+     this:
+
+      ALTADDR.CDX (FoxPro)
+         Index tag: TRACKID   Key: TRACKID+IIF(CURRENT,"0","1")
+         For: .NOT.DELETED()
+
+      EMPLOYEE.MDX (dBASE IV)
+         Index tag: CITY   Key: CITY
+         Index tag: DEPT   Key: department+lastname+firstname+initial
+         Index tag: EMP_ID   Key: emp_id
+         Index tag: FIRSTNAME   Key: FIRSTNAME
+         Index tag: NAMES   Key: lastname+firstname+initial
+         Index tag: STATUS   Key: department+STR(salary,8,2)
+         Index tag: YEARS   Key: STR(yrs_exper,4,1)
+
+      CHECKREG.NDX (dBASE III)
+         Key: Check_no
+
+      If you had chosen Printer Output, the same screen would have been
+      printed instead.
+
+      The last choice, Build Index Key List is really something we use an
+      awful lot.  It creates a key list that you could insert in your code.
+      This is a sample of the code produced:
+       *** ACTIVITY.CDX
+       INDEX ON KIND TAG KIND OF ACTIVITY.CDX
+       INDEX ON TRACKID TAG TRACKID OF ACTIVITY.CDX
+       INDEX ON TRACKID+KIND+STR(VISITNUM)+PARCEL TAG VISITVIEW ;
+             OF ACTIVITY.CDX
+
+       *** ALTADDR.CDX
+       INDEX ON TRACKID+IIF(CURRENT,"0","1") TAG TRACKID ;
+             FOR .NOT.DELETED() OF ALTADDR.CDX
+
+       *** BROKER.CDX
+       INDEX ON BROKER TAG BROKER OF BROKER.CDX
+       INDEX ON RTRIM(LASTNAME)+", "+FIRSTNAME ;
+             TAG NAME OF BROKER.CDX
+
+       *** CHECKLST.CDX
+       INDEX ON LASTNAME TAG LASTNAME OF CHECKLST.CDX
+
+       *** COMPANY.CDX
+       INDEX ON COMPANY TAG COMPANY OF COMPANY.CDX
+       INDEX ON COMPANYID TAG COMPANYID OF COMPANY.CDX
+
+       *** DAILY.CDX
+       INDEX ON DTOS(DAILY_DATE)+RTRIM(LASTNAME)+", "+FIRSTNAME ;
+             TAG NAME OF DAILY.CDX
+       INDEX ON DTOS(DAILY_DATE)+STR(DAILY_NUM,3) TAG NOTRANSFER ;
+             FOR .NOT.TRANSFERED OF DAILY.CDX
+       INDEX ON DTOS(DAILY_DATE)+SALESASSOC+RTRIM(LASTNAME)+;
+             ", "+FIRSTNAME TAG SALESASSOC OF DAILY.CDX
+       INDEX ON DTOS(DAILY_DATE)+STR(DAILY_NUM,3) ;
+             TAG VISITNUM OF DAILY.CDX
+
+       We think you'll agree, this is a very handy tool.
+
+
+
+TECHNICAL SUPPORT
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+
+You may obtain technical support directly from SemWare via any of the
+following:
+
+   InterNet
+
+    Send Email to: qf.support@semware.com
+
+    Visit our WWW page at:  http://www.semware.com
+    Visit our ftp site at:  ftp.semware.com
+
+   Other email:
+
+    CIS         75300,2710
+
+   CompuServe (GO SEMWARE, Section 6)
+
+   Send us a Fax: (770) 640-6213
+
+   Write to us:
+
+                 SemWare Corporation
+                 Attn: Quiet Flight Technical Support
+                 4343 Shallowford Road, Suite C3A
+                 Marietta, GA  30062-5022  USA
+
+   Call us directly at SemWare (770) 641-9002. Support hours are 9 am
+    to 5 pm (ET), Monday through Friday.
+
+We request that you reserve telephone support for questions or problems
+requiring immediate attention.
+
+If you have a suggestion that you think would improve our products, do
+not hesitate to let us know about it.
+
+
+All Products listed are trademarks of their respective companies.

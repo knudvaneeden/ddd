@@ -1,0 +1,101 @@
+/****************************************************************************\
+
+    User interface to use TSE as file filter
+
+    Version         v1.00/19.10.95
+    Copyright       (c) 1995 by DiK
+
+    History
+
+    v1.00/19.10.95  first version
+
+\****************************************************************************/
+
+/****************************************************************************\
+    print error message and quit
+\****************************************************************************/
+
+proc ScreenMessage( string line )
+    Warn(line)
+    AbandonEditor()
+end
+
+/****************************************************************************\
+    called just after editor startup
+\****************************************************************************/
+
+proc WhenLoaded()
+    register r
+    integer con_out
+    string cmd[128] = Query(DosCmdLine)
+
+    // check for console output
+
+    r.ax = 0x4400
+    r.bx = _STDOUT_
+    intr(0x21,r)
+    con_out = r.dx & 0x80
+
+    // check command line
+
+    if not Length(cmd)
+        ScreenMessage("Filter macro not specified")
+    endif
+    if not LoadMacro(GetToken(cmd," ",1))
+        AbandonEditor()
+    endif
+
+    // allocate buffers
+
+    if not CreateBuffer("[<stdin>]")
+        ScreenMessage("Cannot allocate buffer")
+    endif
+
+    // read stdin into input buffer
+
+    if not fReadFile(_STDIN_)
+        ScreenMessage("Error reading stdin into buffer")
+    endif
+    BegFile()
+
+    // execute dos command line as macro
+
+    ExecMacro(cmd)
+
+    // clear screen on console output
+
+    if con_out
+        r.ax = 0x0F00
+        Intr(0x10,r)
+        r.ax = r.ax & 0x00FF
+        Intr(0x10,r)
+    endif
+
+    // save output buffer to stdout (adapt for "Writing..." message!)
+
+    EditFile("[<stdin>]")
+    if con_out
+        BegFile()
+        InsertLine()
+    endif
+    if not fWriteFile(_STDOUT_)
+        ScreenMessage("Error writing buffer to stdout")
+    endif
+
+    // prompt after console output (TSE restores screen afterwards!)
+
+    if con_out
+        ScreenMessage("Finished...")
+    endif
+
+    // quit the editor
+
+    AbandonEditor()
+end
+
+/****************************************************************************\
+    emergency exit
+\****************************************************************************/
+
+<Alt X>     AbandonEditor()
+

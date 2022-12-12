@@ -1,0 +1,3 @@
+TIME12 - TSE macro - returns time in 12 hour
+format - may be added to TIMEDATE.S macro by
+Tom Klein or used separately - Jim Fouch.

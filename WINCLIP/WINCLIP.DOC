@@ -1,0 +1,86 @@
+1. What's it All About
+----------------------
+
+Do you use MS Windows as your standard operating system? And do you
+routinely run TSE from a DOS box, because there's no genuine Windows
+editor which comes even close to TSE? Then WinClip is for you!
+
+WinClip allows you to directly copy your marked blocks into the Windows
+clipboard. It also can retrieve text data from the clipboard and paste
+it into your file. Thus the communication between TSE and your favorite
+Windows application becomes much more efficient and easier.
+
+
+2. Using WinClip
+----------------
+
+Using WinClip is easy. Copy the mac file in a directory where TSE can
+find it and then execute it. A menu will pop up giving you all the
+choices there are. The Cut and Copy commands are quite self explanatory.
+But there are three different Paste commands, because the Windows
+clipboard doesn't know the difference between character, line and column
+blocks. Thus you have to tell WinClip which kind of block you want to
+have pasted into your file. The last command (Paste Over) works only for
+column blocks. Because of the size of the mac file (14k) WinClip will
+unload itself after each use.
+
+If you want to have these commands at your fingertips, you can bind them
+to the ui. But do NOT copy the source code into your ui file, because
+this would bloat your TSE exe file by 14k. Use the following approach
+instead. Say, for example, you want to bind the Copy command to the
+<CtrlAlt Ins> key, then insert the following line towards the end of
+your ui file.
+        <CtrlAlt Ins>   mExecMacro("WinClip^WinCopy")
+
+A final note: don't worry about the different sets of character codes
+which DOS and Windows use. The translation between the ANSI and the OEM
+character set is handled automatically by Windows itself.
+
+
+3. System Requirements and Restrictions
+---------------------------------------
+
+Using the Windows clipboard from a DOS box is only possible, if you have
+Windows 3.1 and when it is running in enhanced mode. This means you must
+have at least a 386SX equipped with a minimum of 2 megs of memory,
+because otherwise Windows will refuse to load in enhanced mode. It does
+not matter, if you started TSE directly or from a DOS prompt or if the
+DOS box is windowed or in full screen mode. WinClip will work just fine
+in any of these cases.
+
+There is one important limitation to WinClip. It can cope only with 12k
+(this is 12287 bytes) of data at a time. The reason for this is, that
+the Windows clipboard requires data transactions to be done in one
+piece and TSE allows only macros of 16k maximum size. As the transaction
+buffer must reside within the macro, the size of this buffer is limited.
+But 12k of text data is a lot, thus WinClip will be up to your needs in
+probably 99.9% of all cases.
+
+
+4. Technical Information
+------------------------
+
+When Windows 3.1 is running in enhanced mode, it is possibly to access
+the Windows clipboard from inside a DOS box. This is done via the
+multiplexer interrupt 2Fh. In particular the subfunction 1600h is used
+to check for the presence of Windows and its various incarnations. The
+subfunctions 17xxh implement a subset of the clipboard API. You can
+open, close and empty the clipboard and exchange data with it. The
+format of text data is lines of ascii-codes terminated by CrLf pairs,
+which in turn are terminated by a Null character. If you want to learn
+more about this subject, you need two books. A good book on DOS
+programming which explains the multiplexer interrupt and the Windows API
+documentation.
+
+The accompanying asm file implements the necessary API calls. Furthermore
+it contains three functions, which are used to split the data into
+strings and concat strings to CrLF terminated lines, respectively. The
+actual data transfer and intermediate data storage in a scratch TSE
+buffer is controlled via a normal SAL macro.
+
+
+5. Copyright and Disclaimer
+---------------------------
+
+This program is thereby donated to the public domain. Use it or even
+alter it as you see fit, but ENTER AT YOUR OWN RISK!

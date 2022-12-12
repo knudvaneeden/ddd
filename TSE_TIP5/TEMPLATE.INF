@@ -1,0 +1,230 @@
+
+  This file was obtained from the online help of TSE 2.00 by pressing
+  F1, then clicking on TEMPLATES, and saving the information to the
+  clipboard by pressing the <Grey +> key and then pasting the clipboard
+  into this file.
+
+  This is only a text file if you are interested in more information use
+  the online help and use the hypertext links in the HELP system.
+
+                            ÚÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                            ³Template Mode³
+                            ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+  Template mode is a versatile and powerful feature that allows you to
+  minimize typing when entering repetitive text or generating text in a
+  pre-defined structure.  With this feature, an abbreviated text string
+  is identified as a "keyword" and assigned to a user-defined template
+  of expanded text.  Template mode operates by expanding the abbreviated
+  text (the keyword) into the text defined in the associated template.
+
+  Templates can be useful for entering long words or phrases that you
+  use often, such as your name or your address.  They can also be used
+  to create "forms" for guiding the entry of text according to a
+  pre-defined format.  Simply assign the expanded text (the template) to
+  the abbreviation (keyword) of your choice.  The next time you want to
+  include your name or address in a document, or insert a text-entry
+  form into a file, just type the assigned keyword and press the
+  template-expansion key.  The editor replaces the abbreviation with the
+  text defined in the template.
+
+  To create a template for any regular construct, such as "if" or
+  "while" statements.  A number of templates are included in the editor
+  for C, Pascal, xBase, and SemWare's macro language (SAL).
+
+  A number of Template options are available, allowing you to:
+
+    ù display a PickList of templates in the Template "dictionary" (from
+    which you can expand, add, or delete a template)
+
+    ù expand a keyword into text defined in a template
+
+    ù create your own template and add it to the Template "dictionary"
+
+    ù delete an existing template from the Template "dictionary"
+
+  Templates that you create are saved by the editor, and are available
+  during each editing session.
+
+  You can define templates as either local or global.  A local template
+  is readily available only for a specified file extension; a global
+  template is readily available for all file extensions.
+
+
+Basic Operation of Template Mode
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  To toggle Template mode ON and OFF, choose "Template Expansion" under
+  the Util Menu.  To use Template mode, you must toggle it ON.
+
+  When Template mode is ON, the <Tab> and <Ctrl Tab> keys are configured
+  to perform special Template operations.  <Tab> expands a
+  template-defined keyword into its pre-assigned word, phrase, or series
+  of lines.  (If the cursor is not positioned at the end of a
+  Template-defined keyword when you press <Tab>, the <Tab> key behaves
+  as normal; that is, it executes the TabRight command.) Pressing <Ctrl
+  Tab> pops up the Template menu.
+
+  The simplest way to invoke Template expansion for a keyword in your
+  text is as follows:
+
+    ù Place the cursor at the end of the keyword; that is, one position past
+      the last character, as it would be if you had just typed the keyword.
+      (If the cursor is positioned within a word, the characters in the word
+      to the immediate left of the cursor will be used as the keyword.)
+
+    ù Press <Tab>.
+
+  The editor then searches for a (case-insensitive) match in the
+  Template dictionary for the keyword before the cursor.  If one is
+  located (and is available to the file extension of the current file),
+  the keyword is replaced with the expanded text from the Template
+  dictionary.  Existing text in the file is shifted to accommodate the
+  text inserted from the template. If the keyword is not located (or is
+  not available to the current file extension), the <Tab> key behaves
+  according to its normal action.
+
+  When the expanded text is inserted in the current file, the cursor is
+  positioned at the end of the expanded text by default.  However, you
+  can specify a particular position in the expanded text on which you
+  want the cursor to be located instead.  You can even temporarily turn
+  on Insert mode for the line on which the cursor is initially
+  positioned.  (These capabilities are described below under "Creating
+  Your Own Template.")
+
+  To perform other Template operations, use the Template menu.  To
+  access the Template menu, press <Ctrl Tab>.  The Template menu
+  provides alternate methods for expanding keywords.  It also allows you
+  to add, delete, or list templates in the Template dictionary.  These
+  options are described in the following sections.
+
+
+Creating Your Own Template
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+It is quite easy to create your own template, as illustrated by the following:
+
+    ù Type the text as you want it to appear when it is fully expanded.
+
+    ù If desired, specify the location at which you want the cursor to be
+      positioned by placing "\c" (without the quotes) at the desired location
+      in the text.  By default, if you do not indicate a cursor position, the
+      cursor is placed at the end of the expanded text when the template is
+      inserted.
+
+    ù If you want to force Insert mode ON for the cursor line when the
+      template is inserted, place "\C" (uppercase, without the quotes) at the
+      desired location of the cursor.  When the template is inserted, the
+      cursor will be positioned at the location indicated by the placement of
+      "\C".  If Insert mode is OFF, it will be set ON until you move the
+      cursor off this cursor line.  (Once the cursor moves from this line,
+      Insert mode is set back OFF, if it was OFF when the template was
+      initially expanded.)
+
+    ù Next mark the expanded text using one of the block-marking commands.
+
+    ù Press <Ctrl Tab> to display the Template menu.
+
+    ù Add the currently-marked text to the Template dictionary, either by:
+
+      ù Selecting "Add Marked Text as Template" from the Template menu; or
+
+      ù Selecting "List Templates (Add/Delete/Expand)" from the Template menu,
+        then pressing <Ins> once the PickList of Templates is displayed.
+
+      In either case, the editor prompts you for the keyword to which to
+      assign the template.  The case of the keyword is not significant.  This
+      keyword should be unique, simple to type, and easy to remember!  If you
+      select a keyword that is already in the Template dictionary, you will be
+      given the option to add a duplicate entry, replace the existing entry,
+      or cancel the operation.  Duplicate entries can be helpful if you want
+      to use the same keyword for different template expansions, depending on
+      the extension of the file.
+
+      The editor then prompts you for an extension.
+
+      ù If you want to limit the immediate availability of the template to a
+        particular file extension (making it a local template), type the
+        desired filename extension, and press <Enter>.
+
+      ù If you want to make the template readily available for all file
+        extensions (making it a global template), clear the prompt box (press
+        the space bar if the prompt box input area is not empty), and press
+        <Enter>.
+
+  Once a template is added, the editor is updated so that the template
+  is available each time you start the editor.
+
+
+Alternate Methods for Expanding a Template
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  In addition to using the <Tab> key to expand a keyword (as described
+  under "Basic Operation of Template Mode" above), two other expansion
+  methods are available from the Template menu.
+
+  The first alternate method is very similar to the <Tab> key method
+  described earlier:
+
+    ù Place the cursor at the end of the keyword, either on the last
+      character, or one position past the last character as it would be if
+      you had just typed the word.
+
+    ù Press <Ctrl Tab> to display the Template menu.
+
+    ù Select "Expand Word Before Cursor".  The keyword that you typed is
+      replaced with the text in the template defined for that keyword.  (If
+      the keyword is not defined, or is not available for the current file
+      extension, no action occurs.)
+
+  With the second alternate method, you do not have to type the keyword
+  that is to be expanded.  This method is useful if you cannot remember
+  a particular keyword, or if you do not want to type the keyword, or if
+  you want to select a particular template for a keyword for which there
+  are duplicates.  To use this method:
+
+    ù Position the cursor where you want the expanded text from the template
+      to be inserted.
+
+    ù Press <Ctrl Tab> to display the Template menu.
+
+    ù Select "List Templates (Add/Delete/Expand)".  A PickList is displayed of
+      all template keywords readily available for the current file extension;
+      that is, the keywords for all local templates defined for the current
+      extension, and all global templates.
+
+    ù If the keyword that you want to expand is not included in this limited
+      PickList, press <Ctrl Enter> to display a PickList of all template
+      keywords that are defined.  This PickList includes even those keywords
+      for templates that are local to other file extensions.
+
+    ù Once you have located the desired keyword, move the cursor bar to that
+      keyword and press <Enter>.  The template defined for the selected
+      keyword is inserted into your text at the cursor position.
+
+
+Deleting an Existing Template
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  To delete a keyword from the Template dictionary:
+
+    ù Press <Ctrl Tab> to display the Template menu.
+
+    ù Select "List Templates (Add/Delete/Expand)".  A PickList is displayed of
+      all template keywords readily available for the current file extension.
+
+    ù If the keyword that you want to delete is not included in this limited
+      PickList, press <Ctrl Enter> to display a PickList of all template
+      keywords that are defined.
+
+    ù Once you have located the desired keyword, move the cursor bar to that
+      keyword and press <Del>.
+
+    ù The editor displays a prompt box to verify that you want to delete the
+      selected keyword.  Place the cursor bar on "Yes" and press <Enter>.
+      Both the keyword and its defined template are permanently removed from
+      the Template dictionary.
+
+  (For more information on making selections from a PickList, see "Using
+  PickLists" in the chapter on "Command Prompts and PickLists.")
+

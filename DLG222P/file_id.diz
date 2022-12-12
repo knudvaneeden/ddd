@@ -1,0 +1,6 @@
+The SAL macro Dialog.S is a run time library, which implements
+everything that is necessary to use CUA style dialog boxes
+within TSE. This file includes tools and documentation, which
+allow you to create your own custom dialog boxes. Version 2.22
+now features a visual dialog resource editor. Warning: the user
+file DLG222.ZIP is required.

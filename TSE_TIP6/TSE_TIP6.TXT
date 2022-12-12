@@ -1,0 +1,2964 @@
+                       ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                       ³TSE Tips and Mini-Macros³
+                       ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                ThisFile:  \tse_tip6.txt for TSE Pro 2.5
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+  This TIPS release may contain items/macros pertaining to TSE Pro 2.5
+  and macros and tips may not work with TSE 2.0 / TSE 1.0 Pre-release.
+
+  Users of previous versions of TSE should be aware that there are many
+  new items in TSE Pro 2.5 and they should probably assume that errors
+  relating to RESERVED WORDS, Unknown command, and "',' expected", are
+  probably related to the fact that they are using an old TSE version.
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+         Compiled by Tom Klein from Personal Notes and Slips of
+                     Paper used for Memory Joggers
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+//tak       Covers the dates from 02/06/95 to 09/20/95
+       although some tips/macros may be outside these two dates.
+
+===========================================================================
+  Special thanks to people that wrote the messages that I mis-appropriated
+  to provide the tips in this file and to the SemWare staff who have
+  provided us with TSE (pronounced TESSIE) that allows so much to be
+  accomplished with just a text editor.
+===========================================================================
+
+  TIPS are intended to be a continuing series of hints and tips and each
+  subsequent release will be in-addition-to the previous versions.  That
+  is TIP4 will not contain any of the information in TIP3.  The one
+  exception is that grievous errors from a previous editions will be
+  corrected in the next release.
+
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³Public Releases:³  'tsetip3.zip', 'tsetip4.zip', 'tsetip5.zip'
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ  'tsetip6.zip'.
+
+  The above files are available on the SemWare BBS.
+
+  If you have any problems or find errors please let me know [Tom Klein]
+  so that they may be fixed in the next version.
+
+  Contact me in any conference on the SemWare BBS or via RIME #330
+  (SemWare) or via Internet at either of the addresses below.
+
+  E-mail: tom.klein@cris.com or TSE mail list:  tsepro@semware.com
+
+===========================================================================
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³Revision History³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+09/20/95:  Started TIP6 for use with TSE 2.5  Includes '20to25kys.inf';
+           PROJECTS, 'tsecomp.bat' & 'tsefile.bat'
+
+===========================================================================
+
+  In general all macros or start with this:
+
+/**************************************************************************
+
+  and all tips, portions of macros start with this:
+
+===========================================================================
+
+  If you clip the macro area from that line to the end of the macro you
+  should be able to compile the clip.  Include the above ' /** ' because
+  it is the first part of a comment area.
+
+  All sections generally end with:
+
+//*************************************************************************
+//             Comment Here Indicating What Macro  <DATE>
+//*************************************************************************
+
+  and you could mark the ' /** .... '  as the start of a block and then
+  search for ' //***... ' for the end of each macro.  At least that is
+  how it worked when I tested it ;-).
+
+===========================================================================
+
+//tak**START of TIP 6 - 09/20/95
+
+  Mike Chambers has written a macro that allows for easy searching of
+  files like TSE TIPS that has a structure.  His macros name on the
+  SemWare BBS is 'textv100.zip'.
+
+  Download it and compile it and if you modify the TIPS settings in
+  TextView by editing the TSE TIPS selection to the items below:
+
+  A FILE NAME of your choosing,  i.e. the path\name of tip file
+  Separator to 'Date :',       ;no space between Date and : I removed
+  DeltaToTitle to '1',         ;the space so it would NOT show in the
+  DeltaToBottom to '-3 '       ;listing of ALL sections
+
+  Now enter a search string in the TextView prompt box it will have a
+  very good chance of getting a complete macro that you could then view
+  from the picklist that TextView generates.  If you enter no string in
+  the prompt ( i.e. blank prompt box ) you can obtain a listing of all
+  sections in TIP6.
+
+  The 'tse_tip6.txt' has been specially formatted to work with Mike
+  Chambers TextView and if you enter NO search string then you get a
+  pickfile listing of ALL sections in TIP6.
+
+===========================================================================
+                    Date: 09/20/95   From: Tom Klein
+              Subj: Updating Errors TSE 2.0 to TSE Pro 2.5
+---------------------------------------------------------------------------
+
+    'min' & 'max' are now RESERVED words and cannot be used as variable
+    names:
+
+         Error   xxx  (xxx,xx)   Reserved keyword 'min'
+         Error   xxx  (xxx,xx)   Reserved keyword 'max'
+===========================================================================
+
+  mPullDownMenu() was changed in the keydef or *.key file to MainMenu()
+
+  FROM:  <Alt t>       mPullDownMenu(<T>) // Bring up Text SubMenu 2.00
+
+  TO:    <Alt t>       MainMenu('T')      // Bring up Text SubMenu 2.01s
+
+//*************************************************************************
+            Updating Errors TSE 2.0 to TSE Pro 2.5  09/20/95
+//*************************************************************************
+
+===========================================================================
+                    Date: 09/20/95   From: Tom Klein
+             Subj: Key Changes or New Keys in TSE Pro 2.5
+        Errors correct from posting on list 'tsepro@semware.com'
+---------------------------------------------------------------------------
+
+---------------------------------------------------------------------------
+       Changes to key assignments between TSE 2.0 and TSE Pro 2.5
+
+                   Comparing TSE 2.0 to  TSE Pro 2.5
+                 Appendix C - Standard Key Assignments
+---------------------------------------------------------------------------
+
+//-------------------------------------------------------------------------
+    I did this comparison to help me convert older macros to TSE 2.5 and
+    provided the TSE 2.0 command followed by the new command for TSE 2.5
+
+                                                               \\\...tak
+//-------------------------------------------------------------------------
+
+  The first item of the pair is for TSE 2.0
+  The second item of the pair is for TSE Pro 2.5
+
+  <F1>                  Help('Table Of Contents')
+  <F1>                  Help()
+
+  <F5>                  ScrollToRow(1)
+  <F5>                  ScrollToTop()
+
+  <Alt F3>              mMatch()
+  <Alt F3>              ExecMacro("match")
+
+  <Ctrl F9>             mExecMacro('Compile^CompileCurrentFile')
+  <Ctrl F9>             ExecMacro("Compile " + CurrFilename())
+
+  <Shift F1>            Help('Key Assignments')
+  <Shift F1>            Help("Key Assignments")
+
+  <Shift F3>            Sort(sort_flags)
+  <Shift F3>            ExecMacro("sort " + Str(sort_flags))
+
+  <Shift F5>            ScrollToRow(Query(WindowRows) / 2)
+  <Shift F5>            ScrollToCenter()
+
+  <Shift F9>            mExecMacro('Compile^CompileMenu')
+  <Shift F9>            ExecMacro("Compile -m")
+
+  <AltShift F9>         ExecMacro("Capture")
+  **Above is new for TSE Pro 2.5
+
+  <AltShift V>            ViewFinds()    TAKnote: Missed in my comparison
+  **Above is new for TSE Pro 2.5
+
+---------------------------------------------------------------------------
+TAKnote: Documentation error:  Appendix C. indicates 'TabRight' but
+         *.ui and keydef/*.key files use 'mFancyTabRight'
+
+  <Tab>                 TabRight()
+  <Tab>                 mFancyTabRight()
+---------------------------------------------------------------------------
+
+TAKnote: Documentation error:  Appendix C. indicates 'NextPara' but
+         *.ui and keydef/*.key files use 'mNextPara'
+
+  <Shift PgDn>          NextPara()
+  <Shift PgDn>          mNextPara()
+  **Above is new for TSE Pro 2.5
+
+---------------------------------------------------------------------------
+TAKnote: Documentation error:  Appendix C. indicates 'NextPara' but
+         *.ui and keydef/*.key files use 'mNextPara'
+
+  <Shift PgUp>          PrevPara()
+  <Shift PgUp>          mPrevPara()
+  **Above is new for TSE Pro 2.5
+
+---------------------------------------------------------------------------
+
+  <RightBtn>            ClipBoardMenu()
+  <RightBtn>            MouseMenu()
+
+  <Ctrl 8>              ExecMacro("quote comment")
+  **Above is new for TSE Pro 2.5
+
+  <Ctrl B>              NamedClipBoardMenu('Named ClipBoards')
+  <Ctrl B>              ExecMacro("nameclip Named ClipBoards")
+
+  <Ctrl I>              mIncrementalSearch()
+  <Ctrl I>              ExecMacro("isrch")
+
+ PlaceMarks q thru z removed because they would not display correctly TSE 2.0
+  <Ctrl K><0>           PlaceMark("q")
+  <Ctrl K><1>           PlaceMark("r")
+  <Ctrl K><2>           PlaceMark("s")
+  <Ctrl K><3>           PlaceMark("t")
+  <Ctrl K><4>           PlaceMark("u")
+  <Ctrl K><5>           PlaceMark("v")
+  <Ctrl K><6>           PlaceMark("w")
+  <Ctrl K><7>           PlaceMark("x")
+  <Ctrl K><8>           PlaceMark("y")
+  <Ctrl K><9>           PlaceMark("z")
+
+  <Ctrl O><T>           mCenterLine()
+  <Ctrl O><T>           ExecMacro("center")
+
+  <Ctrl O><W>           Toggle(WordWrap)
+  <Ctrl O><W>           mToggleWordWrap()
+
+  <CTRL O><Y>           ExecMacro("synchscr")
+  **Above is new for TSE Pro 2.5
+
+ GotoMark q thru z removed because they would not display correctly TSE 2.0
+  <Ctrl Q><0>           GotoMark("q")
+  <Ctrl Q><1>           GotoMark("r")
+  <Ctrl Q><2>           GotoMark("s")
+  <Ctrl Q><3>           GotoMark("t")
+  <Ctrl Q><4>           GotoMark("u")
+  <Ctrl Q><5>           GotoMark("v")
+  <Ctrl Q><6>           GotoMark("w")
+  <Ctrl Q><7>           GotoMark("x")
+  <Ctrl Q><8>           GotoMark("y")
+  <Ctrl Q><9>           GotoMark("z")
+
+  <Ctrl Q><I>           Set(AutoIndent, iif(Query(AutoIndent), 0, 2))
+  <Ctrl Q><I>           mToggleAutoIndent()
+
+  <Ctrl Q><Q>           RepeatCmd()
+  <Ctrl Q><Ctrl Q>      RepeatCmd()
+
+  <CtrlShift L>         RepeatFind(_REVERSE_)
+  **Above is new for TSE Pro 2.5
+
+  <Alt 0>               mListOpenFiles()
+  <Alt 0>               ExecMacro("listopen")
+
+  <Alt B>               mWrapPara()
+  <Alt B>               ExecMacro("wrappara")
+
+  <Alt F>               mPullDownMenu(<F>)
+  <Alt F>               MainMenu('F')
+
+  <Alt T>               mPullDownMenu(<T>)
+  <Alt T>               MainMenu("T")
+
+  <ALT Y>               MarkToEOL()
+  **Above is new for TSE Pro 2.5
+
+//-------------------------------------------------------------------------
+                            Second reminder:
+//-------------------------------------------------------------------------
+               The first item of the pair is for TSE 2.0
+      The second item or subsequent items changed for TSE Pro 2.5
+//-------------------------------------------------------------------------
+
+--  \\\...tak
+            +----------------------------------------------+
+            |TAK Information Exchange; Fort Wayne, Indiana |
+            | ÷÷  Wednesday; September 20 at 1600 hrs  ÷÷  |
+            +----------------------------------------------+
+--  InterNet: tomklein@cris.com  or TSE list mail: tsepro@semware.com
+
+  If find any errors or omissions in the above list I would appreciate
+  it if you dropped a message to either address above or to any TSE or
+  TSE Jr. conference on the SemWare BBS
+
+//*************************************************************************
+//           Key Changes or New Keys in TSE Pro 2.5  09/20/95
+//*************************************************************************
+
+//tak**02-06-95**START**
+
+/**************************************************************************
+===========================================================================
+                 Date: 02-06-95  From: GEORGE DE BRUIN
+             Subj: Any even a 4th way to Insert Signatures
+---------------------------------------------------------------------------
+
+TAKnote:  I promised that I would not put yet another way to generate
+          various signatures.  Sorry, I lied.  Here's the 4th.
+
+ * ---------------*
+ * Signature Menu *
+ * ---------------*
+
+***************************************************************************/
+
+menu SigMenu()
+    title = "Signature Menu"
+
+    "Moderator [GN_&GENERAL]"
+    "Moderator [GN_&DEBATE]"
+    "Moderator [GN_&FORSALE]"
+end
+
+/*
+* -----------------*
+* Insert Signature *
+* -----------------*
+*/
+
+proc InsSig()
+    if SigMenu()               // Call Signature Menu -- If true do:
+        EndFile()
+        BegLine()
+        AddLine()
+        AddLine("Jim Dever")   // Insert Name
+        AddLine(MenuStr(SigMenu, MenuOption()))
+                               // Insert string from selected menu item
+    endif
+end
+
+<Ctrl F8>  InsSig()
+
+//*************************************************************************
+//         Any even a 4th way to Insert Signatures  02-06-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 02-08-95  From: GEORGE DE BRUIN
+             Subj: Any even a 5th way to Insert Signatures
+***************************************************************************/
+
+FORWARD proc InsSig()
+     /*
+     * ------------------------*
+     * Some Signature DataDefs *
+     * ------------------------*
+     */
+
+    DataDef EdSig
+
+        "George J. De Bruin"
+        "   Editors-R-Us"
+    end
+
+    DataDef SemWare
+        "George De Bruin"
+        "SemWare Technical Support"
+        "Home of: The SemWare Editor, TSE Jr. Advanced, TSR & OS/2"
+    end
+
+    /* -------------------------*
+     * Insert DataDef Signature *
+     * -------------------------*
+     */
+
+    proc InsDDSig(integer DDef)
+
+        EndFile()
+        BegLine()
+        AddLine()
+        AddLine()
+        case DDef
+            when 1 InsertData(EdSig)
+            when 2 InsertData(SemWare)
+        endcase
+        UnMarkBlock()
+    end
+
+    /*
+     *-----------------*
+     *  Signature Menu *
+     *-----------------*
+     */
+
+    menu SigMenu()
+    title = "Signature Menu"
+    command = InsSig()
+
+    "Moderator [GN_&GENERAL]"
+    "Moderator [GN_&DEBATE]"
+    "Moderator [GN_&FORSALE]"
+    "&Editors", InsDDSig(1)
+    "&SemWare", InsDDSig(2)
+    end
+
+    /* -------------------------*
+     * Insert Regular Signature *
+     * -------------------------*
+     */
+
+    proc InsSig()
+        EndFile()
+        BegLine()
+        AddLine()
+        AddLine("Jim Dever")    // Insert Name
+        AddLine(MenuStr(SigMenu, MenuOption()))
+                                // Insert string from selected menu
+    end
+
+    <F12> SigMenu()
+
+//*************************************************************************
+//         Any even a 5th way to Insert Signatures  02-08-95
+//*************************************************************************
+
+===========================================================================
+                   Date: 02-11-95  From: GRAFTON COLE
+                 Subj: Marking WordLeft for 'spellchk'
+---------------------------------------------------------------------------
+
+  Started poking around in the Spellchk macro.  The reason GetWord(1)
+  does not work in GetCurrWord() is the word is not marked at this
+  point.  I changed the code under main() (line 335) as follows:
+
+   FROM:    otherwise             TO:      otherwise
+                BegWord()                      if not BegWord()
+                                                 Left()
+                                                 BegWord()
+                                               endif
+
+//*************************************************************************
+//             Marking WordLeft for 'spellchk'  02/12/95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 02-15-95  From: GEORGE DE BRUIN
+                        Subj: SelectWordWrap1()
+---------------------------------------------------------------------------
+
+       SelectWordWrap1: Set WordWrap on based on file extension.
+
+  See the next message for another version when the extension is numeric.
+***************************************************************************/
+
+    proc SelectWordWrap1()
+
+        string WrdWrp[5] = ""       // String to hold file extension
+
+        // Get file extension
+        WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+        // See if file extension is in list to turn off WordWrap.
+        if WrdWrp <> "." and Pos(WrdWrp, ".s.ui.c.h.inc.pas.sys.bat.asm.")
+            Set(WordWrap, OFF)
+        else
+            Set(WordWrap, ON) // If it wasn't in the list, turn WW on.
+        endif
+    end  SelectWordWrap1
+
+    proc WhenLoaded()
+        Hook( _ON_CHANGING_FILES_, WrdWrp) // Check file extension
+                                           // whenver changing files.
+    end  WhenLoaded
+
+
+//*************************************************************************
+               SelectWordWrap1() Selection - 1  02-15-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 02-15-95  From: GEORGE DE BRUIN
+                        Subj: SelectWordWrap2()
+---------------------------------------------------------------------------
+
+       SelectWordWrap2: Set WordWrap on based on file extension.
+                     When the extension is numeric
+***************************************************************************/
+
+    proc SelectWordWrap2()
+
+        string WrdWrp[5] = ""       // String to hold file extension
+        integer IsNumExt = TRUE     // Flag to compare against
+        integer x                   // Counter
+
+        x = 2                       // Initialize counter
+
+        // Get file extension
+        WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+        while x < length(WrdWrp)
+            case WrdWrp[x]
+                when ASC("0")..ASC("9")
+                        IsNumExt = TRUE
+                otherwise
+                        IsNumExt = FALSE
+                        Break
+            EndCase
+        EndWhile
+
+        // If IsNumExt is TRUE, turn WordWrap on.
+        if IsNumExt
+            Set(WordWrap, ON)
+        else
+            Set(WordWrap, OFF) // If it wasn't in the list, turn WW on.
+        endif
+    end  SelectWordWrap2
+
+    proc WhenLoaded()
+        Hook( _ON_CHANGING_FILES_, WrdWrp) // Check file extension
+                                           // whenver changing files.
+    end  WhenLoaded
+
+//*************************************************************************
+                      SelectWordWrap2()  02-15-95
+//*************************************************************************
+
+===========================================================================
+                    Date: 02-16-95  From: JIM DEVER
+                      Subj: SelectWordWrap bug FIX
+---------------------------------------------------------------------------
+
+ GDB> /*
+ GDB> * WrdWrp: Set WordWrap on based on file extension.
+ GDB> */
+
+ GDB> proc WrdWrp()
+
+
+ GDB> string WrdWrp[5] = ""       // String to hold file extension
+ GDB> integer IsNumExt = TRUE     // Flag to compare against
+ GDB> integer x                   // Counter
+
+ GDB> x = 2                       // Initialize counter
+
+ GDB> // Get file extension
+ GDB> WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+ GDB> while x < length(WrdWrp)
+ GDB>   case WrdWrp[x]
+ GDB>     when ASC("0")..ASC("9")
+ GDB>       IsNumExt = TRUE
+ GDB>   otherwise
+ GDB>       IsNumExt = FALSE
+ GDB>       Break
+ GDB>   EndCase
+ GDB> EndWhile
+
+
+  George!  I get a type mismatch on the "when" statement when I
+  compile this...  hate to be stupid but I don't see it!
+
+  case WrdWrp[x] should return a string.
+
+  when ASC("0")..ASC("9") should return an integer.  Could this be
+  the problem??
+
+  It compiles if I change this line to:
+    when CHR(ASC("0")..CHR(ASC("9"))
+  the macro compiles.  But I'm not sure what to do with it.  If I
+  put it in the autoload list...  and try to edit a BlueWave
+  message file it locks the editor up tight with the "Loading File"
+  message.  Can't tell what it's doing.  Any ideas....  am I using
+  it wrong??
+
+
+===========================================================================
+
+  Later... I found out what was wrong.  The index variable x was never
+  incremented.  I made the following modifications (marked by "-->" and it
+  seems to work!  So...  how was I at debugging?? <Grin>  Putting it in
+  the AutoLoad list works fine!
+
+  proc WrdWrp()
+
+        string WrdWrp[5] = ""       // String to hold file extension
+        integer IsNumExt = TRUE     // Flag to compare against
+        integer x                   // Counter
+
+        x = 2                       // Initialize counter
+
+        // Get file extension
+        WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+        while x < length(WrdWrp)
+            case WrdWrp[x]
+-->             when CHR(ASC("0"))..CHR(ASC("9")) //Must return STRING
+
+                        IsNumExt = TRUE
+                otherwise
+                        IsNumExt = FALSE
+                        Break
+            EndCase
+-->         x = x + 1    //Increment index to extention
+        EndWhile
+
+        // If IsNumExt is TRUE, turn WordWrap on.
+        if IsNumExt
+            Set(WordWrap, ON)
+        else
+            Set(WordWrap, OFF) // If it wasn't in the list, turn WW on.
+        endif
+    end  WrdWrp
+
+    proc WhenLoaded()
+        Hook( _ON_CHANGING_FILES_, WrdWrp) // Check file extension
+                                           // whenver changing files.
+    end  WhenLoaded
+
+//*************************************************************************
+//                SelectWordWrap bug FIX #1  02-16-95
+//*************************************************************************
+
+===========================================================================
+                 Date: 02-17-95  From: GEORGE DE BRUIN
+                    Subj: SelectWordWrap bug FIX #2
+---------------------------------------------------------------------------
+
+
+  I should have explained that you needed to use a when loaded with it to
+  hook to the _ON_CHANGING_FILES_ hook.  I don't know where my mind was.
+
+-->             when CHR(ASC("0"))..CHR(ASC("9")) //Must return STRING
+
+  Actually, this is a bit redundant...  You should be able to just:
+
+                when "0".."9"
+
+-->         x = x + 1    //Increment index to extention
+
+//*************************************************************************
+                    SelectWordWrap bug FIX  02-17-95
+//*************************************************************************
+
+===========================================================================
+                    Date: 02-27-95  From: JIM DEVER
+                        Subj: SelectWordWrap3()
+---------------------------------------------------------------------------
+
+  The following this the way I have modified that original macro
+  you helped me with to turn WordWrap ON for messages written with
+  the BlueWave Mail Reader.
+
+  I changed it so it would save the WordWrap and RightMargin status
+  at the start of the macro.
+
+  If the current file extension is numeric (BlueWave)
+  Wordwrap is set ON and the RightMargin is set to 65
+    elseif
+  the current file extension is .txt
+  WordWrap is set to ON and RightMargin is set to 72
+    else
+  the original startup settings of WordWrap and RightMargin are
+  restored.
+
+Also... in this line:
+
+        WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+  Why the concatenation of the "." on the end.  Just to prevent it
+  from returning a null string??  Or will SplitPath() always return
+  the "." in the extension???
+
+/*
+ * WrdWrp: Set WordWrap on based on file extension.
+ *
+ * Based on a macro by George De Bruin
+ *
+ * Saves startup state of WordWrap and RightMargin.  If file name
+ * extension is numeric then set WordWrap ON and RightMargin at 65
+ * (for use withe the BlueWave Mail Reader).
+ * If file name extension is ".txt" then set WorWrap ON and RightMargin
+ * at 72.  Otherwise restore WordWrap and RightMargin to original
+ * editor startup state.
+ *
+ */
+
+/*
+ * Global Variables
+ */
+
+    integer OrgWrdWrp               // Save original WrdWrp status
+    integer OrgRtMargin             // Save original RtMargin
+
+
+    proc WrdWrp()
+
+        string WrdWrp[5] = ""       // String to hold file extension
+        integer IsNumExt = TRUE     // Flag to compare against
+        integer x                   // Counter
+
+        x = 2                       // Initialize counter
+
+        // Get file extension
+        WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+        while x < length(WrdWrp)
+            case WrdWrp[x]
+                when "0".."9"
+                        IsNumExt = TRUE
+                otherwise
+                        IsNumExt = FALSE
+                        Break
+            EndCase
+            x = x + 1
+        EndWhile
+
+
+        // If IsNumExt is TRUE turn WW on and set RM to 65
+        if IsNumExt
+            Set(WordWrap, ON)
+            Set(RightMargin, 65)
+
+        //  if EXT is ".txt." set WW on and RM to 72
+        elseif WrdWrp == ".txt."
+            Set(WordWrap, ON)
+            Set(RightMargin, 72)
+
+        else
+            Set(WordWrap, OrgWrdWrp)       // If EXT is not numeric or .txt
+            Set(RightMargin, OrgRtMargin)  // restore WW and RM to origional
+                                           // startup state.
+        endif
+    end
+
+
+    proc WhenLoaded()
+
+        OrgWrdWrp = Query(WordWrap)        // Get Startup WordWrap Status
+        OrgRtMargin = Query(RightMargin)   // Get Startup RtMargin
+
+        Hook( _ON_CHANGING_FILES_, WrdWrp) // Check file extension
+                                           // whenever changing files.
+    end
+
+//*************************************************************************
+                      SelectWordWrap3()  02-27-95
+//*************************************************************************
+
+===========================================================================
+                 Date: 02-28-95  From: GEORGE DE BRUIN
+                  Subj: SelectWordWrap3() small quirk
+---------------------------------------------------------------------------
+
+  >  WrdWrp = lower(SplitPath(CurrFileName(), _EXT_))+"."
+
+  >  Why the concatenation of the "." on the end.  Just to prevent it
+  >  from returning a null string??  Or will SplitPath() always return
+  >  the "." in the extension???
+
+  In your situation this isn't quite as obvious, but in general when
+  trying to match an extension there is a problem...  Consider the
+  following:
+
+    Extension to match: .s
+
+    Extension list: .pas.sol.bas.
+
+  If we looked for ".s" in the extension list, it would match
+  ".sol"...which wasn't intended.  If instead we look for ".s.", it won't
+  match ".sol." which is what we wanted.
+
+//*************************************************************************
+                SelectWordWrap3() small quirk  02-28-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+              Date: 03-07-95  From: DAVID DANIEL ANDERSON
+                         Subj: TSE: ROT13 macro
+---------------------------------------------------------------------------
+
+
+  This macro toggles all alpha-characters in a LINE BLOCK of text
+  to and from their ROT13 counterparts.
+
+  You can use it to encrypt/ decrypt messages with ease.
+
+  Before using for encryption, please MAKE SURE that ROT13 text is
+  allowed in the conference in you wish to place your text!
+
+***************************************************************************/
+
+proc Rot13()
+integer CChar, EOF
+  if (isBlockMarked() == _LINE_) and isBlockInCurrFile()
+    PushPosition()
+    GotoBlockBegin()
+    BegLine()
+      repeat
+        CChar = CurrChar()
+          case CChar
+            when 65..77, 97..109   CChar = CChar + 13  // A..M a..m
+            when 78..90, 110..122  CChar = CChar - 13  // N..Z n..z
+          endcase
+          if CChar <> CurrChar()
+            insertText(Chr(CChar),_OVERWRITE_)
+            PrevChar()
+          endif
+        EOF = NOT NextChar()
+      until EOF or (NOT isCursorInBlock())
+    PopPosition()
+  else
+    Warn('A LINE block must be marked, and be in the current file!')
+  endif
+end
+
+proc main()
+  Rot13()
+end
+
+//*************************************************************************
+//                     TSE: ROT13 macro  03-07-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                Date: 03-22-95  From: RICHARD BLACKBURN
+                   Subj: Position in file Status Line
+---------------------------------------------------------------------------
+
+  The following macro should do what you are wanting... NOTE: you also
+  lose the indicator that macro recording is turned on.  In the next
+  release of TSE, we hope to address this.
+
+  TAKnote: Look at this for possible change in positioning the 'L 11 of
+           54' type of information from the far left to another position
+           in the status line.
+
+***************************************************************************/
+
+    integer statusline, statuslineupdating
+
+    proc Aus()
+        integer attr
+
+        attr = Set(Attr, Query(StatusLineAttr))
+        vGotoXy(1,statusline)
+        ClrEol()
+        PutStr(Format(
+                        Format("L ", CurrLine(), " of ", NumLines()):-20
+                        , "C "
+                        , CurrCol():-6
+                        , iif(Query(Insert)     , "I", " ")
+                        , iif(Query(AutoIndent) , "A", " ")
+                        , iif(Query(WordWrap)   , "W", " ")
+                        , iif(Query(LineDrawing), "L", " ")
+                        , " "
+                        , iif(FileChanged()     , "*", " ")
+                        , CurrFilename()
+                    )
+                )
+        Set(Attr, attr)
+        BreakHookChain()
+    end
+
+    proc WhenLoaded()
+        statuslineupdating = Set(StatusLineUpdating, OFF)
+        statusline = iif(Query(StatusLineAtTop), 1, Query(ScreenRows))
+        Hook(_AFTER_UPDATE_STATUSLINE_, Aus)
+    end
+
+    proc WhenPurged()
+        Set(StatusLineUpdating, statuslineupdating)
+    end
+
+//*************************************************************************
+//               Position in file Status Line  03-22-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                   Date: 04-02-95  From: JOHN W REED
+                    Subj: Toggle Current Video Mode
+---------------------------------------------------------------------------
+
+    The following two macros are very simple, but are nonetheless
+ quite useful and fun. They toggle or set the current video mode as
+ shown in the code. I use these macros incessantly while coding, to
+ switch rapidly and easily between close and landscape views of larger
+ routines. These macros require a VGA card, and are meant to be burned
+ into tse.ui. They are written the way they are to allow attachment of
+ a special routine at the end of the first macro to do [something] after
+ changing the current video mode. I use such a routine in my customized
+ tse.ui to update special global variables intended to be written to an
+ enhanced statusline. The second of the two macros is an adaptation of
+ and replacement for the original video mode menu that came with the
+ default tse.ui user interface configuration file.
+
+***************************************************************************/
+
+ constant togglevariable = 2048
+ proc mToggleOrSetCurrVideoMode(integer videomode)
+   if (videomode == togglevariable)
+     case Query(CurrVideoMode)
+       when (_25_LINES_)  videomode = _28_LINES_
+       when (_28_LINES_)  videomode = _43_LINES_
+       when (_43_LINES_)  videomode = _50_LINES_
+       when (_50_LINES_)  videomode = _25_LINES_
+     endcase
+   endif
+   Set(CurrVideoMode, videomode)
+ //iPutSpecialRoutineHereIfDesired()
+ end
+
+ menu CurrVideoModeMenu()
+   title = "Video Mode"
+   history = Query(CurrVideoMode)
+   nokeys
+   "{&25} lines", mToggleOrSetCurrVideoMode(_25_LINES_), CloseAllBefore
+   "{2&8} lines", mToggleOrSetCurrVideoMode(_28_LINES_), CloseAllBefore
+   "{&43} lines", mToggleOrSetCurrVideoMode(_43_LINES_), CloseAllBefore
+   "{5&0} lines", mToggleOrSetCurrVideoMode(_50_LINES_), CloseAllBefore
+ end
+
+ <Alt Tab>   mToggleOrSetCurrVideoMode(togglevariable)
+ <Alt `>      CurrVideoModeMenu()
+ <Alt 1>     mToggleOrSetCurrVideoMode(_25_LINES_)
+ <Alt 2>     mToggleOrSetCurrVideoMode(_28_LINES_)
+ <Alt 3>     mToggleOrSetCurrVideoMode(_43_LINES_)
+ <Alt 4>     mToggleOrSetCurrVideoMode(_50_LINES_)
+
+//*************************************************************************
+//                Toggle Current Video Mode  04-02-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                   Date: 04-02-95  From: JOHN W REED
+                     Subj: ASCII Chart Replacement
+---------------------------------------------------------------------------
+
+    The following set of macros constitute a complete drop-in enhanced
+ replacement for the ASCII chart that came with the default tse.ui user
+ interface configuration file. This ASCII chart may be toggled on and
+ off at will using the same keybinding, which is considerably more
+ convenient than being forced to use the Escape key to abort the ASCII
+ chart after popping up the ASCII chart simply to take a quick peek at
+ the hexadecimal or decimal value for the current character. Also, this
+ version makes clear the distinction between a blank and the end of the
+ line. Thanks go to George J. De Bruin (of the SemWare support staff)
+ for solving the problem of how to make possible such a toggling of the
+ keybinding.
+
+ ***************************************************************************/
+
+ /****************************************************************
+ * Return boundary adjusted for maximum available boundary (with *
+ * additional crimp as requested).                               *
+ *                                                               *
+ ****************************************************************/
+ integer proc iBoundaryFilter(integer boundary,
+                              integer boundarymax,
+                              integer crimp)
+   if not (boundary <= (boundarymax - crimp))
+     boundary = boundarymax - crimp
+   endif
+   return(boundary)
+ end
+
+ keydef kASCIIChartEsc
+   <Alt A>                       Escape()
+ //  ^^^^^^^
+ // must be same as the keybinding below
+ end
+
+ proc hkASCIIChartEscOn()
+     Enable(kASCIIChartEsc, _DEFAULT_)
+ end
+
+ proc hkASCIIChartEscOff()
+     Disable(kASCIIChartEsc)
+ end
+
+ constant no = False, negative = -1, zero = 0,
+          one = 1, two = 2, four = 4, five = 5,
+          ten = 10, fifteen = 15, sixteen = 16
+ integer asciichartid = no
+ proc mASCIIChart() /* popup (ASCII Chart) character selection */
+   string titlelist[12] = "Dec Hex Char"
+   integer memorycurrentid = GetBufferId(),
+           currcharvalue = CurrChar(),
+           asciichartselection = no,
+           widthlist, counter
+   if (asciichartid == no)
+     asciichartid = CreateTempBuffer()
+     if not (asciichartid == no)
+       counter = 255
+       while (counter >= zero)
+             and InsertLine(Format(Str(counter, ten): five,
+                                   Str(counter, sixteen): four,
+                                   Chr(counter): five), asciichartid)
+         counter = counter - one
+       endwhile
+       InsertLine(Format("<out of line>": fifteen), asciichartid)
+     endif
+   endif
+   if not (GotoBufferId(asciichartid) == no)
+     BegFile()
+     widthlist = iBoundaryFilter((CurrLineLen() + one),
+                                 Query(ScreenCols), zero)
+     if (currcharvalue >= zero)
+       GotoLine(currcharvalue + two)
+     endif
+     Hook(_LIST_STARTUP_, hkASCIIChartEscOn)
+     Hook(_LIST_CLEANUP_, hkASCIIChartEscOff)
+     asciichartselection = List(titlelist, widthlist)
+     UnHook(hkASCIIChartEscOn)
+     UnHook(hkASCIIChartEscOff)
+     currcharvalue = CurrLine() - two
+   endif
+   GotoBufferId(memorycurrentid)
+   if not (asciichartselection == no)
+     case currcharvalue
+       when negative
+         DelToEOL()
+       when 0..255
+         InsertText(Chr(currcharvalue), _DEFAULT_)
+     endcase
+   endif
+ end
+
+ <Alt A>   mASCIIChart()
+
+
+//*************************************************************************
+//                 ASCII Chart Replacement  04-02-95
+//*************************************************************************
+//START ordinal series of macros
+/**************************************************************************
+===========================================================================
+                   Date: 04-02-95  From: JOHN W REED
+                 Subj: Find Ordinal Word - 1st Version
+---------------------------------------------------------------------------
+
+    The following pair of macros are meant to allow easy access to any
+ specific ordinal word on any specific line within the current buffer.
+ They are for internal use only, and not for binding to a key. They
+ replace a roughly equivalent but less capable pair of macros in the
+ default tse.ui user interface configuration file. The first of the
+ two following macros originated approximately two years ago with
+ (I believe) David Marcus.
+
+***************************************************************************/
+
+ constant zero = 0, one = 1
+ string emptystring[0]
+
+ string proc iGetWordAtCursor()
+   string wordatcursor[127] = emptystring
+   PushPosition()
+   PushBlock()
+   if MarkWord() or (Left() and MarkWord())
+     wordatcursor = GetMarkedText()
+   endif
+   PopBlock()
+   PopPosition()
+   return(wordatcursor)
+ end
+
+ string proc iGetOrdinalWordInLine(integer linenum, integer ordinal)
+   string ordinalwordinline[127] = emptystring
+   integer wordnum = zero
+   PushPosition()
+   GotoLine(linenum)
+   if (PosFirstNonWhite() >= one)
+     GotoPos(PosFirstNonWhite())
+     repeat
+       if isWord()
+         wordnum = wordnum + one
+       endif
+     until (wordnum == ordinal) or not WordRight() or not isWord()
+     if isWord()
+       ordinalwordinline = iGetWordAtCursor()
+     endif
+   endif
+   PopPosition()
+   return(ordinalwordinline)
+ end
+
+//*************************************************************************
+//             Find Ordinal Word - 1st Version  04-02-95
+//*************************************************************************
+/**************************************************************************
+===========================================================================
+                   Date: 04-02-95  From: JOHN W REED
+                 Subj: Ordinal Word with Fixes i.e. #2
+---------------------------------------------------------------------------
+           TYPE:  Internal ( i.e. Must be used in your *.ui )
+---------------------------------------------------------------------------
+
+    The following pair of macros are meant to allow easy access to any
+ specific ordinal word on any specific line within the current buffer.
+ They are for internal use only, and not for binding to a key. They
+ replace a roughly equivalent but less capable pair of macros in the
+ default tse.ui user interface configuration file. The first of the
+ two following macros originated approximately two years ago with
+ (I believe) David Marcus.
+
+***************************************************************************/
+
+ constant zero = 0, one = 1
+ string emptystring[0]
+
+ string proc iGetWordAtCursor()
+   string wordatcursor[127] = emptystring
+   PushPosition()
+   PushBlock()
+   if MarkWord() or (Left() and MarkWord())
+     wordatcursor = GetMarkedText()
+   endif
+   PopBlock()
+   PopPosition()
+   return(wordatcursor)
+ end
+
+ constant maxeditorcolumn = 2032
+
+string proc iGetOrdinalWordInLine(integer linenum, integer ordinal)
+   string ordinalwordinline[127] = emptystring
+   integer wordnum = zero
+   PushPosition()
+   GotoLine(linenum)
+   if (PosFirstNonWhite() >= one)
+     GotoPos(PosFirstNonWhite())
+     repeat
+       if isWord()
+         wordnum = wordnum + one
+       endif
+     until (wordnum == ordinal)
+           or (CurrCol() == maxeditorcolumn)
+           or not WordRight()
+           or not isWord()
+     if isWord() and (wordnum == ordinal)
+       ordinalwordinline = iGetWordAtCursor()
+     endif
+   endif
+   PopPosition()
+   return(ordinalwordinline)
+ end
+
+//*************************************************************************
+//                    Ordinal Word with Fixes 04-02-95
+//*************************************************************************
+
+/**************************************************************************
+
+===========================================================================
+                   Date: 04-03-95  From: JOHN W REED
+                 Subj: TSEditor Macro Fix Redux i.e. #3
+---------------------------------------------------------------------------
+
+    The previous fix did not work right upon further paranoid testing.
+ This annoyed me enough that I've thoroughly fixed the logic once and
+ for all. It works perfectly now, at the cost of some slowdown for the
+ additional overhead. You may wish to use the original version that I
+ posted if you know for a fact that the line length will never reach
+ exactly 2032 characters (the maximum line length under TSEditor 2.00)
+ AND have a non-white character at the end of the line. That original
+ version is noticeably faster and may be suitable for any application
+ for which you may have it in mind.
+
+    There is an additional macro required to make this fixed routine
+ work right. This additional macro may be used as a standalone macro
+ bound to a key. Ordinarily, a marked word cannot be copied or moved
+ over existing text as can be a marked column block. This additional
+ macro marks a word as a column block, so that it can be copied or
+ moved over another part of your text. It returns the same values as
+ MarkWord() and can be used as a drop-in replacement for MarkWord().
+
+    Here is the entire macro set again, but fixed and thoroughly
+ debugged:
+
+
+***************************************************************************/
+
+
+ constant yes = True, no = False,
+          zero = 0, one = 1, two = 2, ten = 10,
+          maxeditorcolumn = 2032
+ string emptystring[0]
+
+ integer proc mMarkWord() /* mark word as column block */
+     integer success = no
+     if isWord()
+         MarkWord()
+         MarkColumn(CurrLine(), Query(BlockBegCol),
+                    CurrLine(), Query(BlockEndCol))
+         success = yes
+     endif
+     return(success)
+ end
+
+ string proc iGetWordAtCursor()
+     string wordatcursor[127] = emptystring
+     PushPosition()
+     PushBlock()
+     if MarkWord() or (Left() and MarkWord())
+         wordatcursor = GetMarkedText()
+     endif
+     PopBlock()
+     PopPosition()
+     return(wordatcursor)
+ end
+
+ string proc iGetOrdinalWordInLine(integer linenum, integer ordinal)
+     string ordinalwordinline[127] = emptystring
+     integer wordnum = zero
+     PushPosition()
+     GotoLine(linenum)
+     if (PosFirstNonWhite() >= one)
+         GotoPos(PosFirstNonWhite())
+         PushBlock()
+         repeat
+             if isWord()
+                 mMarkWord()
+                 GotoBlockEnd()
+                 UnMarkBlock()
+                 wordnum = wordnum + one
+             endif
+         until (wordnum == ordinal)
+               or (CurrCol() == maxeditorcolumn)
+               or not WordRight()
+               or not isWord()
+         PopBlock()
+         if isWord() and (wordnum == ordinal)
+             ordinalwordinline = iGetWordAtCursor()
+         endif
+     endif
+     PopPosition()
+     return(ordinalwordinline)
+ end
+
+ proc mTest(integer line, integer words)
+     string wordcapture[127] = emptystring
+     integer counter = one
+     repeat
+         wordcapture = "Word (" + Str(counter, 10) + "): "
+                     + iGetOrdinalWordInLine(line, counter)
+         AddLine(wordcapture)
+         counter = counter + one
+     until not (counter <= words)
+ end
+
+
+ <Alt T>   mTest(one, ten)
+
+//*************************************************************************
+//               TSEditor Macro Fix Redux #3  04-03-95
+//*************************************************************************
+
+
+/**************************************************************************
+===========================================================================
+                   Date: 04-03-95  From: JOHN W REED
+                    Subj: Get Ordinal Word Macro  #4
+---------------------------------------------------------------------------
+
+    I am embarrassed by that awful kludge that I posted a day ago. It
+ worked well enough after the last, most vigorous bug eradication, but
+ was an absurdly convoluted way to perform a simple act. Also, it may
+ not even have been perfect yet. It may have been unable to handle
+ certain other rather common conditions. I don't know anymore, because
+ that macro went into the bit bucket. It has now been replaced with a
+ much better macro with a different approach and more generality.
+
+    The following pair of macros offers the ability to get any ordinal
+ word (if it exists) in any line in any loaded buffer. The first of the
+ two macros is a slight rewording of a macro by (I think) David Marcus,
+ and the second is my own supercalifragilisticexpialadocious effort.
+ These two macros are meant to be used internally and not bound to a
+ key.
+
+    The simple test macro is meant to display the capability of the two
+ macros working in tandem. To try it, compile the macros below as a
+ single file. Execute the compiled macro to activate the key binding.
+ Write whatever you like on line one of a test file. Press <Alt D>.
+
+    Please let me know if this macro pair proves to be useful
+ to you, and of course if there are any more bugs needing to
+ be pounced upon with a big ol' can of Black Raid.
+
+***************************************************************************/
+
+ constant no = False, zero = 0, one = 1, ten = 10, twenty = 20
+ string emptystring[0]
+
+ string proc iGetWordAtCursor()
+     string wordatcursor[127] = emptystring
+     PushPosition()
+     PushBlock()
+     UnMarkBlock()
+     if MarkWord() or (Left() and MarkWord())
+         wordatcursor = GetMarkedText()
+     endif
+     PopPosition()
+     PopBlock()
+     return(wordatcursor)
+ end
+
+ string proc iGetOrdinalWordInLine(integer bufferid,
+                                   integer linenum,
+                                   integer ordinal)
+     string ordinalwordinline[127] = emptystring
+     integer memorycurrentid = GetBufferId(),
+             scratchid = no,
+             wordnum = zero
+     GotoBufferId(bufferid)
+     PushPosition()
+     PushBlock()
+     UnMarkBlock()
+     GotoLine(linenum)
+     if (PosFirstNonWhite() >= one)
+         MarkLine()
+         Set(Marking, Off)
+         scratchid = CreateTempBuffer()
+         if not (scratchid == no)
+             CopyBlock()
+             UnMarkBlock()
+             GotoPos(PosFirstNonWhite())
+             repeat
+                 if isWord()
+                     wordnum = wordnum + one
+                 endif
+                 EndWord()
+             until (wordnum == ordinal)
+                   or not WordRight()
+             if (wordnum == ordinal)
+                 ordinalwordinline = iGetWordAtCursor()
+             endif
+             AbandonFile(scratchid)
+         endif
+     endif
+     PopPosition()
+     PopBlock()
+     GotoBufferId(memorycurrentid)
+     return(ordinalwordinline)
+ end
+
+ proc mTest(integer line)
+     string captureword[140] = emptystring
+     integer counter = one
+     repeat
+         captureword = "Word (" + Str(counter, ten) + "): "
+                     + iGetOrdinalWordInLine(GetBufferId(), line,
+counter)
+         Addline(captureword)
+         counter = counter + one
+     until not (counter <= twenty)
+ end
+
+ <Alt D>   mTest(one)
+
+//*************************************************************************
+//                Get Ordinal Word Macro  #4  04-03-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 04-06-95  From: GEORGE DE BRUIN
+                        Subj: Variable Tabstops
+---------------------------------------------------------------------------
+
+>  Is there no command to change the VarTabs-variable interactively?
+>  Now I have to do: <Alt-O><F><M><V>{Change it}<Esc><Esc><Esc><Esc>
+>  Because I do a lot of "kolumn-jobs" lately, this is, so you
+>  probably can imagine, not my way of having a nice time.... :-)
+
+  The problem here is that the string that is passed into TabSet() has to
+  be a _constant_ string.  It cannot be a variable that you read in
+  dynamically.  You should be able to do something like this:
+
+***************************************************************************/
+
+// TabSetMenu(): A Menu containing select variable tab stop settings.
+
+    menu TabSetMenu()
+
+        "1, 4, 7, 10..."
+        "5, 10, 15, 20..."
+        "10, 20, 40, 60..."
+    end
+
+// SetVarTabs():
+//
+// - Display the TabSetMenu()
+// - Use the selected Item to set the variable tab stops.
+
+    proc SetVarTabs()
+        integer WhichString
+
+        TabSetMenu()
+        WhichString = MenuOption()
+        if WhichString
+            Case WhichString
+                when 1 Set(VarTabs, TabSet("1 4 7 10"))
+                when 2 Set(VarTabs, TabSet("5 10 15 20"))
+                when 3 Set(VarTabs, TabSet("10 20 40 60"))
+            EndCase
+        endif
+    end
+
+    <Alt F12>   SetVarTabs()
+
+//*************************************************************************
+//                    Variable Tabstops  04-06-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 04-10-95  From: GEORGE DE BRUIN
+                    Subj: Delete Lines with criteria
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³I need a way to look for and delete every line like this in the
+  ³(very large) file in Tessie....is there a macro that'll do this
+  ³for me?
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+
+  This is actually fairly simple to do:
+
+***************************************************************************/
+
+    proc StripSeen()
+        PushBlock()         // Save a block, if open.
+        PushPosition()      // Save user's position
+        UnMarkBlock()       // UnMark block (if there is one)
+        BegFile()           // Start at the beginning of the file
+        while lFind("^\x01{SEEN-BY}|{PATH}","X")  // Find the 'SEEN-BY'
+                                                  // or 'PATH' lines
+            DelLine()       // Delete the line
+        EndWhile            // Do the find again
+        PopPosition()       // Restore user's position
+        PopBlock()          // Restore User's Block
+    end
+
+/*
+Note that I limited it to only grabbing your SEEN-BY and PATH lines.  If
+you wanted it to just get rid of all of the Kludge lines you could just
+search for:
+
+      lFind("^\x01","X")
+
+Instead.
+*/
+
+//*************************************************************************
+//                Delete Lines with criteria  04-10-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+              Date: 04-12-95  From: DAVID DANIEL ANDERSON
+                    Subj: TSE macro trims FIDO mail
+---------------------------------------------------------------------------
+
+> I import a very large conference in FIDO every day, and need to trim the
+> file before printing it out. After every message, there is a listing of
+
+***************************************************************************/
+
+proc main()
+  PushPosition()
+    BegFile()
+    while lFind('^'+chr(1)+'SEEN-BY:','x') DelLine() endwhile
+    BegFile()
+    while lFind('^'+chr(1)+'PATH:','x') DelLine() endwhile
+  PopPosition()
+end
+
+//*************************************************************************
+//                TSE macro trims FIDO mail  04-12-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                    Date: 04-18-95  From: PAUL LENZ
+                    Subj: ShowMatchingBrackets V1.2
+             TAKnote: 1.2.1 changed from International Keys
+---------------------------------------------------------------------------
+
+/****   ShowMatchingBracket() Version 1.2  shows where a
+        matching bracket is.
+*****
+
+
+Macro written  26.3.1995 by: Paul Lenz                proppi@sampo.han.de
+                             Friesenstrasse 22
+                             D-30161 Hannover
+                             Germany
+Released:      17.04.1995
+
+  ShowMatchingBracket() shows a matching bracket while you type a
+  bracket key. This means: if you type ")", this macro searches
+  backwards for a matching "(", displays it for a short thime and
+  returns where you were. If no matching bracket was found, an alarm
+  occurs. This macro avoids you counting brackets or invoke mMatch().
+
+  The bracket key definitions on the end of the file are codes for a
+  German keyboard. Use the macro ShowKey to find the codes for other
+  keyboards.
+
+  For fastest operation, set DISTANCE to a suitable value:
+
+        If DISTANCE = 0, every matching bracket is showed.
+        If DISTANCE = 1, "()" is not showed, but "( )".
+
+
+###########################################################################
+
+04/18/95:    Version 1.2.1  Changed key assignments from the
+             international set to the US key assignments.  It would NOT
+             work with the international keys.  Change by Tom Klein
+
+                      Internet: tomklein@cris.com
+                      SemWare:  all TSE conferences
+
+Version 1.2: Now the macro skips strings between quote characters, so
+             brackets in such strings will not be counted.
+
+Version 1.1: Delay(TIME) was replaced by a loop which checks the
+             keyboard status. So you can break off the delay by
+             simply pressing the next key.
+
+###########################################################################
+
+***************************************************************************/
+
+proc ShowMatchingBracket(string br)             // br = bracket you typed in
+
+    constant    TIME     = 20   // matching bracket display time [1/18 sec]
+    constant    DISTANCE =  3   // min. working distance
+
+    integer ics,    // insert cursor size
+            inm,    // insert modus
+            kc,     // bracket counter
+            dist,   // distance counter
+            ti,     // delay time counter
+            qc      // found quote character
+    string  opp[1]  // opposite bracket
+
+    ics = Query(InsertCursorSize)       // save old cursor size
+    inm = Query(Insert)                 // save old insert mode
+    case br
+        when ")" opp = "("              // list of opposite brackets
+        when "]" opp = "["
+        when "}" opp = "{"
+        when ">" opp = "<"
+        otherwise Alarm()               // just for programmer's error
+    endcase
+
+    InsertText(br)                      // insert bracket
+    UpdateDisplay()                     // and show it
+    PushPosition()
+    kc = 0                              // reset bracket counter
+    dist = -2                           // reset distance counter
+    loop
+        if PrevChar()                   // go backwards
+            dist = dist + 1             // count distance
+            case CurrChar()
+                when asc(br)            // add bracket to bracket counter
+                    kc = kc + 1
+                when asc(opp)           // subtract opposite from counter
+                    kc = kc - 1
+                when 34, 39             // quote character:
+                    qc = CurrChar()             // save it
+                    repeat
+                        if NOT PrevChar()       // go backwards...
+                            break               // stop at file beginning
+                        endif
+                        dist = dist + 1
+                    until CurrChar() == qc      // ... until prev. quote
+                otherwise
+            endcase
+            if kc == 0                  // matching bracket found:
+                break                   // stop searching
+            endif
+        else                            // file beginning found:
+            Alarm()                     // alarm for no matching bracket
+            PopPosition()
+            Return()                    // abort macro
+        endif
+    endloop
+
+    if dist < DISTANCE                  // if distance is too short:
+        PopPosition()
+        Return()                        // abort macro
+    endif
+
+    set(InsertCursorSize,8)             // display full cursor
+    set(Insert,1)                       // switch to insert mode
+    UpdateDisplay()                     // display matching bracket
+    ti = GetClockTicks() + TIME
+    while GetClockTicks() < ti          // delay until time-out
+          AND NOT KeyPressed()          // or key press
+    endwhile
+    set(InsertCursorSize, ics)          // restore cursor size
+    set(Insert, inm)                    // restore insert mode
+    PopPosition()
+end
+
+//**************************************************************************
+// Bracket key definitions:
+/*
+//International Key Assignments will NOT work in US version.
+<2601>      ShowMatchingBracket(")")
+<2653>      ShowMatchingBracket("]")
+<2941>      ShowMatchingBracket("}")
+<22078>     ShowMatchingBracket(">")
+*/
+
+<Shift 0>   ShowMatchingBracket(")")
+<]>         ShowMatchingBracket("]")
+<Shift ]>   ShowMatchingBracket("}")
+<Shift .>   ShowMatchingBracket(">")
+
+//*************************************************************************
+//               ShowMatchingBrackets V1.2  04-18-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 04-24-95  From: GEORGE DE BRUIN
+                          Subj: Printing SetUp
+---------------------------------------------------------------------------
+                       Needs work to get it run.
+---------------------------------------------------------------------------
+
+  > Is there a way to set up TSE-Pro so that when I hit a key, it'll
+  > ask "Which printer: Label printer, or Laser printer?", then load
+  > a specific printer setup associated with that selection?
+
+  Yes, you can write a macro that would set up your printer before
+  printing a file.  It would look something like this:
+
+--------------------------------------------------------------------------
+
+  When you press Ctrl Alt F12, this macro would display a menu allowing
+  you to chose from your Label Printer or the Laser Printer.  It then
+  sets the printer appropriately for type of printing job, it prints the
+  current document, then it restores your original printer settings.
+
+  Hope this helps!  If you need any more help in writing a macro to do
+  what you need, just give me a hollar!
+
+***************************************************************************/
+
+proc PrintSet(integer setup)
+
+    integer oPrintAddFF,     // You can add any strings or integers
+            PrintBotMargin,      // to these declarations for saving /
+            oPrintTopMargin       // restoring your original printer
+    string oPrintDevice[250],     // settings
+           oPrintInit[255]
+
+    oPrintDevice = Set(PrintDevice, iif(set, "LPT1", "LPT2"))
+    oPrintAddFF = Set(PrintAddFF, iif(set, ON, OFF))
+    oPrintBotMargin = Set(PrintBotMargin, iif(set, 3, 8))
+    oPrintTopMargin = Set(PrintTopMargin, iif(set, 3, 8))
+    oPrintInit = Set(PrintInit, iif(set, "", "xxxyyy"))
+// Any other printer settings based on the above pattern....
+    PrintFile()
+
+    Set(PrintDevice, oPrintDevice)
+    Set(PrintAddFF, oPrintAddFF)
+    Set(PrintBotMargin, oPrintBotMargin)
+    Set(PrintTopMargin, oPrintTopMargin)
+    Set(PrintInit, oPrintInit)
+    // Anything else you need to restore to it's original value
+end
+
+menu PrintItMnu()
+    Title = "Which Printer?"
+
+    "&Label Printer", PrintSet(0)
+    "La&ser Printer", PrintSet(1)
+end
+
+<CtrlAlt F12> PrintItMnu()
+
+//*************************************************************************
+//                      Printing SetUp  04-24-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 04-28-95  From: GEORGE DE BRUIN
+                          Subj: page numbering
+---------------------------------------------------------------------------
+
+  There is a simple process, but as it turns out, it isn't an easy macro
+  to write...  Let me explain:
+
+  What you could do is the following:
+
+    - Print the file to a temporary file on disk.
+    - Edit the temporary file, and remove the "Page"'s using
+      search and replace.
+    - Change your printer settings to remove all margins, page settings,
+      line spacing, headers, footers, etc.
+    - Set the device back to your printer, and print the modified
+      temporary file.
+    - Erase the temporary file, temporary buffer, reset the printer
+      options, etc. then exit.
+
+  Not too difficult to think about, but there are a lot of extra checks
+  and things that need to be done along the way.
+
+  Anyway, I have put together a macro for you:
+
+***************************************************************************/
+
+/* ****************************************************************** *
+ * Macro: Adjust Page Numbers                                         *
+ * By...: GDB                                                         *
+ * Date.: 4-28-95                                                     *
+ *                                                                    *
+ * Description:                                                       *
+ *                                                                    *
+ *  This macro will print the current file to a temporary file,       *
+ *  then load the temporary file and remove all of the "Page"'s       *
+ *  before the page number, and then print the temporary file.        *
+ *                                                                    *
+ * Usage Notes:                                                       *
+ *                                                                    *
+ *  This will only work if the page number is in the header, and is   *
+ *  the only item in the header. The macro does check the header      *
+ *  settings, and will abort with an error message if not set         *
+ *  correctly.                                                        *
+ * ****************************************************************** */
+
+proc AdjPgNum()
+
+    // First, we need a few variables to store the printer settings.
+
+    integer oPrintBotMargin, oPrintCopies, oPrintFirstPage,
+            oPrintLastPage, oPrintLeftMargin, oPrintLineNumbers,
+            oPrintLineSpacing, oPrintLinesPerPage, oPrintRightMargin,
+            oPrintTopMargin, pTBuffId, oBuffId
+
+    string  oPrintDevice[255], oPrintFooter[4], oPrintHeader[4],
+            oPrintInit[255]
+
+    // First, get the ID of the current file
+
+    oBuffId = GetBufferId()
+
+    // Now check the header setting before we go any further!
+
+    oPrintHeader = Query(PrintHeader)
+    if Length(oPrintHeader) <> 1 and Upper(oPrintHeader) <> 'P'
+        Warn("Header setting not correct!")
+        Return()
+    endif
+
+    // Check for temporary file, if it exists, exit macro with
+    // warning.  If it doesn't exist, set print device to use that
+    // file.
+
+    if not FileExists("$prnout$.$$$")
+        oPrintDevice = Set(PrintDevice, "$prnout$.$$$")
+    else
+        message("$PRNOUT$.$$$ file already exists! Please Check!!")
+        return()
+    endif
+
+    // If we've made it this far, we can attempt to print the file!
+    // If there is an error, give warning, attempt to clean up, and
+    // exit macro.
+
+    if not PrintFile()
+        Warn("Error Occurred While Printing file ", CurrFileName())
+        Goto ErrExit
+    endif
+
+    // Okay, now that we've printed to the temporary file, we want to
+    // load the file into a temporary buffer.
+
+    pTBuffId = CreateTempBuffer()
+    if GotoBufferId(pTBuffID)
+        if not InsertFile("$prnout$.$$$")
+            Warn("Unable to load temporary file")
+            Goto ErrExit
+        endif
+    else
+        Warn("Unable to Create / Goto Temporary Buffer")
+        Goto ErrExit
+    endif
+
+    // Now, we should be in the temporary buffer, and we should
+    // have the temporary file loaded. Now we modify it to remove
+    // any 'Page' entries.
+    lReplace("{[ ]#}{Page}{[ ]#}{[0-9]#}$","\1    \3\4","GXN")
+
+    // Now we adjust the printer options...
+
+    Set(PrintDevice, oPrintDevice)          // Back it's original setting!
+    oPrintBotMargin = Set(PrintBotMargin, 0)
+    oPrintCopies = Set(PrintCopies, 1)
+    oPrintFirstPage = Set(PrintFirstPage, 0)
+    oPrintFooter = Set(PrintFooter, "")
+    oPrintHeader = Set(PrintHeader, "")
+    oPrintInit = Set(PrintInit, "")
+    oPrintLastPage = Set(PrintLastPage, 0)
+    oPrintLeftMargin = Set(PrintLeftMargin, 0)
+    oPrintLineNumbers = Set(PrintLineNumbers, OFF)
+    oPrintLineSpacing = Set(PrintLineSpacing, 1)
+    oPrintLinesPerPage = Set(PrintLinesPerPage, 0)
+    oPrintRightMargin = Set(PrintRightMargin, 0)
+    oPrintTopMargin = Set(PrintTopMargin, 0)
+
+    PrintFile()                             // This is it!  We print the file
+
+    // Now we reset the printer options back to their original settings
+
+    Set(PrintBotMargin, oPrintBotMargin)
+    Set(PrintCopies, oPrintCopies)
+    Set(PrintFirstPage, oPrintFirstPage)
+    Set(PrintFooter, oPrintFooter)
+    Set(PrintHeader, oPrintHeader)
+    Set(PrintInit, oPrintInit)
+    Set(PrintLastPage, oPrintLastPage)
+    Set(PrintLeftMargin, oPrintLeftMargin)
+    Set(PrintLineNumbers, oPrintLineNumbers)
+    Set(PrintLineSpacing, oPrintLineSpacing)
+    Set(PrintLinesPerPage, oPrintLinesPerPage)
+    Set(PrintRightMargin, oPrintRightMargin)
+    Set(PrintTopMargin, oPrintTopMargin)
+
+    ErrExit:                         // Cleanup left-over buffers, etc.
+    GotoBufferId(oBuffId)
+    if pTBuffID
+        if not AbandonFile(pTBuffID)
+            Warn("Error abandoning temporary buffer.")
+        endif
+    endif
+
+    if FileExists("$prnout$.$$$") and not EraseDiskFile("$PRNOUT$.$$$")
+            Warn("Error occurred attempting to erase $PRNOUT$.$$$ file!")
+    endif
+    Set(PrintDevice, oPrintDevice)   // Reset the Printer Device
+end     // Exit the macro
+
+<Alt F12>   AdjPgNum()
+
+
+//*************************************************************************
+//                      page numbering  04-28-95
+//*************************************************************************
+
+===========================================================================
+                   Date: 05-07-95  From: ALEX WILSON
+                            Subj: User Input
+---------------------------------------------------------------------------
+
+  ´It is the check for user input I have problems with. I have tried using
+  ´KeyPressed(). This works but any key that is pressed is echoed on the
+  ´screen. Another option was GetKey() but this waits for a user input.
+
+  I never thought about combining the Keypressed() and Getkey() as
+  follows;
+
+        if Keypressed() and Getkey() == <Escape>
+                Return()
+        endif
+
+  This works just fine. Thanks "DiK" and thanks for the File Manager
+  3.1. Anyway please feel free to tell me if you know of another way of
+  doing it.
+
+//*************************************************************************
+//                        User Input  05-07-95
+//*************************************************************************
+
+===========================================================================
+                 Date: 05-24-95  From: GEORGE DE BRUIN
+                     Subj: TSE Alternate WrapPara()
+---------------------------------------------------------------------------
+
+  Here's the macro you wanted to go to the beginning of a paragraph and
+  wrap it.  It will leave the cursor on the 2nd line below the paragraph
+  (which in most cases should be your next paragraph).
+
+proc AltWrap()
+
+    If lFind("^$","XB")     // Find previous blank line
+        Down()              // Move to first line of paragraph
+        WrapPara()          // Warp paragraph
+        Down()              // Down one line
+    endif
+
+end
+
+Just assign this macro to a key, compile it, and you should be set.
+
+
+//*************************************************************************
+//                 TSE Alternate WrapPara()  05-24-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 06-16-95  From: GEORGE DE BRUIN
+                   Subj: TSEpro macro inserting lines
+---------------------------------------------------------------------------
+
+***************************************************************************/
+
+proc ManyLines()
+    string  sParaTitle[255] = ""
+    integer iParaStartLine, iParaEndLine
+
+
+    PushPosition()                                 // Save start position
+    PushBlock()                                    // Save starting block
+
+    BegFile()                                      // Start at top of file
+    BegLine()
+    UnMarkBlock()
+
+    While lFind("^<<{.*}\c$","X")                  // Find Paragraph Title
+        MarkFoundText(1)
+        sParaTitle = GetMarkedText()               // Get title
+        iParaStartLine = CurrLine()                // Get paragraph start
+        UnMarkBlock()                              // UnMark() title
+        PushPosition()                             // Save position
+        if lFind("^<<{.*}\c$","X")                 // Find next paragraph
+           iParaEndLine = CurrLine() -2            // Find paragraph end
+        else
+            iParaEndLine = NumLines()              // If not another
+                                                   // paragraph, assume
+                                                   // end of file
+        endif
+        PopPosition()                              // Goto paragraph start
+        while iParaStartLine + 100 < iParaEndLine  // While not outside
+                                                   // of current paragraph
+            iParaStartLine = iParaStartLine + 100
+            GotoLine(iParaStartLine)               // Go down 100 lines
+            InsertLine(">> "+sParaTitle)           // Insert Title Line
+        endwhile
+    endWhile
+
+    PopPosition()                                  // Restore start position
+    PopBlock()                                     // Restore start block
+    message("Macro Complete.")
+end
+
+<Alt F8> ManyLines()
+
+//*************************************************************************
+//               TSEpro macro inserting lines  06-16-95
+//*************************************************************************
+
+/**************************************************************************
+
+From:             Karlh@cris.com
+Date sent:        Mon, 21 Aug 95 22:58:46 EDT
+
+                ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                ³ Internet header stripper ³
+                ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+TAKnote: Needs work -  DATE: find causes problem because different mail
+                       handles enter in different forms.  One other form
+                       noted was 'Date Sent:'
+
+  Here's a stripper that I use to clip my Internet headers in a REPLY
+  form.  Saves some strokes; fix the FIND() lines to suit yourself.
+
+  This macro is intended for use with an off-line reader (such as OLX
+  for Windows) when replying to a message which contains the full
+  Internet Header in the REPLY form.
+
+  The macro will discard all the lines from the header except those
+  beginning with the words Name, Subject, and Date. These three lines
+  will be pasted at the top of the REPLY form and the cursor will move
+  to the bottom line of the quoted message so the user may begin typing
+  a reply.
+
+  On my machine I have burned the macro in and bound it to the keys
+  Ctrl-F3 so that it is always available when I am using TSE 2.0.
+  However, the macro may be loaded and used without doing that and I've
+  just assigned the Ctrl-F3 keys to it in this copy.
+
+***************************************************************************/
+
+proc Header()
+
+        integer m = 0
+
+        Find("From:","GI")  //G starts search at line 1 of message
+        Mark(_LINE_)        //Marks a line block
+        Copy(_DEFAULT_)     //Erases before copying
+
+        //Find("Date:", "GI") //I forces case-insensitive search
+        //          ___ pastes find below when not found
+        //               in the header "Date sent:"
+        //
+        Find("Date", "GI")   //I forces case-insensitive search
+        Mark(_LINE_)
+        MarkLine()
+        Copy(_APPEND_)      //Appends before copying
+
+        Find("Subject:", "GI")
+        Mark(_LINE_)
+        Copy(_APPEND_)
+
+        GotoLine(1)
+        InsertLine()
+        Paste()
+
+   while m < 4
+     Down()
+     m = m + 1
+   endwhile
+
+   while CurrLineLen() <> 0      //locates the first blank line
+         Mark(_LINE_)            //marks a line block
+         Down()                  //moves down 1 until CLL=0
+   endwhile
+
+   DelBlock()
+   InsertLine()
+   GotoRow(Query(WindowRows))
+   InsertLine("===============REPLY FOLLOWS===============")
+   AddLine()
+   GotoRow(Query(WindowRows))  //Puts cursor on bottom line
+
+end  Header
+
+<Ctrl F3>  Header()
+
+//*************************************************************************
+//                 Internet header stripper  08/22/95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                  Date: 03-14-95  From: SAMMY MITCHELL
+                   Subj: NoFussNoMussSaveAndQuitFile
+---------------------------------------------------------------------------
+***************************************************************************/
+
+proc NoFussNoMussSaveAndQuitFile()
+    integer make_backups, protected_saves
+
+    make_backups = Set(MakeBackups, off)
+    protected_saves = Set(ProtectedSaves, off)
+    SaveAndQuitFile()
+    Set(MakeBackups, make_backups)
+    Set(ProtectedSaves, protected_saves)
+end
+
+<Alt q> NoFussNoMussSaveAndQuitFile()
+
+//*************************************************************************
+                 NoFussNoMussSaveAndQuitFile  03-14-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+               Date: 03-15-95  From: SIEGHARD SCHICKTANZ
+                       Subj: TAB selection
+---------------------------------------------------------------------------
+***************************************************************************/
+
+proc mLanguageTabs ()
+
+    case CurrExt ()
+        when ".s", ".ui", ".c", ".h", ".cpp"
+            Set (TabWidth, 4)                           //SchS\\
+        when ".pas"
+            Set (TabWidth, 2)                           //SchS\\
+        when ".prg"
+            Set (TabWidth, 3)                           //SchS\\
+        otherwise
+            Set (TabWidth, 8)           // default value
+    endcase
+end  mLanguageTabs
+
+//*************************************************************************
+                        TAB selection  03-15-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                   Date: 03-19-95  From: PETER BIRCH
+                          Subj: SLASH.S ver 2
+---------------------------------------------------------------------------
+
+>  Here is another way to convert slashes to backslashes
+
+***************************************************************************/
+
+proc mFixFileName (var string fileNameToFix)
+    integer     i, j
+    j = length(fileNameToFix)
+    for i = 1 to j
+        if (fileNameToFix[ i] == '/')
+            fileNameToFix[ i] = '\'
+        endif
+    endfor
+end
+
+I don't know when they started letting us change a character inline like
+this but I tried it a few betas back and it worked!
+
+//*************************************************************************
+//                      SLASH.S ver 2  03-19-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                Date: 04-28-95  From: RICHARD BLACKBURN
+                      Subj: Ask() Prompt > 1 line?
+---------------------------------------------------------------------------
+
+  The macro I sent to you was an example of how to get multi-line input.
+  Apparently I mis-read your original message, you were wanting
+  multiline prompts, not input.  For a multiline prompt, you would use
+  the PopWinOpen(), PopWinClose(), PutStr(), and Read() commands to make
+  a multiline prompt string.  Then you could use whatever character you
+  wanted to be your line separator.
+
+***************************************************************************/
+
+//Pseudo code:
+
+    Ask2(string prompt, var string reply)
+        count eol chars in prompt
+        open window num eol chars + 3
+        writeline/putline each part of prompt
+        read input into reply
+        close window
+
+  If you want history, you could also pass in a integer hist_no, and use
+  it in the Read() command.
+
+
+//*************************************************************************
+//                  Ask() Prompt > 1 line?  04-28-95
+//*************************************************************************
+
+===========================================================================
+                  Date: 06-09-95  From: SAMMY MITCHELL
+                   Subj: OLD BegFile/EndFile behavior
+---------------------------------------------------------------------------
+
+  >   From one user, I miss this ability even though it can be done in a
+  >   macro.  Why remove it from the editor??  It's been this way forever!
+
+  I can certainly appreciate your comments!
+
+  The old BegFile behavior could cause problems in writing macros.
+  Typically, one expects BegFile to go to line 1 column 1 of the file.
+  But of course this wasn't true when a column block was open.
+
+  It seems more consistent to me for BegFile to always go to line 1
+  column 1, and then have another command that does different things
+  depending on a column block being open.
+
+  And, as you surmised, a macro easily recreates the behavior, and it is
+  more in keeping with other commands such as CReturn, BackSpace, and
+  DelChar, which are all overridden with macros in the standard TSE.UI.
+
+  Based on these things (which indeed boils down to my intuition, least
+  it gets misconstrued that I've got all the facts (for which it should
+  be obvious I don't! <grin>)), I'm sticking with the new BegFile
+  behavior, and offering macros for the old behavior.
+
+  And just in case you don't have them, here are the 'missing' commands:
+
+// Only change column if a column block is _not_ open
+proc mBegFile()
+    GotoLine(1)
+    if isBlockInCurrFile() <> _COLUMN_ or Query(Marking) == OFF
+        BegLine()
+    endif
+end
+
+// Only change column if a column block is _not_ open
+proc mEndFile()
+    GotoLine(NumLines())
+    if isBlockInCurrFile() <> _COLUMN_ or Query(Marking) == OFF
+        EndLine()
+    endif
+end
+
+//*************************************************************************
+//               OLD BegFile/EndFile behavior  06-09-95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                Date: 06-23-95  From: RICHARD BLACKBURN
+                          Subj: InterNetQuote
+---------------------------------------------------------------------------
+
+To:               tsepro@semware.com
+Subject:          Quoting macros
+From:             richard.blackburn@semware.com (RICHARD BLACKBURN)
+Date sent:        Fri, 23 Jun 95 16:35:00 -400
+Organization:     SemWare Corporation -- The makers of The SemWare Editor
+Send reply to:    richard.blackburn@semware.com (RICHARD BLACKBURN)
+
+  In the original macro that I posted, I was relying on the text to
+  remain marked after pasting it into the file.  Here is a modified
+  version that does not rely on the text remaining marked:
+
+//
+// Mark the text you wish to quote in your original message, and then
+// execute the macro.
+//
+***************************************************************************/
+
+proc InterNetQuote()
+    integer rm, umap
+
+    Copy()                          // copy to clipboard
+    EditFile("e:\work\reply.txt" )  // go to my reply file :)
+    EndFile()
+    umap = Set(UnMarkAfterPaste, OFF)
+    Paste()
+    Set(UnMarkAfterPaste, umap)
+    GotoBlockBegin()
+    rm = Set(RightMargin, Query(RightMargin) - 2) // reduce right margin
+    while WrapPara() endwhile       // wrap the text
+    Set(RightMargin, rm)            // restore right margin
+    lReplace("^", "> ", "GLNX")     // replace beginning of line w/ "> "
+    EndFile()
+    AddLine()
+    AddLine()
+    BegLine()
+    UnMarkBlock()
+
+end  InterNetQuote
+
+//*************************************************************************
+//                      InterNetQuote  06/23/95
+//*************************************************************************
+
+===========================================================================
+                  Date: 07-27-95  From: ARNOLD HENNIG
+                        Subj: Help in Prompt Box
+---------------------------------------------------------------------------
+
+  Only a few things are enabled by default in the prompt boxes, because
+  the prompt boxes are essentially a sub process which does NOT make the
+  editor aware of everything that has happened inside it. So you need to
+  think about anything that you make available during a prompt process
+  so that it will not cause you problems when you come out of it (while
+  testing something in a similiar sub-process situation recently I ended
+  up with the cursor moving along in one screen and the text in the
+  other on my dual monitor setup).
+
+  In your .UI there is a proc called  OnPromptStartup() which enables
+  the keydef AdditionalKeys found immediately above it. Anything beyond
+  the default enabled functions that you want to work while in a prompt
+  box needs to be defined in this keydef.
+
+  So if you define a help screen thusly:
+
+  helpdef PromptHelp Title = "Prompt box keys" x=1 y=6
+
+    "Text of Help Screen goes here."
+    "More text of Help Screen goes here."
+    "More text of Help Screen goes here."
+    "More text of Help Screen goes here."
+  end PromptHelp
+
+  placing it above the keydef AdditionalKeys and add the line
+    <Alt F1>     QuickHelp(PromptHelp)
+  into the keydef, then you will be able to press Alt F1 at any
+  prompt and get this help screen.
+
+  Note that while I chose y=6 because this will place the help screen
+  below the initial "Files to Edit:" prompt box, the x= and y= are
+  totally unnecessary (and not necessarily desireable, since there is no
+  standard place for prompt boxes to appear on the screen after that
+  initial "Files to Edit:"). Also note that the same help screen will be
+  available at ANY and ALL prompt boxes, and that it can be as long as
+  you like, you can scroll and incremental search within it.
+
+  Any other commands you want available (maybe InsertText("\*.*") for
+  example) should also go into this keydef.
+
+
+//*************************************************************************
+//                    Help in Prompt Box  07-27-95
+//*************************************************************************
+
+===========================================================================
+                 Date: 08-09-95  From: GEORGE DE BRUIN
+                      Subj: Two-Key Command Menu?
+---------------------------------------------------------------------------
+
+>  With a two-key command set (e.g., <Ctrl q><x>, is it possible to
+>  create a menu the would pop up when the first keystroke, e.g.,
+>  <Ctrl q>, is pressed?  How would I go about coding it?
+
+  There are a couple of things you can do, Fred.  If all you really want
+  is something that will serve as a reminder, you can create a Help Line
+  for the key:
+
+    <Ctrl q><HelpLine>      "({1}) SetMark 1, ({2}) SetMark 2"
+    <Ctrl q><1>             PlaceMark("a")
+    <Ctrl q><2>             PlaceMark("b")
+
+Or, you could just attach a menu to the first key:
+
+    menu MarkMenu()
+        "(&1) SetMark 1", PlaceMark("a")
+        "(&2) SetMark 2", PlaceMark("b")
+    end
+
+    <Ctrl q>                MarkMenu()
+
+//*************************************************************************
+//                  Two-Key Command Menu?  08-09-95
+//*************************************************************************
+
+===========================================================================
+                 Date:  08-09-95  From:  George DE BRUIN
+                    Subj: Keys Active In Prompt Box
+---------------------------------------------------------------------------
+===========================================================================
+Date Sent:        Wed, 09 Aug 95 12:08:00 -400
+To:               tsepro@semware.com
+Subject:          Keys Active in prompt box
+From:             george.de.bruin@semware.com (GEORGE DE BRUIN)
+===========================================================================
+
+>  Now all I need is a better understanding of how and why it all works
+>  the way it does.  What would be wrong with making F1 "live" at _all_
+>  times? Why does TSE kill so many keys while ListHelp is used?  I
+>  looked for
+
+  The reasoning behind all of this is concept behind processes.  A
+  process is a separate instance of the editor.  Starting a Process
+  allows you to (in essence) invoke another copy of the editor without
+  having to restart the editor from disk, and with much less memory
+  overhead.
+
+  Every time you enter a Prompt, Menu, List, History, etc. you are going
+  into another instance of the editor.  When this happens, there aren't
+  (necessarily) any default key assignments, so we use a default set of
+  key mappings.
+
+  There are several reasons for this...  First, there are certain
+  commands that users want to be available no matter what -- like
+  RepeatFind() in a history.  If you have changed the mapping for
+  RepeatFind(), we have no way to know what key it is mapped to within
+  the process.
+
+  The second reason for remapping the keys is that there are times where
+  the default key actions aren't appropriate.  For example, inside a
+  List() process, it doesn't make sense to have <End> go to the end of
+  the current line (you can't even see the cursor) when what you really
+  want to do is go to the last entry in the list.
+
+  The final reason is that within many prompts / lists you are
+  referencing areas within the editor where careful control needs to be
+  maintained. For example, using certain commands within a prompt could
+  be very detrimental to the information that the editor itself has to
+  use for it's internal operations as they relate to history handling.
+
+  So, in order to make it possible to get around this situation since
+  there are quite a few times where you want to map other keys within a
+  List, History, Prompt, etc. we have the following hooks which are
+  called when a process begins/ends:
+
+ o _LIST_STARTUP_  This event is called when the List() and lList()
+   functions start processing.
+
+ o _LIST_CLEANUP_  This event is called when the List() and lList()
+   functions terminate.
+
+ o _PICKFILE_STARTUP_  This event is called when the PickFile() function
+   (called explicitly or implicitly by EditFile() or others) starts
+   processing.
+
+ o _PICKFILE_CLEANUP_  This event is called when the PickFile() function
+   terminates.
+
+ o _PROMPT_STARTUP_  This event is called when the Ask() and Read()
+   functions start processing.
+
+ o _PROMPT_CLEANUP_  This event is called when the Ask() and Read()
+   functions terminate.
+
+I hope this helps your understanding of what is going on inside the
+editor.  If you have any other questions, please feel free to ask.
+
+//*************************************************************************
+//                Keys Active in prompt box  08/10/95
+//*************************************************************************
+
+===========================================================================
+                 Date:  08/18/95  From:  George DE BRUIN
+                      Subj: GetFreeHistory Changes
+---------------------------------------------------------------------------
+
+Date sent: Tue, 18 Jul 95 17:02:00 -400
+To: tsebeta@semware.com
+Subject: Bug in TSE Pro beta v2.03
+From: george.de.bruin@semware.com (GEORGE DE BRUIN)
+
+  /---------------------------------------
+  > The offending line is as follows:
+  >
+  > 	compress_hist = getfreehistory()
+  > 	                               ^
+  > The error is where indicated.  At the top of CUAWS.UI, compress_hist
+  > is a global integer variable.  Anyone else encounter this?
+  \---------------------------------------
+
+  Good to see you getting in there and playing around...<smile>
+
+  This is one of the few things that have changed that leave a "minor"
+  incompatibility:  GetFreeHistory() now takes a string parameter, as
+  explained in the READ.ME file:
+
+  o  GetFreeHistory() has changed to:
+
+     GetFreeHistory(string), where string is the name of the user
+     history to reserve.  name conventions are:
+
+    macro-name:function
+
+    Some examples from SemWare supplied macros are:
+    (where:cd/findeol/cmp2bkup et al are macros)
+
+    dir_his =           GetFreeHistory("CD:Dir")
+    drive_his =         GetFreeHistory("CD:Drive")
+    find_his =          GetFreeHistory("FindEOL:Find")
+    replace_his =       GetFreeHistory("FindEOL:Replace")
+    cmp2bkup_file_his = GetFreeHistory("Cmp2bkup:SecondaryFile")
+    change_word_his =   GetFreeHistory("SpellChk:ChangeWord")
+    file_his =          GetFreeHistory("Where:file")
+    drive_his=          GetFreeHistory("Where:drive")
+    named_clip_his =    GetFreeHistory("UI:NamedClipboards")
+    compress_his =      GetFreeHistory("UI:CompressViewFind")
+    compress_option_his =  GetFreeHistory("UI:CompressViewFindOptions")
+
+//**********************************************************************
+//                  GetFreeHistory Changes  08/18/95
+//**********************************************************************
+
+/**************************************************************************
+===========================================================================
+                  Date: 08-22-95  From: MIKE CHAMBERS
+                          Subj: InsertFiles()
+---------------------------------------------------------------------------
+
+// This procedure allows you to insert all files matching a wildcard spec
+// into a buffer (and also works with a fully specified filename matching
+// only one file.)  Can be called like TSE's InsertFile().
+// Returns non-zero (true) if successful.
+
+***************************************************************************/
+
+integer proc InsertFiles (string filename)
+
+    string  path[128] = '',  dta[80] = '',   s[80]
+
+            path = splitpath(filename, _drive_ | _path_)
+            SetDTA(dta)
+            if FindFirst(filename)
+                repeat
+                    s = DecodeDTA(dta)
+                    EndFile()
+                    creturn()
+                    pushBlock()
+                    if not insertfile(path+s[2:13])
+                       popblock()
+                       return(false)
+                    endif
+                    popblock()
+                    SetDTA(dta)
+                until not FindNext()
+            else
+                return(false)
+            endif
+            return(true)
+end
+
+//*************************************************************************
+//                      InsertFiles()  08-22-95
+//*************************************************************************
+
+===========================================================================
+                  Date: 09-11-95  From: SAMMY MITCHELL
+      Subj: TSE 2.5 STATE.MAC wants FONT.MAC instead of VIDEO.MAC
+---------------------------------------------------------------------------
+
+  > I was trying to use the -r option on the command line of TSE 2.5 and
+  > discovered what appears to be a problem. The state.s code appears to
+  > call the wrong macro. I think it should call video.s.
+
+  Sorry for the problem.  Here is the current fix:
+
+    Insert after line 114
+      // BOOLEAN: Set new screen rows
+integer proc SetNewRows(integer rows)
+    integer r
+
+    case rows
+        when 25 r = _25_LINES_
+        when 28 r = _28_LINES_
+        when 30 r = _30_LINES_
+        when 33 r = _33_LINES_
+        when 36 r = _36_LINES_
+        when 40 r = _40_LINES_
+        when 43 r = _43_LINES_
+        when 44 r = _44_LINES_
+        when 50 r = _50_LINES_
+        otherwise
+          return (FALSE)
+        endcase
+        Set(CurrVideoMode, r)
+        return (Query(ScreenRows) == rows)
+end  EndSetNewRows
+
+        Change lines 399-400
+           ExecMacro("fonts " + Str(rows))
+           if rows <> Query(ScreenRows)
+
+        To
+           if not SetNewRows(rows)
+
+//*************************************************************************
+//  TSE 2.5 STATE.MAC wants FONT.MAC instead of VIDEO.MAC  09-11-95
+//*************************************************************************
+
+===========================================================================
+                 Date: 09-18-95  From:  George DE BRUIN
+                        Subj: PROJECTS macro fix
+===========================================================================
+To: tsepro@semware.com
+Subject: Projects macro
+From: george.de.bruin@semware.com (GEORGE DE BRUIN)
+Date Sent: Mon, 18 Sep 95 11:53:00 -400
+---------------------------------------------------------------------------
+
+> Projects macro not terminating properly, but I have a feeling that the
+> solution isn't really a fix -- I believe the cost is in not being able
+> to save keyboard macros.
+
+Sorry about this problem.  Here is a real fix for it:
+
+
+  PushKey(<Y>)                // in case "Overwrite existing File" appears
+  PushKey(<Enter>)            // terminate the prompt
+  PushKey(<Escape>)           // !!! Add this line
+  SaveKeyMacro()              // try to save the macro now
+
+Just adding the above marked line to the macro will fix the problem.
+
+//*************************************************************************
+//               TSE Pro 2.5 Fix for Projects  09/18/95
+//*************************************************************************
+
+===========================================================================
+                 Date:  09-18-95  From:  Sammy Mitchell
+                         Subj: mToggleWordWrap
+===========================================================================
+To: tsepro@semware.com
+Subject: mToggleWordWrap()
+From: sammy.mitchell@semware.com (SAMMY MITCHELL)
+Date Sent: Mon, 18 Sep 95 15:28:00 -400
+---------------------------------------------------------------------------
+
+>Problem using mToggleWordWrap() in TSE 2.5
+
+  In TSE Pro, only boolean variables can be toggled. WordWrap was a
+  boolean variable in 2.0.  In 2.5, we added the new auto setting,
+  making WordWrap now a non-boolean variable.  So, technically, you
+  can't simply toggle it. However, there are a couple of simple
+  work-arounds:
+
+  If you simply want to set WordWrap on/off, and do not care about the
+  new auto setting, use the following:
+
+  proc mToggleWordWrap()
+    Set(WordWrap, iif(Query(WordWrap), OFF, ON))
+  end
+
+
+  If you want to toggle between on/off, with on being on or auto, then
+  use the following macro:
+
+  integer save_wordwrap
+
+  proc mToggleWordWrap()
+    if Query(WordWrap)
+    save_wordwrap = Set(WordWrap, OFF)
+  else
+      if save_wordwrap == OFF
+        save_wordwrap = ON
+      endif
+      Set(WordWrap, save_wordwrap)
+    endif
+end
+
+  In summary, if you will never use auto WordWrap, use the first
+  procedure. If you may sometimes set auto WordWrap, then use the second
+  procedure.
+
+//*************************************************************************
+//                mToggleWordWrap() Options  09/18/95
+//*************************************************************************
+
+===========================================================================
+                 Date:  09-18-95  From:  George DE BRUIN
+               Subj: InsertFile() Question - Response #1
+===========================================================================
+To: tsepro@semware.com
+Subject: InsertFile() Broken?
+From: george.de.bruin@semware.com (GEORGE DE BRUIN)
+Date Sent: Mon, 18 Sep 95 11:53:00 -400
+---------------------------------------------------------------------------
+
+> InsertFile() Broken?
+> <Ctrl F11>   InsertFile("c:\max\inbound")
+
+  Thanks for the catch.  This is a problem with a simple work around. In
+  your macros use the following macro:
+
+proc mInsertFile(string sFileName)
+
+    if FileExists(sFileName)
+        InsertFile(sFileName)
+    endif
+end
+
+//*************************************************************************
+//               TSE 2.5 Fix for InsertFile()  09/18/95
+//*************************************************************************
+
+===========================================================================
+                 Date:  09-18-95  From:  Sammy Mitchell
+               Subj: InsertFile() Question - Response #2
+===========================================================================
+To: tsepro@semware.com
+Subject: Re: InsertFile() Broken?
+From: sammy.mitchell@semware.com (SAMMY MITCHELL)
+Date Sent: Mon, 18 Sep 95 15:28:00 -400
+---------------------------------------------------------------------------
+
+  As you surmised, InsertFile with no parameters works fine. Also,
+  InsertFile with a non-ambiguous filename, and one that exists, also
+  works fine.  The problem manifests when you pass a parameter to
+  InsertFile, that is either a) an ambiguous filename or b) a filename
+  that does not exist.
+
+  Assuming you do not pass a string greater than 63 characters to the
+  routine, you can use this as a replacement for InsertFile with
+  parameters:
+
+proc mInsertFile(string s)
+    PushKey(<Enter>)
+    PushKeyStr(s)
+    InsertFile()
+end
+
+//*************************************************************************
+//           InsertFile() Question - Response #2  09/18/95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date:  09-19-95  From:  George DE BRUIN
+                    Subj: Sorting files in picklist
+===========================================================================
+To: tsepro@semware.com
+Subject: Sorting files in picklist
+From: george.de.bruin@semware.com (GEORGE DE BRUIN)
+Date Sent: Tue, 19 Sep 95 11:22:00 -400
+---------------------------------------------------------------------------
+
+\---------------------------------------
+>It seems that we've lost some 2.0 functionality. It used to be possible
+> to sort the files listed in various picklist windows by use of Alt keys...
+\ ---------------------------------------
+
+  This was a macro in the HOOKS.DOC in TSE 2.0.  We apparently
+  overlooked updating the macro.  Here is a revised copy of it:
+
+***************************************************************************/
+
+proc SortIt(string order)
+    string pickfilesortorder[8] = Set(PickFileSortOrder, order)
+    Sort(_PICK_SORT_)
+    Set(PickFileSortOrder, pickfilesortorder)
+end
+
+keydef pickkeys
+    <Alt E>  Sortit("e")             // Extension
+    <Alt S>  Sortit("s")             // Size
+    <Alt D>  Sortit("d")             // Date
+    <Alt T>  Sortit("t")             // Time
+    <Alt N>  SortIt("f")             // File Name
+ end
+
+proc PickFileStartUp()
+    enable(pickkeys)
+    WindowFooter("Sort by: {Alt} {E}xt, {S}ize, {D}ate, {T}ime, {N}ame")
+end
+
+proc WhenLoaded()
+    Hook(_PICKFILESTARTUP_, PickFileStartUp)
+end
+
+//*************************************************************************
+//               SortIt() TSE Pro 2.5 update  09/19/95
+//*************************************************************************
+
+===========================================================================
+                Date:  09-20-95  From:  Sammmy Mitchell
+                     Subj: PickAMacro() Enhancement
+===========================================================================
+To:               tsepro@semware.com
+Subject:          skipping "Press <Escape>"?
+From:             sammy.mitchell@semware.com (SAMMY MITCHELL)
+Date sent:        Wed, 20 Sep 95 11:46:00 -400
+---------------------------------------------------------------------------
+
+> As a supplement to menus, key assignments, and potpourri, I decided to
+> write a macro to execute the macro whose name is under the cursor.  I
+> thought this would do it, and basically it does:
+>
+> proc PickAMacro()
+>   string macname[20]=""
+>   macname=GetWord(1)
+>       if ExecMacro(macname)
+>         else
+>           Message("Couldn't find " + macname + ".mac")
+>       endif
+> End
+>
+> If the compiled macro exists, all is well.  But if it doesn't, I see
+> File not found:junk.mac Press <Escape>
+> and I am forced to press Escape.  I would rather see a "not found"
+> message without having to press anything.
+
+You could try Setting the msglevel, for instance:
+
+proc PickAMacro()
+    integer msglevel, ok
+    string macname[20]
+
+    macname = GetWord(1)
+    msglevel = Set(MsgLevel, _NONE_)
+    ok = ExecMacro(macname)
+    Set(MsgLevel, msglevel)
+    if not ok
+        Message("Error running ", macname, ".mac")
+    endif
+end
+
+
+Sammy
+
+//*************************************************************************
+//                 PickAMacro() Enhancement  09/20/95
+//*************************************************************************
+
+===========================================================================
+                 Date:  09-20-95  From:  George DeBruin
+                  Subj: 'tsefile.bat' & 'tsecomp.bat'
+===========================================================================
+To:               tsepro@semware.com
+Subject:          Bat files
+From:             george.de.bruin@semware.com (GEORGE DE BRUIN)
+Date sent:        Wed, 20 Sep 95 12:15:00 -400
+---------------------------------------------------------------------------
+
+/---------------------------------------
+> The DOC files for 2.5 mention 2 BAT files which can be used to
+> run the directory manager and file compare routines. I don't seem
+> to have them.  Can they be posted up here please?
+\---------------------------------------
+
+TAKnote: These batch files were in the ZIP versions of
+         TSEFILE and TSECOMP but apparently not in the TSE
+         Pro 2.5 release.
+
+
+TSECOMP.BAT:
+===========================================================================
+
+@echo off
+rem ************************************************************************
+rem *                                                                      *
+rem *   TSEComp.BAT                                                        *
+rem *                                                                      *
+rem *   Start file compare in batch mode                                   *
+rem *                                                                      *
+rem *   Version         v2.10/23.05.95                                     *
+rem *   Copyright       (c) 1994,95 by DiK                                 *
+rem *                                                                      *
+rem *   History                                                            *
+rem *                                                                      *
+rem *   v2.10/23.05.95  adaption to v2.5 of TSE                            *
+rem *                                                                      *
+rem *   Remarks:                                                           *
+rem *                                                                      *
+rem *   The first filename in the editor command line ($      $.$ $)       *
+rem *   includes the ascii character #255. This is a dirty trick, to       *
+rem *   convince TSECompB.MAC that it has been executed by TSEComp.BAT.    *
+rem *                                                                      *
+rem ************************************************************************
+
+rem ************************************************************************
+rem *   splash                                                             *
+rem ************************************************************************
+echo TSE File Compare 2.1 (c) 1994,95 by DiK
+
+rem ************************************************************************
+rem *   check arguments                                                    *
+rem ************************************************************************
+
+if "%1" == "?" goto SYNTAX
+if "%1" == "" goto SYNTAX
+if "%2" == "" goto SYNTAX
+if not "%3" == "" goto SYNTAX
+
+if not exist %1 goto FILE1
+if not exist %2 goto FILE2
+
+rem ************************************************************************
+rem *   start TSE and execute TSEComp                                      *
+rem ************************************************************************
+
+e -etsecompb $      $.$ $ %1 %2
+goto DONE
+
+rem ************************************************************************
+rem *   error messages                                                     *
+rem ************************************************************************
+
+:SYNTAX
+echo.
+echo Syntax:  TSEComp  Filename1  Filename2
+goto DONE
+
+:FILE1
+echo.
+echo File "%1" does not exist
+goto DONE
+
+:FILE2
+echo.
+echo File "%2" does not exist
+goto DONE
+
+rem ************************************************************************
+rem *   the end                                                            *
+rem ************************************************************************
+
+:DONE
+if not "%@eval[1+1]" == "2" echo.
+
+
+TSEFILE.BAT:
+===========================================================================
+
+@echo off
+rem ************************************************************************
+rem *                                                                      *
+rem *   TSEFile.BAT                                                        *
+rem *                                                                      *
+rem *   Start file manager in batch mode                                   *
+rem *                                                                      *
+rem *   Version         v4.00/27.05.95                                     *
+rem *   Copyright       (c) 1994,95 by DiK                                 *
+rem *                                                                      *
+rem *   History                                                            *
+rem *                                                                      *
+rem *   v4.00/27.05.95  new version for TSE 2.5                            *
+rem *                                                                      *
+rem *   Remarks:                                                           *
+rem *                                                                      *
+rem *   The filename in the editor command line ($      $.$ $)             *
+rem *   includes the ascii character #255. This is a dirty trick, to       *
+rem *   convince TSEFileB.MAC that it has been executed by TSEFile.BAT.    *
+rem *                                                                      *
+rem ************************************************************************
+
+rem ************************************************************************
+rem *   splash                                                             *
+rem ************************************************************************
+
+echo TSE File Manager 4.0 (c) 1994,95 by DiK
+
+rem ************************************************************************
+rem *   check arguments                                                    *
+rem ************************************************************************
+
+if "%1" == "?" goto SYNTAX
+
+rem ************************************************************************
+rem *   save arguments                                                     *
+rem ************************************************************************
+
+if "%1" == "" goto EMPTY
+    echo %1 %2 %3 %4 %5 %6 %7 %8 > $      $.$ $
+    goto END_EMPTY
+:EMPTY
+    echo. > $      $.$ $
+:END_EMPTY
+
+rem ************************************************************************
+rem *   start TSE and execute TSEFile                                      *
+rem ************************************************************************
+
+e -etsefileb $      $.$ $
+goto DONE
+
+rem ************************************************************************
+rem *   error messages                                                     *
+rem ************************************************************************
+
+:SYNTAX
+echo.
+echo Syntax:    TSEFile  [Switch]  [Directory...}
+echo.
+echo Switches:  -f  find files
+echo            -g  find files and text (grep)
+echo.
+echo Directory: list the specified directories
+echo            defaults to the current directory
+
+rem ************************************************************************
+rem *                         the end                                      *
+rem ************************************************************************
+
+:DONE
+if not "%@eval[1+1]" == "2" echo.
+:STOP
+
+//*************************************************************************
+//              'tsefile.bat' & 'tsecomp.bat'  09/20/95
+//*************************************************************************
+

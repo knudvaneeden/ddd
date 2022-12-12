@@ -1,0 +1,85 @@
+                                                  Sun 9-January-2005
+
+About TSWTSE in General                        (All rights reserved)
+=======================
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³   Please do not distribute any part of this package separately   ³
+³   Do not display any single part of this package on a web site   ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+This  package may be used and distributed freely for NON-COMMERCIAL,
+NON-INSTITUTIONAL, PRIVATE purposes, provided it is not  changed  in
+any  way.  For  ANY other usage, such as public use at a university,
+contact the  author.  Full  business  or  government  usage  is  not
+allowed.
+
+The  SAL macro codes are under development. Emailed comments and bug
+reports are welcome. Please, however, take into account that this is
+unsupported  material. Do not contact the author by email to ask for
+consultation  or  support  for  this  material.  If  you  have  such
+questions  or  problems  use  a  suitable  Usenet  newsgroup such as
+news:comp.editors
+
+The author shall not be liable to the user for any direct,  indirect
+or  consequential loss arising from the use of, or inability to use,
+any  program,  macro,  information  or  file  howsoever  caused.  No
+warranty  is given that the codes will work under all circumstances.
+
+The SemWare Editor (TSE) and the SemWare Applications Language (SAL)
+are copyright of the SemWare Corporation. My own  relationship  with
+them  is  that  of a satisfied, paying customer who has had over the
+years good support from the company in my own SemWare editor related
+questions  and  problems.  That is all. I have no business ties with
+the SemWare Corporation. The SemWare web site is at
+http://www.semware.com/
+
+Timo Salmi
+Professor of Accounting and Business Finance
+Faculty of Business Studies
+University of Vaasa
+P.O. BOX 700, FIN-65101 Vaasa, Finland
+mailto:ts@uwasa.fi WWW: http://www.uwasa.fi/~ts/
+
+
+                           - 2 -
+
+Timo Salmi Windows version of The SemWare Editor SAL 4.0+ macro
+*    *     *                  *   *       *
+sources release 1.0
+                * *
+includes the following material. The material is self-documenting.
+
+TSWTSE10        TSE W editor SAL macros, T.Salmi
+Filename        Comment
+--------        --------------------------------
+FILE_ID.DIZ     Brief characterization of TSWTSE
+M_TSWTSE.CMD    Makefile that built this package
+TSPROG.TXT      List of programs from T.Salmi
+TSWTSEIF.TXT    Document of the TSWTSE package
+TSWTSENW.TXT    News accouncemens about TSWTSE
+WBOX2ASC.S      Boxdraw characters into ASCII
+WCOUNT.S        Count block lines, words, chars
+WDATECNV.S      PKPAK etc date format conversion
+WDEJUSTI.S      Dejustify a right margin
+WDETAB.S        Detab a line or the entire file
+WDTETIM.S       Input date/time, alternate forms
+WDUMP.S         Dump block as bin oct dec or hex
+WFLIPONE.S      Flip one character, incl foreign
+WLINE.S         Insert line numbers
+WMAI2IBM.S      Unix email to IBM format, etc
+WMISC.S         Miscellaneous SAL macros
+WNOBLANK.S      Remove blank lines from file/blk
+WPROGS.S        Run programs on the editor text
+WQUOTETS.S      Quote messages Usenet news style
+WRNGEFND.S      Forward search an ascii range
+WROT13.S        Rotate text by 13 positions
+WROTATE.S       Copy column to row or vice versa
+WRULER.S        Relative, abs. or centered ruler
+WSWAP.S         Swap order of text, words/chars
+WSYNCH.S        Scroll windows in unison
+WTEST.S         Testbench for new SAL macros
+WTOASC.S        Scandinavian 7/8-bit conversions
+WUPCASE.S       Convert text to upper/lower case
+----            ------             ------  -----
+0028

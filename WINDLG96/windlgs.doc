@@ -1,0 +1,397 @@
+
+1. Welcome To Windows Dialogs
+-----------------------------
+
+Since TSEPro went GUI, I always wanted to get rid of the character based
+dialogs*. Programming character based input devices for a GUI application
+while maintaining backwards compatibility for the console version was
+quickly becoming... tedious. Therefore I started to draft some real Windows
+dialogs and write a SAL macro layer to use them. Over the course of time
+(several years actually) this became a full blown package which includes
+everything Dialogs ever did and more. Moreover, WinDlgs is fully backwards
+compatible to Dialogs and is easily substituted for the latter.
+
+*   If you don't know what Dialogs is, you can either go to SemWare and
+    download the older macro package or you can simply forget about it and
+    use WinDlgs instead.
+
+
+
+2. What's New (Version 0.96)
+----------------------------
+
+This is the first version of WinDlgs which could be considered more or less
+"feature complete" ;-). This is to say, that WinDlgs now contains everything
+which Dialogs did. It also includes some additional goodies.
+
+When looking at the version number of the package, you should realize that it
+still is considered BETA. On the other hand, I personally used the more basic
+dialogs (open, buffer list, find, replace, grep) for two years and they work
+as expected for quite some time now. You might be a bit more wary about the
+later additions though. On the other hand, most of these aren't any newer than
+the rest of the package. It's only the user interfaces, i.e. the dialogs,
+which are new.
+
+
+
+3. Installation
+---------------
+
+Since this bundle consists of several files, here's a breakdown on what you
+get.
+
+        windlgs.dll     This file implements the dialogs. It's a standard
+                        Windows dll. You can find the source code in
+                        source.zip and IncrSrch.zip.
+
+        windlgs.s       This macro is the SAL layer which allows you to
+                        accesses the dialogs inside the dll. It's not meant
+                        to be run by the user. It doesn't even include a
+                        main procedure. In order to display the dialogs, use
+                        the public macros defined at the end of the file
+                        instead.
+
+        grep.zip        The grep dialog is an empty shell which is meant as
+                        an input device for the grep macro. The macro source
+                        for the grep command is packed up in this file.
+
+        todo.s          The various todo dialogs are also empty shells which
+                        are called from the todo manager implemented in this
+                        macro. Actually, todo.s can even be used without
+                        windlgs, since it has its own native interface.
+
+        compx.s         This is the engine which works under the hood of the
+                        compare dialog (dlgcomp). It is called by the dialog
+                        and thus doesn't have a user interface.
+
+        find&do1.s      This is SemWare's find&do macro. Some lines of code
+                        have been added which allow windlgs to bypass the
+                        internal user interface of find&do.
+
+To install the package compile the SAL macros (windlgs, todo, compx and
+find&do1) and put the mac files into TSE's mac folder. Copy the dll to the
+same place. If you want to use the grep macro unpack grep.zip and compile
+its contents (grep and viewgrep). Also move the resulting mac files into the
+mac folder.
+
+To test WinDlgs load the macro (Macro->Load, "windlgs", Enter). You can also
+execute it (Macro->Execute, "windlgs", Enter). This is identical to loading,
+since windlgs.s doesn't have a main procedure. In order to see some of the
+dialogs you have to execute the public procs defined at the end of the
+file. E.g., to see the find dialog execute "dlgfind" (Macro->Execute,
+"dlgfind", Enter). To make test driving a bit easier, a few key assignments
+are defined at the end of windlgs.s. To use these simply remove the comment
+characters (//) at the beginning of the corresponding lines.
+
+The most convenient way to use WinDlgs is to bind it to your UI. This task
+includes defining/replacing key assignments and editing menu definitions. To
+test things a bit I prepared a special UI file (dlg42w.ui), which is TSE.ui
+adapted to use WinDlgs.
+
+If you want to substitute WinDlgs for the older Dialogs, all you have to do
+is to add windlgs to the list of your autoload macros. The interface of
+windlgs is constructed in such a way that it can transparently replace the
+older macros.
+
+
+
+4. Dialogs
+----------
+
+This section shortly describes the dialogs included in this package. Don't
+forget that each dialog provides some on-line help in one form or another.
+
+In general, the dialogs are displayed by executing a public procedure which
+is defined at the end of windlgs.s. The names of these procedures all begin
+with the string "dlg". The exceptions to the rule are the grep command and
+the todo list manager. These are stand alone macros which utilize WinDlgs as
+their input device.
+
+Most of the dialogs can be used by simply calling the corresponding public
+procedure. Again, there are exceptions to the rule, since some dialogs use
+command line switches to distinguish between several ways they are working.
+
+
+4.1 Library Version (DlgVersion)
+--------------------------------
+
+Displays the version number of the windows dialogs (WinDlgs).
+
+
+4.2 Edit Files (DlgOpen)
+------------------------
+
+This dialog allows you to open files (including new ones). It is also used
+for various other file oriented commands (e.g. Save As, Load Macro, etc.).
+Command line switches are used, to control what the macro does:
+
+        none    EditFile
+        -s      SaveFileAs
+        -i      InsertBlock
+        -b      SaveBlock
+        -e      ExecMacro
+        -l      LoadMacro
+        -k      LoadKeyMacro
+        -v      SaveKeyMacro
+
+The EditFile command (no switch) allows you to select multiple files. Use
+the Ctrl and Shift keys to select multiple files and blocks of files. If you
+check "Open As Binary" the file(s) is (are) loaded in binary mode (-b64) and
+Hex View is activated.
+
+DlgOpen doesn't use TSE's EditFile history. It uses the history mechanism
+built into Windows instead. This is an automatic "benefit" from using the
+common dialog.
+
+
+4.3 The Ring of Files (DlgBuff & DlgRcnt)
+-----------------------------------------
+
+These dialogs replace the Buffer List and Recent Files commands. The new
+dialogs now work fine without being called from the burned in UI.
+
+
+4.4 Changing the Current Folder (DlgBrows)
+------------------------------------------
+
+This macro is used to pick a folder. The result is returned in the global
+variable DlgMsgText. When the "-g" argument is specified the current folder
+is changed when the OK button is pressed. When the "-c" argument is
+specified, the folder that contains the currently edited file is selected at
+startup. This is not necessarily the current folder. Use the buttons of the
+dialog to quickly switch between these preselected folders or to display a
+pick list of recent folders.
+
+
+4.5 Filling Blocks with Text (DlgFill)
+--------------------------------------
+
+A simply input device that asks for the text that should fill the block.
+
+
+4.6 Finding and Replacing Text (DlgFind, DlgRplc)
+-------------------------------------------------
+
+These are the Find and Replace commands. I think, you will immediately know
+how to use them: fill in the strings, click options and press <Enter>. To
+insert special characters into the edit fields right click them and select
+"Special Character" from the pop-up menu.
+
+
+4.7 Find And Do (DlgFndDo)
+--------------------------
+
+This is the find and do command wrapped into a dialog box. It works exactly
+the same way as the original command. In fact, it even uses SemWare's
+original macro, renamed to find&do1 and edited slightly to bypass the
+internal user interface.
+
+
+4.8 Finding Text Across Multiple Files and on Disk (Grep)
+---------------------------------------------------------
+
+The DlgGrep command is an empty shell. To use it run the grep macro. I never
+uploaded my grep before, because Chris Antos beat me to it by a week or two
+and because both macros were _very_ similar. Moreover, the macro which
+displays the result of the grep (viewgrep) is even partly based on Chris's
+code. And finally, TSE includes a grep macro of its own.
+
+Well, none of the other macros can use DlgGrep and the dialog is included in
+WindDlgs after all. So I decided to plague the public with yet another grep
+macro. You can find it in its own zip archive.
+
+
+4.9 Numerically positioning the cursor (DlgGoto)
+------------------------------------------------
+
+These are the GotoLine and GotoColumn commands wrapped into a single box.
+
+
+4.10 Displaying bookmarks (DlgBookMarks)
+----------------------------------------
+
+This dialog displays a list of the currently defined bookmarks. The list
+includes the bookmarks' IDs and their locations (filename, line and column).
+To go to a bookmark double click it or select it and press the enter key.
+The list can be sorted by bookmark id, bookmark location and text (click the
+coulumn headers). Sorting by text might be useless, but it was easily
+implemented :-).
+
+
+4.11 The Macro Control Center (DlgMCC)
+--------------------------------------
+
+This macro collects all the things you can do with SAL macros (load, execute
+and purge) into one central place. To quickly start a macro, just type in
+its name and press enter. You can also choose a macro from the list of
+loaded macros (double click it). Press the Purge button, to purge a macro
+you don't need any longer. The Load and Search buttons will pop up another
+dialog, which allows you to search the disk for macros you want to load or
+execute immediately. The list of loaded macros, actually, shows a somewhat
+censored view of reality. Since WinDlgs is always loaded (and executing) while
+this dialog is on-screen, it is removed from the list before it is displayed.
+
+
+4.12 ASCII Chart (DlgAscii)
+---------------------------
+
+This launches Window's character map. If the latter isn't installed on your
+computer, you'll get an error message instead.
+
+
+4.13 Executing OS Commands (DlgDOS)
+-----------------------------------
+
+A simply input device, to ask for the command. Use the "-c" switch, if you
+want to capture the output of the command.
+
+
+4.14 Options dialog (DlgOpts)
+-----------------------------
+
+This dialog allows you to quickly set some of the more often used options.
+It is not meant as a replacement for the full configuration utility.
+
+
+4.15 The History List Utility (DlgHist)
+---------------------------------------
+
+Use this utility to inspect (and maintain) history lists. See the on-line
+help for more information.
+
+
+4.16 To-Do Item Manager (Todo)
+------------------------------
+
+Again, the dialogs DlgTodoList, DlgAddTodo, DlgTodoSetup are empty shells.
+These macros are visual interfaces for the todo manager and must be used via
+the todo macro. To scan the file for todo items simply execute the macro. To
+add a new item uses the -t switch: ExecMacro("todo -t"). The example UI file
+(dlg42w) binds both commands to the Util menu. To see the todo manager at
+work _now_, load windlgs.s into TSE and run the todo macro. Press F1 to pop
+up the online help. In addition to keyboard shortcuts the dialog also has a
+context menu (right click, shift-f10 or application key). To quickly sort
+the list click at the column headers.
+
+Don't be alarmed at the occasional flicker of the todo list. Due to certain
+limitations of the programming model, we need to close and immediately reopen
+the dialog for some operations.
+
+When running, todo tries to detect and utilize WinDlgs. But it can also be
+used without WinDlgs, since it includes a native user interface. In fact,
+when looking at the version history of the macro you can see that the macro
+is tried and tested. I never released it to the public, because determining
+comment characters was somewhat awkward. But now TSEPro v4.20 includes
+interface functions to the syn file simplifying the corresponding code
+greatly. This also means that this version of todo only works with v4.20 or
+later.
+
+The format of the todo comments inserted by the todo macro is compatible
+with the way Borland's Delphi handles todo items. This is _not_ a lucky
+coincidence :-).
+
+
+4.17. Comparing Files (DlgComp aka TseComp)
+-------------------------------------------
+
+This is nothing but a newer and friendlier user interface for the old
+TseComp macro. (Actually CompX _is_ TseComp minus the input interface.)
+
+On default TseComp displays the files to be compared on a vertically split
+screen. You can toggle to horizontally split windows using the <Tab> key.
+You can move around using the cursor keys (including <PgUp>, <PgDn>, <Home>
+and <End>). The 'unshifted' keys move the text in the left (or upper)
+window. If you additionally press the <Ctrl> key, the right (or lower)
+window is effected. If you want to move the text of both windows
+simultaneously, use the <Alt> key instead. E.g., <Alt Home> will position
+the highlights at the beginning of both files.
+
+When TseComp is started, it will immediately begin comparing the two files
+and stops only when it encounters mismatching lines (or the end of file
+marker in one of the files). Once TseComp has stopped, you can do a couple
+of things. To resume the comparison press <Enter>. If you want a 'zoomed'
+view of the mismatching lines, hit the <SpaceBar> and a window will pop up,
+which shows a detailed comparison of the two lines. To update one of the
+lines with the other, use <Ctrl L> or <Ctrl R>. To delete one of the lines,
+press <Ctrl D> and TseComp will ask you which one it should remove.
+
+Things are a bit more complicated, when you encounter whole blocks of text
+which are missing in one of the files. But TseComp helps you to find these.
+Use <Alt L> and <Alt R> to scan for blocks within the (l)eft or (r)ight
+file. If you hit the wrong key, you can undo the search with <Alt U>.
+<Ctrl B> and <Ctrl E> can be used to move to the beginning or end of a
+marked block. Furthermore, a marked block can be copied over to the other
+file using <Alt C>. If things should be even more complicated, e.g., some
+parts of the files are completely different, you can use <Alt F> to search
+for a line from which you want to resume comparing.
+
+Finally, you can 'blank out' a set of characters (Compare|Filter). TseComp
+will completely ignore these characters. But you should be aware that
+'filtering' will slow down TseComp considerably. Thus, you should not use it
+unless it is absolutely necessary.
+
+
+
+5. How to Recreate
+------------------
+
+This is the fun part. Well, at least for programmers :-). I used Delphi 7 to
+create the dll. If you don't own Delphi, you can download Delphi Personal
+from Borland's web page for free. You have to register though.
+
+The Pascal source code is located in source.zip. WinDlgs.dpr is the Delphi
+project (main library file) which defines the contents and build order of
+the dll. Unfortunately, it doesn't compile. You need to install two
+component libraries first. The first one, IncrSearch is one of my own
+making. It's a non-visual component you stick to a form and tell which other
+component (ListBox, Edit, etc.) it is connected to. Doing that implements
+incremental searching for the connected visual component. This took a while
+to make, but it is _really_ handy. The other one is ShellShock a TurboPower
+library which has been released to the public domain. You can find its
+source and documentation at http://sourceforge.net/projects/tpshellshock/.
+The shell tree view in DlgBrows is the only thing I used from ShellShock.
+
+As already mentioned, I used Delphi to build the dll. A modern development
+environment like Delphi allows you to quickly and easily create dialogs.
+Unfortunately, this comes at a cost: the size of the dll. The size of the
+dialogs is only about 115 kb, but linking the runtime libraries into the dll
+increases its size by almost 700 kb. Well, every advantage has a major
+drawback it seems.
+
+
+
+6. Limitations
+--------------
+
+There is actually one rather severe restriction: key macros do _not_ work
+with WinDlgs. The reason is that TSE doesn't "see" the keys typed into a
+dialog and thus cannot record them. What's even more of a restriction, TSE
+cannot replay keys into a windows dialog. I don't want to bore you with the
+internals of windows programming, so let's simply state: no way, it's not
+possible. Thus, if you want to use both WinDlgs and key macros, define some
+backup keys you can use when recording key macros. The example ui file
+dlg42w.ui does that exactly.
+
+I hope that there aren't too many glitches and bugs. Well, if you should
+find something buggy, have a suggestion on what is missing or just want to
+say hello, please contact me. My e-mail address is
+DieterKoessl@mnet-online.de.
+
+
+
+7. Copyright and Disclaimer
+----------------------------
+
+Part of this software, i.e. the adapted macro source files, is copyright (c)
+1996-2005 by SemWare. Another part of this software, i.e. the Delphi's runtime
+library and VCL, is copyright (c) 1995-2002 by Borland. Yet another part, i.e.
+ShellShock, is published under the Mozilla Public License (MPL 1.1). The rest
+is copyleft by me :-). This means you have the binaries, you have the source
+code and as long as you don't sell it outright, you can use it or even alter
+it as you see fit, but ENTER AT YOUR OWN RISK!.
+
+Some of the macros included in this package use internal, undocumented data
+structures of TSE. I.e., these macros work with the current versions of TSE,
+but there is absolutely no guarantee that they will also work with any
+future version of the editor.
+

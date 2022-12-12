@@ -1,0 +1,100 @@
+                          ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+                          ºSELECTED EPSON PRINTER CODES º
+                          ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+
+
+      ³FONT STYLE SETTINGS               ³SPACING SETTINGS
+      ÔÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ             ÔÑÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+       ³DRAFT STYLE: Esc,x,0              ³PICA   (10cpi/80cpl)  Esc,P
+       Æ                                  ³ELITE  (12cpi/96cpl)  Esc,M
+       ³LETTER QUALITY: Esc,x,1           ³MICRON (15cpi/120cpl) Esc,g
+       ÀÄÄÄ¿Courier: Esc,k,0 or           ³  ºCOMPRESSED:      @15
+           ³         Esc,k,2              ³  º   Rel Compress: @18
+           ³Prestige: Esc,k,3             ³Compressed Pica   = 17cpi/137cpl
+           ³Script:   Esc,k,4             ³Compressed Elite  = 20cpi/160cpl
+           ³Bold PS:  Esc,k,6             ³Compressed Micron = Micron
+           ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ           ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+          ÉÍ
+          ³SUPERSCRIPT: Esc,S,0
+          ³SUBSCRIPT:   Esc,S,1    Release Super or Subscript: Esc,T
+          ÈÍ
+
+
+                      ºSTANDARD ATTRIBUTES, Make & Release º
+               ÄÄÄÄÄÄÄĞÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄĞÄÄÄÄÄÄÄ
+      ³PROPORTIONAL SPACING, Set: Esc,p,1      Rel: Esc,p,0   ÚÄÄÄÄ
+      ÀÄÄ¿EMPHASIZED (BOLD), Set: Esc,E        Rel: Esc,F    ÚÙ
+         ÀÄÄÄ¿DOUBLE STRIKE, Set: Esc,G        Rel: Esc,H   ÚÙ
+             ÀÄÄÄ¿UNDERLINE, Set: Esc,-,1      Rel: Esc,-,0ÚÙ
+                 ÀÄÄ¿ITALIC, Set: Esc,4        Rel: Esc,5 ÚÙ
+                    ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+      ³WORD PROCESSING MODES
+      ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+      ³CENTERING:     Esc,a,1 ·
+      ³Rt ALIGNMENT:  Esc,a,2 Ç  Rel: Esc,a,0
+      ³JUSTIFICATION: Esc,a,3 ½
+
+
+      OVERSIZE LETTERS: ºDOUBLE WIDE, One Line Only: @14   Rel: @20
+                        ºDOUBLE WIDE, Regular: Esc,W,1     Rel: Esc,W,0
+                        ºDOUBLE HIGH:          Esc,w,1     Rel: Esc,w,0
+
+
+                          ÄÒÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÒÄ
+                           ºSELECTED MACHINE CONTROLSº
+      ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄĞÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄĞÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+               (( To Send Direct from DOS Use: ECHO (code)>PRN ))
+      ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+      RESET: Esc,@   (^[,@)     SINGLE DIRECTION PRINT: Esc,U,1  Rel:Esc,U,0
+      SET L MARGIN: Esc,l,n     FORM FEED:   @12   (^L)
+      SET R MARGIN: Esc,Q,n     LINE FEED:   @10
+
+                    CANCEL DATA: @24   (^X)
+                       ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+
+            ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+            PROGRAMMABLE PITCH - HIGHLIGHT COMBINATIONS for EPSON
+            ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+            Step 1, Determine the Desired Spacing (Pitch):
+
+                    5  cpi = 32     PS: 34
+                    6  cpi = 33     PS: 35
+                    8« cpi = 36     PS: 37
+
+                    10 cpi = 0      PS:  2
+                    12 cpi = 1      PS:  3
+                    17 cpi = 4      PS:  6
+                    20 cpi = 5      PS:  7
+
+            ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+            ³For BOLD,        add 8         For ITALIC,      add 64  ³
+            ³                                                        ³
+            ³For DOUBLEPRINT, add 16        For UNDERLINE,   add 128 ³
+            ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                                 The Code is: Esc,!,n
+                           ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+
+
+      ³PAPER FEED LENGTHS          ³PERF & PAGE LENGTH
+      ÆÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ     ÆÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+      ³1/6" (Default):  Esc,2      ³Skip n Lines at Perf.: Esc,N,n
+      ³1/8"             Esc,0      ³Release Skip Perf.:    Esc,O (letter)
+      ³n/60"            Esc,A,n    ³Page Length, Lines:    Esc,n
+      ³n/180"           Esc,3,n    ³Page Length, Inches:   Esc,0,n
+      ³n/180"(one line) Esc,J,n    ³(Perf Skip must be reset)
+      ³ " " "(reverse)  Esc,j,n
+      ÀÄÄÄÄÄ 
+
+      
+      *****   NOTE: n = single byte value (@n), -1not-0 arabic numerals.   *****
+      In TSE, to enter n=0 ("Null"), use ^P,^2 (on the alphanumeric keypad).
+
+      NOTE: Commas are includes for clarity only. 
+            They are -1not-0 part of the codes.
+

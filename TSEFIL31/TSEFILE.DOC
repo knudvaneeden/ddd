@@ -1,0 +1,608 @@
+
+1. What Is TSEFile?
+-------------------
+
+TSEFile is a file manager for TSE, implemented exclusively using TSE's
+own macro programming language SAL. It allows you to execute all basic
+file management tasks without leaving TSE, e.g. copying, renaming and
+deleting files. You can view files in text and hex mode and navigate the
+directory tree, which includes making and removing subdirectories.
+Moreover, version 3.1 of TSEFile implements some advanced techniques,
+which include:
+    þ deleting, copying and moving directory trees,
+    þ comparing files both binary and as lines of text,
+    þ searching files by name and by text (grep),
+    þ managing 4dos compatible file descriptions,
+    þ running programs and associated files,
+    þ viewing and extracting archived files.
+
+
+2. What's New?
+--------------
+
+2.1 Version 3.1
+---------------
+
+I did not plan to update TSEFile just after a few weeks, but to my great
+dismay I found two rather unpleasant bugs. So here is Version 3.1 of the
+program with bugs fixed (hopefully) and file comparison included.
+
+  þ File comparison (binary)
+        This feature works similar to copying files, except, of course,
+        that the files are compared. It is fully recursive, which means
+        subdirectory trees can be compared.
+
+  þ Text comparison (TSEComp)
+        Actually, this is a stand alone macro with an interface to
+        TSEFile built in. See TSEComp.DOC for more information.
+
+  þ Fixed bugs
+        ù After copying or renaming descriptions across paths (function
+          DupDesc in TSEFile.S), the wrong temporary buffer was cleared.
+          This might have produced description files containing some
+          garbage, but 'real' descriptions should not have been damaged.
+        ù The Yes/No logic of the 'cancel operation box' within the file
+          iterator (ForAllFiles) was reversed. Thus pressing <Enter>
+          actually resumed the operation.
+
+
+2.2 Version 3.0
+---------------
+
+Here is a list of all the things which have been changed, added or
+de-bugged since version 2.01 of the program.
+
+  þ Macro size
+        Due to the size of the source code, TSEFile had to be split into
+        three distinct macro files. The loading of the additional macros
+        is handled automatically.
+
+  þ National keyboards
+        No more adaption of key bindings required. TSEFile has been
+        rewritten such, that it will now work with any keyboard layout.
+
+  þ Date and time format
+        Date and time are now formatted using the internal TSE variables
+        DateFormat, DateSeparator and TimeSpeparator.
+
+  þ Speed search
+        Now wraps around to the top of the file list, when the bottom is
+        reached. Upper case letters search backwards.
+
+  þ File browsing
+        The way file browsing is implemented has been changed, to
+        accommodate the new features of TSEFile.
+
+  þ Confirmation logic
+        The logic to confirm destructive actions, e.g. deleting and
+        overwriting files, has been streamlined somewhat and adapted to
+        the new features of TSEFile.
+
+  þ More options
+        More setup options have been added, so that some of the new
+        features of TSEFile can be customized.
+
+  þ Additional help
+        All the various pick and browsing lists now have their own
+        special help screen.
+
+  þ Printing
+        The file lists can now be printed or dumped to a file.
+
+  þ File descriptions
+        TSEFile now reads and writes 4dos compatible description files.
+        File descriptions can be changed, copied and moved. If you copy
+        or move a file, its description is copied along with it.
+
+  þ Associations
+        You can now associate a file extension with an application.
+        Browsing a file with such an extension will launch the
+        corresponding application with the file as an argument.
+
+  þ File archivers
+        You can view the contents of an archive (arj,lzh,zip), browse
+        files within it and extract some or all of the files from the
+        archive.
+
+  þ File and text searching
+        You can search files on an entire drive or only on part of it.
+        The found files can additionally be searched for text (grep).
+
+  þ Subtree management
+        All the basic file management actions (copying, moving and
+        deleting) can now be used with directories. These operations
+        automatically include all the subdirectories and files below the
+        chosen directory.
+
+  þ Tree list
+        TSEFile now manages a list of the directories of one or more
+        drives. This list can be viewed and used to quickly change
+        directories and drives.
+
+  þ File marking
+        Directories can now be marked, because they will be affected by
+        file management actions.
+
+  þ Extended wildcards
+        All the prompts, which ask you to select files, now accept
+        extended wildcards, which allow character ranges and *'s at the
+        beginning or right in the middle of names and extensions.
+
+  þ Fixed bugs
+        ù Drives n and y could not be accessed with the change drive
+          command. This has been fixed.
+        ù Tab expansion was not switched off at program startup. This
+          sometimes garbled file list entries. This has been fixed.
+        ù The entry/exit code had some odd quirks, which have been
+          fixed.
+
+
+3. Installation
+---------------
+
+This package contains four kinds of files: the documentation, the source
+code, the executables and the configuration files. To successfully
+install the program neither the documentation nor the source code is
+needed. This means you can store the following files in a safe place and
+ignore them for the time being.
+
+    tsefile.doc     no! you really shouldn't ignore this one!
+    tsefile.s       main program file
+    tsefile1.s      run time library (subtree management)
+    tsefile2.s      run time library (menus and help screens)
+    tsefileb.s      program loader used by tsefile.bat
+    tsefile.src     include file (common constants)
+    tsefile.asm     binary (dos functions, which SAL does not provide)
+    tsefile.bin     compiled version of tsefile.asm
+
+    tsecomp.doc     explanation of text file comparison
+    tsecomp.s       program file for text comparison
+    tsecompb.s      program loader used by tsecomp.bat
+    fnprompt.src    include file (emulates the EditFile prompt)
+
+The batch file tsefile.bat allows you to run TSEFile as a stand alone
+application. Put it in a directory which is included in your path, e.g.
+the same directory where TSE (e.exe) is stored. There is also a batch
+file for TSEComp. Put it in the same directory as tsefile.bat
+
+    tsefile.bat     command line version of TSEFile
+    tsecomp.bat     command line version of TSEComp
+
+The rest of the files should be placed in a directory where TSE can find
+them, e.g. a directory which is included in your TSEPath. (If this
+sounds all gibberish to you, just put the files into the mac directory,
+which is directly below the place where TSE is located.)
+
+    tsefile.mac     main program file
+    tsefile1.mac    run time library (subtree management)
+    tsefile2.mac    run time library (menus and help screens)
+    tsefileb.mac    program loader used by tsefile.bat
+    tsefile.cfg     configuration file (the options are stored here)
+    tsefile.app     association file (associations are stored here)
+    tsefile.tre     subdirectory trees (tree info is stored here)
+
+    tsecomp.mac     program file for text comparison
+    tsecompb.mac    program loader used by tsecomp.bat
+
+The file tsefile.tre is not included in this package, but it will be
+created the first time you configure the drives which TSEFile should
+manage (Options|Drive). Be sure, to overwrite a version 2 configuration
+file with the new one, because they are not compatible.
+
+Now you are ready for test driving. To run TSEFile enter "tsefile" at
+the "execute macro" prompt. You cannot run any of the other mac-files
+(just try it), they will simply refuse to cooperate, because they are
+not meant to be executed by the user. To quit TSEFile hit <Escape> and
+<Enter> at the ensuing prompt.
+
+
+4. Command Reference
+--------------------
+
+The following list contains a short description of all the commands
+available in TSEFile. The key bindings and the keys used to access the
+menu system are also included. This list is a verbatim copy of part of
+the main help screen of the program, which means that it is only a key
+stroke away, when TSEFile is running.
+
+
+  Help
+      F1              Alt-H H     this help
+      -               Alt-H I     info on file manager
+
+  Windows
+      F12             -           zoom/unzoom window
+      Shift F12       -           switch list
+      Tab             -           switch list
+
+  Movement
+      0..9,a..z,A..Z  -           speed search
+      Up/Down         -           move up/down one line
+      PgUp/Down       -           move up/down one page
+      Home/End        -           goto beginning/end of list
+      Ctrl-F/L        -           goto first/last marked file
+      Ctrl-N/P        -           goto next/previous marked file
+      Ctrl-R          -           repeat find within list boxes
+
+  Marking files
+      Grey+           -           mark current file
+      Grey-           -           unmark current file
+      Spacebar        -           toggle mark of current files
+      Grey*           Alt-M A     mark all list entries
+      Grey/           Alt-M U     unmark all list entries
+      GreyEnter       Alt-M T     toggle marks of all entries
+      -               Alt-M F     mark all files
+      -               Alt-M D     mark all directories
+      -               Alt-M S     set marks according to expression
+
+  File descriptions
+      Alt BackSpace   -           undo last edit or delete
+      Ctrl Del        -           delete current description
+      Shift Del       -           delete and move to clipboard
+      Ctrl Ins        -           copy current line to clipboard
+      Shift Ins       -           paste clipboard to current line
+      F2              Alt-I I     edit description (inline)
+      Shift F2        Alt-I E     edit description (prompt)
+      -               Alt-I S     set descriptions of all entries
+      -               Alt-I M     set descriptions of marked entries
+      -               Alt-I V     save descriptions to file
+      -               Alt-I G     check descriptions for garbage
+
+  Searching and browsing files
+      Enter           -           browse current file in default mode
+      Shift Enter     Alt-F V H   browse current file in hex mode
+      -               Alt-F V T   browse current file in text mode
+      Ctrl Enter      Alt-F V L   launch current file
+      -               Alt-F F C   search files within current directory
+      -               Alt-F F L   search files within subtree
+      -               Alt-F F D   search files on entire drive
+      -               Alt-F F G   search files on all drives
+      -               Alt-F G C   search text within current directory
+      -               Alt-F G L   search text within subtree
+      -               Alt-F G D   search text on entire drive
+      -               Alt-F G G   search text on all drives
+
+  File and subtree management
+      Del             Alt-F L     delete files and subtrees
+      F7              Alt-F R     rename files and directories
+      F8              Alt-F P     copy files (prompts for new names)
+      Ctrl-C          Alt-F C     copy files and trees to other window
+      Ctrl-M          Alt-F M     move files and trees to other window
+      Ctrl-O          Alt-F O     compare files and trees
+
+  Directories and trees
+      Ins             Alt-D M     add a new directory
+      -               Alt-D E     remove an empty directory
+      F6              Alt-D C     change current directory
+      Shift F6        Alt-D D     change current drive
+      -               Alt-D R     return to startup directory
+      -               Alt-D I     show info about current directory
+      -               Alt-D S     show info about subtree
+      -               Alt-D P     print directory listing
+      F5              Alt-D F     refresh directory listings
+      F9              Alt-D T L   show subtree of current directory
+      Shift F9        Alt-D T G   show all directories of all drives
+      -               Alt-D T R   read directory information
+
+  Options and setup
+      -               Alt-O L     file mask for left window
+      -               Alt-O R     file mask for right window
+      -               Alt-O D     drives for tree information
+      -               Alt-O S     sort field for both windows
+      -               Alt-O O     sort order
+      -               Alt-O I     video mode
+      -               Alt-O A     view and edit association list
+      -               Alt-O P O   output port for printing (may be file)
+      -               Alt-O P P   initialization string for printer
+      -               Alt-O M W   warning level for file deletion
+      -               Alt-O M U   use 4dos compatible descriptions
+      -               Alt-O M P   prompt before saving descriptions
+      -               Alt-O M S   on startup, save changed files
+      -               Alt-O M E   on exit, prompt"
+      -               Alt-O M R   on exit, restore startup directory
+      -               Alt-O M A   on exit, save configuration
+      -               Alt-O V     save options in configuration file
+
+  Miscellaneous
+      F10             -           activate menu
+      F4              Alt-F T     compare current file using TSEComp
+      F3              Alt-F V E   load files
+      Shift F3        Alt-F V Q   load files and return to editor
+      Escape          Alt-F Q     return to editor
+      Shift Escape    Alt-F T     return and do not restore directory
+      -               Alt-F D     run a dos shell
+
+  Mouse
+      Left Click Statusline       activate menu
+      Left Click                  toggle mark
+      Shift Left Click            extend markings
+      Left Drag                   move marked files
+      Ctrl Left Drag              copy marked files
+      Shift Left Drag             extend markings and move marked files
+      Ctrl Shift Left Drag        extend markings and copy marked files
+      Right Click                 browse current file or directory
+
+  Prompt (blue) boxes
+      Enter, Left Button, Y       accept
+      Escape, Right Button, N     cancel
+
+  Error (red) boxes
+      Ctrl C                      break
+      AnyOtherKey                 continue
+
+
+
+5. Using TSEFile
+----------------
+
+
+5.1 Basics
+----------
+
+To begin with, load TSEFile and have a short look on it. Don't worry
+about lost files, because TSEFile will warn you before it overwrites or
+deletes something. For now, just abort these operations by pressing the
+<Escape> key. If you want to experiment a bit, there is plenty of on-
+line help available. Pressing <F1> will pop up a help window describing
+some general concepts and all the short cut keys there are. Furthermore
+each pick list and each browsing list has its own special help screen.
+Finally, if you access the menu system (<F10>), a short description of
+what each command does is shown at the help line.
+
+
+5.2 Navigating the Directory Tree
+---------------------------------
+
+TSEFile displays two directory listings, which both show the current
+directory after the program has started. The highlight can be moved
+using the cursor keys and individual files can be (un-)marked with the
+<SpaceBar> or by <Left Clicking> them with the mouse. To switch the
+active list press the <Tab> key. To quickly locate a file, press one of
+the alphabetic keys and TSEFile will position you at the next entry in
+the list, that begins with the corresponding character. (To search
+backward use uppercase letters.) The contents of the lists can be
+filtered using wildcards and can be sorted in a variety of ways.
+
+To view another directory, position the highlight on a directory name
+and press <Enter> or <Right Click> it with the mouse. Larger jumps are
+available using the <F6> key. At the ensuing prompt you may enter
+relative or absolute paths. If you include a drive letter and a colon
+the current disk will also be changed (e.g., c:\tse will take you to the
+tse directory on drive c, no matter where you are).
+
+Moreover, TSEFile manages a list of directories on your drives, which
+may also be used to change the current directory in a variety of ways.
+To configure which drives TSEFile should manage use Options|Drives. You
+can view a list of all directories on your drives (<Shift F9>) or only
+the current directory and its subdirectories (<F9>). Furthermore, if you
+enter a partial directory name at the <F6> prompt, TSEFile will display
+a list of directories, which it thinks come closest to what you wanted.
+To change the current directory, highlight one of the list entries and
+press <Enter>.
+
+If you want to save one of the file lists either as soft or as hard
+copy, use Directory|Print. Finally, if you suspect, that TSEFile somehow
+became confused about what the contents of a directory really is, press
+<F5> and it will rebuild both directory listings from scratch.
+
+
+5.3 Directory Management
+------------------------
+
+To add a new directory press <Ins> and enter the directory name. This is
+undone using the <Del> key. Be careful, as this version of TSEFile is
+capable of deleting subdirectory trees. TSEFile will always show a
+warning message, when you try to remove a subdirectory tree. Using
+Directory|Remove is a safer way to delete directories, because this
+command will only remove empty subdirectories.
+
+TSEFile can also copy and move directories. Highlight or mark the source
+directory(ies) and press <Ctrl M> or <Ctrl C> and TSEFile will move or
+copy these directory(ies) including all of their subdirectories and
+files to the inactive directory. Again, moving will pop up a warning
+box. By the way, you cannot disable these "directory destruction"
+warnings, because recursive deletion IS dangerous.
+
+Finally, you can rename a directory using the <F7> key.
+
+
+5.4 File Management
+-------------------
+
+Most of the file management commands use either the highlighted file or
+the marked file(s). In the latter case TSEFile ignores the highlighted
+file, if it is not marked.
+
+You can copy and move files from the active to the inactive directory
+using <Ctrl C> or <Ctrl M>. Alternatively you can drag the current or
+the marked files with the mouse. Just click in the active window and
+move the mouse curser over to the inactive window without releasing the
+mouse button. This will move the files. If you additionally hold down
+the <Ctrl> key, the files will be copied instead. The indicator box
+shows you, what will happen and how many files will be affected.
+
+You can rename or duplicate files using <F7> or <F8>. These commands
+also accept file paths, allowing you to rename files across directories
+(but not across disks). Finally, hit <Del>, if you want to delete some
+files. (Once again, look out for marked directories.)
+
+
+5.5 Comparing Files
+-------------------
+
+Files can be compared both in binary mode and as text files. Binary
+comparison (<Ctrl-O>) works similar to the copy command, which means
+that everything that is marked in the active file list will be compared
+to the corresponding item in the inactive list. This includes comparing
+subdirectories and all the files they contain.
+
+After the comparison has finished, TSEFile tells you either that all the
+files were identical or it pops up a list showing all the differences
+found. This list contains the full path of the file and an indication of
+what is wrong.
+
+        directory   the directory was not found in the inactive list
+        missing     the file was not found in the inactive list
+        length      the file sizes differ
+        ######      the position of the first mismatching byte
+
+Comparing text files works on a line to line basis, in contrast to
+binary comparison, which works on a one to one basis. Position the
+highlight on the file you want to compare and press <F4>. TSEFile (in
+fact TSEComp) will then ask for the name of the second file. Press
+<Enter> and you will be put into an environment, which allows you to
+compare and update two text files. This environment is a stand alone
+macro named TSEComp. It may also be called from the command line or
+can be executed directly from within TSE. See the file TSEComp.DOC for
+further instructions.
+
+
+5.6 Browsing and Launching
+--------------------------
+
+If you want to inspect the contents of one of your files, <Right Click>
+it or press <Enter> and TSEFile will display the file in text mode.
+<Shift Enter> will do the same, except that TSEFile will put you in hex
+mode. If you want to edit a file, press <F3> to load it or <Shift F3> to
+to load it and simultaneously quit the file manager.
+
+Actually, something completely different could happen, depending on the
+extension of the current file. If the current file is a program, it will
+simply be executed in a dos shell. If it is a SAL macro, TSEFile will be
+terminated and the macro will be executed.
+
+Furthermore, there is a list of so-called associations, which determines
+which application should be used to view files with certain extensions.
+If you ever used the Windows file manager, you know what these
+associations are. Simply put, if you view an associated file, the
+corresponding application is launched with the filename as a command
+line argument. This will run the program and simultaneously load the
+file. E.g., if you associated the file extension "pas" with a program
+named "bp.exe", then <Right Clicking> the file example.pas would run
+"bp.exe" and would automatically load the "example.pas" file into bp.
+Associations are stored in a file named TSEFile.APP and can be edited
+using Options|Associations.
+
+Associations can be used to set up archive viewers. The associations
+setup menu has a submenu Archive. If you leave the entries of this
+submenu blank, you made a normal association, which just launches an
+application with the current filename as an argument. But, if you fill
+in the entries of the Archive menu, you make an archive viewer. The
+extract command is exactly that, the command used to extract a file from
+the archive. "Skip Until" and "Skip From" are regular expressions, which
+define the portions at the top and bottom of the archive listing which
+should be ignored. "Name Filter" is a regular expression which defines
+where the filename can be found in a line of the archiver listing.
+
+TSEFile comes with an association file, which contains archiver setups
+for three of the most popular archiver programs (arj, lzh and zip). The
+rest of the associations serve mainly as examples on how to do it.
+Finally, you can launch any file within any application by pressing
+<Ctrl Enter>. TSEFile will then ask you which program should handle the
+current file.
+
+
+5.7 Finding Files and Text
+--------------------------
+
+If you want to locate some files, use the command File|Find. You have
+four choices for the scope of the search:
+
+    Current     searches only the current directory
+    Local       recursively searches all subdirectories
+    Drive       searches the entire current drive
+    Global      searches all drives (Options|Drives)
+
+At the filename prompt, which follows, you may enter an extended
+wildcard specification of the file(s) you want to find. While searching,
+TSEFile displays some statistics in a pop up window. When finished,
+TSEFile will display either a message, that it could not find any files,
+or it will pop up a list of all the files matching your specification.
+Some of the basic file management commands are available from within this
+list. (The target for copying files is the current directory.)
+
+You can also locate files which contain a specified string of text or
+regular expression (grep). The procedure is almost identical to finding
+files by their names, except that you will additionally be asked to
+enter some text, which the files must contain. Moreover, when viewing
+one of the found files, you can "compress" it such, that only the lines
+containing the search expression are visible.
+
+
+5.8 File Descriptions
+---------------------
+
+TSEFile allows you to attach a description to a file. But you have to
+use full screen mode (<F12>) to view and edit these descriptions. The
+best thing about descriptions is, that they are sticky, which means they
+will move along with their corresponding files, if these are moved or
+copied. You can Copy (<Ctrl Ins>), Cut (<Shift Del>) and Paste (<Shift
+Ins>) descriptions from one line of a directory listing to any other.
+Additionally, you can attach the same description to all marked files
+(Describe|Set_All_Marked) or to every file in the listing (Describe|
+Set_All). To edit an existing description or to insert a new one, simply
+press the <F2> key.
+
+The descriptions are stored in a hidden file named "descript.ion", which
+is compatible to the file of the same name which 4dos uses. In other
+words the whole thing is stolen from this invaluable replacement of the
+original DOS command interpreter.
+
+(If you don't know what 4dos is or just haven't tried it, check it out!
+It's a complete replacement for command.com made by JP Software, which
+TMHO is a must have. It allows you to do all the things at the DOS
+prompt you always wanted to do, but were afraid of to ask for.
+Seriously, when working on some other person's PC, which does not have
+4dos installed, makes me feel like being put into a straight jacket.)
+
+
+5.9 Options
+-----------
+
+The options menu is used to customize the way TSEFile is working or to
+temporarily have a different view of the directory listings. You can
+determine which files should be shown in the listings (Left_List and
+Right_List) and for which drives tree listings should be managed
+(Drives). Moreover, you can sort the directory listings in a variety of
+ways. All of these options can be written to disk (TSEFile.CFG) and will
+be automatically reloaded the next time TSEFile is started.
+
+If you do not like the colors I have chosen, you can alter these too.
+All the colors used by TSEFile are defined right at the top of the
+include file TSEFile.SRC. If you change these definitions, you must,
+however, recompile _all_ the source files for your changes to take
+effect.
+
+
+6. Known (and Unknown) Problems
+-------------------------------
+
+This is an almost completely new version of TSEFile. Roughly 95% of the
+source code is either new, extended or has changed in some way or
+another. Since the basics have been tested over and over again during
+program development, I am quite sure that there is no major bug hiding
+in there. But I cannot guarantee that I found each and every minor
+glitch. (You certainly know the age old saying: There's still another
+bug!).
+
+What I wanted to say is, if you should find a bug, have a suggestion on
+what should be included in the next version, or just want to say hello,
+send me a note. My CIS-ID is 100517.1221.
+
+Actually, there is one known problem. When you pop up a menu from a pick
+list in SAL, the mouse input is not handled correctly. The mouse cursor
+and the menu highlight are offset by a fixed amount, which depends on
+where the menu is placed. The only advice I have is, stick with the
+keyboard whenever you see a blue menu.
+
+Oh yes, I know, the documentation is incomplete, too short and
+absolutely incomprehensible. But I'm afraid, there's nothing to be done
+about it >-).
+
+
+7. Copyright and Disclaimer
+---------------------------
+
+This program is thereby donated to the public domain. Use it or even
+alter it as you see fit, but ENTER AT YOUR OWN RISK!
+

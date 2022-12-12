@@ -1,0 +1,14 @@
+SetCache v1.0.5 (Jun 19, 2002):
+
+Tools to allow macros to cache
+their settings in memory, but
+reload them from disk when
+necessary.
+
+Platform: TSE Pro 2.x/3.x/4.x
+
+Requirements: none
+
+Author: Michael Graham <magmac@occamstoothbrush.com>
+Homepage: http://www.occamstoothbrush.com/tsemac/
+

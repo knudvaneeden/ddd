@@ -1,0 +1,173 @@
+News on the TSTSE editormacro package by Timo Salmi in reverse order
+====================================================================
+
+University of Vaasa, Finland, Linux Pentium garbo.uwasa.fi has a
+large collection of Shareware, Freeware and Public Domain PC
+programs available by anonymous FTP, WWW (World Wide Web) and mail
+server. The file ftp://garbo.uwasa.fi/pc/ts/0news-ts contains news
+about the TS-programs in the /pc/ts directory (in reverse order).
+This text, which you now have, is an extract from the 0news-ts file
+and the Usenet news.
+
+....................................................................
+Prof. Timo Salmi   Co-moderator of news:comp.archives.msdos.announce
+Moderating at ftp:// & http://garbo.uwasa.fi archives  193.166.120.5
+Department of Accounting and Business Finance  ; University of Vaasa
+mailto:ts@uwasa.fi  <URL:http://uwasa.fi/~ts>  ; FIN-65101,  Finland
+....................................................................
+
+Sat 17-May-97: I have updated my collection of the SemWare editor
+macros to be
+ ftp://garbo.uwasa.fi/pc/ts/tstse19.zip
+ SAL macro sources to extend The SemWare Editor version 2.5
+Rewrote the macro "FLIPONE.S Flip one character, incl foreign" to
+jump to the beginning of the next word after the character has been
+flipped. Also (hopefully) corrected a bug that made wrong
+conversions if a block was on in the window.
+   Rewrote macro "TOASC.S Scandinavian 7/8-bit conversions" adding
+more conversions. The adjustments include e.g. the general-interest
+HTML foreign character conversions. They now cover the whole range.
+   Rewrote macro "HP500.S Esc sequences, HP DeskJet 500". It now has
+the options to either send the escape sequences (new) to the printer
+or to insert them into the text. Rewrote in a similar manner the
+macro "DICONIX.S Esc seqs, Diconix InkJet 150".
+   Rewrote macro "UPCASE.S Convert text to upper/lower case" to
+handle also the cases of convert word and convert line besides
+convert block and entire file. The conversions handle also foreign
+characters like a" and o".
+
+
+Wed 28-Feb-96: I have made an update
+ ftp://garbo.uwasa.fi/pc/ts/tstse18.zip
+ SAL macro sources to extend The SemWare Editor version 2.5
+Added
+ "BOXTOASC Box drawing chars to 7-bit ASCII"
+ "DUMP.S Dump block as bin oct dec or hex"
+ "ROTATE.S Copy column to row or vice versa"
+The rotate macro collection also includes the option to reverse a
+range of text. Furthermore, made the following improvements to
+ "TOASC.S Scandinavian 7/8-bit conversions"
+ - added the option between a block and entire file conversion
+ - the choice also adds confirmation
+ - included some more characters into the conversion
+ - improved the help screen
+Corrected a minor typo in
+ "RNGEFIND.S Forward search an ascii range"
+Added to
+ "MISC.S Miscellaneous SAL macros"
+a macro that reloads the current file without saving the changes
+that may have been made since last saving the file. This is a
+convenient method one can use to undo the recent changes in a file
+in the editor window. This is an often needed very useful procedure.
+   A demonstration version of the SemWare editor is available as
+ 404275 Dec 14 1994 ftp://garbo.uwasa.fi/pc/demo/tsetd2.zip
+ tsetd2.zip The SemWare Editor (TSE) v2.0 Demo/Test-Drive
+Well, how come all these macros for the TSE editor? Simple, I have
+needed the operations also for my own editing purposes at one stage
+or another. You see, TSE v2.5 (and MicroEMACS on Unix) are the
+editors I use the most. For example, just the other day I needed to
+rotate a column into a row, and to dump a row in decimal.
+
+Sun 28-Jan-96: I have made an update
+ ftp://garbo.uwasa.fi/pc/ts/tstse17.zip
+ SAL macro sources to extend The SemWare Editor version 2.5
+Upon getting an update of the SemWare Editor from version 2.0 to
+version 2.5 I have gone through my collection of SAL macros to
+enhance the editor. There have been some changes in the SAL language
+from version 2.0 to version 2.5 which are reflected in my update.
+If you have TSE 2.0 then do not get my update. If you have 2.5, then
+please do, since not all the old macros will continue to work
+without the changes. Furthermore, I made the following changes
+1) Rewrote and renamed SWITCH.S to SWAP.S
+ "SWAP.S Swap order of text, words/chars"
+2) Added "Run TurboPower Software Structure Analyst on the current
+file" to "PROGS.S Run programs on the editor text".
+
+Sun 12-Nov-95: I have made an update
+ ftp://garbo.uwasa.fi/pc/ts/tstse16.zip
+ SAL macro sources to extend The SemWare Editor
+1) Wrote a new macro file
+ "UPCASE.S Convert text to upper/lower case"
+This set handles extended ascii set including a' a" and o", that is
+the Scandinavian characters. The SemWare Editor standard includes
+an upper / lower case conversion, but it does not cover the foreign
+characters.
+2) Added macros for inserting escape sequences for several printers.
+These help give the editor some features of a true wordprocessor.
+The new macros are
+ "DICONIX.S Esc seqs, Diconix InkJet 150"
+ "HP500.S   Esc sequences, HP DeskJet 500"
+Even if you don't have any of these printers, if you understand the
+TSE macro language, it should not be too difficult to adapt to
+yours.
+3) Made a correction in
+ "COUNT.S Count block lines, words, chars"
+where one of the menu items gave a wrong command.
+4) Added a "working..." message to
+ "DETAB.S Detab a line or the entire file"
+since detabbing a large file can take some time.
+5) Added in PROS.S a routine
+ "Run a Turbo Pascal source"
+to
+ "PROGS.S Run programs on the editor text"
+
+Sat 29-Jul-95: Updated
+ ftp://garbo.uwasa.fi/pc/ts/tstse15.zip
+ SAL macro sources to extend The SemWare Editor
+Added in its macro
+ "TOASC.S Scandinavian 7/8-bit conversions"
+conversions between Scandinavian html characters used in preparing
+World Wide Web files. Added a new macro
+ "LINE.S Insert line numbers"
+
+Fri 31-Mar-95: I have updated my collection of The SemWare Editor
+macros to be
+ garbo.uwasa.fi:/pc/ts/tstse14.zip
+ SAL macro sources to extend The SemWare Editor
+Added three new marcos
+ NOBLANK.S Remove blank lines from file or block
+ SWITCH.S  Switch order of text
+ DETAB.S   Detab a line or the file
+Updated
+ TOASC.S   Scandinavian 7/8-bit conversions
+
+Sat 18-Feb-95: After releasing a new version of my macro collection
+for The SemWare Editor I got very useful feedback from Michael Bate
+(mbb@crl.com) reporting a factual nonfunctionality of the macro
+ "ROT13.S Rotate text by 13 positions"
+I have rewritten this macro and hopefully it works correctly now. I
+have also rewritten
+ "TOASC.S Scandinavian 7/8-bit conversions"
+to handle the Unix / IBM PC Scandinavian character conversions since
+the new convention by the Finnish computer centres of using Latin1
+character set on Unix nodes.
+The updated version is available as
+ garbo.uwasa.fi:/pc/ts/tstse13.zip
+ SAL macro sources to extend The SemWare Editor
+
+Sun 12-Feb-95: I have updated my macro collection for my favorite
+MS-DOS editor The SemWare Editor.
+ garbo.uwasa.fi:/pc/ts/tstse12.zip
+ SAL macro sources to extend The SemWare Editor
+I have added the following material
+ "COUNT.S Count block lines, words, characters, like Unix wc"
+ "RULER.S Relative, absolute or centered ruler on screen"
+The macros are self-documenting. A demonstration version of the
+SemWare editor is available as tsedt2.zip from Garbo's /pc/demo/
+directory.
+
+Sun 15-Jan-95: I have updated my collection of macros for the
+SemWare Editor, v. 2.0. You can find a demo version of the said
+editor as
+ 404275 Dec 14 02:00 garbo.uwasa.fi:/pc/demo/tsetd2.zip
+ tsetd2.zip The SemWare Editor (TSE) v2.0 Demo/Test-Drive
+I added the following macro
+  "RNGEFIND.S Forward search an ascii range"
+The reason for this addition is the following. I needed for my own
+purposes to check in a converted file whether it has any 8-bit
+characters because there isn't supposed to be any in the file.
+   The updated package is garbo.uwasa.fi:/pc/ts/tstse11.zip.
+
+Tue 29-Nov-94: Started a collection of macros for the SemWare
+Editor, v. 2.0. This is the editor that I use on MS-DOS most of the
+time. The editor is an extension of the QEdit editor.

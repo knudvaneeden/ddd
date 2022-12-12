@@ -1,0 +1,236 @@
+The SemWare Editor calculator Macros
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Version: 0.9
+ Date: Monday, 9 August 1993
+Author: L.A.Vonderscheer
+(Tim Farley & the University of California (Randall Hyde))
+
+Copyright:
+ÄÄÄÄÄÄÄÄÄ
+This package is released to SemWare for use by them as they see fit.
+CALC.S and FPCALC.S are subject to the restrictions, if any, made by Tim
+Farley in his SEFP (SemWare Editor Floating Point) package and by the
+distributors of UCRLIB;  the University of California Standard Library
+for Assembly Programming.  As of this writing, SEFP and UCRLIB imply
+public domain and seem to have no significant restrictions in their use.
+(see excerpts at end of this document)
+
+The integer versions are written entirely in SAL and shouldn't have any
+concerns as to rights to the source.
+
+Introduction
+ÄÄÄÄÄÄÄÄÄÄÄÄ
+Calc.zip is a collection of 4 calculators for The SemWare Editor (TSE).
+These calculators come in two styles, a standard algebraic type and a
+Reverse Polish Notation (RPN) type. Each style of calculator is also
+divided into two versions; floating point and integer versions.
+
+The reason for this split in function seemed logical and in keeping with
+"separate and small is better".  The macros of choice can be called from
+TSE with a controlling Load/Purge/Load macro that would make more
+efficient use of available resources then a single large calculator. Or
+a menu front end might be desired to call a specific macro.
+
+Files Included
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+CALC.DOC    This document
+
+FPCALC.S    Algebraic floating point calculator source.
+            Requires Tim Farley's SEFP 0.9 of 26 February 1993, in
+            particular FP.S* and FPLOW.BIN.
+
+ACLAC.S     Algebraic Integer calculator source
+
+CALC.S      Reverse Polish Notation Floating Point Calculator source
+            Requires Tim Farley's SEFP 0.9 of 26 February 1993, in
+            particular FP.S* and FPLOW.BIN. (FP_MIN.S included)
+
+CALC.INC    CALC.S #include file containing some helper functions.
+
+ICALC.S     Reverse Polish Notation Integer Calculator source.
+
+ICALC.HLP   #Include help display source for ICALC.S
+
+FP_MIN.S    * Revised version of Tim Farley's FP.S that has unused
+            procedures removed. The two source files (FPCALC.S & CALC.S)
+            for floating point #Include this file instead of the full
+            version.
+
+Algebraic Calculator use
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Since this is a calculator familiar to us all there is little reason to
+explain it's basic use. As a minimum these versions function as:
+"Number, Operation, Number, Equals, Result". Specifics to the type
+(integer or floating point) abilities follow below.
+
+RPN Calculator use
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+For real number crunching this is the ONLY calculator type to use. With
+it's stack and stack manipulation it allows the solution of many
+involved formula without re-entry of intermediate results.  This saves
+many keystrokes required by other types.  I'm a crummy teacher so I
+won't review the use of RPN calculators, but if you have used any of the
+Hewlett-Packard units on the market you should be on familiar ground.
+These calculators function as: Number, <enter>, number, operation,
+result. The "=" key doesn't exist on this calculator type.
+
+Minimum stack manipulation operations (RollUp|Dn, X<>Y, LastX ClX) are
+provided. These are the most used operations and although X<>Z|T and
+storage registers are useful they were not implemented in this version.
+
+Integer versions
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+There are a few functions that bear some examination.  This version has
+provision to do calculations and display in alternate number bases
+(Binary, Octal, Decimal, Hex). Switching from base to base has no effect
+on any calculation in progress. It just changes the display and the
+ability to input numbers of the current base. This makes it easy to
+convert numbers between bases or to add numbers of disparate bases.
+
+There are provisions to perform some bit manipulation. AND(&), OR(|),
+XOR(^), NOT(N).
+
+"Not" is an oddball in that it does not affect or require any other
+number entry. Enter a number, press (N)ot and the bits are toggled and
+the result displayed. As an example start up the calculator switch into
+binary display (W) and enter 1010101010101010 then press "N". The result
+will be 0101010101010101. Note that there is one setting/function that
+can affect this operation; it is "WO(R)D SIZE". Word size sets the
+number of bits (right to left) that are to be operated on. The default
+is 0Fh (16). Setting to another value affects the number of bits
+toggled. Returning to the previous example after setting the Wo(r)d size
+to 8 the (n)ot result is: 1010101001010101.  This holds true for the
+other bit manipulation functions (and, or, xor ) as well. There is no
+requirement that you be in, or remain in, binary mode to perform these
+functions, but behind the scenes this is what is being done.
+
+AND, OR and XOR require two numbers be entered and return the result in
+the display. Word size effects how many bits are and|or|xor'ed together.
+
+There are two more bit operations: ShiftLeft(shl) and ShiftRight(shr)
+that also require two number input. Number1 [Shl | shr] Number2 = Result.
+The second number is the number of bits to shift the first digit by. For
+example: 1111b shl 10b = 111100b or 1111b shr 10b = 0011b. These
+functions also do not require binary mode be or remain in effect in
+order to function.
+
+Floating Point versions
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+The floating point versions do none of the base or bitwise manipulation
+that the integer versions do, although a binary or hex display is
+provided of the INTEGER only portion. (press 'x' for hex, 'b' for
+binary).
+
+The FP calculators do have the ability to do scientific or financial
+calculations out to 9 decimal places. The number of digits _displayed_
+is controlled by the (F)ix function. Even if no decimal places are
+displayed full internal precision is maintained. In order to display the
+'invisible' digits just use fix to increase the number of displayed
+places (max=9). The display is limited to 16 significant digits. Beyond
+that shifts the display into scientific notation displaying 9 digits and
+an exponent. This allows the display of some pretty big numbers.
+
+It Moves!
+ÄÄÄÄÄÄÄÄÄ
+The control_cursor keys can be used to move the calculator around the
+screen. The calc box often pops up over some numbers that you want to
+refer to while using the calculator. These keys allow it to be moved
+out of the way.
+
+Help
+ÄÄÄÄ
+All versions have a simple help screen integrated into them. These are
+only intended as a hint as to what operations are available and which
+keys are used.
+
+Acknowledgment
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+SemWare: provided TSE and SAL which make all sorts of catty macros
+         possible.
+
+Tim Farley: Released the floating point package that made the floating
+            point macros possible.
+
+Ray (Buddy) Asbury: for pointing out numerous improvements, and not a
+                    few errors.
+
+'Team TSE': The whole group of áeta testers that upload all sorts of
+            good code examples.
+
+
+Important Notes:
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+There appears to be a bug in either Tim Farley's FP package or in UCRLIB
+that returns a bogus '0' value for 0.25 or 0.250 without also setting an
+error condition. The ASM routines are way over my head so I have failed
+to track where the spurious 0 value is coming from. I kludged a
+correction in the FP calculators by trapping this value before making
+the call to the FP units:
+
+ (If InPut == '0.25' or InPut == '0.250' FPvar = FVal('0.2500') EndIf)
+
+A version of this 'fix' is in both floating point macro's code. I don't
+know if any other values cause a similar problem although so far none
+have cropped up.
+
+Excerpts
+ÄÄÄÄÄÄÄÄ
+/***************************************************************************/
+; Floating point package.
+;
+;
+; Released to the public domain
+; Created by: Randall Hyde
+; Date: 8/13/90
+;	8/28/91
+***************************************************************************
+; ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+; º BINKIT.ASM:  an ASM include file for use in creating TSE binary macros. º
+; ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+; Author: Tim Farley
+; First written: 18 February 1993
+; Last revision: 19 February 1993
+; Last revision: 26 February 1993
+;
+; Release:  This file may be FREELY distributed to any and all users of
+;           The SemWare Editor.  I would appreciate you mentioning my name
+;           in the documentation of any BIN macros you create using this
+;           file.
+***************************************************************************
+;
+; FPLOW.ASM   -- Low-level assembly portions of the interface to the
+;                UCR Standard Floating Point Library for Assembly
+;                from the University of California at Riverside.
+;
+; Author: Tim Farley
+;   Date: 24-Feb-1993
+;
+; Release:  This source code and the associated SAL macros are released to
+;           the public domain.  Please honor any restrictions which are
+;           included in current or future versions of UCRLIB, but beyond
+;           that I do not restrict use.  I would appreciate it if you
+;           mention my name in the docs of any derivative macros you
+;           distribute.
+/***************************************************************************
+    FP.S        --  Suite of convenient high-level functions for doing
+                    floating point calculations.
+    Author:  Tim Farley
+      Date:  25-Feb-1993
+    Revised: 26-Feb-1993
+
+    Explanation:  The UCR Floating Point library, adapted to The SemWare
+    Editor in UCRFP.S, provides a number of convenient floating point
+    functions.  These are defined in this file, along with a series
+    of more convenient higher-level functions to access the library.
+
+    This file is intended to be #include'd in your macros which need
+    to access floating point numbers.
+
+  Release:  This source code and the associated SAL macros are released to
+            the public domain.  Please honor any restrictions which are
+            included in present or future versions of UCRLIB, but beyond
+            that I do not restrict use.  I would appreciate it if you
+            mention my name in the docs of any derivative macros you
+            distribute.
+
+***************************************************************************/

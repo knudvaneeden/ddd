@@ -1,0 +1,16 @@
+TWIDDLE is a very simple macro for The Semware Editor.  It exchanges the two
+characters immediately to the left of the cursor.  Used mainly while typing.
+For this reason, it *assumes* there are two alpha characters to be exchanged,
+and has no protection against situations where this is not true (but then, its
+action can be reversed by executing it again).
+
+TWIDDLE is *copyleft* and *freeware*, and can not be sold.
+Luigi Bianchi  24 APR 1993
+
+-----------------------------------------------------------------------
+ They said, `You have a blue guitar,    |   Luigi M. Bianchi - York U.
+ You do not play things as they are.'   |
+ The man replied, `Things as they are   |     lbianchi@sol.yorku.ca
+ Are changed upon the blue guitar.'     |    luigi.bianchi@rose.com
+                    [Wallace Stevens]   |
+-----------------------------------------------------------------------

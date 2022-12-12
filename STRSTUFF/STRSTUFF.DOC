@@ -1,0 +1,138 @@
+                            CRAZY JACK'S STRING STUFF
+
+     (c)Copyright 1993 by Jack Hazlehurst
+     First version - 07/01/93
+
+     This file contains NO page breaks.  To get a  printed  copy,  use  your
+     favorite file printer, or, better, suck it in to TSE and print it.
+
+     This  is a set of binary routines that perform several string functions
+     not well supported by The Semware Editor, to wit:
+
+     *    Clear a string to all bits off.
+
+     *    Test a bit in a string to see if it's off or on.
+
+     *    Turns a bit in a character string ON.
+
+     *    Turns a bit in a character string OFF.
+
+     *    Inverts the value of a bit in a character string.
+
+     *    Replaces a character in a character string with a character
+          supplied by the caller.
+
+     The  string  stuff  routines  are  intended  for  internal use by other
+     macros.  Thus the STRSTUFF.S macro is just a vehicle  for  testing  the
+     binary routines in case you make changes.
+
+     To  access  the  string  support  routines  you must call up the binary
+     moduel STRSTUFF.BIN.  Use this to do it:
+
+     binary ["strstuff.bin"]
+         integer proc TestBitSetBit( var string BitSet, integer Which ) :  0
+         integer proc SetBitSetBit( var string BitSet, integer Which )  :  2
+         integer proc ClrBitSetBit( var string BitSet, integer Which )  :  4
+         integer proc FlipBitSetBit( var string BitSet, integer Which ) :  6
+         integer proc PlantChar( var string CharStr, integer Where,
+                                                     integer What )     :  8
+         proc ClearBitSet( var string BitSet )                          : 10
+     end
+
+     Just copy this into your SAL source up ahead of where you want  to  use
+     the  routines.   Remove  the  declarations  for any of the routines you
+     aren't using if you don't want the SAL Compiler nattering at you.
+
+     With the exception of PlantChr(), which allows you to  overwrite  bytes
+     in   a  character  string,  these  routines  deal  with  the  clearing,
+     manipulation and testing of bits in strings used as  bit  sets.   Since
+     TSE  strings  are limited to 255 bytes, this means we can have bit sets
+     with no more than 2040 bits in them, numbered 0 thru 2039.  You can, of
+     course, have smaller bit sets.
+
+     Before  you  start using a bit set you usually want to set all the bits
+     in it off.  You do this with ClearBitSet().  The call is:
+
+          ClearBitSet( var string BitSet )
+
+     "BitSet" is the string you are going to use.  It only  makes  sense  if
+     this  is a set you are going to do things with.  ClearBitSet() sets the
+     length of the string to its maximum decalred length, then turns off all
+     the bits in it.  There is no return value.
+
+     TestBitSetBit(), SetBitSetBit(), ClrBitSetBit() and FlipBitSetBit() all
+     use the same calling sequence, and have the  same  return  value.   The
+     general form of the calling sequence is:
+
+          <routine name>( var string BitSet, integer Which )
+
+     BitSet  is  the  bit  set you are testing or manipulating.  Which is an
+     integer in the range 0 thru the maximum bit number in you bit set  (but
+     never greater than 2039) that specifies the bit you are interested in.
+
+     If you specify a bit that is outside of your bit set, -1 is returned as
+     an error code.  If the bit is within your bit set, the  value  returned
+     is > 0 if the bit is ON, and 0 if it is OFF.  What is actually returned
+     is the specified bit as it appears in its byte,  with  the  other  bits
+     masked   off.   This  is  always  the  value  of  the  bit  BEFORE  any
+     manipulations are performed upon it.
+
+     TestBitSetBit() does not make any changes to the bit.  You just get its
+     current state.
+
+     SetBitSetBit()  always  turns  the  indicated bit ON.  The return value
+     shows you what it was BEFORE it was turned ON.
+
+     ClrBitSetBit() always turns the selected bit  OFF.   The  return  value
+     shows you what it was BEFORE it was turned OFF.
+
+     FlipBitSetBit()  inverts  the selected bit.  The return value shows you
+     what it was BEFORE it was flipped.
+
+     That's all there is to the bit set routines, gang!
+
+     As I mentioned above, PlantChar is odd man out here.  It replaces
+     characters in a string.  Its calling sequence is:
+
+          PlantChat( var string CharStr, integer Where, integer What )
+
+     CharStr is the character string you want to fool with.  Where is the
+     byte number (1 thru the length of the string) of the character you want
+     to replace, and what is the integer representation of the character you
+     want placed in the string.  It performs the function:
+
+          CharStr[Which] = chr(What)
+
+     --which you can't do directly in SAL.
+
+     Do you need to force the first character of a  string  to  upper  case?
+     Try:
+
+          PlantChar( CharStr, 1, asc( UpCase( ChatStr[1] ) ) )
+
+     As  you  can  see,  the  use  of  the string support routines is pretty
+     straight forward.
+
+
+                         A WORD ABOUT TSE BIT SETS
+
+     You  may  wish  to  deal with bit sets using PlantChar() instead of the
+     other routines.  The binary bit routines here  use  the  bit  numbering
+     scheme  used  by  TSE  for  "VarTabs" and "WordSet".  The bit number is
+     divided by 8 to get the byte number.  The remainder from this  division
+     specifies  the  bit.   The byte number thus calculated is ONE LESS than
+     the TSE string index to that byte.  Remember,  the  characters  in  TSE
+     strings are numbered starting with ONE, not zero!  For those of you who
+     know Turbo Pascal, it is like  the  difference  between  the  character
+     numbering  in  a  string  (1..n),  and  the  numbering  in a zero-based
+     character array (0..n-1).  Further, within a byte,  the  bit  numbering
+     runs  0..7  using the standard numbering convention used by Intel where
+     the bits are numbered from right to left (low-order to high order).
+
+     If we have a set of 32 bits, which occupies 4 bytes, the  last  bit  in
+     the  set would be bit 31.  Dividing this by 8 gives a quotient of 3 and
+     a remainder of 7.  The byte index would be 4, and the bit would  be  7,
+     which  is  the  HIGH-ORDER  bit (10000000).  It is easy to get confused
+     about this.
+
+                            ** END OF STRSTUFF.DOC **

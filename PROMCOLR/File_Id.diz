@@ -1,0 +1,9 @@
+(06-13-2004) - PromColr.s - Tse Pro v4.0+
+This macro's default action is to color TSE
+prompts consistently with other TSE color
+settings, and to solve the viewing problem
+if some prompt colors are the same.
+Alternatively it lets you set prompt colors
+yourself. For the latter it needs
+SlctColr.zip to be pre-installed.
+Author: Carlo.Hogeveen@xs4all.nl.

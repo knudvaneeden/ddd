@@ -1,0 +1,1589 @@
+CUAWS: CUA Macro/WordStar UI for TSE Pro/32
+Version 5.7 - Mar 10 2004
+(C) 1997-2004 by Bill Stewart (bstewart@iname.com)
+
+Table of Contents
+
+1  Description
+2  System Requirements
+3  Installation
+4  Contacting the Author
+5  User's Guide Supplement
+
+1  Description
+   ===========
+
+   CUAWS (CUA/WordStar) is a UI and macro for TSE Pro/32.
+
+      File           Description
+      ------------------------------------------------------------------
+      WORDSTAR.UI    A WordStar-compatible user-interface for TSE Pro/32
+
+      CUA.S          Replaces CUAMARK.S
+
+   WORDSTAR.UI is a user interface for TSE Pro/32. It features an extensive
+   WordStar emulation includes several features not available in SemWare's
+   standard UIs.
+
+   CUA.S is the supplemental CUA-style block-marking macro.
+
+   Note that you don't have to use WORDSTAR.UI to use CUA.S or vice versa.
+
+2  System Requirements
+   ===================
+
+   o  To use WORDSTAR.UI, you must have TSE Pro/32 v4.2 or later; it works
+      with both the console and GUI versions of the editor
+   o  To use CUA.S, you must have TSE Pro/32 v2.6 or later
+
+3  Installation
+   ============
+
+   To install WORDSTAR.UI:
+
+   o  Copy WORDSTAR.UI into the directory you keep your UI files; e.g.
+      \TSEPRO\UI
+   o  Open WORDSTAR.UI in the editor
+   o  Execute the Compile command (normally Ctrl-F9)
+
+   The next time you start the editor, WORDSTAR.UI will be the active
+   user-interface.
+
+   To install CUA.S:
+
+   o  Copy CUA.S to a directory where you store macro source files; e.g.
+      \TSEPRO\MAC
+   o  Open the CUA.S file in the editor
+   o  Execute the Compile command (normally Ctrl-F9)
+
+   WORDSTAR.UI attempts to load CUA.MAC on startup (you won't get an error
+   message if CUA.MAC is not found). You can control CUA block marking by
+   using the submenu at the bottom of the Block menu.
+
+4  Contacting the Author
+   =====================
+
+   E-mail:  bstewart@iname.com
+
+5  User's Guide Supplement
+   =======================
+
+   The rest of this file serves as a supplement to TSE Pro's User's Guide.
+   It follows the same chapter headings and subheadings as the User's
+   Guide, and documents changes and additions that will be relevant if you
+   use WORDSTAR.UI and CUA.S.
+
+   There are several characters used in the first column of this file,
+   below, to indicate chapter headings/subheadings; additions and changes
+   to the User's Guide; and editor commands. These are listed below:
+
+      Character in
+      First Column   Meaning
+      ------------   -----------------------------
+      >              Chapter heading or subheading
+      |              Additions to the User's Guide
+      =              Editor commands
+
+   This makes it easy to browse through the Supplement by chapter headings
+   and subheadings. You can use the editor's CompressView command to
+   display a PickList of the chapter headings and subheadings; use the
+   following find string and options:
+
+      Search for:  ^>
+      Options:     x
+
+___________________________________________________________________________
+
+>                          USER'S GUIDE SUPPLEMENT
+
+>  STARTING THE EDITOR
+
+>  THE PULL-DOWN MENU SYSTEM
+
+>     ACCESSING SUB-MENU COMMANDS AND OPTIONS
+
+      [The last bulleted item should be:]
+
+|     o  For any menu category, menu hotkeys are available to directly
+|        access the sub-menus while editing. Press <Alt F>, <Alt T>,
+|        <Alt S>, <Alt B>, <Alt C>, <Alt W>, <Alt M>, <Alt P>, <Alt U>,
+|        <Alt O>, and <Alt H> to activate the pull-down Menu and display
+|        the associated sub-menu.
+
+>        Sub-Menu Items that Change an Editing Option
+
+         [The first and second paragraphs should read as follows:]
+
+|        If the sub-menu item toggles or changes an editing option, that
+|        option is either indicated by a check mark or an indication of
+|        its current setting enclosed within [ ]. If the option has only
+|        two states, ON and OFF, the state is immediately toggled when you
+|        select that option. Such states are indicated by the presence
+|        (ON) or absence (OFF) of a check mark to the left of the option.
+|        If the option has more than two possible settings, or allows a
+|        user-defined value to be specified, then when you select that
+|        option, it activates the option and allows you to specify the
+|        appropriate setting or value.
+|
+|        For two-state editing options (e.g. ON and OFF), the sub-menu
+|        does not remain on the screen. Otherwise, after you select an
+|        editing option, the sub-menu remains on the screen to allow you
+|        to select other options or commands, or to move to another Menu
+|        category. To deactivate the pull-down Menu system and resume
+|        editing, press <Escape> twice.
+
+         [The first example item should read as follows:]
+
+|        o  When you open the Options Menu, the "Backups" item will either
+|           have a check mark next to it (indicating it is set ON) or the
+|           check mark will be absent (indicating it is turned OFF). When
+|           you select the "Backups" option, the option is set ON (if it
+|           was OFF) or it is turned OFF (if it was ON). The Options Menu
+|           is then closed, and you are returned to editing.
+
+
+>  COMMAND PROMPTS AND PICKLISTS
+
+>     COMMAND PROMPTS
+
+>        Prompt Box
+
+         The following table identifies commands that are operational in
+         prompt boxes:
+
+                             Key/Mouse
+             Command         Assignment*      Operation within Prompt Box
+         ---------------- ------------------ -----------------------------
+         CReturn          <Enter>*           Accepts user entry.
+                          or <LeftBtn>*
+
+         Escape           <Escape>*          Cancels command or operation.
+                          or <RightBtn>*
+
+         BackSpace        <Backspace>*       Deletes character to left of
+                          or <Ctrl H>*       cursor in prompt box; any text
+                                             to right of cursor is shifted
+                                             left.
+
+|        DelChar          <Del>*             Deletes character at cursor
+|                         or <Ctrl G>*       position in prompt box.
+|
+|        DelRightWord     <Ctrl T>*          Deletes all/part of word from
+|                                            and to right of cursor in
+|                                            prompt box.
+|
+|        DelLine          <Ctrl Y>*          Deletes contents of prompt
+|                                            box.
+|
+|        DelToEol         <Ctrl Q Y>*        Deletes text from and to right
+|                                            of cursor position in prompt
+|                                            box.
+|
+|        BegLine          <Home>*            Moves cursor to beginning of
+|                         or <Ctrl Q S>*     prompt box.
+|
+|        EndLine          <End>*             Moves cursor to end of prompt
+|                         or <Ctrl Q D>*     string.
+
+         Left             <CursorLeft>*      Moves cursor left in prompt
+                                             box.
+
+         Right            <CursorRight>*     Moves cursor right in prompt
+                                             box.
+
+         Down             <CursorDown>*      Pops up History box.
+
+         Up               <CursorUp>*        Pops up History box.
+
+         WordLeft         <Ctrl CursorLeft>  Moves cursor to first
+                                             character to word left of
+                                             cursor in prompt box.
+
+         WordRight        <Ctrl CursorRight> Moves cursor to first
+                                             character to word right of
+                                             cursor in prompt box.
+
+|        AsciiChart       <Ctrl P 0>*        Pops up ASCII chart.
+|
+|        Copy             <Ctrl C>*          Copies text in prompt box to
+|                         or <Ctrl Ins>*     System ClipBoard.
+|
+|        CopyBlock        <Ctrl K C>*        Copies marked block into
+|                                            prompt box. If no block
+|                                            marked, copies word at cursor
+|                                            position in text.
+|
+|        Cut              <Ctrl X>*          Cuts text in prompt box to
+|                                            System ClipBoard.
+|
+|        CutToWinClip     <Shift Del>*       Cuts text in prompt box to
+|                                            Windows Clipboard.
+|
+|        CopyToWinClip    <Ctrl Ins>*        Copies text in prompt box to
+|                         or <Ctrl K ]>*     Windows Clipboard.
+|
+|        ListRecentFiles  <Ctrl 0>*          Displays Recent Files list;
+|                                            places selected filename into
+|                                            prompt box.
+|
+|        Literal          <Ctrl P>*          Places literal representation
+|                                            of a character into prompt box
+|                                            at cursor position. (The
+|                                            StatusLine prompt is not
+|                                            displayed; however, character
+|                                            following execution Literal
+|                                            command is processed.)
+|
+|        Paste            <Ctrl V>*          Pastes contents of System
+|                         or <Shift Ins>*    ClipBoard into prompt box.
+|
+|        PasteFromWinClip <Shift Ins>*       Pastes contents of Windows
+|                         or <Ctrl K [>*     Clipboard into prompt box.
+
+         ToggleInsert     <Ins>*             Toggles Insert mode ON and
+                                             OFF.
+
+|        QuoteLine        <Ctrl K U>*        Toggles quotation marks around
+|                         or <Ctrl '>*       the text inside a prompt box.
+|                                            This is to assist with
+|                                            entering filenames or UNC path
+|                                            names that contain spaces.
+|
+|        Lower            <Ctrl K '>*        Converts the text inside the
+|                         or <Ctrl L>        prompt box to lowercase. If a
+|                                            block is marked inside the
+|                                            prompt box, only the block is
+|                                            affected.
+|
+|        Upper            <Ctrl K ">*        Converts the text inside the
+|                         or <Ctrl U>        prompt box to uppercase. If a
+|                                            block is marked inside the
+|                                            prompt box, only the block is
+|                                            affected.
+
+         [Add the following paragraph:]
+
+|        If CUA block-marking mode is ON, CUA block-marking is active
+|        inside prompt boxes. (FOR MORE INFORMATION, see "Effects of CUA
+|        Block-Marking Mode in Prompt Boxes" under "Using CUA Block-
+|        Marking Mode" in the chapter on "Block Operations.")
+
+>           History Buffer for Prompt Boxes
+
+            [This section has the following changes:]
+
+|           o  The Literal command does not discard the initially displayed
+|              value in a prompt box, but the Paste and PasteFromWinClip
+|              commands do.
+|
+|           o  If CUA block-marking mode is ON, the Paste and
+|              PasteFromWinClip commands do NOT discard the initially
+|              displayed value in a prompt box. (FOR MORE INFORMATION on
+|              CUA Block-Marking Mode, see "Using CUA Block-Marking Mode"
+|              in the chapter on "Block Operations.")
+
+            [Add the following bulleted item:]
+
+|           o  If CUA block-marking mode is ON, you can also discard the
+|              initial response that is displayed by pressing <Del>,
+|              <Backspace>, or <Ctrl H> when the prompt box first appears.
+|              (FOR MORE INFORMATION, see "Effects of CUA Block-Marking
+|              Mode in Prompt Boxes" under "Using CUA Block-Marking Mode"
+|              in the chapter on "Block Operations.")
+
+
+>  LOADING, PROCESSING, AND SAVING FILES
+
+>     SAVING AND CLOSING FILES, AND EXITING FROM THE EDITOR
+
+>        Commands to Save and/or Close Files
+
+=        o  SaveFile (<Ctrl K S>, or "Save" under File menu)
+
+            [Add the following paragraph:]
+
+|           If the current file is an unnamed file created with the NewFile
+|           command, the SaveFile command automatically executes the
+|           RenameAndSaveFile command instead.
+
+=        o  SaveAllFiles ("Save All" under File Menu)
+
+            [Add the following paragraph:]
+
+|           If any of the files in the Ring are unnamed files created with
+|           the NewFile command, the SaveAllFiles command automatically
+|           executes the RenameAndSaveFile command for such files.
+
+=        o  QuitFile (<Ctrl K Q>, or "Close" under File Menu)
+
+            [The QuitFile command now behaves as follows:]
+
+|           This command prompts you to save the current file (if
+|           modified), then closes (or "quits") the file. If the file has
+|           not been saved since it was last modified, the following prompt
+|           is given:
+|
+|              +-----------------------------+
+|              |                             |
+|              | Save changes to [filename]? |
+|              |                             |
+|              | [  Yes ] [  No  ] [Cancel]  |
+|              |                             |
+|              +-----------------------------+
+|
+|           ([filename] represents the name of the current file). Select
+|           "Yes" to first save the file, and then quit the file. Select
+|           "No" to quit the file without saving the changes. Select
+|           "Cancel" (or press <Escape>) to terminate this operation and
+|           continue editing the file.
+|
+|           If the current file is an unnamed file created with the NewFile
+|           command, and you choose to save the file, the QuitFile command
+|           automatically executes the RenameAndSaveFile command instead.
+|
+|           This command automatically closes duplicate editing windows.
+|           (FOR MORE INFORMATION, see the CloseDupWindows command in the
+|           chapter on "Splitting the Screen into Windows.")
+
+=        o  SaveAndQuitFile (<Ctrl K D>)
+
+            [The SaveAndQuitFile command now behaves as follows:]
+
+|           This command automatically saves the current file and then
+|           closes (or "quits") the file. The file is only saved if it was
+|           modified.
+|
+|           If the current file is an unnamed file created with the NewFile
+|           command, the SaveAndQuitFile command automatically executes the
+|           RenameAndSaveFile command first, then quits the file.
+|
+|           This command automatically closes duplicate editing windows.
+|           (FOR MORE INFORMATION, see the CloseDupWindows command in the
+|           chapter on "Splitting the Screen into Windows.")
+
+>        Commands to Exit from the Editor
+
+=        o  Exit (<Alt F4>, or "Exit" under File Menu)
+
+            [The Exit command now behaves as follows:]
+
+|           This command quits (closes) all files that are open and exits
+|           the editor. The command operates by issuing the QuitFile
+|           command for each file in the Ring. As with QuitFile, you are
+|           prompted to save any files that were modified since they were
+|           last saved. If you select "Cancel" or press <Escape> at the
+|           "Save changes to ... ?" prompt for any file, the Exit command
+|           is terminated at that file, leaving that file open with any
+|           other files following it in the Ring.
+|
+|           If any of the files in the Ring are unnamed files created with
+|           the NewFile command, the Exit command automatically executes
+|           the RenameAndSaveFile command for such files.
+|
+|           This command automatically closes duplicate editing windows.
+|           (FOR MORE INFORMATION, see the CloseDupWindows command in the
+|           chapter on "Splitting the Screen into Windows.")
+
+=        o  SaveAllAndExit (<Ctrl K X>, or "Save All & Exit" under File
+=              Menu)
+
+            [Add the following paragraph:]
+
+|           If any of the files in the Ring are unnamed files created with
+|           the NewFile command, the SaveAllAndExit command automatically
+|           executes the RenameAndSaveFile command for such files.
+
+>     ALTERNATIVE MODES FOR VIEWING FILES
+
+         Browse Mode
+
+         [The second paragraph should read as follows:]
+
+=        o  ToggleBrowseMode (<Ctrl O P>, or "Browse Mode" under Options
+=              Menu)
+
+|           To toggle Browse mode ON and OFF for a file, press <Ctrl O P>
+|           or select "Browse Mode" under the Options Menu.
+
+
+>  SPLITTING THE SCREEN INTO WINDOWS
+
+>     SWITCHING BETWEEN WINDOWS
+
+=     o  ExchangeWindows (<Ctrl O X>, or "Exchange" under Window Menu)
+|
+|        This command exchanges the current editing window with the next
+|        editing window, if they contain two different files. If there is
+|        more than one window open, and the next window contains a
+|        different file that the current window, the window contents are
+|        exchanged (the current window now contains the next file, and the
+|        next window contains the previously current file). The cursor
+|        remains in the same window.
+|
+|        For example, suppose you have two horizontal windows open, and the
+|        top window contains FILE1 and the bottom window contains FILE2.
+|        The cursor is located in the top window, in FILE1. After you
+|        execute the ExchangeWindows command, the top window contains FILE2
+|        and the bottom window contains FILE1. The cursor remains in the
+|        top window (now in FILE2).
+
+>     CLOSING EDITING WINDOWS
+
+=     o  CloseWindow (<Alt F3>, or "Close" under Window Menu)
+
+         [Add the following paragraph:]
+
+|        If there is only a single editing window on the screen,
+|        CloseWindow executes the Exit command instead. (FOR MORE
+|        INFORMATION, see the Exit command in the chapter on "Loading,
+|        Processing, and Saving Files.")
+
+=     o  CloseDupWindows (<Ctrl F3>, or "Close Duplicates" under Window
+=           Menu)
+|
+|        This command closes "duplicate" editing windows; that is, other
+|        editing windows on the screen that contain the current file.
+|
+|        The QuitFile, SaveAndQuitFile, and Exit commands execute this
+|        command automatically any time a file is closed. (FOR MORE
+|        INFORMATION, see "Commands to Save and/or Close Files" and
+|        "Commands to Exit from the Editor" in the chapter on "Loading,
+|        Processing, and Saving Files.")
+
+
+>  MOVING THROUGH TEXT IN A FILE
+
+>     CHANGING POSITION IN A FILE
+
+>        Changing Position by Multiple Characters or Lines
+
+=        o  BegWindow (<Ctrl Q E>)
+
+            [The BegWindow command now behaves as follows:]
+
+|           This command moves the cursor to column 1 of the first line of
+|           text in the current window.
+
+=        o  EndWindow (<Ctrl Q X>)
+
+            [The EndWindow command now behaves as follows:]
+
+|           This command moves the cursor to the end of the last line of
+|           text in the current window.
+
+=        o  GotoLineCol (<Ctrl Q I>, or "Go to Line/Column" under Search
+=              Menu)
+|
+|           This command moves the cursor to the specified line and/or to
+|           the specified column.
+|
+|           When you execute this command, the editor displays the prompt
+|           "Go to line, column:". There are several ways to respond to
+|           this prompt:
+|
+|           o  To move the cursor to a specific line, enter the line number
+|              and press <Enter>. For example, you would enter "50" to move
+|              the cursor to line 50.
+|
+|           o  To move the cursor to a specific column number, enter a
+|              comma followed by the column number and press <Enter>. For
+|              example, you would enter ",20" to move the cursor to column
+|              20 on the current line.
+|
+|           o  To move the cursor to a specific line and column, enter the
+|              line number, a comma, then the column number; then press
+|              <Enter>. For example, you would enter "50,20" to move the
+|              cursor to line 50, column 20.
+|
+|           You can designate a line or column relative to the current line
+|           or column by preceding the line or column number with "+" to
+|           specify a line or column after the current line or column, or
+|           with "-" to specify a line or column before the current line or
+|           column.
+|
+|           Examples of the GotoLineCol command:
+|
+|           o  Enter "50" to move the cursor to line 50. The cursor column
+|              does not change.
+|           o  Enter ",20" to move the cursor to column 20 on the current
+|              line.
+|           o  Enter "50,20" to move the cursor to line 50, column 20.
+|           o  Enter "+50" to move the cursor 50 lines past the current
+|              line. The cursor column does not change.
+|           o  Enter ",+20" to move the cursor 20 columns to the right of
+|              the current column.
+|           o  Enter "-50,-20" to move the cursor to the line that is 50
+|              lines before the current line and 20 columns to the left of
+|              the current column.
+
+
+>  USING TABS
+
+>     SETTING TAB STOPS
+
+>        Variable Tabs
+
+=        o  SetVarTabs ("Variable Tab Stops" under Options Menu)
+|
+|           Identifies the tab stop locations used with Variable Tabs. Tab
+|           stops are designated by specifying the actual columns at which
+|           to place tab stops, and may occur at variable intervals. The
+|           maximum variable tab stop location is column 255.
+|
+|           When this option is selected, a prompt box is displayed
+|           containing the message, "Variable Tab stops:", along with a
+|           listing of the current set of Variable Tab stops. You can
+|           modify the existing set, or enter a whole new set, by typing
+|           the appropriate column number(s), separated by spaces.
+
+>     USING POSITIONAL TABS: SOFT, VARIABLE, AND SMART
+
+=     o  TabRight (<Tab>)
+
+         [Add the following paragraph:]
+
+|        If TabShiftsBlock is ON and the cursor is in a marked block, the
+|        text in the marked block is shifted right to the next tab stop.
+|        (FOR MORE INFORMATION, see the ToggleTabShiftsBlock command in the
+|        chapter on "Editing Modes.")
+
+=     o  TabLeft (<Shift Tab>)
+
+         [Add the following paragraph:]
+
+|        If TabShiftsBlock is ON and the cursor is in a marked block, the
+|        text in the marked block is shifted left to the previous tab stop.
+|        (FOR MORE INFORMATION, see the ToggleTabShiftsBlock command in the
+|        chapter on "Editing Modes.")
+
+=     o  TabType (<Ctrl O T>, or "Tab Type" under Options Menu)
+|
+|        This command sets the tab type to be used to either Hard, Soft,
+|        Smart, or Variable.
+|
+=     o  SetTabWidth (<Ctrl O I>, or "Tab Width" under Options Menu)
+|
+|        This command allows you to identify a fixed interval for placement
+|        of tab stops with Soft and Hard Tabs. When you select this option,
+|        you can enter a value from 1 through 16 to designate the tab
+|        width.
+
+>     EFFECTS OF EXPANDTABS
+
+=     o  ToggleExpandTabs (<Ctrl O B>, or "Expand Tabs" under Options Menu)
+|
+|        Toggles ExpandTabs ON or OFF. This dictates whether the editor
+|        displays tabs as the appropriate number of spaces, as determined
+|        by the value of TabWidth. Set this option ON to have the editor
+|        interpret tab characters so that the text is positioned on the
+|        screen according to the current TabWidth. Set this option OFF to
+|        have the editor display each tab character on the screen as the
+|        physical tab character itself (ASCII 9).
+
+>  MANIPULATING TEXT
+
+>     COMMANDS TO ADD TEXT
+
+=     o  Literal (<Ctrl P>)
+
+         [The Literal command is changed as follows:]
+
+|        It generates the prompt "Press character to insert (0 for ASCII
+|        chart):".
+|
+|        If you press "0" at the Literal command's prompt, the ASCII chart
+|        is displayed.
+
+>     COMMANDS TO MOVE TEXT
+
+=     o  SplitLine (<Ctrl N>)
+
+         [The SplitLine command now behaves as follows:]
+
+|        This command splits the current line at the cursor position. The
+|        text from and to the right of the cursor is moved to a new line
+|        immediately below the current line. The AutoIndent setting affects
+|        the column at which the text is placed on the new line.
+
+>     COMMANDS TO FORMAT TEXT
+
+=     o  FlushLeft (<Ctrl O [>
+|
+|        This command adjusts the text on the current line to the left
+|        margin as specified by the LeftMargin setting. If LeftMargin is
+|        zero, column 1 is used for the left margin. (To set LeftMargin,
+|        select "Left Margin" under the Options Menu.)
+|
+|        If you execute FlushLeft with the cursor positioned in a marked
+|        block, text on each line in the block is adjusted. The left margin
+|        used for adjusting depends on the type of block that is marked, as
+|        follows:
+|
+|        o  For a line or character block, the text on each line of the
+|           block is adjusted to the left margin, as described in the
+|           preceding paragraph. (For a character block, the entire text is
+|           adjusted on each line spanned by the block, even if the block
+|           does not include all text on the first or last lines of the
+|           block.)
+|
+|        o  For a column block, only text within the block is adjusted. The
+|           text is adjusted on each line to the left-most column of the
+|           block.
+
+=     o  FlushRight (<Ctrl O ]>, or "Flush Right" under Text Menu)
+|
+|        This command adjusts the text at and following the cursor on the
+|        current line to the right margin as specified by the RightMargin
+|        setting. If RightMargin is 0, no action occurs when you execute
+|        FlushRight. (To set RightMargin, select "Right Margin" under the
+|        Options Menu.)
+|
+|        If you execute FlushRight with the cursor positioned in a marked
+|        block, text on each line in the block is adjusted. The right
+|        margin used for adjusting depends on the type of block that is
+|        marked, as follows:
+|
+|        o  For a line or character block, the text on each line of the
+|           block is adjusted to the right margin, as described in the
+|           preceding paragraph. (For a character block, the entire text is
+|           adjusted on each line spanned by the block, even if the block
+|           does not include all text on the first or last lines of the
+|           block.)
+|
+|        o  For a column block, only text within the block is adjusted. The
+|           text is adjusted on each line to the right-most column of the
+|           block.
+
+=     o  QuoteLine (<Ctrl K U>, or "Quote/Comment Line" under Text Menu)
+
+         [Add the following paragraph:]
+
+|        If this command is executed in a prompt box, it toggles quotation
+|        marks around the text inside the prompt box. This is to assist in
+|        entering long filenames or UNC path names that contain spaces.
+|        (FOR MORE INFORMATION, see "Prompt Box" under "Command Prompts" in
+|        the chapter on "Command Prompts and PickLists.")
+
+=     o  SetLeftMargin (<Ctrl O L>, or "Left Margin" under Options Menu)
+|
+|        Indicates the LeftMargin setting for editing. The value (if any)
+|        specified may affect the operation of the CReturn and WrapPara
+|        commands, as well as WordWrap mode. Valid values for LeftMargin
+|        range from 0 through the maximum allowable line length.
+|
+=     o  SetRightMargin (<Ctrl O R>, or "Right Margin" under Options Menu)
+|
+|        Indicates the RightMargin setting for editing. The value (if any)
+|        specified affects the operation of the WrapPara command and of
+|        WordWrap mode. Valid values for RightMargin range from 0 through
+|        the maximum allowable line length.
+
+
+>  EDITING MODES
+
+=  o  AutoIndent (<Ctrl O A>, or "AutoIndent" under Options menu)
+|
+|     Indicates the state of AutoIndent mode, which affects placement of
+|     the cursor when CReturn (<Enter>) is executed. Three options are
+|     available: OFF, ON, or STICKY.
+|
+=  o  WordWrap (<Ctrl O W>, or "WordWrap" under Options menu)
+|
+|     Indicates the state of WordWrap mode, which affects wrapping of text
+|     as characters are inserted or deleted. Three options are available:
+|     OFF, ON, or AUTO.
+|
+=  o  ToggleSyntaxHilite (<Ctrl O H>, or "SyntaxHilite Mode" under Util
+=        Menu)
+|
+|     Toggles whether SyntaxHilite colors are displayed for any files for
+|     which SyntaxHilite mode is active. Enable this option to display
+|     SyntaxHilite colors for any files for which SyntaxHilite mode is
+|     active; disable this option to suppress the display of SyntaxHilite
+|     colors for all files in the editing session.
+
+=  o  ToggleTabShiftsBlock ("Tab Shifts Block" under Options Menu)
+|
+|     Change this option to cause the TabLeft and TabRight commands to
+|     shift the text within a marked block one tab stop to the left and
+|     right, respectively, if the cursor is located in a block. (FOR MORE
+|     INFORMATION, see the TabLeft and TabRight commands in the chapter on
+|     "Using Tabs.")
+
+>     SPECIAL PROGRAMMING-LANGUAGE MODES
+|
+|        SmartIndent Mode
+|
+|        [The list of extensions should read:]
+|
+|        .asm, .bas, .c, .cc, .cls, .cpp, .cs, .dpr, .frm, .h, .hpp, .inc,
+|        .java, .kix, pas, .pl, .pp, .py, .prg, .s, .si, .tex, .ui, .vbs
+|
+|        [The list of keywords should read:]
+|
+|        case, catch, do, else, elseif, finally, for, if, loop, otherwise,
+|        proc, repeat, select, switch, try, when, while, with
+
+
+>  BLOCK OPERATIONS
+
+>     MARKING AND MANIPULATING A BLOCK OF TEXT
+
+>        Opening and Closing a Block
+
+         [The first paragraph should read:]
+
+|        A block is a contiguous portion of text that is marked using the
+|        block-marking commands described later in this section under
+|        "Block-Marking Commands." One of three types of blocks can be
+|        marked:
+
+         [The first numbered item should read:]
+
+|        1. Execute the MarkBlockBegin command. This opens a block (either
+|           a character block or a column block, depending on whether
+|           ColumnBlock mode is ON or OFF). This opens the block and begins
+|           marking. Any existing block is unmarked.
+
+         [The third numbered item and following paragraph should read:]
+
+|        3. Position the cursor on the last character of the block, then
+|           execute the MarkBlockEnd command. This closes the block and
+|           ends marking.
+|
+|           If you change the state of ColumnBlock before the end of the
+|           block is marked, it does not yet take effect until a new block
+|           is marked.
+
+>        Extending a Block
+
+         [This section should read as follows:]
+
+|        Once a block is closed, you can extend it without having to re-
+|        mark the entire block. Simply place the cursor at the desired new
+|        position outside the block, then execute the MarkBlockEnd command.
+|
+|        If you execute the MarkBlockEnd command on a line that passes
+|        through or is contained in the current block, AND the location of
+|        the cursor is not a logical location to which to extend the block,
+|        no action is taken.
+|
+|        If you execute the MarkBlockEnd command from another window
+|        containing the same (current) file, the block is extended to the
+|        position of the cursor in that new window.
+
+>        Block-Marking Commands
+
+=        o  MarkBlockBegin (<Ctrl K B>, or "Mark Begin" under Block Menu)
+|
+|           This command opens either a character or a column block,
+|           depending on whether ColumnBlock mode is ON or OFF. If a block
+|           is already marked, this command unmarks that block and begins
+|           marking a new block.
+|
+=        o  MarkBlockEnd (<Ctrl K K>, or "Mark End" under Block Menu)
+|
+|           This command closes a block opened with MarkBlockBegin.
+
+=        o  MarkFile (<Ctrl A>, or "Mark File" under Block Menu)
+|
+|           This command marks all of the text in the current file as a
+|           non-inclusive character block.
+
+>        Block-Marking Options
+
+=        o  ToggleColumnBlockMode (<Ctrl K N>, or "Column Mode" under Block
+=              Menu)
+|
+|           If ColumnBlock mode is ON, the MarkBlockBegin command will
+|           start marking a column block. Otherwise, the MarkBlockBegin
+|           command will start marking a character block.
+|
+=        o  ToggleColumnOverlayMode (<Ctrl K I>, or "Column Overlay Mode"
+=              under Block Menu)
+|
+|           The state of ColumnOverlay mode affects the operation of the
+|           CopyBlock and MoveBlock commands, below.
+
+>        Manipulating Text in a Block
+
+=        o  CopyBlock (<Ctrl K C>, or "Copy" under Block Menu)
+
+            [Add the following paragraph:]
+
+|           If the marked block is a column block, CopyBlock behaves
+|           differently, based on whether ColumnOverlay mode is ON or OFF:
+|
+|           o  If ColumnOverlay mode is OFF, the block is inserted
+|              beginning at the cursor column, and extending across the
+|              current line and down that lines that follow, to accommodate
+|              the text in the block. Any text on each of the affected
+|              lines, from at to the right of the current cursor column, is
+|              shifted to the right.
+|
+|           o  If ColumnOverlay mode is ON, the text on the affected lines
+|              is not shifted to the right; rather, it is overlaid by the
+|              text inserted from the block.
+|
+|           ColumnOverlay mode affects only column blocks.
+
+=        o  MoveBlock (<Ctrl K V>, or "Move" under Block Menu)
+
+            [Add the following paragraphs:]
+
+|           If the marked block is a column block, MoveBlock behaves
+|           differently, based on whether ColumnOverlay mode is ON or OFF:
+|
+|           o  If ColumnOverlay mode is OFF, the block is inserted
+|              beginning at the cursor column, and extending across the
+|              current line and down that lines that follow, to accommodate
+|              the text in the block. Any text on each of the affected
+|              lines, from at to the right of the current cursor column, is
+|              shifted to the right.
+|
+|           o  If ColumnOverlay mode is ON, the text on the affected lines
+|              is not shifted to the right; rather, it is overlaid by the
+|              text inserted from the block.
+|
+|           ColumnOverlay mode affects only column blocks.
+
+>        Changing the Case of Characters in a Block
+
+         [The first paragraph should read as follows:]
+
+|        A group of commands are available that allow you to change the
+|        case of alphabetic characters in a block. These case-change
+|        commands are Upper, Lower, Flip, and Capitalize. These commands
+|        will also change the case of characters in the word at the cursor
+|        position if a block is not marked.
+|
+=        o  Upper (<Ctrl K ">, or "Upper" under Block Menu)
+|
+|           This command changes ALL characters in the current block (or
+|           word) to upper case. This command also works inside prompt
+|           boxes.
+|
+=        o  Lower (<Ctrl K '>, or "Lower" under Block Menu)
+|
+|           This command changes ALL characters in the current block (or
+|           word) to lower case. This command also works inside prompt
+|           boxes.
+|
+=        o  Flip ("Flip" under Block Menu)
+|
+|           This command reverses the case of ALL characters in the current
+|           block (or word); that is, lower-case characters are changed to
+|           upper case, and upper-case characters are changed to lower
+|           case.
+|
+=        o  Capitalize (<Ctrl K .>, or "Capitalize" under Block Menu)
+|
+|           This command capitalizes each word in the current block (or the
+|           current word); that is, the FIRST character of each word in the
+|           block (or the current word) is changed to upper case, and every
+|           other letter of each word in the block (or the current word) is
+|           changed to lower case.
+
+
+>     MANIPULATING BLOCKS VIA CLIPBOARDS
+
+>        The ClipBoard Copy Commands
+
+         [These commands are changed as follows:]
+
+|        The block remains marked.
+
+>        The ClipBoard CopyAppend Commands
+
+         [These commands are changed as follows:]
+
+|        The block remains marked.
+
+         [The following paragraph is changed:]
+
+|        * As an alternative to using the pull-down Menu to execute the
+|          Named ClipBoard commands, press <Ctrl K O> to pop up the
+|          Named ClipBoard menu.
+
+>        Viewing the System ClipBoard
+
+=        o  ViewClipboard ("View Clipboard" under Clip Menu)
+|
+|           This command displays the contents of the System ClipBoard in a
+|           scrollable window. Press <Enter> or <Escape> to remove the
+|           display window and return to editing.
+
+>        Viewing the Windows ClipBoard
+
+=        o  ViewWindowsClipboard ("View Windows Clipboard" under "Windows
+=              Clipboard" of Clip Menu)
+|
+|           This command displays the contents of the Windows ClipBoard in
+|           a scrollable window. Press <Enter> or <Escape> to remove the
+|           display window and return to editing.
+
+
+>     USING CUA BLOCK-MARKING MODE
+
+|     CUA block-marking mode (CUAMarking) is handled by the external CUA
+|     macro. The macro must be present for CUAMarking mode to activate. The
+|     CUA macro, if available, is executed when the editor starts, and
+|     CUAMarking mode is enabled.
+|
+=     o  ToggleCUAMarking ("CUA Marking Enabled" under "CUA Block Marking"
+|        of Block Menu)
+|
+|        This command turns CUAMarking mode ON and OFF.
+|
+|     CUAMarking mode is a special block-marking mode that provides
+|     additional flexibility in marking and manipulating blocks.
+
+>        Marking a CUA-Style Block Using the Keyboard
+
+|        When CUAMarking mode is active, you can hold down the <Shift> key
+|        and move the cursor through the text to open a CUA-style character
+|        block; as long as you hold down the <Shift> key while moving the
+|        cursor, the block stays open and follows the cursor. If you
+|        release the <Shift> key and move the cursor, the block is
+|        automatically unmarked (unless CUAPersistent mode is ON; see
+|        below). The <CursorLeft> and <CursorRight> keystrokes execute the
+|        PrevChar and NextChar commands, respectively, when you are marking
+|        a CUA-style block using the <Shift> key.
+|
+|        Also, you may mark a CUA-style column block by holding down the
+|        <Alt> key while moving the cursor through the text. As long as you
+|        hold down the <Alt> key, the block remains open and follows the
+|        cursor. If you release the <Alt> key and move the cursor, the
+|        block is automatically unmarked (unless CUAPersistent mode is ON;
+|        see below).
+|
+|        When a CUA-style block is marked, you can press <Del>, <Ctrl G>,
+|        <Backspace>, or <Ctrl H> to delete the block.
+|
+|        You may mark the entire file as a CUA-style block by pressing
+|        <Ctrl A>. The cursor is placed at the end of the file. If you want
+|        to return to your previous position, press <Ctrl Q P>
+|        (PrevPosition).
+
+>        Marking a CUA-Style Block Using the Mouse
+
+|        To mark a CUA-style block using the mouse, click and drag the
+|        <LeftBtn> through the text to open a character block and cause it
+|        to follow the movement of the mouse. If you click the <LeftBtn> in
+|        an editing window without dragging the mouse, the block is
+|        automatically unmarked (unless CUAPersistent mode is ON; see
+|        below).
+|
+|        You can also mark a column or a line block using the mouse. To
+|        mark a CUA-style column block using the mouse, hold down the <Alt>
+|        key, and click and drag using the <LeftBtn> to mark a column
+|        block. To mark a CUA-style line block using the mouse, hold down
+|        the <Ctrl> key, and click and drag using the <LeftBtn>.
+
+>        Extending a CUA-Style Block using the Mouse
+
+|        You may also extend a CUA-style block using the mouse and a single
+|        click of the <LeftBtn>. Hold down <Shift>, <Alt>, or <Ctrl>, then
+|        click the <LeftBtn> in the text where you would like the block to
+|        be extended. If no CUA-style block was present, one is marked and
+|        extended to the clicked position.
+|
+|        Hold down <Shift> and click the <LeftBtn> to extend a CUA-style
+|        character block to the clicked position. Hold down <Alt> and click
+|        the <LeftBtn> to extend a CUA-style column block to the clicked
+|        position. Hold down <Ctrl> and click the <LeftBtn> to extend a
+|        CUA-style line block to the clicked position.
+|
+|        If the block-marking command you execute to close a block is
+|        different from the last one you executed to extend the block, the
+|        block type changes to the last block-marking style used. The
+|        marked area is then adjusted to accommodate the new block type.
+
+>        Effects of CUA Block-Marking Mode in Prompt Boxes
+
+|        If CUAMarking mode is ON, you can mark the text inside prompt
+|        boxes as a block if you use the <Shift> key. Additionally, you can
+|        delete the initial value of a prompt box when the prompt box first
+|        appears by pressing <Del>, <Backspace>, or <Ctrl H>. (FOR MORE
+|        INFORMATION, see "History Buffer for Prompt Boxes" under "Prompt
+|        Box" in the chapter on "Command Prompts and PickLists.")
+
+>        Typing Replaces Block (CUATyping) Mode and Persistent Block
+>           (CUAPersistent) Modes
+
+|        CUATyping mode is only available when CUA block-marking mode is
+|        ON. If CUATyping mode is ON, then the next alphanumeric character
+|        you type deletes the CUA-style block and replaces it with the
+|        character you typed. If CUATyping is OFF, the block is not
+|        deleted; rather, any characters you type are simply inserted into
+|        the text and included in the block.
+|
+|        CUAPersistent mode is only available when CUA block-marking mode
+|        is ON. If CUAPersistent mode is ON, then the next movement
+|        keystroke or mouse click you use to move the cursor without
+|        holding down one of the block marking keys (<Shift> or <Alt>)
+|        leaves the block in its marked state, rather than unmarking it. If
+|        CUAPersistent mode is ON, CUATyping mode is not available.
+
+=        o  ToggleCUATyping ("Typing Replaces Block" under "CUA Block
+|           Marking" of Block Menu)
+|
+|           This command toggles CUATyping mode ON and OFF. Note that
+|           CUATyping mode is ignored inside prompt boxes, where it is
+|           always OFF.
+|
+=        o  ToggleCUAPersistent ("Persistent Block" under "CUA Block
+|           Marking" of Block Menu)
+|
+|           This command toggles CUAPersistent mode ON and OFF. If
+|           CUAPersistent mode is ON, CUATyping mode is disabled.
+
+>        Commands Affected by CUA Block-Marking Mode
+
+|        When CUAMarking is ON, several keystroke commands operate
+|        differently than when CUAMarking is OFF. Additionally, executing
+|        the commands from the pull-down Menus will not have the same
+|        effect as the keystroke commands, because the commands on the
+|        pull-down Menus execute from the user-interface (UI) macro file,
+|        while the below commands are handled by the external CUA macro.
+|
+=        o  Find (<Ctrl F> or <Ctrl Q F>)
+|
+|           If the command finds any matching text, the found text is
+|           marked as a CUA-style block.
+|
+=        o  Again (<Ctrl L>)
+|
+|           This command locates the next occurrence of found text and
+|           marks it as a CUA-style block.
+|
+=        o  AgainReverse (<CtrlShift L>)
+|
+|           This is the same as Again (above), but the search proceeds in
+|           the opposite direction as the last find or replace.
+|
+=        o  IncrementalSearch (<Ctrl I>)
+|
+|           If the command finds any matching text, the found text is
+|           marked as a CUA-style block.
+|
+=        o  Replace (<Ctrl R or <Ctrl Q A>)
+|
+|           If no CUA-style block is marked, perform the standard Replace
+|           command. Otherwise, it will perform the Replace command but it
+|           will add the options 'gl' to the options string and leave the
+|           block marked after the command is finished. This is to make it
+|           easier to find and replace within only the marked block when a
+|           CUA-style block is marked.
+
+
+>  SEARCH FEATURES: FINDING AND REPLACING TEXT
+
+>     LISTING ALL OCCURRENCES OF A SPECIFIED TEXT STRING
+
+=     o  FunctionList (<Ctrl O F>, or "Function List" under Search menu)
+
+         [Change the bulleted items as follows:]
+
+|     o  If the extension is ".asm", declaration lines for assembly
+|        language subroutines are listed.
+|
+|     o  If the extension is ".bas", ".bi", ".cls", ".frm", ".pb3", ".pbi",
+|        ".pbs", or ".vbs", declaration lines for Visual Basic,
+|        PowerBuilder, or VBScript subroutines, procedures, and classes are
+|        listed.
+|
+|     o  If the extension is ".bat", ".btm", ".cmd", or ".kix", script
+|        labels (lines whose first character is ":") for batch files or
+|        KiXtart scripts are listed.
+|
+|     o  If the extension is ".c" or ".h", declaration lines for C
+|        functions are listed.
+|
+|     o  If the extension is ".cc", ".cpp", or ".hpp", declaration lines
+|        for C++ functions are listed.
+|
+|     o  If the extension is ".ini" or ".inf", bracketed section names for
+|        INI or INF files are listed.
+|
+|     o  If the extension is ".java" or ".cs", declaration lines for Java
+|        functions are listed.
+|
+|     o  If the extension is ".inc", ".s", ".si", or ".ui", declaration
+|        lines for SAL procedures are listed.
+|
+|     o  If the extension is ".dpr", ".pas", or ".pp", declaration lines
+|        containing Delphi or Pascal functions and procedures are listed.
+|
+|     o  If the extension is ".py", declaration lines containing Python
+|        procedures are listed.
+|
+|     o  If the extension is ".ch", ".fmt", ".frg", ".lbg", ".mpr", ".prg",
+|        ".qpr", or ".spr", declaration lines for xBase functions and
+|        procedures are listed.
+
+>     OTHER SPECIAL-PURPOSE SEARCH FEATURES
+
+=     o  Match (<Ctrl Q [>, or "Match" under Search Menu)
+
+         [Add the following paragraph:]
+
+|        This command can also display the length of a quoted string,
+|        provided the string is entirely on one line. Position the cursor
+|        on the opening character of the string (either a single or a
+|        double quotation mark) and execute the Match command. The length
+|        of the string is displayed on the StatusLine ("String is n
+|        characters long", where n is the number of characters found
+|        between the quotation marks). If the Match command can't find the
+|        closing quote character, it displays the message "End of string
+|        not found...".
+
+
+>  CREATING AND USING MACROS
+
+>     KEYBOARD MACROS
+
+>        Purging Keyboard Macros from the Current Session
+
+=        o  PurgeKeyMacro (<Ctrl M Y>, or "Purge Key Macro" under Macro
+=              Menu)
+
+         [Change the last paragraph to the following:]
+
+|        When you execute PurgeKeyMacro, the editor displays the following
+|        prompt:
+|
+|           +----------------------------+
+|           |                            |
+|           | Purge all keyboard macros? |
+|           |                            |
+|           | [  Yes ] [  No  ] [Cancel] |
+|           |                            |
+|           +----------------------------+
+|
+|        If you choose "Yes," the editor immediately removes all Keyboard
+|        Macros from the editing session. Any key(s) affected by the
+|        Keyboard Macros now resume their previous function(s). Choose
+|        "No," "Cancel," or press <Escape> to cancel this command.
+
+
+>  SPECIAL COMMANDS AND FEATURES
+
+>     SORTING LINES OF TEXT
+
+=     o  Sort (<Ctrl K Z>, or "Sort" under Util Menu)
+
+         [The fourth and fifth paragraphs should be changed as follows:]
+
+|        To specify a descending order for the Sort, enable the "Sort
+|        Descending" option Under the Util Menu.
+|
+|        To specify whether the Sort is to be sensitive to the case of the
+|        characters in the sort key, use the "Case Sensitive" option under
+|        the Util Menu. Enable this option if lines are to be sorted
+|        according to the case of alphabetic characters (a through z)
+|        included in the sort key; set this option OFF if the case of
+|        alphabetic characters should NOT affect the order in which lines
+|        are sorted. (A case-sensitive Sort operation is usually faster
+|        than a case-insensitive Sort.)
+
+>     OBTAINING A WORD COUNT
+
+=     o  WordCount (<Ctrl K ?>)
+|
+|        This command executes the WORDCNT external macro. It counts the
+|        number of words in the current file; or, if the cursor is located
+|        in a block, the number of words in the block. The result is
+|        displayed on the StatusLine.
+|
+|        The WordSet for this command is assumed to be "[A-Za-z_0-9]".
+
+
+>  CONFIGURING THE EDITOR INTERACTIVELY
+
+>     METHODS FOR INTERACTIVELY CONFIGURING THE EDITOR
+
+      [The second paragraph should read as follows:]
+
+|     Some of the editor's configuration options are readily available from
+|     the pull-down Menu. These represent options that are likely to be
+|     changed frequently during an editing session. The majority of the
+|     printing options are included under the Print Menu, in the "Set
+|     Options" selection. A number of miscellaneous editing options
+|     (AutoIndent, WordWrap, RightMargin, LeftMargin, TabType, TabWidth,
+|     ExpandTabs, TabShiftsBlock, VarTabs, Backups, SaveState, EOLType, and
+|     EOFType) are included under the Options Menu.
+
+=     o  EOLType (<Ctrl O E>, or "EOL Type" under Options Menu)
+|
+|        Identifies the character string to be placed at the end of each
+|        line (except the last line) when the file is saved to disk. (See
+|        "EOFType" below.)
+
+=     o  EOFType ("EOF Type" under Options Menu)
+|
+|        Identifies the optional character string to be placed at the end
+|        of the file when saved to disk. (See "EOLType" above.)
+
+
+>  APPENDIX C: WORDSTAR.UI KEY ASSIGNMENTS
+
+|  This appendix identifies the key assignments in the WORDSTAR.UI editor
+|  configuration.
+|
+|  FUNCTION KEY         EDITOR COMMAND/MACRO
+|  ------------------------------------------------------------
+|  <F1>                 mHelp("Table of Contents")
+|  <F2>                 mSaveFile()
+|  <F3>                  HWindow()
+|  <F5>                  ZoomWindow()
+|  <F6>                  NextWindow()
+|  <F8>                  Shell()
+|  <F9>                  LoadMacro()
+|  <F10>                 MainMenu()
+|
+|  <Alt F1>             mPrevHelp()
+|  <Alt F3>             mCloseWindow()
+|  <Alt F4>             mExit()
+|  <Alt F5>              ShowEntryScreen()
+|  <Alt F8>              Dos()
+|  <Alt F9>              ExecMacro()
+|
+|  <Ctrl F1>            mHelpOnWordAtCursor()
+|  <Ctrl F3>            mCloseDupWindows()
+|  <Ctrl F5>             ResizeWindow()
+|  <Ctrl F6>             NextFile()
+|  <Ctrl F9>            mCompileCurrFile()
+|
+|  <Shift F1>           mHelp("Key Assignments")
+|  <Shift F3>            VWindow()
+|  <Shift F6>            PrevWindow()
+|  <Shift F9>            ExecMacro("COMPILE -m")
+|  <Shift F10>           PopupMenu()
+|
+|  SPECIAL-PURPOSE KEY
+|  ------------------------------------------------------------
+|  <}>                  mCloseBrace()
+|
+|  <Enter>              mCReturn()
+|  <Ctrl Enter>          ExecScrapMacro()
+|
+|  <Backspace>          mBackSpace()
+|  <Shift Backspace>    mBackSpace()
+|  <Alt Backspace>       Undo()
+|  <AltShift Backspace>  Redo()
+|
+|  <Tab>                mTabRight()
+|  <Shift Tab>          mTabLeft()
+|
+|  <CtrlAlt Spacebar>    lVersion()
+|
+|  KEYPAD KEY
+|  ------------------------------------------------------------
+|  <Ins>                 ToggleInsert()
+|  <Ctrl Ins>           mCopyToWinClip()
+|  <Shift Ins>          mPasteFromWinClip(_DEFAULT_)
+|
+|  <Del>                mDelChar()
+|  <Shift Del>           CutToWinClip()
+|
+|  <CursorUp>            Up()
+|  <Ctrl CursorUp>       RollUp()
+|
+|  <CursorDown>          Down()
+|  <Ctrl CursorDown>     RollDown()
+|
+|  <CursorLeft>          Left()
+|  <Ctrl CursorLeft>     WordLeft()
+|
+|  <CursorRight>         Right()
+|  <Ctrl CursorRight>    WordRight()
+|
+|  <Home>                BegLine()
+|  <Ctrl Home>          mBegFile()
+|
+|  <End>                 EndLine()
+|  <Ctrl End>           mEndFile()
+|
+|  <PgUp>                PageUp()
+|  <Ctrl PgUp>           RollLeft()
+|
+|  <PgDn>                PageDown()
+|  <Ctrl PgDn>           RollRight()
+|
+|  MOUSE BUTTON
+|  ------------------------------------------------------------
+|  <LeftBtn>            mLeftBtn()
+|  <Alt LeftBtn>         MouseMarking(_LINE_)
+|  <Ctrl LeftBtn>        MouseMarking(_COLUMN_)
+|  <Shift LeftBtn>      mShiftLeftBtn()
+|
+|  <RightBtn>            PopupMenu()
+|
+|  <WheelUp>             RollUp(GetWheelScrollLines())
+|  <WheelDown>           RollDown(GetWheelScrollLines())
+|
+|  CONTROL KEY
+|  ------------------------------------------------------------
+|  <Ctrl [>             mShiftBlock(-1)
+|  <Ctrl ]>             mShiftBlock(1)
+|  <Ctrl 0>             mListRecentFiles()
+|  <Ctrl A>             mMarkFile()
+|  <Ctrl B>              ExecMacro("WRAPPARA")
+|  <Ctrl C>             mCopy(_DEFAULT_)
+|  <Ctrl F>              Find()
+|  <Ctrl G>             mDelChar()
+|  <Ctrl H>             mBackSpace()
+|  <Ctrl I>              ExecMacro("ISRCH")
+|  <Ctrl J>             mHelp("Index")
+|
+|  <CtrlShift B>         ExecMacro("WRAPPARA quote")
+|
+|  <Ctrl K><">          mChangeCase(UPPER_CASE)
+|  <Ctrl K><'>          mChangeCase(LOWER_CASE)
+|  <Ctrl K><.>          mChangeCase(CAP_CASE)
+|  <Ctrl K><?>           ExecMacro("WORDCNT")
+|  <Ctrl K><[>           PasteFromWinClip()
+|  <Ctrl K><]>          mCopyToWinClip()
+|  <Ctrl K><<>           UnMarkBlock()
+|
+|  <Ctrl K><0>           PlaceMark("Q")
+|  <Ctrl K><1>           PlaceMark("R")
+|  <Ctrl K><2>           PlaceMark("S")
+|  <Ctrl K><3>           PlaceMark("T")
+|  <Ctrl K><4>           PlaceMark("U")
+|  <Ctrl K><5>           PlaceMark("V")
+|  <Ctrl K><6>           PlaceMark("W")
+|  <Ctrl K><7>           PlaceMark("X")
+|  <Ctrl K><8>           PlaceMark("Y")
+|  <Ctrl K><9>           PlaceMark("Z")
+|
+|  <Ctrl K><A>          mMarkPara()
+|  <Ctrl K><B>          mMarkBlockBegin()
+|  <Ctrl K><C>          mCopyBlock()
+|  <Ctrl K><D>          mSaveAndQuitFile()
+|  <Ctrl K><E>           ChangeCurrFilename()
+|  <Ctrl K><F>           ExecMacro("F -r")
+|  <Ctrl K><G>           ExecMacro("CD")
+|  <Ctrl K><H>           UnMarkBlock()
+|  <Ctrl K><I>          mToggleColumnOverlayMode()
+|  <Ctrl K><K>          mMarkBlockEnd()
+|  <Ctrl K><L>           FillBlock()
+|  <Ctrl K><M>           PlaceMark()
+|  <Ctrl K><N>          mToggleColumnBlockMode()
+|  <Ctrl K><O>          mNameClip()
+|  <Ctrl K><P>          mPrintBlock()
+|  <Ctrl K><Q>          mQuitFile()
+|  <Ctrl K><R>           InsertFile()
+|  <Ctrl K><S>          mSaveFile()
+|  <Ctrl K><T>           RenameAndSaveFile()
+|  <Ctrl K><U>           ExecMacro("QUOTE")
+|  <Ctrl K><V>          mMoveBlock()
+|  <Ctrl K><W>          mSaveBlock()
+|  <Ctrl K><X>          mSaveAllAndExit()
+|  <Ctrl K><Y>          mDelBlock()
+|  <Ctrl K><Z>          mSort()
+|
+|  <Ctrl L>              RepeatFind()
+|
+|  <Ctrl M><!>          mDateTimeStamp()
+|  <Ctrl M><D>           SaveKeyMacro()
+|  <Ctrl M><L>           LoadKeyMacro()
+|  <Ctrl M><R>           RecordKeyMacro()
+|  <Ctrl M><Y>          mPurgeKeyMacro()
+|
+|  <Ctrl N>             mSplitLine()
+|
+|  <Ctrl O><->           Toggle(LineDrawing)
+|  <Ctrl O><[>          mAdjust("LEFT")
+|  <Ctrl O><]>          mAdjust("RIGHT")
+|  <Ctrl O><?>           ExecMacro("FILEINFO")
+|
+|  <Ctrl O><A>           AutoIndentMenu("AutoIndent")
+|  <Ctrl O><B>           Toggle(ExpandTabs)
+|  <Ctrl O><C>           ExecMacro("CENTER")
+|  <Ctrl O><D>          mToggleDisplayMode()
+|  <Ctrl O><E>           EOLStrMenu("EOL Type")
+|  <Ctrl O><F>          mCompressView(TRUE)
+|  <Ctrl O><G>           PrevFile()
+|  <Ctrl O><H>          mToggleSyntaxHilite()
+|  <Ctrl O><I>          mSetTabWidth()
+|  <Ctrl O><K>          mOpenFileAndWindow()
+|  <Ctrl O><L>          mSetLeftMargin()
+|  <Ctrl O><M>           ResizeWindow()
+|  <Ctrl O><N>           NextFile()
+|  <Ctrl O><O>          mCompressView(FALSE)
+|  <Ctrl O><P>          mToggleBrowseMode()
+|  <Ctrl O><R>          mSetRightMargin()
+|  <Ctrl O><S>          mShift()
+|  <Ctrl O><T>           TabTypeMenu("Tab Type")
+|  <Ctrl O><V>           ScrollToCenter()
+|  <Ctrl O><W>           WordWrapMenu("WordWrap")
+|  <Ctrl O><X>          mExchangeWindows()
+|  <Ctrl O><Y>           ExecMacro("SYNCHSCR")
+|  <Ctrl O><Z>          mToggleAppWindowSize()
+|
+|  <Ctrl P>             mLiteral(TRUE)
+|
+|  <Ctrl Q><Del>        mDelToBOL()
+|  <Ctrl Q><->          mDelToBOL()
+|  <Ctrl Q><[>           ExecMacro("MATCH")
+|  <Ctrl Q><]>           ExecMacro("MATCH")
+|
+|  <Ctrl Q><0>           GotoMark("Q")
+|  <Ctrl Q><1>           GotoMark("R")
+|  <Ctrl Q><2>           GotoMark("S")
+|  <Ctrl Q><3>           GotoMark("T")
+|  <Ctrl Q><4>           GotoMark("U")
+|  <Ctrl Q><5>           GotoMark("V")
+|  <Ctrl Q><6>           GotoMark("W")
+|  <Ctrl Q><7>           GotoMark("X")
+|  <Ctrl Q><8>           GotoMark("Y")
+|  <Ctrl Q><9>           GotoMark("Z")
+|
+|  <Ctrl Q><A>           Replace()
+|  <Ctrl Q><B>           GotoBlockBegin()
+|  <Ctrl Q><C>          mEndFile()
+|  <Ctrl Q><D>           EndLine()
+|  <Ctrl Q><E>          mBegWindow()
+|  <Ctrl Q><F>           Find()
+|  <Ctrl Q><I>          mGotoLineCol()
+|  <Ctrl Q><K>           GotoBlockEnd()
+|  <Ctrl Q><L>           ExecMacro("SPELLCHK")
+|  <Ctrl Q><M>           GotoMark()
+|  <Ctrl Q><O>           ExecMacro("POTPOURR")
+|  <Ctrl Q><P>           PrevPosition()
+|  <Ctrl Q><Q>           RepeatCmd()
+|  <Ctrl Q><R>          mBegFile()
+|  <Ctrl Q><S>           BegLine()
+|  <Ctrl Q><U>           RestoreCursorLine()
+|  <Ctrl Q><V>          mViewFinds()
+|  <Ctrl Q><X>          mEndWindow()
+|  <Ctrl Q><Y>           DelToEol()
+|
+|  <Ctrl R>              Replace()
+|  <Ctrl T>              DelRightWord()
+|  <Ctrl U>              GlobalUnDelete()
+|  <Ctrl V>              Paste()
+|  <Ctrl W>              ScrollUp()
+|  <Ctrl X>             mCut(_DEFAULT_)
+|  <Ctrl Y>              DelLine()
+|  <Ctrl Z>              ScrollDown()
+|
+|  ALT KEY
+|  ------------------------------------------------------------
+|  <Alt 0>               ExecMacro("LISTOPEN")
+|  <Alt 1>               GotoWindow(1)
+|  <Alt 2>               GotoWindow(2)
+|  <Alt 3>               GotoWindow(3)
+|  <Alt 4>               GotoWindow(4)
+|  <Alt 5>               GotoWindow(5)
+|  <Alt 6>               GotoWindow(6)
+|  <Alt 7>               GotoWindow(7)
+|  <Alt 8>               GotoWindow(8)
+|  <Alt 9>               GotoWindow(9)
+|
+|  <Alt F>               MainMenu("F")
+|  <Alt B>               MainMenu("B")
+|  <Alt T>               MainMenu("T")
+|  <Alt S>               MainMenu("S")
+|  <Alt W>               MainMenu("W")
+|  <Alt C>               MainMenu("C")
+|  <Alt M>               MainMenu("M")
+|  <Alt P>               MainMenu("P")
+|  <Alt U>               MainMenu("U")
+|  <Alt O>               MainMenu("O")
+|  <Alt H>               MainMenu("H")
+
+
+>  APPENDIX E: COMMAND IMPLEMENTATION
+
+|  This Appendix only lists changes and additions pertinent to WORDSTAR.UI.
+|
+|  EDITING COMMAND                     NATIVE COMMAND OR ENHANCED MACRO
+|  ------------------------------------------------------------------------
+|  AutoIndent                           AutoIndentMenu("AutoIndent")
+|
+|  BegLine                              BegLine()
+|  BegWindow                           mBegWindow()
+|
+|  Capitalize                          mChangeCase(CAP_CASE)
+|  CloseWindow                         mCloseWindow()
+|  CompileMenu                          ExecMacro("COMPILE -m")
+|  Copy to a Named ClipBoard           mNameClip()
+|  Copy to the System ClipBoard        mNameClip()
+|  CopyAppend to a Named ClipBoard     mNameClip()
+|  CopyAppend to the System ClipBoard  mNameClip()
+|  CopyBlock                           mCopyBlock()
+|  CopyToWinClip                       mCopyToWinClip()
+|  Cut to a Named ClipBoard            mNameClip()
+|  Cut to the System ClipBoard         mNameClip()
+|  CutAppend to a Named ClipBoard      mNameClip()
+|  CutAppend to the System ClipBoard   mNameClip()
+|
+|  DelToBOL                            mDelToBOL()
+|
+|  Empty the System ClipBoard          mEmptyClipboard()
+|  EndWindow                           mEndWindow()
+|  EOFType                              EOFStrMenu("EOF Type")
+|  EOLType                              EOLStrMenu("EOL Type")
+|  ExchangeWindows                     mExchangeWindows()
+|  Exit                                mExit()
+|
+|  Flip                                mChangeCase(FLIP_CASE)
+|  FlushLeft                            External macro file: ADJUST
+|  FlushRight                           External macro file: ADJUST
+|
+|  GotoLineCol                         mGotoLineCol()
+|
+|  HelpIndex                           mHelp("Index")
+|
+|  ListRecentFiles                     mListRecentFiles()*
+|  Literal                             mLiteral(FALSE)
+|  Lower                               mChangeCase(LOWER_CASE)
+|
+|  MainMenu                             MainMenu()
+|  MarkBlockBegin                      mMarkBlockBegin()
+|  MarkBlockEnd                        mMarkBlockEnd()
+|  MoveBlock                           mMoveBlock()
+|
+|  PopupMenu                            PopupMenu()**
+|  PrevHelp                            mPrevHelp()
+|  PrintBlock                          mPrintBlock()
+|  PurgeKeyMacro                       mPurgeKeyMacro()
+|
+|  QuitFile                            mQuitFile()
+|  QuoteLine                            External macro file: QUOTE***
+|
+|  SaveAllAndExit                      mSaveAllAndExit()
+|  SaveAllFiles                        mSaveAllFiles()
+|  SaveAndQuitFile                     mSaveAndQuitFile()
+|  SaveFile                            mSaveFile()
+|  SetLeftMargin                       mSetLeftMargin()
+|  SetRightMargin                      mSetRightMargin()
+|  SetTabWidth                         mSetTabWidth()
+|  SetVarTabs                          mSetVarTabs()
+|  SplitLine                           mSplitLine()
+|
+|  TabLeft                             mTabLeft()
+|  TabRight                            mTabRight()
+|  ToggleBrowseMode                    mToggleBrowseMode()
+|  ToggleColumnBlockMode               mToggleColumnBlockMode()
+|  ToggleColumnOverlayMode             mToggleColumnOverlayMode()
+|  ToggleCUAMarking                     External macro file: CUA
+|  ToggleCUATyping                      External macro file: CUA
+|  ToggleCUAPersistent                  External macro file: CUA
+|  ToggleExpandTabs                    mToggleExpandTabs()
+|  ToggleHexView                       mToggleDisplayMode()
+|  ToggleSyntaxHilite                  mToggleSyntaxHilite()
+|
+|  Upper                               mChangeCase(UPPER_CASE)
+|
+|  ViewClipboard                       mViewClipboard()
+|  ViewWindowsClipboard                mViewWindowsClipboard()
+|
+|  WordCount                            External macro file: WORDCNT
+|
+|  *     Inside prompt box: mPromptRecentFiles()
+|  **    Inside prompt box: PromptBoxPopupMenu()
+|  ***   Inside prompt box: mPromptBoxToggleQuotes()

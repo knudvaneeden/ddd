@@ -1,0 +1,10 @@
+(06-29-2002) - Vga2Fon is a tool for
+converting old DOS VGA fonts into Windows
+fonts. This tool was created to help generate
+monospace fonts for use with The Semware
+Editor Professional (TSE Pro), but the fonts
+can be used with any Windows program. Note
+that the fonts are bitmap fonts, not TrueType
+fonts, so they are not scalable.  See the
+readme.htm file for more details.
+Author: Chris Antos

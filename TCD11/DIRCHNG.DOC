@@ -1,0 +1,79 @@
+The following macro will cause TSE to change to the directory that you load
+a file from.  To use this macro, add the following code on after the
+#include lines at the top of the TSE.S file located in your UI sub-directory:
+
+/************************************************************************
+    ;
+    ; This comment is just to show the code that is in the BIN file.
+    ; It does not have to be included in your file.
+    ;
+    ; integer cd(string s)
+    ;
+    ; cd('..' + Chr(0))
+    ;
+    ; long PASCAL cd(uchar *far string);
+    ;
+    ;                       bp+06 seg string
+    ;                       bp+04 ofs string
+    ;                       bp+02 seg ret
+    ;                       bp+00 ofs ret
+    ;
+    cd proc
+            mov     bp,sp
+            lds     dx,[bp+4]               ; ofs string
+            inc     dx                      ; move past the length
+            inc     dx                      ;    word
+            mov     ah,3bh                  ; change dir
+            int     21h                     ; dos call
+            mov     ax, 0                   ; assume error...
+            jc      @@exit
+            inc     ax                      ; single success
+    @@exit:
+            cwd
+            retf
+    cd endp
+ ************************************************************************/
+
+binary ['dirchng.bin']
+    integer proc cd(string dir):0
+end
+
+proc mEditFile()
+    string temp[80] = ''
+    EditFile()
+    LogDrive(SplitPath(CurrFilename(),_DRIVE_))
+    temp = SplitPath(CurrFilename(), _PATH_)
+    if temp <> '\'
+        temp = SubStr(temp, 1, Length(temp) - 1)
+    endif
+    cd(temp + Chr(0))
+end
+
+Once you have done this, change the line in your MENU FileMenu()(located in
+the section of the TSE.S file titled 'The Menus') from:
+
+    "&Open..."                      ,   EditFile()
+
+to:
+
+    "&Open..."                      ,   mEditFile()
+
+Then in the TSE.KEY file in your UI sub-directory change the line:
+
+    <Alt e>                 Editfile()
+
+to:
+
+    <Alt e>                 mEditfile()
+
+This uses a binary file DIRCHNG.BIN (found in this ZIP file).  Place the BIN
+file in your UI sub-directory.
+
+Once you have made the modification to your TSE files, move to your \TSE
+directory (the directory where you installed TSE) and use SC.EXE to update
+your E.EXE.  To run SC use the following syntax:
+
+SC -b ui\tse
+
+Once you have made these modifications, TSE will change to the directory
+where you load a file from.

@@ -1,0 +1,11 @@
+WORDS.S (source file) and WORDS.MAC (compiled macro file)
+provide a word counter macro for TSE (The Semware Editor),
+pre-release version 1.0.  If a block is marked, words in the
+block are counted; if no block is marked, words in the file are
+counted.  Macro version: 1.0
+
+Documentation is included in WORDS.S
+
+Author:  David Mayerovitch
+         reachable in ILink TSE Jr. conference
+         or by E-mail: david.mayerovitch@canrem.com

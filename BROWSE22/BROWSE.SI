@@ -1,0 +1,21 @@
+
+// Note: this is an sample macro which provides a confirmation
+//       before entering BROWSE mode.  INCLUDE it in your UI file,
+//       if desired.
+//
+//  (Put the following line in your .UI file:
+//
+// #include "c:\tse\ui\browse.si"
+
+/******************************************************************
+  mBrowseCurrentFile() prompts before executing the browse macro.
+******************************************************************/
+proc mBrowseCurrentFile()
+  if YesNo("Enable BROWSE mode?")==1
+     ExecMacro('browse')
+     UpDateDisplay(_ALL_WINDOWS_REFRESH_|_HELPLINE_REFRESH_)
+  endif
+end mBrowseCurrentFile
+
+<Ctrl b> mBrowseCurrentFile() // View current files, (w/ confirm)
+

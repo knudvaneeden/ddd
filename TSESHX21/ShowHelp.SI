@@ -1,0 +1,43 @@
+/****************************************************************************\
+
+    ShowHelp.SI
+
+    Display file in a read-only scrolling list.
+
+    Version         v2.00/19.04.99
+    Copyright       (c) 1997-99 by DiK
+
+    History
+    v2.00/19.04.99  new for version 2.0
+
+\****************************************************************************/
+
+keydef HelpKeys
+    <CursorUp>      RollUp()
+    <CursorDown>    RollDown()
+end
+
+proc HelpList()
+    UnHook(HelpList)
+    Enable(HelpKeys)
+end
+
+proc ShowDocFile(string Name)
+    integer msa
+    integer bid
+
+    bid = GetBufferId()
+
+    if CreateTempBuffer() and LoadBuffer(Name,0)
+        Hook(_LIST_STARTUP_,HelpList)
+        msa = Set(MenuSelectAttr,Query(MenuTextAttr))
+        List("TSE Shell Extensions",80)
+        Set(MenuSelectAttr,msa)
+        AbandonFile()
+    else
+        MsgBox("Error","Unable to find doc file",0)
+    endif
+
+    GotoBufferId(bid)
+end
+

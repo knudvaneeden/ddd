@@ -1,0 +1,5 @@
+TSE macro Commenter v0.05 6-25-93 to add
+comment characters to the beginning of marked
+lines. e.g. adds '// ', ';  ','REM' plus
+several others. Works on any Block type or
+current line with no block marking required,

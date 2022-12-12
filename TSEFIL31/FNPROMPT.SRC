@@ -1,0 +1,44 @@
+/****************************************************************************\
+
+    FnPrompt.Src
+
+    Filename prompt
+
+    Ask user for a filename. Emulates EditFile() prompt.
+
+    Version         v1.30/08.03.95
+    Copyright       (c) 1993-95 by DiK
+
+    History
+    v1.30/08.03.95  added default extension
+    v1.20/26.10.94  adaption to v2.0 of TSE
+    v1.10/25.01.94  added EditFile() history
+    v1.00/29.12.93  primary release
+
+\****************************************************************************/
+
+integer proc FilePrompt(
+    var string WildCard, string Prompt, string DefExt, integer Msg )
+
+    while Ask(Prompt,WildCard,_EDIT_HISTORY_)
+        WildCard = Trim(WildCard)
+        if Length(WildCard) == 0 or Pos("*",WildCard) or Pos("?",WildCard)
+            WildCard = PickFile(WildCard)
+        endif
+        if Length(WildCard)
+            if Length(SplitPath(WildCard,_EXT_)) == 0
+                WildCard = WildCard + DefExt
+            endif
+            if FileExists(WildCard)
+                AddHistoryStr(WildCard,_EDIT_HISTORY_)
+                return (TRUE)
+            elseif Msg
+                Warn("File '"+WildCard+"' does not exist")
+            else
+                return (TRUE)
+            endif
+        endif
+    endwhile
+    return (FALSE)
+end
+

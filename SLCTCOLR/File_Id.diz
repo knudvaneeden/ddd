@@ -1,0 +1,8 @@
+(06-13-2004) - SlctColr.s - TSE Pro v2.5e+
+This macro lets the user select one of TSE's
+colors. Although it can be run by itself, it
+is intended as a supplemental macro, to be
+called from other macros to select a color
+for something. This macro by itself sets or
+updates nothing.
+Author: Carlo.Hogeveen@xs4all.nl.

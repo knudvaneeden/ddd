@@ -1,0 +1,48 @@
+
+string  PCache_Token_Char[1]          = Chr(10)
+integer PCache_Force_Refresh_Settings = 0
+integer PCache_Settings_Serial        = 0
+
+string proc GetProfileStrCached(string section, string key, string default, string fn)
+    integer i
+    string calc_value[100]
+    string source_cache[255] = GetGlobalStr('PCache:Source:' + section)
+    string target_cache[255] = GetGlobalStr('PCache:Target:' + section)
+
+    if NeedToReloadSettings(PCache_Settings_Serial)
+      or Length(source_cache) > 253
+      or Length(target_cache) > 253
+      or PCache_Force_Refresh_Settings
+          // Warn("Resetting CurrExt Cache")
+          source_cache = ""
+          target_cache = ""
+          SetGlobalStr('PCache:' + section, '')
+          SetGlobalStr('PCache:' + section, '')
+          PCache_Force_Refresh_Settings = 0
+    endif
+
+    // Warn("Source Cache: " + source_cache)
+    // Warn("Target Cache: " + target_cache)
+
+    if Pos(key + PCache_Token_Char , source_cache)
+        for i = 1 to NumTokens(source_cache, PCache_Token_Char)
+            // Warn("found '" + GetToken(source_cache, PCache_Token_Char, i) + "' as possible match for '"+key+"' in cache")
+            if GetToken(source_cache, PCache_Token_Char, i) == key
+                // Warn("matched '" + GetToken(target_cache, PCache_Token_Char, i) + "' from '"+key+"' in cache")
+                return(GetToken(target_cache, PCache_Token_Char, i))
+            endif
+        endfor
+        // Warn("Something went wrong with the current extension cache - resetting...")
+        source_cache = ""
+        target_cache = ""
+        SetGlobalStr('PCache:Source:' + section, '')
+        SetGlobalStr('PCache:Target:' + section, '')
+    else
+        calc_value = GetProfileStr(section, key, default, fn)
+        // Warn("adding '" + calc_value + "' as match for '"+key+"' to cache")
+        SetGlobalStr('PCache:Source:' + section, source_cache + key + PCache_Token_Char)
+        SetGlobalStr('PCache:Target:' + section, target_cache + calc_value + PCache_Token_Char)
+    endif
+
+    return(calc_value)
+end

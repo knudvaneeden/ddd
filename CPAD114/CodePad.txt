@@ -1,0 +1,165 @@
+
+    CodePad - Line up code nicely into columns
+
+    1. INTRODUCTION
+    ---------------------------------------------------------------
+
+    This is a simple code formatting macro that lets you easily align
+    many similar lines of code so that all of the punctuation lines up.
+
+    For instance, with a single keypress CodePad turns this:
+
+        integer Grapes = 5439
+        integer Pinapples = 15
+        integer Raspberries = 2
+        integer Pips = 3
+
+    into this:
+
+        integer Grapes      = 5439
+        integer Pinapples   = 15
+        integer Raspberries = 2
+        integer Pips        = 3
+
+    CodePad can pad around other punctuation as well.  It can convert this
+    Perl code from:
+
+        $berry = 'Grapes' if $fruit_id == 432;
+        $legume = 'Lima Beans' if $veg_id == 40;
+        $fruit = 'Grapefruit' if $fruit_id == 1;
+
+    Into something more readable:
+
+        $berry  = 'Grapes'     if $fruit_id == 432;
+        $legume = 'Lima Beans' if $veg_id == 40;
+        $fruit  = 'Grapefruit' if $fruit_id == 1;
+
+    Or, by using the interactive function (Pad('')), you can pad
+    around the '==' expressions as well:
+
+        $berry  = 'Grapes'     if $fruit_id == 432;
+        $legume = 'Lima Beans' if $veg_id   == 40;
+        $fruit  = 'Grapefruit' if $fruit_id == 1;
+
+    2. INSTALLATION
+    ---------------------------------------------------------------
+
+    NOTE: On TSE 2.5 (DOS) You will first need to install the Profile
+    package.  See Profile.txt in that package for instructions.
+
+    Place the CodePad.s, findprof.si and setcache.si files in
+    your macro source directory, then compile CodePad.s.
+
+    Note that the findprof.si and setcache.si files may already have
+    been installed from another macro package. If so, you should not
+    need to install them again.  But it's worth taking a quick check
+    to see that you have the latest version of these files.
+
+    There are two basic functions in CodePad (described in the next section).
+
+    You can bind keys to these functions directly by editing the CodePad.s
+    source file:
+
+        <Ctrl g><d> AutoPad()
+        <Ctrl g><s> Pad('')
+
+    or you can make bindings in your UI file:
+
+        <Ctrl g><d> ExecMacro('CodePad -f')
+        <Ctrl g><s> ExecMacro('CodePad')
+
+    If you bind directly to the functions, you should place CodePad
+    in TSE's autoload list, so that the functions are always available.
+
+    3. USAGE
+    ---------------------------------------------------------------
+
+    The Pad() function (Also: ExecMacro('CodePad')) is used
+    to align lines in a marked block around a particular punctuation
+    character or characters.
+
+    Pass the character or characters as a parameter, e.g.:
+
+        Pad('=')   // Line up around equals signs
+        Pad(',')   // Line up around commas
+
+    If you want the macro to use multiple passes to align around
+    more than one character or string, specify these by whitespace:
+
+        Pad(', ;')  // Pad around commas and semi-colons
+        Pad('= //') // Pad around equals or comments
+
+    When called with a blank string,
+
+        Pad('') // Ask for what to pad around
+
+    In this case the function will prompt you for the character or
+    characters it should pad around.  (The default for this function, as
+    well as the history for the prompt are configurable.  See below
+    under CONFIGURATION.)
+
+    The AutoPad() function analizes the current line, and all
+    the lines above and below it, trying to find common characters to
+    pad around.  You do not need to mark the lines first, and it does
+    not prompt for the characters to pad around.
+
+    It is a convenient function, but please note that it can occasionally
+    do strange things depending upon the text you give it.
+
+    3. CONFIGURATION
+    ---------------------------------------------------------------
+
+    CodePad reads its settings from TSE.INI.  (It searches for this file
+    according to the rules in the FindProf package.)  CodePad uses the
+    [CodePad] section of TSE.INI.
+
+    You can specify the characters to pad around for the following cases:
+
+         Set used by AutoPad():
+
+             full_pad_set
+
+         Sets in Pad() history:
+
+             default_pad_set1
+             default_pad_set2
+             default_pad_set3
+             default_pad_set4
+             default_pad_set5
+
+    The defaults for these settings are as follows:
+
+        full_pad_set         = => ) if # ,
+        default_pad_set1     =
+        default_pad_set2     =>
+        default_pad_set3     )
+        default_pad_set4     ) = =>
+        default_pad_set5
+
+    CodePad will use the SetCache package if you have it installed.
+    This means you can tell it to reload its settings without exiting it
+    and restarting.  To do so, Edit TSE.INI, and then run the SReload macro.
+
+    AUTHOR, VERSION, COPYRIGHT, CONTACT
+    ---------------------------------------------------------------
+
+    CodePad - Line up code nicely into columns
+
+    v1.1.4 - Jun 19, 2002
+
+    
+    Copyright (c) 2002 - Michael Graham <magmac@occamstoothbrush.com>
+
+    This program is Free Software - you may use it, modify it and
+    distribute it under the the terms of the Perl Artistic License,
+    which you may find at:
+
+          http://www.perl.com/CPAN/doc/misc/license/Artistic
+
+    In particular, note that you use this software at your own risk!
+
+    The latest version of my TSE macros can be found at:
+
+        http://www.occamstoothbrush.com/tsemac/
+
+

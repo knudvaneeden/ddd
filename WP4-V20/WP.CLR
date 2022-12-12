@@ -1,0 +1,19 @@
+// Attributes - WP4 White on Blue
+
+CurrWinBorderAttr       = Color(Bright White on Blue)
+OtherWinBorderAttr      = Color(White on Blue)
+MenuTextAttr            = Color(Bright White on Blue)
+MenuTextLtrAttr         = Color(Bright Yellow on Blue)
+MenuBorderAttr          = Color(Bright Red on Blue)
+MenuSelectAttr          = Color(Bright Yellow on Red)
+MenuSelectLtrAttr       = Color(Blink Bright White on Red)
+BlockAttr               = Color(Bright White on Green)
+CursorInBlockAttr       = Color(Bright White on Green)
+CursorAttr              = Color(Bright White on Blue)
+HiLiteAttr              = Color(Bright Yellow on Red)
+TextAttr                = Color(Bright White on Blue)
+EofMarkerAttr           = Color(Bright Yellow on Blue)
+MsgAttr                 = Color(Bright Yellow on Blue)
+StatusLineAttr          = Color(Bright Yellow on Red)
+
+

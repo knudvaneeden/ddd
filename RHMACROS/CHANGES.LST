@@ -1,0 +1,442 @@
+These are the changes I've made to the Standard version of TSE 2.0:
+(See comment at end of this file)
+by:  Rob Howse,  Dec 94
+
+1.  Key Asssignments:  Some changes (ex Ctrl Home/End = Beg/EndFile, while
+    Ctrl PgUp/Dn = Beg/EndWindow.  This is switched.  The Ctrl Home/end
+    especially has come to mean Beg/End File in many pgms.)  Other changes
+    to key assignments:  MANY additions!
+    When Upgrade time comes:  Take whole Key Assignment section and plunk
+    right into new "UI" file and make as few changes as absolutely necessary
+    for the new version!
+
+2.  Help Line Changes:  My help lines are crowded, but sure is nice to see
+    ALL my F-key assignments!  When combined with the key assignments shown
+    on the Menu system, I can see the great majority of all my numerous
+    assignments.  Also note my F-keys are fairly organized: (F1-Help,
+    F2-Find, F3-More Find + Replace, F4-Line(Add, Dup, Del, Swap), F5-Copy
+    Char Above + Justify, F6-Shift, Center, Align, F7-Print + Quit (like
+    WordPerfect) + ChangeFileName + ShowEntry, F8-Box + LineDraw, F9-Macro +
+    Named ClipBoards, F10-File(Save, Open, SaveAs...again much like WP,
+    F11-Completely open various external macro use, F12 half open (SpellChk
+    on F12, PotPourri on Shift-F12)
+    Added <CtrlAlt> <ShiftAlt> and <CtrlShift> HelpLines
+    When Upgrade time comes:  Take the the 7 helpline assignments and plunk
+    right into new "UI" file and make as few changes as absolutely necessary
+    for the new version!
+
+3.  Help "Key Assignments":  I have this section pretty well laid out too.
+    When Upgrade time comes:  Take whole Help "Key Assignment" section
+    and plunk right into new "UI" file.  Make changes and additions as
+    needed to adapt to new changes and new features in the new version!
+
+4.  External Macro files:  I did not as SemWare suggested, keep any new
+    additions in a separate directory.  I find it handier to keep all in one
+    place where I can choose from one picklist and less chance of keeping
+    'duplicates'.  Plus some I've merely 'fiddled with' slightly, while
+    others are downloaded and some I,ve written from scratch.
+    When Upgrade time comes:  Make sure the whole set of external macros are
+    backed up somewhere where they will be safe (tape, diskette, or another
+    partition, as well as leaving one original set where they can be
+    accessed by the new version install for updating.
+    EXTRA MACROS I've written include:  2WINDOW, 4WINDOW, BLANKLIN, BLANKSCR,
+    BOXIN, BREAK, CHKORIG, DATEBREF, IFNOT, SENTENCE... + 2WINDOW.KBD,
+    RENUMBER.KBD,
+
+    MACROS I'VE IMPROVED ON include: FILEMGR, FILLWSTR, FOLD, INCBAK,
+    SPELLCHK, SSEARCH...
+
+    OTHER MACROS I've picked up include: ACCENT, BOXIT, BROWSE, CD,
+    COLCHART, COUNTBLK, DBEDIT, DTMENU, ENCRPT13, FILCHNGD, FILEINFO,
+    FILLNUM, FILLWSTR, FNDREPST, FF, GRPH2TXT, I_CMMT, LINEPRO, LINESWAP,
+    LOADLIST, LONGSTLN, MFFIND, MAKECSV, NAMECLIP, PARA, RAND_NUM, PRGNAV,
+    RENUMBER, REPAGE, RINGFIND, RULER21, SCRSAVER, SHOWCHAR, SLIDER,
+    SYNCWIN, TEMPLATE, TIMESAVE, TSELOG, WRAPARA, and of course, TSGREP
+    which I keep in its own TSGREP subdir of TSE, with it's BAT and INI
+    files in the TSE dir.  Descriptions for most are in the PotPourr.dat
+    file.
+
+5.  External Macro Source Files:  Currently all in the "S" subdir of "MAC".
+    Hang on to these babies!  Never know when you might want to 'fiddle'
+    with a key assignment, whatever!
+
+6.  TSE-CMDS.LST & VARIABLE.LST:  Two text files arranged in alphabetical
+    columns and kept in USERMISC subdir of TSE.  Great when you need to see
+    the whole list and/or get help. (Using HelpOnWordAtCursor)
+    Keep these files and update as needed for new version.
+
+7.  SETTINGS.ROB config options file.  In the TSE dir.  Keep a copy safe,
+    plus leave a copy available to the new Install routine.
+
+8.  TSELOAD.DAT file (In TSE dir) and POTPOURR.DAT file (In the MAC dir)
+    Keep copies, plus leave originals available to new Install routine.
+
+9.  USER.LEX (User defined SpellChk words), + TSGREP Bat and Ini files:
+    In TSE dir:  Keep backup copies of these also.  (SEMWARE.LEX also in
+    TSE dir and SPELL dir removed since it seemed unnecessary to keep
+    separate directory for only two files.
+    When Upgrade time comes:  May be advisable to recreate SPELL dir and
+    move the two LEX files into it to be sure new Install deals with them
+    properly?
+
+10. MY.UI file:  KEEP AT LEAST ONE COPY SAFE IN THE VAULT!!  Besides the
+    Key Assignments, Help Lines, and Key Assignment Help Screen, the
+    following are some of the enhancements I've made:
+      ษออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+  A.  บMacros copied in from external macro source files:   --Rbh    บ
+      บmCutWipe, mAlign, mAlignAtCursor, mInitialCaps, mSmartReplace บ
+      ศออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+      ษอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออป
+      บ/*********************************************************** บ
+      บ Following Section contains My Macros!       --Rbh           บ
+      บ*********************************************************** /บ
+      ศอออออออออออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+      Block these sections and drop them into the new UI file.  Note also
+      the "--Rbh" signature wherever I've made major changes.  (Makes it
+      easy to 'jump' to these spots on searches.) A list of My Macros
+      embedded in the MY.UI file is appended to the end of this file. FWIW
+
+ Other Additions/Modifications:
+proc mCopyCharAboveToEol()
+->    integer cpos = CurrPos()  //to retain current cursor column
+    repeat
+    until not mCopyCharAbove()
+->    GotoPos(cpos)             //and this line
+    Down()
+end
+
+proc mShift  //two changes to prevent loss of text on shift lefts
+        case GetKey()
+            when <CursorLeft>
+->                if not(PosFirstNonWhite()==1)
+                mShiftBlock(-1)   ->  endif
+            when <CursorRight>
+                mShiftBlock(1)
+------------------
+            when <Shift Tab>
+->                if (PosFirstNonWhite()<(Query(TabWidth)))
+->                warn("Less than TabWidth from Left Margin")
+->                elseif
+->                mShiftBlock(-Query(TabWidth))  endif
+            when <Escape>, <Enter>
+
+->proc mIncrementalSearch:  Removed CTRL L, CTRL R, and changed <Alt GreyPgUp>
+  to <F5>
+
+proc mFindWordAtCursor:  Don't Query options; specify in key assignments.
+                        (see CTRL -, +, and \)
+->//      return (Find(GetWordAtCursor(), Query(FindOptions) + option))
+->        return (Find(GetWordAtCursor(), option))
+
+proc mTimeStamp()  //added right after mDateTimeStamp
+    InsertText(GetTimeStr(), _INSERT_)
+    lReplace(" 0", "  ", "cb1")
+end
+
+constant WORDCASE  = 1, LINECASE = 2, BLOCKCASE = 3
+->   constant UPPER_CASE = 0, LOWER_CASE = 1, FLIP_CASE  = 2, INIT_CAPS = 3
+
+integer casetype
+
+proc ChangeCase(integer type)
+    PushBlock()
+->    if (type == BLOCKCASE) and NOT (isCursorInBlock())
+->        Message("No Block Marked  or  Cursor not in Block")
+->        goto done
+->    endif
+    if type <> BLOCKCASE
+
+        when LOWER_CASE
+            Lower()
+->        when FLIP_CASE
+->            Flip()
+->        otherwise
+->            mInitialcaps()
+
+    CaseMenu("Flip Case")
+end
+
+->  proc mInitCaps()
+->     casetype = INIT_CAPS
+->     CaseMenu("Initial Caps")
+->  end
+
+integer proc mSaveSettings()
+
+
+
+menu CaseMenu()
+->    history
+    Command = ChangeCase(MenuOption())
+
+added to intro for mWrapPara.  And renamed external to mWraPara (one P)
+/****************************************************************************
+  Macro to wrap text in a column block, without disturbing surrounding text.
+  If a column isn't marked, the normal WrapPara() is called.
+->  IMPORTANT NOTE: If you wind up accumulating extra 'white space' using this
+->  WRAPPARA, try calling tse\mac\WRAPARA.mac which will trim out extra spaces.
+ ***************************************************************************/
+    if blocktype == 0
+        WrapPara()
+->        ScrollToRow(Query(WindowRows)/2)  //(I added this line --Rbh)
+    else
+
+proc HelpOnWordAtCursor()  //I modified to the following so it will give
+->        string OldWrdSet[32]  //help even with parantheses on end of cmd
+
+->        OldWrdset = Set(WordSet, ChrSet("0-9A-Z_a-z"))
+        Help(GetWordAtCursor(), TRUE)
+->        Set(WordSet, OldWrdSet)
+end
+
+
+keydef AddlPromptKeys
+
+->    <Ctrl A>    mAsciiChart()         //so chart is available in prompt box
+->    <Ctrl T>    mPromptDelRightWord()
+end
+
+proc OnPromptStartup()
+->    Enable(AddlPromptKeys)   //changed "additionalKeys" to "AddlPromptKeys"
+end
+
+/****************************************************************************
+  This macro is called the first time a file is loaded into the editor.
+ ***************************************************************************/
+->integer fileattribute
+
+proc OnFirstEdit()
+->    fileattribute = FileExists(CurrFileName())
+->    if fileattribute & _READONLY_
+->    Message("File is 'Read-only'")    //Delay(9) //1/2 sec
+->  endif
+->  if fileattribute & (_SYSTEM_ | _HIDDEN_)
+->  Warn("Not a good idea to edit to edit `Hidden' or 'SYSTEM' files!!!")
+->  Message("Not a good idea to edit to edit `Hidden' or 'SYSTEM' files!!! (ALT-X to Exit)")
+->  endif
+end
+
+ADDITIONS TO MENU:
+WINDOW:
+    "&Previous"             ,   PrevWindow()
+    "&Next"                 ,   NextWindow()
+BLOCK:
+    "Mark C&haracter"               ,   MarkChar()  //Chng & and Stream=>Char
+    "M&ark Word"                    ,   MarkWord()
+    "Mark Se&ntence"                ,   ExecMacro("Sentence") //my own ext. macro
+    "&Copy (Insert)"                ,   CopyBlock()
+    "Copy (&OverWrite)"             ,   CopyBlock(_OVERWRITE_)
+    "Ini&tCaps"                    ,   mInitCaps()         , DontClose
+    "&Fill..."                      ,   ExecMacro("FillwStr")
+SEARCH:
+    "&Replace..."                   ,   mSmartReplace()
+MACRO:
+    "Loa&d Key Macro..."            ,   LoadKeyMacro("")  //added "" for picklist
+    "&Purge..."                     ,   PurgeMacro("")    //added "" for picklist
+PRINT:
+    "&Line"                 ,   mMarkLinePrint()
+UTIL:
+    "Insert &Date"          ,   ExecMacro("Date")  //in place of DateTimeStamp
+    "&Blank Screen (Any key restores)" , ExecMacro("BlankScr")
+
+  Available keys include:
+    Alt  None!
+    Ctrl h,n,q,y,z
+    Ctrl 7,8,9,0
+    Alt 0,  \
+
+      ษอออออออออออออออออออออออออออออออออออออป
+      บFWIW: Here is the list of My Macros: บ
+      ศอออออออออออออออออออออออออออออออออออออผ
+proc mCopyCharAboveDown()           //(behaves funny if hits last line of file
+    mCopyCharAbove() Down() Left()  //but no problem)
+end
+
+//declare global strings for date procedures
+    integer mon, day, year, dow
+    string  month_name[4] = ''
+    string  weekday[3] = ''
+
+PUBLIC proc mGetDateTime()
+    GetDate(mon, day, year, dow)    // get current date
+    case mon
+        when  1 month_name = 'Jan'
+        when  2 month_name = 'Feb'
+        when  3 month_name = 'Mar'
+        when  4 month_name = 'Apr'
+        when  5 month_name = 'May'
+        when  6 month_name = 'June'
+        when  7 month_name = 'July'
+        when  8 month_name = 'Aug'
+        when  9 month_name = 'Sept'
+        when 10 month_name = 'Oct'
+        when 11 month_name = 'Nov'
+        when 12 month_name = 'Dec'
+    endcase
+    case dow
+      when 1 weekday = 'Sun'
+      when 2 weekday = 'Mon'
+      when 3 weekday = 'Tue'
+      when 4 weekday = 'Wed'
+      when 5 weekday = 'Thu'
+      when 6 weekday = 'Fri'
+      when 7 weekday = 'Sat'
+    endcase
+end
+
+proc mMonthDate()
+       mGetDateTime()
+    InsertText(Format(month_name,' ',day,', ',year))
+end
+
+proc mDowTime()
+       mGetDateTime()
+    InsertText(Format(weekday,' ',(GetTimeStr())))
+        lReplace(" 0", "  ", "cb1")    //this line strips leading "0"
+end
+
+proc mDelToBoL()
+    Splitline() DelLine() BegLine()
+end
+
+integer proc mFindBkwd()
+    string needle[80] = ""
+    message('Search BKWD (from Current Position)   "F3" to repeat')
+    return (Ask("Search for:", needle, _FIND_HISTORY_) and Find(needle, "ib"))
+    if  (Find(needle, "ib") == 0)  return (FALSE) //(needle "not found")
+    endif
+    return (TRUE)
+end
+
+integer proc mFindFwd()
+    string needle[80] = ""
+    message('Search FWD (from Current Position)   "F3" to repeat')
+    return (Ask("Search for:", needle, _FIND_HISTORY_) and Find(needle, "i+"))
+    if  (Find(needle, "i+") == 0)  return (FALSE) //(needle "not found")
+    endif
+    return (TRUE)
+end
+
+/***********************************************
+mGoto & mPlace Mark make for very fast (no prompting) way to set a mark
+and get back to it.  They don't get in the way of Ctrl 1-4 used by
+external BOOK.MAC.  Mark 'P' is reset each time <Ctrl 5> is used.
+************************************************/
+proc mGotoMark()
+    if NOT GotoMark("P")   Message("No Bookmark 'P' marked. (Use CTRL 5)")
+    else Message("This is BookMark 'P'")
+        endif
+end
+
+proc mHome()    //fancy Home!
+    if not BegLine() GoToPos(PosFirstNonWhite())
+    endif
+end
+
+integer proc mKillFile()
+    if YesNo("Delete Current FileName from Disk?") == 1  //if answer yes
+    return (iif(KillFile(), TRUE, Warn("Error..File not found or 'ReadOnly'")))
+    endif
+    return (FALSE)
+end
+
+proc mMarkLinePrint()
+    PushBlock() UnMarkBlock() MarkLine() PrintBlock() UnMarkBlock()
+    RollDown() PopBlock()
+end
+
+proc mMarkToEOL()
+    MarkChar() EndLine() MarkChar() GoToBlockBegin() Down()
+end
+
+proc mPlacemark()
+    PlaceMark("P")   Message('Bookmark "P" placed')
+end
+
+proc mPrintblock()
+    PrintBlock() UnMarkBlock()
+end
+
+proc mTabFirstnonWhiteAbove()        //put cursor under FNW above
+    Up() GoToPos(PosFirstnonWhite())
+    while CurrChar() < 0
+    Up()  GoToPos(PosFirstnonWhite())
+    endwhile
+    Down()
+end
+
+proc mTabFirstnonWhiteBelow()        //put cursor under FNW below
+    Down() GoToPos(PosFirstnonWhite())
+    while CurrChar() < 0
+    Down() GoToPos(PosFirstnonWhite())
+    endwhile
+    Down()
+end
+
+proc mTabLeft()
+   if (PosFirstNonWhite()<(Query(TabWidth))) and isBlockMarked() and isCursorinBlock()
+   warn("Less than TabWidth from Left Margin")
+   else
+    Iif(IsCursorInBlock(),mShiftBlock(-(Query(TabWidth))),Tableft())
+                endif
+end    //if cursor in a markedblock, do mShiftBlock; otherwise just TabLeft
+
+
+    Iif(IsCursorInBlock(),mShiftBlock(-(Query(TabWidth))),Tableft())
+end    //if cursor in a markedblock, do mShiftBlock; otherwise just TabLeft
+
+proc mTabRight()
+   Iif(IsCursorInBlock(),mShiftBlock(Query(TabWidth)),TabRight())
+end
+
+          ษอออออออออออออออออออออออออออออออออออออออออออออออออออออป
+          บSummary of enhancements I've made that I REALLY like:บ
+          ศอออออออออออออออออออออออออออออออออออออออออออออออออออออผ
+1.  Alt-H gives complete Key Assignment List (scrollable & 'searchable'
+2.  Message when opening READONLY file (also warning on SYSTEM | HIDDEN files)
+3.  Ctrl 5-6 Fast BookMarks
+4.  Ctrl Home/End, Ctrl Del, Grey Numeric KeyBoard Keys Arrangements
+5.  Organized F-keys and key assignments generally (incl EXC Cursor Control!)
+6.  My BoxIn Macro!  (Fast and won't Overwrite)
+7.  My 2Window & 4Window Macros!
+8.  My SENTENCE MARKER!
+9.  MY ChkOrig macro which allows me to check what changes I've made before
+    answering "Save Changes? "
+10.  My info-rich HelpLines!
+11.  My organized Key Assignment 'Quick Help' Screen
+12. My TSE-CMDS.LST & VARIABLE.LST files.  (Nice to see the complete list,
+    and VERY handy when combined with HelpOnWordAtCursor!  See Alt I & Alt J
+13. Tab keys will ShiftBlock if cursor in marked block.
+14. mShift and ShiftTab won't lose text on left shifts!
+15. my FindWordAtCursor FWD, BKWD, GLOBAL:  <CTRL -> <CTRL +> <CTRL \>
+16. Ascii Chart Available in Prompt Box
+17. One key LoadMacro("") and PurgeMacro("") commands for immediate picklist.
+18. The 'fancy home' macro from TSE Jr.
+19. Nicer Insert Date and Time options (with leading "0"'s stripped from time)
+20. Several Menu Additions: incl Copy Ins, Copy Over, Print Line, BlankScreen,
+    InitCaps, and MARK SENTENCE (my own creation!)
+21. Options:  Set FF after print to Off, also Backups & Protected Saves to
+    off for faster operation and less disk fragmentation. (I live dangerous!)
+22. Fill... off block menu tied to FillwStr (which is really VMFILL renamed)
+23. Added History to CaseMenu
+24. Added assignment <CtrlShift CenterCursor>  mMarkLinePrint
+25. Reassigned PROJECTS macro <Ctrl K> key assignments to <Alt K> and made
+    several <Ctrl K> twokeys for Macro management.  (Seems more inline with
+    existing assignments for CTRL X  and ALT X.)
+26. Assigned "ExecMacro("RecordKeyMacro") to <Ctrl KR> and use it instead of
+    ESC M R. (Prevents annoying Menu screen perceptible 'bleed thru' flash.
+27. Included proc INITIALCAPS in my UI file integrated with "CaseMenu"
+28. Modified FL.MAC (which I renamed FILEMGR) to prompt on delete of RDONLY,
+    SYSTEM and HIDDEN files, and LIST IS NOW SORTED.
+29. Added Paste to the PotPourr Edit Keys.  (To Paste in `OverView's)
+30. Added history to RENUMBER macro.
+31. Modified SpellChk to check word to left of cursor
+32. Tempted to add following to "WhenLoaded" in my UI file:
+    "Message("I Love  You Too!  --Tessie")!!!!!!!!!!
+
+COMMENT: I have added over 18K to my UI file!  (Most of it in Key Assignments
+         and 'QuickHelp' Screen Info, plus a collection of small 'My Macros'.
+         HOWEVER, this has added only 5K to my EXE file.  Further, when I
+         open a 'new' file, I still use only 58K memory, same as original EXE.
+         UPDATE: If I purge all my AutoLoad Macros, the figure of 58K drops
+         to only *14K* for both My & Original TSE versions!!!

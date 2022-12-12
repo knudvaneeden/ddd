@@ -1,0 +1,716 @@
+
+[.s] reloaded
+DefaultCasing=None
+quoteescape3=
+quoteescape2=
+quoteescape1=
+quote3=
+quote2='
+quote1="
+tilleolstartcol3=
+tilleolstartcol2=
+tilleolstartcol1=0
+tilleol3=
+tilleol2=
+tilleol1=//
+multilinedelimited3_to=
+multilinedelimited3_from=
+multilinedelimited2_to=
+multilinedelimited2_from=
+multilinedelimited1_to=*/
+multilinedelimited1_from=/*
+wordset=0-9A-Z_a-z
+Keywords=
+ Config Datadef Endconfig Helpdef Keydef and binary break by case cmdmap
+ config constant continue datadef dll do downto else elseif end endcase
+ endconfig enddo endfor endif endloop endwhile for forward goto halt helpdef
+ if iif in include integer keydef loop menu menubar mod not or otherwise proc
+ public register repeat return shl shr string times to until var when while
+ & ( ) * + , - / : < = > [ ] ^ | ~
+ AbandonEditor AbandonFile Abs AddAutoLoadMacro AddFileToRing AddHistoryStr
+ AddLine AddTrailingSlash Addr AdjPtr Alarm Asc Ask AskFilename AskNumeric
+ BackSpace BegFile BegLine BegWindow BegWord BinaryMode BreakHookChain
+ BufferType BufferVideo BuildPickBufferEx CReturn CfgInt CfgStr ChDir ChainCmd
+ ChangeCurrFilename CheckDefaultExt Chr ChrSet ClearBit ClosePrint CloseWindow
+ ClrEol ClrScr Color Copy CopyAppend CopyBlock CopyToWinClip CreateBuffer
+ CreateTempBuffer CurrChar CurrCol CurrDir CurrExt CurrFilename CurrLine
+ CurrLineLen CurrLinePtr CurrMacroFilename CurrPos CurrRow CurrXoffset Cut
+ CutAppend DelAllBookMarks DelAutoLoadMacro DelBlock DelBookMark DelChar
+ DelGlobalVar DelHistory DelHistoryStr DelLeftWord DelLine DelRightWord DelStr
+ DelToEol DelWindow Delay Disable DisplayMode DistanceToTab Dos DosIOResult
+ Down DrawBox DupLine EditAutoLoadList EditBuffer EditFile EmptyBuffer Enable
+ EndFile EndLine EndProcess EndWindow EndWord EraseDiskFile Escape ExecHook
+ ExecLoadedMacro ExecMacro ExecScrapMacro ExistGlobalVar Exit ExpandPath
+ ExpandTabsToSpaces FFAttribute FFDate FFDateStr FFName FFSize FFTime
+ FFTimeStr FileChanged FileExists FillBlock Find FindFileClose FindFirst
+ FindFirstFile FindHistoryStr FindNext FindNextFile FindThisFile Flip Format
+ FullWindow GetBit GetBookMarkInfo GetBufferId GetClipBoardBlockType
+ GetClockTicks GetDate GetDateStr GetDir GetDrive GetEnvStr GetFoundText
+ GetFreeHistory GetGlobalInt GetGlobalStr GetHistoryStr GetHookState GetKey
+ GetKeyFlags GetMarkedText GetMaxRowsCols GetStr GetStrAttr GetStrAttrXY
+ GetStrXY GetSynFilename GetText GetTime GetTimeStr GetToken GetWinHandle
+ GetWindowTitle GetWord GlobalUnDelete GotoBlockBegin GotoBlockBeginCol
+ GotoBlockEnd GotoBlockEndCol GotoBufferId GotoColumn GotoLine GotoMark
+ GotoMouseCursor GotoPos GotoRow GotoWindow GotoXY GotoXoffset HWindow Help
+ HexEdit HiByte HiLiteFoundText HiWord HideMouse Hook InitSynhiCurrFile InsStr
+ InsertData InsertFile InsertLine InsertText JoinLine KeyCode KeyName
+ KeyPressed KillBlock KillFile KillLine KillPosition KillToEol LTrim Left
+ Length LineDraw LineTypeMenu LinkSynFile List ListFooter ListHeader Literal
+ LoByte LoWord LoadBuffer LoadDir LoadKeyMacro LoadMacro LoadStartupMacros
+ LoadSynhiAssoc LogDrive LongestLineInBuffer Lower MacroStackAvail
+ MakeTempName Mark MarkChar MarkColumn MarkFoundText MarkLine MarkStream
+ MarkToEOL MarkWord MatchFilename Max MenuKey MenuOption MenuStr Message Min
+ MouseHotSpot MouseKeyHeld MouseMarking MouseStatus MouseWindowId MoveBlock
+ MsgBox NewFile NextChar NextFile NextWindow NoOp NoSound NumFiles
+ NumHistoryItems NumLines NumTokens NumWindows Ofs OneWindow PBAttribute
+ PBDate PBDateStr PBName PBSize PBTime PBTimeStr PageDown PageUp Paste
+ PasteFromWinClip PasteUnDelete PeekByte PeekLong PeekWord PickFile PlaceMark
+ PokeByte PokeLong PokeWord PopBlock PopPosition PopWinClose PopWinOpen Pos
+ PosFirstNonWhite PosLastNonWhite PressKey PrevChar PrevFile PrevHelp
+ PrevPosition PrevWindow PrintBlock PrintChar PrintFile Process ProcessHotSpot
+ Ptr PurgeKeyMacro PurgeMacro PurgeSynhi PushBlock PushKey PushKeyStr
+ PushPosition PutAttr PutAttrXY PutChar PutCharH PutCharHXY PutCharV PutCharXY
+ PutCtrStr PutHelpLine PutLine PutLineXY PutNCharAttr PutStr PutStrAttr
+ PutStrAttrXY PutStrEOL PutStrEOLXY PutStrXY Query QueryEditState QuickHelp
+ QuitFile QuotePath RTrim Read ReadNumeric RecordKeyMacro RemoveTrailingSlash
+ RemoveUnloadedFiles RenameDiskFile RepeatCmd RepeatFind Replace ReplaceFile
+ ReplaceSynFile ResizeWindow RestoreCursorLine Right RollDown RollLeft
+ RollRight RollUp SaveAllAndExit SaveAllFiles SaveAndQuitFile SaveAs SaveBlock
+ SaveFile SaveKeyMacro SaveSettings ScrollDown ScrollLeft ScrollRight
+ ScrollToCenter ScrollToRow ScrollToTop ScrollUp SearchHelp SearchPath Seg
+ SelfInsert Set SetBit SetCursorOff SetCursorOn SetFileAttr SetGlobalInt
+ SetGlobalStr SetHookState SetInt SetVideoRowsCols SetWindowTitle Shell
+ ShiftText ShowEntryScreen ShowMouse SignOn SizeOf Sort Sound SplitLine
+ SplitPath Str SubStr TabLeft TabRight TabSet Toggle ToggleInsert
+ TrackMouseCursor Trim UnBufferVideo UnDelete UnHook UnMarkBlock Up
+ UpdateDisplay Upper VGotoXY VGotoXYAbs VHomeCursor VWhereX VWhereY VWindow
+ Val Version ViewFinds WaitForMouseEvent Warn WhereX WhereXAbs WhereY
+ WhereYAbs Window WindowFooter WindowId WordLeft WordRight WrapLine WrapPara
+ Write WriteLine YesNo ZoomWindow fClose fCreate fDup fDup2 fOpen fRead
+ fReadFile fSeek fWrite fWriteFile isBlockInCurrFile isBlockMarked
+ isBookMarkSet isCharDevice isCursorInBlock isMacroLoaded isTrailingSlash
+ isTypeableKey isWhite isWildPath isWord isZoomed lDos lFind lList lRead
+ lReadNumeric lRepeatFind lReplace lShowEntryScreen lVersion
+ AltBlockAttr AltColor10Attr AltColor11Attr AltColor12Attr AltColor13Attr
+ AltColor14Attr AltColor15Attr AltColor1Attr AltColor2Attr AltColor3Attr
+ AltColor4Attr AltColor5Attr AltColor6Attr AltColor7Attr AltColor8Attr
+ AltColor9Attr AltCurrWinBorderAttr AltCursorAttr AltCursorInBlockAttr
+ AltEOFMarkerAttr AltHelpBoldAttr AltHelpInfoAttr AltHelpItalicsAttr
+ AltHelpLinkAttr AltHelpSelectAttr AltHelpTextAttr AltHiLiteAttr
+ AltMenuBorderAttr AltMenuGrayAttr AltMenuSelectAttr AltMenuSelectGrayAttr
+ AltMenuSelectLtrAttr AltMenuTextAttr AltMenuTextLtrAttr AltMsgAttr
+ AltOtherWinBorderAttr AltStatusLineAttr AltTextAttr Attr AttrSet AutoIndent
+ BackupExt Beep BlockAttr BlockBegCol BlockBegLine BlockEndCol BlockEndLine
+ BlockId Break BufferFlags CenterFinds ChangeShellPrompt ClipBoardId
+ Color0Attr Color10Attr Color11Attr Color12Attr Color13Attr Color14Attr
+ Color15Attr Color1Attr Color2Attr Color3Attr Color4Attr Color5Attr Color6Attr
+ Color7Attr Color8Attr Color9Attr CurrHistoryList CurrVideoMode
+ CurrWinBorderAttr CurrWinBorderType Cursor CursorAttr CursorInBlockAttr
+ DateFormat DateSeparator DefaultExt Directive1Attr Directive2Attr
+ Directive3Attr DisplayBoxed DosCmdLine EOFMarkerAttr EOFType EOLType
+ EquateEnhancedKbd ExpandTabs FileLocking FindOptions HelpBoldAttr
+ HelpInfoAttr HelpItalicsAttr HelpLineDelay HelpLinkAttr HelpSelectAttr
+ HelpTextAttr HiLiteAttr IdleTime IncompleteQuoteAttr Insert InsertCursorSize
+ InsertLineBlocksAbove KbdMacroRecording KbdMacroRunning KbdPath Key
+ KeyWords1Attr KeyWords2Attr KeyWords3Attr KeyWords4Attr KeyWords5Attr
+ KeyWords6Attr KeyWords7Attr KeyWords8Attr KeyWords9Attr KillMax LastKey
+ LastMouseKey LastMouseX LastMouseY LeftHandedMouse LeftMargin LineDrawChar
+ LineDrawType LineDrawing LoadWildFromDOS LoadWildFromInside MacroCmdLine
+ MakeBackups Marking MaxHistoryPerList MaxHistorySize MaxRecentFiles
+ MenuBorderAttr MenuGrayAttr MenuSelectAttr MenuSelectGrayAttr
+ MenuSelectLtrAttr MenuTextAttr MenuTextLtrAttr MouseEnabled MouseHoldTime
+ MouseKey MouseRepeatDelay MouseX MouseY MsgAttr MsgLevel MultiLnDlmt1Attr
+ MultiLnDlmt2Attr MultiLnDlmt3Attr NumberAttr OtherWinBorderAttr
+ OtherWinBorderType OverwriteCursorSize ParaEndStyle PersistentHistory
+ PersistentRecentFiles PickFileChangesDir PickFileFlags PickFileSortOrder
+ PopWinCols PopWinRows PopWinX1 PopWinY1 PrintAddFF PrintBotMargin PrintCopies
+ PrintDevice PrintFirstPage PrintFooter PrintHeader PrintInit PrintLastPage
+ PrintLeftMargin PrintLineNumbers PrintLineSpacing PrintLinesPerPage
+ PrintPause PrintRightMargin PrintTopMargin PrintUseFF ProtectedSaves
+ QuitToPrompt Quote1Attr Quote2Attr Quote3Attr RemoveTrailingWhite
+ ReplaceOptions RestoreDirOnExit ReturnEqNextLine RightMargin SaveState
+ ScreenCols ScreenRows ShowEOFMarker ShowHelpLine ShowMainMenu ShowStatusLine
+ ShowSyntaxHilite SingleLnDlmt1Attr SingleLnDlmt2Attr SingleLnDlmt3Attr
+ StartupAttrSet StartupFlags StartupVideoMode StatusLineAtTop StatusLineAttr
+ StatusLineFillChar StatusLineRow StatusLineUpdating TSEPath TabType TabWidth
+ TemplateExpansion TextAttr TimeFormat TimeSeparator ToEOL1Attr ToEOL2Attr
+ ToEOL3Attr UnMarkAfterPaste UseCurrLineIfNoBlock VarTabs ViewFindsId
+ WindowCols WindowRows WindowX1 WindowY1 WordSet WordWrap X1 Y1 ZeroBasedTab
+ MAXINT MAXLINELEN MININT WIN32 _25_LINES_ _28_LINES_ _30_LINES_ _33_LINES_
+ _36_LINES_ _40_LINES_ _43_LINES_ _44_LINES_ _50_LINES_ _ADD_DIRS_ _ADD_SLASH_
+ _AFTER_COMMAND_ _AFTER_GETKEY_ _AFTER_NONEDIT_COMMAND_ _AFTER_UPDATEDISPLAY_
+ _AFTER_UPDATE_DISPLAY_ _AFTER_UPDATE_STATUSLINE_ _ALL_MESSAGES_
+ _ALL_WINDOWS_REFRESH_ _ALT_KEY_ _ANCHOR_SEARCH_ _APPEND_ _ARCHIVE_ _AT_EOL_
+ _AUTODETECT_ _AUTO_ _AUTO_DETECT_ _AUTO_DETECT__ _BACKWARD_ _BEFORE_COMMAND_
+ _BEFORE_GETKEY_ _BEFORE_NONEDIT_COMMAND_ _BEFORE_UPDATE_DISPLAY_ _BEYOND_EOL_
+ _BLOCK_SEARCH_ _BREAK_FIND_ _BREAK_LOADFILE_ _BREAK_MACRO_ _BREAK_SORT_
+ _BUILDPICKBUFFER_NOTIFY_ _CANT_LOCK_ _CAPS_LOCK_DEPRESSED_ _CLINE_REFRESH_
+ _COLOR_ _COLUMN_ _CREATE_NEW_CONSOLE_ _CTRL_KEY_ _DEFAULT_ _DESCENDING_
+ _DIRECTORY_ _DIRS_AT_TOP_ _DISPLAY_FINDS_ _DISPLAY_HELP_ _DISPLAY_HEX_
+ _DISPLAY_PICKFILE_ _DISPLAY_TEXT_ _DISPLAY_USER_ _DONT_CHANGE_VIDEO_
+ _DONT_CLEAR_ _DONT_EXPAND_ _DONT_LOAD_ _DONT_PROMPT_ _DONT_WAIT_
+ _DOSCOMM_HISTORY_ _DOS_HISTORY_ _DOWN_ _DRIVE_ _DRIVE_CDROM_
+ _DRIVE_DOESNOTEXIST_ _DRIVE_FIXED_ _DRIVE_RAMDISK_ _DRIVE_REMOTE_
+ _DRIVE_REMOVABLE_ _DRIVE_UNKNOWN_ _EDITFILE_HISTORY_ _EDIT_HISTORY_
+ _ENABLE_HSCROLL_ _ENABLE_SEARCH_ _EVENT_ABANDON_EDITOR_ _EVENT_AFTER_COMMAND_
+ _EVENT_AFTER_GETKEY_ _EVENT_AFTER_NONEDIT_COMMAND_
+ _EVENT_AFTER_UPDATEDISPLAY_ _EVENT_AFTER_UPDATESTATUSLINE_
+ _EVENT_BEFORE_COMMAND_ _EVENT_BEFORE_GETKEY_ _EVENT_BEFORE_NONEDIT_COMMAND_
+ _EVENT_BEFORE_UPDATEDISPLAY_ _EVENT_BUILDPICKBUFFER_NOTIFY_
+ _EVENT_CHANGE_FILES_ _EVENT_DELCHAR_ _EVENT_EXIT_CALLED_ _EVENT_FILE_LOAD_
+ _EVENT_FILE_QUIT_ _EVENT_FILE_SAVE_ _EVENT_FIRST_EDIT_ _EVENT_IDLE_
+ _EVENT_LIST_CLEANUP_ _EVENT_LIST_STARTUP_ _EVENT_NONEDIT_IDLE_
+ _EVENT_NONEDIT_UNASSIGNED_KEY_ _EVENT_ON_CONTROL_BREAK_ _EVENT_ON_MESSAGE_
+ _EVENT_ON_WARNING_ _EVENT_PICKFILE_CLEANUP_ _EVENT_PICKFILE_STARTUP_
+ _EVENT_PROMPT_CLEANUP_ _EVENT_PROMPT_STARTUP_ _EVENT_SELFINSERT_
+ _EVENT_UNASSIGNED_KEY_ _EXCLUSIVE_ _EXCLUSIVE_KEYDEF_ _EXECMACRO_HISTORY_
+ _EXECMAC_HISTORY_ _EXT_ _FILLBLK_HISTORY_ _FILLBLOCK_HISTORY_ _FINDHISTORY_
+ _FINDOPTIONS_HISTORY_ _FINDOPT_HISTORY_ _FIND_HISTORY_ _FIND_OPTIONS_HISTORY_
+ _FIXED_HEIGHT_ _FIXED_WIDTH_ _FLCARRY_ _FORWARD_ _FROM_CMDLINE_ _FULL_PATH_
+ _GOTOCOLUMN_HISTORY_ _GOTOLINE_HISTORY_ _GOTO_COLUMN_HISTORY_
+ _GOTO_LINE_HISTORY_ _HANDLE_LOCKING_ _HARD_ _HELPLINE_REFRESH_
+ _HELP_SEARCH_HISTORY_ _HIDDEN_ _HSCROLL_ _IDLE_ _IGNORE_CASE_
+ _INCLUDE_REMOVEABLE_DRIVES_ _INCLUSIVE_ _INSERT_ _INSERT_DEPRESSED_
+ _INSERT_PATH_ _KEYMACRO_HISTORY_ _KEYMAC_HISTORY_ _KEY_CTRL_ _LEFT_
+ _LEFT_SHIFT_KEY_ _LINE_ _LIST_CLEANUP_ _LIST_STARTUP_ _LOADED_
+ _LOADMACRO_HISTORY_ _LOADMAC_HISTORY_ _LOAD_FROM_DISK_ _LOAD_INDEX_ _LOCAL_
+ _MAXPATH_ _MAX_COLS_ _MAX_LINES_ _MAX_LINES_COLS_ _MAX_PATH_ _MF_CHECKED_
+ _MF_CLOSE_AFTER_ _MF_CLOSE_ALL_ _MF_CLOSE_ALL_AFTER_ _MF_CLOSE_ALL_BEFORE_
+ _MF_CLOSE_BEFORE_ _MF_DISABLED_ _MF_DIVIDE_ _MF_DONT_CLOSE_ _MF_ENABLED_
+ _MF_GRAYED_ _MF_HILITE_ _MF_SEPARATOR_ _MF_SKIP_ _MF_UNCHECKED_ _MF_UNHILITE_
+ _MONO_ _MOUSE_CLOSE_ _MOUSE_DOWN_ _MOUSE_HELEVATOR_ _MOUSE_HOLD_TIME_
+ _MOUSE_HRESIZE_ _MOUSE_HWINDOW_ _MOUSE_LEFT_ _MOUSE_MARKING_ _MOUSE_MOVE_
+ _MOUSE_PAGEDOWN_ _MOUSE_PAGEUP_ _MOUSE_RELEASE_ _MOUSE_RIGHT_ _MOUSE_TABLEFT_
+ _MOUSE_TABRIGHT_ _MOUSE_UP_ _MOUSE_VELEVATOR_ _MOUSE_VRESIZE_ _MOUSE_VWINDOW_
+ _MOUSE_ZOOM_ _MUST_ _MUST_EXIST_ _NAME_ _NEWFILE_ _NEWNAME_HISTORY_
+ _NONEDIT_IDLE_ _NONE_ _NONINCLUSIVE_ _NON_INCLUSIVE_ _NORMAL_
+ _NUM_LOCK_DEPRESSED_ _OFF_ _ON_ _ON_ABANDON_EDITOR_ _ON_CHANGING_FILES_
+ _ON_CONTROL_BREAK_ _ON_DELCHAR_ _ON_EXIT_CALLED_ _ON_FILE_LOAD_
+ _ON_FILE_QUIT_ _ON_FILE_SAVE_ _ON_FIRST_EDIT_ _ON_MESSAGE_
+ _ON_NONEDIT_UNASSIGNED_KEY_ _ON_SELFINSERT_ _ON_UNASSIGNED_KEY_ _ON_WARNING_
+ _OPEN_COMPATIBILITY_ _OPEN_DENYALL_ _OPEN_DENYNONE_ _OPEN_DENYREAD_
+ _OPEN_DENYWRITE_ _OPEN_DENY_NONE_ _OPEN_NOINHERIT_ _OPEN_READONLY_
+ _OPEN_READWRITE_ _OPEN_WRITEONLY_ _OVERWRITE_ _PARTIAL_FILE_ _PATH_
+ _PICKFILE_CLEANUP_ _PICKFILE_STARTUP_ _PICKSORT_ _PICK_SORT_
+ _PRESERVE_HELPLINE_ _PRESERVE_SCREEN_ _PREV_TOPIC_ _PROMPT_CLEANUP_
+ _PROMPT_STARTUP_ _QUERY_REMOVEABLE_DRIVES_ _QUIET_ _READONLY_
+ _READONLY_LOCKING_ _READ_ONLY_ _RECURSE_DIRS_ _REFRESH_STATUS_LINE_
+ _REFRESH_THIS_ONLY_ _REPEATCMD_HISTORY_ _REPLACEOPTIONS_HISTORY_
+ _REPLACE_HISTORY_ _REPLACE_OPTIONS_HISTORY_ _REPLOPT_HISTORY_ _REPL_HISTORY_
+ _RETURN_CODE_ _REVERSE_ _RIGHT_ _RIGHT_SHIFT_KEY_ _RPTCMD_HISTORY_
+ _RUN_DETACHED_ _SCROLL_LOCK_DEPRESSED_ _SEARCH_BACKWARD_ _SEARCH_FORWARD_
+ _SEARCH_HELP_ _SEARCH_INCLUSIVE_ _SEARCH_REVERSE_ _SEEK_BEGIN_ _SEEK_CURRENT_
+ _SEEK_END_ _SHIFT_KEY_ _SIZEOF_FINDINFO_ _SIZEOF_VIDEO_ _SMART_ _SOFT_
+ _SORT_COUNTRY_ _SORT_DESCENDING_ _SORT_IGNORE_CASE_ _SORT_PICK_
+ _STARTUP_FILEMGR_ _STARTUP_MENU_ _STARTUP_PICKLIST_ _STARTUP_PROMPT_
+ _STARTUP_RECENTFILES_ _STARTUP_RESTORESTATE_ _STARTUP_UNNAMED_ _START_HIDDEN_
+ _START_MAXIMIZED_ _START_MINIMIZED_ _STATE_EDIT_MAIN_LOOP_
+ _STATUSLINE_REFRESH_ _STATUS_LINE_REFRESH_ _STDERR_ _STDIN_ _STDOUT_ _STICKY_
+ _SYSTEM_ _TEE_OUTPUT_ _TYPEABLES_ _TYPEABLES_KEYDEF_ _UP_ _USEBLOCK_
+ _USE_BLOCK_ _VARIABLE_ _VOLUME_ _WARNINGS_ONLY_ _WARN_MESSAGES_
+ _WINDOW_REFRESH_ _WRITE_ACCESS_ _WRITE_BINARY_HEADER_ _YES_NO_
+ _YES_NO_CANCEL_
+ CLOSEAFTER CLOSEALLAFTER CLOSEALLBEFORE CLOSEBEFORE COMMAND DIVIDE DONTCLOSE
+ FALSE False HISTORY Main NOESCAPE NOKEYS OFF ON Off On SKIP TITLE TRUE True
+ WIDTH WhenLoaded WhenPurged X Y
+
+[.cbl] reloaded
+DefaultCasing=Upper
+quoteescape3=
+quoteescape2=
+quoteescape1=
+quote3=
+quote2='
+quote1="
+tilleolstartcol3=
+tilleolstartcol2=7
+tilleolstartcol1=7
+tilleol3=
+tilleol2=/
+tilleol1=*
+multilinedelimited3_to=
+multilinedelimited3_from=
+multilinedelimited2_to=
+multilinedelimited2_from=
+multilinedelimited1_to=
+multilinedelimited1_from=
+wordset=-0-9A-Z_a-z
+Keywords=
+ accept access add address advancing after all alphabet alphabetic
+ alphabetic-lower alphabetic-upper alphanumeric alphanumeric-edited also alter
+ alternate and any apply are area areas ascending assign at author basis
+ before beginning binary blank block bottom by cancel cbl cd cf ch character
+ charaters class clock-units close cobol code code-set collating column
+ com-reg comma common communication comp comp-1 comp-2 comp-3 comp-4 comp-5
+ comp-6 computational computational-1 computational-2 computational-3
+ computational-4 computational-5 computational-6 compute configuration
+ contains content continue control controls converting copy corr corresponding
+ count crt currency current data date date-compiled date-written day
+ day-of-week db db-key dbcs de decimal-point declaratives delete delimited
+ delimiter depending descending destination detail disable display divide
+ division down duplicates dynamic egcs eject else emi enable end end-add
+ end-call end-compute end-delete end-divide end-evaluate end-id end-if
+ end-multiply end-of-page end-perform end-read end-recieve end-return
+ end-rewrite end-search end-start end-string end-subtract end-unstring
+ end-write ending enter entry environment eop equal error esi evaluate every
+ exception exit extend external false fd file file-control filler final first
+ footing for from generate giving global go goback greater group heading i-o
+ i-o-control id identification if in index indexed indicate initial initialize
+ initiate input input-output insert inspect installation into invalid is just
+ justified kanji key label last leading left length less limit limits linage
+ linage-counter line line-counter lines linkage lock memory merge message mode
+ modules more-labels move multiple multiply native negative next no null nulls
+ number numeric numeric-edited object-computer occurs of off omitted on open
+ optional or order orginazation other output overflow packed-decimal padding
+ page page-counter password pf ph pic picture plus pointer position positive
+ printing prior procedure procedures proceed process processing program
+ program-id purge queue random rd read receive record recording records
+ redefines reel reference references relative release reload remainder removal
+ renames replace replacing report reporting reports rerun reserve reset return
+ returning reverse reversed rewind rewrite rf rh right rounded run same sd
+ search security segment segment-limit select send sentence separate
+ sequential service set shift-in shift-out sign size skip1 skip2 skip3 sort
+ sort-control sort-core-size sort-file-size sort-merge sort-message
+ sort-mode-size sort-return source-computer special-names standard standard-1
+ standard-2 start status stop string sub-queue-1 sub-queue-2 sub-queue-3
+ subtract sum suppress symbolic sync synchronized table tally tallying tape
+ terminal terminate test text than then through thru time times title to top
+ trace trailing true type unit unstring until up upon usage use using value
+ values varying when when-compiled with within words working-storage write
+ write-only
+ " $ ' ( ) * , - . / : ; < = > not |
+ call erase find finish get modify perform ready section store
+ debug-contents debug-item debug-name debug-sub-1 debug-sub-2 debug-sub-3
+ debugging high-value high-values low-value low-values quote quotes replace
+ reset return-code space spaces zero zeroes zeros
+
+[.si]
+DefaultCasing=None
+quoteescape3=
+quoteescape2=
+quoteescape1=
+quote3=
+quote2='
+quote1="
+tilleolstartcol3=
+tilleolstartcol2=
+tilleolstartcol1=0
+tilleol3=
+tilleol2=
+tilleol1=//
+multilinedelimited3_to=
+multilinedelimited3_from=
+multilinedelimited2_to=
+multilinedelimited2_from=
+multilinedelimited1_to=*/
+multilinedelimited1_from=/*
+wordset=0-9A-Z_a-z
+Keywords=
+ Config Datadef Endconfig Helpdef Keydef and binary break by case cmdmap
+ config constant continue datadef dll do downto else elseif end endcase
+ endconfig enddo endfor endif endloop endwhile for forward goto halt helpdef
+ if iif in include integer keydef loop menu menubar mod not or otherwise proc
+ public register repeat return shl shr string times to until var when while
+ & ( ) * + , - / : < = > [ ] ^ | ~
+ AbandonEditor AbandonFile Abs AddAutoLoadMacro AddFileToRing AddHistoryStr
+ AddLine AddTrailingSlash Addr AdjPtr Alarm Asc Ask AskFilename AskNumeric
+ BackSpace BegFile BegLine BegWindow BegWord BinaryMode BreakHookChain
+ BufferType BufferVideo BuildPickBufferEx CReturn CfgInt CfgStr ChDir ChainCmd
+ ChangeCurrFilename CheckDefaultExt Chr ChrSet ClearBit ClosePrint CloseWindow
+ ClrEol ClrScr Color Copy CopyAppend CopyBlock CopyToWinClip CreateBuffer
+ CreateTempBuffer CurrChar CurrCol CurrDir CurrExt CurrFilename CurrLine
+ CurrLineLen CurrLinePtr CurrMacroFilename CurrPos CurrRow CurrXoffset Cut
+ CutAppend DelAllBookMarks DelAutoLoadMacro DelBlock DelBookMark DelChar
+ DelGlobalVar DelHistory DelHistoryStr DelLeftWord DelLine DelRightWord DelStr
+ DelToEol DelWindow Delay Disable DisplayMode DistanceToTab Dos DosIOResult
+ Down DrawBox DupLine EditAutoLoadList EditBuffer EditFile EmptyBuffer Enable
+ EndFile EndLine EndProcess EndWindow EndWord EraseDiskFile Escape ExecHook
+ ExecLoadedMacro ExecMacro ExecScrapMacro ExistGlobalVar Exit ExpandPath
+ ExpandTabsToSpaces FFAttribute FFDate FFDateStr FFName FFSize FFTime
+ FFTimeStr FileChanged FileExists FillBlock Find FindFileClose FindFirst
+ FindFirstFile FindHistoryStr FindNext FindNextFile FindThisFile Flip Format
+ FullWindow GetBit GetBookMarkInfo GetBufferId GetClipBoardBlockType
+ GetClockTicks GetDate GetDateStr GetDir GetDrive GetEnvStr GetFoundText
+ GetFreeHistory GetGlobalInt GetGlobalStr GetHistoryStr GetHookState GetKey
+ GetKeyFlags GetMarkedText GetMaxRowsCols GetStr GetStrAttr GetStrAttrXY
+ GetStrXY GetSynFilename GetText GetTime GetTimeStr GetToken GetWinHandle
+ GetWindowTitle GetWord GlobalUnDelete GotoBlockBegin GotoBlockBeginCol
+ GotoBlockEnd GotoBlockEndCol GotoBufferId GotoColumn GotoLine GotoMark
+ GotoMouseCursor GotoPos GotoRow GotoWindow GotoXY GotoXoffset HWindow Help
+ HexEdit HiByte HiLiteFoundText HiWord HideMouse Hook InitSynhiCurrFile InsStr
+ InsertData InsertFile InsertLine InsertText JoinLine KeyCode KeyName
+ KeyPressed KillBlock KillFile KillLine KillPosition KillToEol LTrim Left
+ Length LineDraw LineTypeMenu LinkSynFile List ListFooter ListHeader Literal
+ LoByte LoWord LoadBuffer LoadDir LoadKeyMacro LoadMacro LoadStartupMacros
+ LoadSynhiAssoc LogDrive LongestLineInBuffer Lower MacroStackAvail
+ MakeTempName Mark MarkChar MarkColumn MarkFoundText MarkLine MarkStream
+ MarkToEOL MarkWord MatchFilename Max MenuKey MenuOption MenuStr Message Min
+ MouseHotSpot MouseKeyHeld MouseMarking MouseStatus MouseWindowId MoveBlock
+ MsgBox NewFile NextChar NextFile NextWindow NoOp NoSound NumFiles
+ NumHistoryItems NumLines NumTokens NumWindows Ofs OneWindow PBAttribute
+ PBDate PBDateStr PBName PBSize PBTime PBTimeStr PageDown PageUp Paste
+ PasteFromWinClip PasteUnDelete PeekByte PeekLong PeekWord PickFile PlaceMark
+ PokeByte PokeLong PokeWord PopBlock PopPosition PopWinClose PopWinOpen Pos
+ PosFirstNonWhite PosLastNonWhite PressKey PrevChar PrevFile PrevHelp
+ PrevPosition PrevWindow PrintBlock PrintChar PrintFile Process ProcessHotSpot
+ Ptr PurgeKeyMacro PurgeMacro PurgeSynhi PushBlock PushKey PushKeyStr
+ PushPosition PutAttr PutAttrXY PutChar PutCharH PutCharHXY PutCharV PutCharXY
+ PutCtrStr PutHelpLine PutLine PutLineXY PutNCharAttr PutStr PutStrAttr
+ PutStrAttrXY PutStrEOL PutStrEOLXY PutStrXY Query QueryEditState QuickHelp
+ QuitFile QuotePath RTrim Read ReadNumeric RecordKeyMacro RemoveTrailingSlash
+ RemoveUnloadedFiles RenameDiskFile RepeatCmd RepeatFind Replace ReplaceFile
+ ReplaceSynFile ResizeWindow RestoreCursorLine Right RollDown RollLeft
+ RollRight RollUp SaveAllAndExit SaveAllFiles SaveAndQuitFile SaveAs SaveBlock
+ SaveFile SaveKeyMacro SaveSettings ScrollDown ScrollLeft ScrollRight
+ ScrollToCenter ScrollToRow ScrollToTop ScrollUp SearchHelp SearchPath Seg
+ SelfInsert Set SetBit SetCursorOff SetCursorOn SetFileAttr SetGlobalInt
+ SetGlobalStr SetHookState SetInt SetVideoRowsCols SetWindowTitle Shell
+ ShiftText ShowEntryScreen ShowMouse SignOn SizeOf Sort Sound SplitLine
+ SplitPath Str SubStr TabLeft TabRight TabSet Toggle ToggleInsert
+ TrackMouseCursor Trim UnBufferVideo UnDelete UnHook UnMarkBlock Up
+ UpdateDisplay Upper VGotoXY VGotoXYAbs VHomeCursor VWhereX VWhereY VWindow
+ Val Version ViewFinds WaitForMouseEvent Warn WhereX WhereXAbs WhereY
+ WhereYAbs Window WindowFooter WindowId WordLeft WordRight WrapLine WrapPara
+ Write WriteLine YesNo ZoomWindow fClose fCreate fDup fDup2 fOpen fRead
+ fReadFile fSeek fWrite fWriteFile isBlockInCurrFile isBlockMarked
+ isBookMarkSet isCharDevice isCursorInBlock isMacroLoaded isTrailingSlash
+ isTypeableKey isWhite isWildPath isWord isZoomed lDos lFind lList lRead
+ lReadNumeric lRepeatFind lReplace lShowEntryScreen lVersion
+ AltBlockAttr AltColor10Attr AltColor11Attr AltColor12Attr AltColor13Attr
+ AltColor14Attr AltColor15Attr AltColor1Attr AltColor2Attr AltColor3Attr
+ AltColor4Attr AltColor5Attr AltColor6Attr AltColor7Attr AltColor8Attr
+ AltColor9Attr AltCurrWinBorderAttr AltCursorAttr AltCursorInBlockAttr
+ AltEOFMarkerAttr AltHelpBoldAttr AltHelpInfoAttr AltHelpItalicsAttr
+ AltHelpLinkAttr AltHelpSelectAttr AltHelpTextAttr AltHiLiteAttr
+ AltMenuBorderAttr AltMenuGrayAttr AltMenuSelectAttr AltMenuSelectGrayAttr
+ AltMenuSelectLtrAttr AltMenuTextAttr AltMenuTextLtrAttr AltMsgAttr
+ AltOtherWinBorderAttr AltStatusLineAttr AltTextAttr Attr AttrSet AutoIndent
+ BackupExt Beep BlockAttr BlockBegCol BlockBegLine BlockEndCol BlockEndLine
+ BlockId Break BufferFlags CenterFinds ChangeShellPrompt ClipBoardId
+ Color0Attr Color10Attr Color11Attr Color12Attr Color13Attr Color14Attr
+ Color15Attr Color1Attr Color2Attr Color3Attr Color4Attr Color5Attr Color6Attr
+ Color7Attr Color8Attr Color9Attr CurrHistoryList CurrVideoMode
+ CurrWinBorderAttr CurrWinBorderType Cursor CursorAttr CursorInBlockAttr
+ DateFormat DateSeparator DefaultExt Directive1Attr Directive2Attr
+ Directive3Attr DisplayBoxed DosCmdLine EOFMarkerAttr EOFType EOLType
+ EquateEnhancedKbd ExpandTabs FileLocking FindOptions HelpBoldAttr
+ HelpInfoAttr HelpItalicsAttr HelpLineDelay HelpLinkAttr HelpSelectAttr
+ HelpTextAttr HiLiteAttr IdleTime IncompleteQuoteAttr Insert InsertCursorSize
+ InsertLineBlocksAbove KbdMacroRecording KbdMacroRunning KbdPath Key
+ KeyWords1Attr KeyWords2Attr KeyWords3Attr KeyWords4Attr KeyWords5Attr
+ KeyWords6Attr KeyWords7Attr KeyWords8Attr KeyWords9Attr KillMax LastKey
+ LastMouseKey LastMouseX LastMouseY LeftHandedMouse LeftMargin LineDrawChar
+ LineDrawType LineDrawing LoadWildFromDOS LoadWildFromInside MacroCmdLine
+ MakeBackups Marking MaxHistoryPerList MaxHistorySize MaxRecentFiles
+ MenuBorderAttr MenuGrayAttr MenuSelectAttr MenuSelectGrayAttr
+ MenuSelectLtrAttr MenuTextAttr MenuTextLtrAttr MouseEnabled MouseHoldTime
+ MouseKey MouseRepeatDelay MouseX MouseY MsgAttr MsgLevel MultiLnDlmt1Attr
+ MultiLnDlmt2Attr MultiLnDlmt3Attr NumberAttr OtherWinBorderAttr
+ OtherWinBorderType OverwriteCursorSize ParaEndStyle PersistentHistory
+ PersistentRecentFiles PickFileChangesDir PickFileFlags PickFileSortOrder
+ PopWinCols PopWinRows PopWinX1 PopWinY1 PrintAddFF PrintBotMargin PrintCopies
+ PrintDevice PrintFirstPage PrintFooter PrintHeader PrintInit PrintLastPage
+ PrintLeftMargin PrintLineNumbers PrintLineSpacing PrintLinesPerPage
+ PrintPause PrintRightMargin PrintTopMargin PrintUseFF ProtectedSaves
+ QuitToPrompt Quote1Attr Quote2Attr Quote3Attr RemoveTrailingWhite
+ ReplaceOptions RestoreDirOnExit ReturnEqNextLine RightMargin SaveState
+ ScreenCols ScreenRows ShowEOFMarker ShowHelpLine ShowMainMenu ShowStatusLine
+ ShowSyntaxHilite SingleLnDlmt1Attr SingleLnDlmt2Attr SingleLnDlmt3Attr
+ StartupAttrSet StartupFlags StartupVideoMode StatusLineAtTop StatusLineAttr
+ StatusLineFillChar StatusLineRow StatusLineUpdating TSEPath TabType TabWidth
+ TemplateExpansion TextAttr TimeFormat TimeSeparator ToEOL1Attr ToEOL2Attr
+ ToEOL3Attr UnMarkAfterPaste UseCurrLineIfNoBlock VarTabs ViewFindsId
+ WindowCols WindowRows WindowX1 WindowY1 WordSet WordWrap X1 Y1 ZeroBasedTab
+ MAXINT MAXLINELEN MININT WIN32 _25_LINES_ _28_LINES_ _30_LINES_ _33_LINES_
+ _36_LINES_ _40_LINES_ _43_LINES_ _44_LINES_ _50_LINES_ _ADD_DIRS_ _ADD_SLASH_
+ _AFTER_COMMAND_ _AFTER_GETKEY_ _AFTER_NONEDIT_COMMAND_ _AFTER_UPDATEDISPLAY_
+ _AFTER_UPDATE_DISPLAY_ _AFTER_UPDATE_STATUSLINE_ _ALL_MESSAGES_
+ _ALL_WINDOWS_REFRESH_ _ALT_KEY_ _ANCHOR_SEARCH_ _APPEND_ _ARCHIVE_ _AT_EOL_
+ _AUTODETECT_ _AUTO_ _AUTO_DETECT_ _AUTO_DETECT__ _BACKWARD_ _BEFORE_COMMAND_
+ _BEFORE_GETKEY_ _BEFORE_NONEDIT_COMMAND_ _BEFORE_UPDATE_DISPLAY_ _BEYOND_EOL_
+ _BLOCK_SEARCH_ _BREAK_FIND_ _BREAK_LOADFILE_ _BREAK_MACRO_ _BREAK_SORT_
+ _BUILDPICKBUFFER_NOTIFY_ _CANT_LOCK_ _CAPS_LOCK_DEPRESSED_ _CLINE_REFRESH_
+ _COLOR_ _COLUMN_ _CREATE_NEW_CONSOLE_ _CTRL_KEY_ _DEFAULT_ _DESCENDING_
+ _DIRECTORY_ _DIRS_AT_TOP_ _DISPLAY_FINDS_ _DISPLAY_HELP_ _DISPLAY_HEX_
+ _DISPLAY_PICKFILE_ _DISPLAY_TEXT_ _DISPLAY_USER_ _DONT_CHANGE_VIDEO_
+ _DONT_CLEAR_ _DONT_EXPAND_ _DONT_LOAD_ _DONT_PROMPT_ _DONT_WAIT_
+ _DOSCOMM_HISTORY_ _DOS_HISTORY_ _DOWN_ _DRIVE_ _DRIVE_CDROM_
+ _DRIVE_DOESNOTEXIST_ _DRIVE_FIXED_ _DRIVE_RAMDISK_ _DRIVE_REMOTE_
+ _DRIVE_REMOVABLE_ _DRIVE_UNKNOWN_ _EDITFILE_HISTORY_ _EDIT_HISTORY_
+ _ENABLE_HSCROLL_ _ENABLE_SEARCH_ _EVENT_ABANDON_EDITOR_ _EVENT_AFTER_COMMAND_
+ _EVENT_AFTER_GETKEY_ _EVENT_AFTER_NONEDIT_COMMAND_
+ _EVENT_AFTER_UPDATEDISPLAY_ _EVENT_AFTER_UPDATESTATUSLINE_
+ _EVENT_BEFORE_COMMAND_ _EVENT_BEFORE_GETKEY_ _EVENT_BEFORE_NONEDIT_COMMAND_
+ _EVENT_BEFORE_UPDATEDISPLAY_ _EVENT_BUILDPICKBUFFER_NOTIFY_
+ _EVENT_CHANGE_FILES_ _EVENT_DELCHAR_ _EVENT_EXIT_CALLED_ _EVENT_FILE_LOAD_
+ _EVENT_FILE_QUIT_ _EVENT_FILE_SAVE_ _EVENT_FIRST_EDIT_ _EVENT_IDLE_
+ _EVENT_LIST_CLEANUP_ _EVENT_LIST_STARTUP_ _EVENT_NONEDIT_IDLE_
+ _EVENT_NONEDIT_UNASSIGNED_KEY_ _EVENT_ON_CONTROL_BREAK_ _EVENT_ON_MESSAGE_
+ _EVENT_ON_WARNING_ _EVENT_PICKFILE_CLEANUP_ _EVENT_PICKFILE_STARTUP_
+ _EVENT_PROMPT_CLEANUP_ _EVENT_PROMPT_STARTUP_ _EVENT_SELFINSERT_
+ _EVENT_UNASSIGNED_KEY_ _EXCLUSIVE_ _EXCLUSIVE_KEYDEF_ _EXECMACRO_HISTORY_
+ _EXECMAC_HISTORY_ _EXT_ _FILLBLK_HISTORY_ _FILLBLOCK_HISTORY_ _FINDHISTORY_
+ _FINDOPTIONS_HISTORY_ _FINDOPT_HISTORY_ _FIND_HISTORY_ _FIND_OPTIONS_HISTORY_
+ _FIXED_HEIGHT_ _FIXED_WIDTH_ _FLCARRY_ _FORWARD_ _FROM_CMDLINE_ _FULL_PATH_
+ _GOTOCOLUMN_HISTORY_ _GOTOLINE_HISTORY_ _GOTO_COLUMN_HISTORY_
+ _GOTO_LINE_HISTORY_ _HANDLE_LOCKING_ _HARD_ _HELPLINE_REFRESH_
+ _HELP_SEARCH_HISTORY_ _HIDDEN_ _HSCROLL_ _IDLE_ _IGNORE_CASE_
+ _INCLUDE_REMOVEABLE_DRIVES_ _INCLUSIVE_ _INSERT_ _INSERT_DEPRESSED_
+ _INSERT_PATH_ _KEYMACRO_HISTORY_ _KEYMAC_HISTORY_ _KEY_CTRL_ _LEFT_
+ _LEFT_SHIFT_KEY_ _LINE_ _LIST_CLEANUP_ _LIST_STARTUP_ _LOADED_
+ _LOADMACRO_HISTORY_ _LOADMAC_HISTORY_ _LOAD_FROM_DISK_ _LOAD_INDEX_ _LOCAL_
+ _MAXPATH_ _MAX_COLS_ _MAX_LINES_ _MAX_LINES_COLS_ _MAX_PATH_ _MF_CHECKED_
+ _MF_CLOSE_AFTER_ _MF_CLOSE_ALL_ _MF_CLOSE_ALL_AFTER_ _MF_CLOSE_ALL_BEFORE_
+ _MF_CLOSE_BEFORE_ _MF_DISABLED_ _MF_DIVIDE_ _MF_DONT_CLOSE_ _MF_ENABLED_
+ _MF_GRAYED_ _MF_HILITE_ _MF_SEPARATOR_ _MF_SKIP_ _MF_UNCHECKED_ _MF_UNHILITE_
+ _MONO_ _MOUSE_CLOSE_ _MOUSE_DOWN_ _MOUSE_HELEVATOR_ _MOUSE_HOLD_TIME_
+ _MOUSE_HRESIZE_ _MOUSE_HWINDOW_ _MOUSE_LEFT_ _MOUSE_MARKING_ _MOUSE_MOVE_
+ _MOUSE_PAGEDOWN_ _MOUSE_PAGEUP_ _MOUSE_RELEASE_ _MOUSE_RIGHT_ _MOUSE_TABLEFT_
+ _MOUSE_TABRIGHT_ _MOUSE_UP_ _MOUSE_VELEVATOR_ _MOUSE_VRESIZE_ _MOUSE_VWINDOW_
+ _MOUSE_ZOOM_ _MUST_ _MUST_EXIST_ _NAME_ _NEWFILE_ _NEWNAME_HISTORY_
+ _NONEDIT_IDLE_ _NONE_ _NONINCLUSIVE_ _NON_INCLUSIVE_ _NORMAL_
+ _NUM_LOCK_DEPRESSED_ _OFF_ _ON_ _ON_ABANDON_EDITOR_ _ON_CHANGING_FILES_
+ _ON_CONTROL_BREAK_ _ON_DELCHAR_ _ON_EXIT_CALLED_ _ON_FILE_LOAD_
+ _ON_FILE_QUIT_ _ON_FILE_SAVE_ _ON_FIRST_EDIT_ _ON_MESSAGE_
+ _ON_NONEDIT_UNASSIGNED_KEY_ _ON_SELFINSERT_ _ON_UNASSIGNED_KEY_ _ON_WARNING_
+ _OPEN_COMPATIBILITY_ _OPEN_DENYALL_ _OPEN_DENYNONE_ _OPEN_DENYREAD_
+ _OPEN_DENYWRITE_ _OPEN_DENY_NONE_ _OPEN_NOINHERIT_ _OPEN_READONLY_
+ _OPEN_READWRITE_ _OPEN_WRITEONLY_ _OVERWRITE_ _PARTIAL_FILE_ _PATH_
+ _PICKFILE_CLEANUP_ _PICKFILE_STARTUP_ _PICKSORT_ _PICK_SORT_
+ _PRESERVE_HELPLINE_ _PRESERVE_SCREEN_ _PREV_TOPIC_ _PROMPT_CLEANUP_
+ _PROMPT_STARTUP_ _QUERY_REMOVEABLE_DRIVES_ _QUIET_ _READONLY_
+ _READONLY_LOCKING_ _READ_ONLY_ _RECURSE_DIRS_ _REFRESH_STATUS_LINE_
+ _REFRESH_THIS_ONLY_ _REPEATCMD_HISTORY_ _REPLACEOPTIONS_HISTORY_
+ _REPLACE_HISTORY_ _REPLACE_OPTIONS_HISTORY_ _REPLOPT_HISTORY_ _REPL_HISTORY_
+ _RETURN_CODE_ _REVERSE_ _RIGHT_ _RIGHT_SHIFT_KEY_ _RPTCMD_HISTORY_
+ _RUN_DETACHED_ _SCROLL_LOCK_DEPRESSED_ _SEARCH_BACKWARD_ _SEARCH_FORWARD_
+ _SEARCH_HELP_ _SEARCH_INCLUSIVE_ _SEARCH_REVERSE_ _SEEK_BEGIN_ _SEEK_CURRENT_
+ _SEEK_END_ _SHIFT_KEY_ _SIZEOF_FINDINFO_ _SIZEOF_VIDEO_ _SMART_ _SOFT_
+ _SORT_COUNTRY_ _SORT_DESCENDING_ _SORT_IGNORE_CASE_ _SORT_PICK_
+ _STARTUP_FILEMGR_ _STARTUP_MENU_ _STARTUP_PICKLIST_ _STARTUP_PROMPT_
+ _STARTUP_RECENTFILES_ _STARTUP_RESTORESTATE_ _STARTUP_UNNAMED_ _START_HIDDEN_
+ _START_MAXIMIZED_ _START_MINIMIZED_ _STATE_EDIT_MAIN_LOOP_
+ _STATUSLINE_REFRESH_ _STATUS_LINE_REFRESH_ _STDERR_ _STDIN_ _STDOUT_ _STICKY_
+ _SYSTEM_ _TEE_OUTPUT_ _TYPEABLES_ _TYPEABLES_KEYDEF_ _UP_ _USEBLOCK_
+ _USE_BLOCK_ _VARIABLE_ _VOLUME_ _WARNINGS_ONLY_ _WARN_MESSAGES_
+ _WINDOW_REFRESH_ _WRITE_ACCESS_ _WRITE_BINARY_HEADER_ _YES_NO_
+ _YES_NO_CANCEL_
+ CLOSEAFTER CLOSEALLAFTER CLOSEALLBEFORE CLOSEBEFORE COMMAND DIVIDE DONTCLOSE
+ FALSE False HISTORY Main NOESCAPE NOKEYS OFF ON Off On SKIP TITLE TRUE True
+ WIDTH WhenLoaded WhenPurged X Y
+
+[.ui]
+DefaultCasing=None
+quoteescape3=
+quoteescape2=
+quoteescape1=
+quote3=
+quote2='
+quote1="
+tilleolstartcol3=
+tilleolstartcol2=
+tilleolstartcol1=0
+tilleol3=
+tilleol2=
+tilleol1=//
+multilinedelimited3_to=
+multilinedelimited3_from=
+multilinedelimited2_to=
+multilinedelimited2_from=
+multilinedelimited1_to=*/
+multilinedelimited1_from=/*
+wordset=0-9A-Z_a-z
+Keywords=
+ Config Datadef Endconfig Helpdef Keydef and binary break by case cmdmap
+ config constant continue datadef dll do downto else elseif end endcase
+ endconfig enddo endfor endif endloop endwhile for forward goto halt helpdef
+ if iif in include integer keydef loop menu menubar mod not or otherwise proc
+ public register repeat return shl shr string times to until var when while
+ & ( ) * + , - / : < = > [ ] ^ | ~
+ AbandonEditor AbandonFile Abs AddAutoLoadMacro AddFileToRing AddHistoryStr
+ AddLine AddTrailingSlash Addr AdjPtr Alarm Asc Ask AskFilename AskNumeric
+ BackSpace BegFile BegLine BegWindow BegWord BinaryMode BreakHookChain
+ BufferType BufferVideo BuildPickBufferEx CReturn CfgInt CfgStr ChDir ChainCmd
+ ChangeCurrFilename CheckDefaultExt Chr ChrSet ClearBit ClosePrint CloseWindow
+ ClrEol ClrScr Color Copy CopyAppend CopyBlock CopyToWinClip CreateBuffer
+ CreateTempBuffer CurrChar CurrCol CurrDir CurrExt CurrFilename CurrLine
+ CurrLineLen CurrLinePtr CurrMacroFilename CurrPos CurrRow CurrXoffset Cut
+ CutAppend DelAllBookMarks DelAutoLoadMacro DelBlock DelBookMark DelChar
+ DelGlobalVar DelHistory DelHistoryStr DelLeftWord DelLine DelRightWord DelStr
+ DelToEol DelWindow Delay Disable DisplayMode DistanceToTab Dos DosIOResult
+ Down DrawBox DupLine EditAutoLoadList EditBuffer EditFile EmptyBuffer Enable
+ EndFile EndLine EndProcess EndWindow EndWord EraseDiskFile Escape ExecHook
+ ExecLoadedMacro ExecMacro ExecScrapMacro ExistGlobalVar Exit ExpandPath
+ ExpandTabsToSpaces FFAttribute FFDate FFDateStr FFName FFSize FFTime
+ FFTimeStr FileChanged FileExists FillBlock Find FindFileClose FindFirst
+ FindFirstFile FindHistoryStr FindNext FindNextFile FindThisFile Flip Format
+ FullWindow GetBit GetBookMarkInfo GetBufferId GetClipBoardBlockType
+ GetClockTicks GetDate GetDateStr GetDir GetDrive GetEnvStr GetFoundText
+ GetFreeHistory GetGlobalInt GetGlobalStr GetHistoryStr GetHookState GetKey
+ GetKeyFlags GetMarkedText GetMaxRowsCols GetStr GetStrAttr GetStrAttrXY
+ GetStrXY GetSynFilename GetText GetTime GetTimeStr GetToken GetWinHandle
+ GetWindowTitle GetWord GlobalUnDelete GotoBlockBegin GotoBlockBeginCol
+ GotoBlockEnd GotoBlockEndCol GotoBufferId GotoColumn GotoLine GotoMark
+ GotoMouseCursor GotoPos GotoRow GotoWindow GotoXY GotoXoffset HWindow Help
+ HexEdit HiByte HiLiteFoundText HiWord HideMouse Hook InitSynhiCurrFile InsStr
+ InsertData InsertFile InsertLine InsertText JoinLine KeyCode KeyName
+ KeyPressed KillBlock KillFile KillLine KillPosition KillToEol LTrim Left
+ Length LineDraw LineTypeMenu LinkSynFile List ListFooter ListHeader Literal
+ LoByte LoWord LoadBuffer LoadDir LoadKeyMacro LoadMacro LoadStartupMacros
+ LoadSynhiAssoc LogDrive LongestLineInBuffer Lower MacroStackAvail
+ MakeTempName Mark MarkChar MarkColumn MarkFoundText MarkLine MarkStream
+ MarkToEOL MarkWord MatchFilename Max MenuKey MenuOption MenuStr Message Min
+ MouseHotSpot MouseKeyHeld MouseMarking MouseStatus MouseWindowId MoveBlock
+ MsgBox NewFile NextChar NextFile NextWindow NoOp NoSound NumFiles
+ NumHistoryItems NumLines NumTokens NumWindows Ofs OneWindow PBAttribute
+ PBDate PBDateStr PBName PBSize PBTime PBTimeStr PageDown PageUp Paste
+ PasteFromWinClip PasteUnDelete PeekByte PeekLong PeekWord PickFile PlaceMark
+ PokeByte PokeLong PokeWord PopBlock PopPosition PopWinClose PopWinOpen Pos
+ PosFirstNonWhite PosLastNonWhite PressKey PrevChar PrevFile PrevHelp
+ PrevPosition PrevWindow PrintBlock PrintChar PrintFile Process ProcessHotSpot
+ Ptr PurgeKeyMacro PurgeMacro PurgeSynhi PushBlock PushKey PushKeyStr
+ PushPosition PutAttr PutAttrXY PutChar PutCharH PutCharHXY PutCharV PutCharXY
+ PutCtrStr PutHelpLine PutLine PutLineXY PutNCharAttr PutStr PutStrAttr
+ PutStrAttrXY PutStrEOL PutStrEOLXY PutStrXY Query QueryEditState QuickHelp
+ QuitFile QuotePath RTrim Read ReadNumeric RecordKeyMacro RemoveTrailingSlash
+ RemoveUnloadedFiles RenameDiskFile RepeatCmd RepeatFind Replace ReplaceFile
+ ReplaceSynFile ResizeWindow RestoreCursorLine Right RollDown RollLeft
+ RollRight RollUp SaveAllAndExit SaveAllFiles SaveAndQuitFile SaveAs SaveBlock
+ SaveFile SaveKeyMacro SaveSettings ScrollDown ScrollLeft ScrollRight
+ ScrollToCenter ScrollToRow ScrollToTop ScrollUp SearchHelp SearchPath Seg
+ SelfInsert Set SetBit SetCursorOff SetCursorOn SetFileAttr SetGlobalInt
+ SetGlobalStr SetHookState SetInt SetVideoRowsCols SetWindowTitle Shell
+ ShiftText ShowEntryScreen ShowMouse SignOn SizeOf Sort Sound SplitLine
+ SplitPath Str SubStr TabLeft TabRight TabSet Toggle ToggleInsert
+ TrackMouseCursor Trim UnBufferVideo UnDelete UnHook UnMarkBlock Up
+ UpdateDisplay Upper VGotoXY VGotoXYAbs VHomeCursor VWhereX VWhereY VWindow
+ Val Version ViewFinds WaitForMouseEvent Warn WhereX WhereXAbs WhereY
+ WhereYAbs Window WindowFooter WindowId WordLeft WordRight WrapLine WrapPara
+ Write WriteLine YesNo ZoomWindow fClose fCreate fDup fDup2 fOpen fRead
+ fReadFile fSeek fWrite fWriteFile isBlockInCurrFile isBlockMarked
+ isBookMarkSet isCharDevice isCursorInBlock isMacroLoaded isTrailingSlash
+ isTypeableKey isWhite isWildPath isWord isZoomed lDos lFind lList lRead
+ lReadNumeric lRepeatFind lReplace lShowEntryScreen lVersion
+ AltBlockAttr AltColor10Attr AltColor11Attr AltColor12Attr AltColor13Attr
+ AltColor14Attr AltColor15Attr AltColor1Attr AltColor2Attr AltColor3Attr
+ AltColor4Attr AltColor5Attr AltColor6Attr AltColor7Attr AltColor8Attr
+ AltColor9Attr AltCurrWinBorderAttr AltCursorAttr AltCursorInBlockAttr
+ AltEOFMarkerAttr AltHelpBoldAttr AltHelpInfoAttr AltHelpItalicsAttr
+ AltHelpLinkAttr AltHelpSelectAttr AltHelpTextAttr AltHiLiteAttr
+ AltMenuBorderAttr AltMenuGrayAttr AltMenuSelectAttr AltMenuSelectGrayAttr
+ AltMenuSelectLtrAttr AltMenuTextAttr AltMenuTextLtrAttr AltMsgAttr
+ AltOtherWinBorderAttr AltStatusLineAttr AltTextAttr Attr AttrSet AutoIndent
+ BackupExt Beep BlockAttr BlockBegCol BlockBegLine BlockEndCol BlockEndLine
+ BlockId Break BufferFlags CenterFinds ChangeShellPrompt ClipBoardId
+ Color0Attr Color10Attr Color11Attr Color12Attr Color13Attr Color14Attr
+ Color15Attr Color1Attr Color2Attr Color3Attr Color4Attr Color5Attr Color6Attr
+ Color7Attr Color8Attr Color9Attr CurrHistoryList CurrVideoMode
+ CurrWinBorderAttr CurrWinBorderType Cursor CursorAttr CursorInBlockAttr
+ DateFormat DateSeparator DefaultExt Directive1Attr Directive2Attr
+ Directive3Attr DisplayBoxed DosCmdLine EOFMarkerAttr EOFType EOLType
+ EquateEnhancedKbd ExpandTabs FileLocking FindOptions HelpBoldAttr
+ HelpInfoAttr HelpItalicsAttr HelpLineDelay HelpLinkAttr HelpSelectAttr
+ HelpTextAttr HiLiteAttr IdleTime IncompleteQuoteAttr Insert InsertCursorSize
+ InsertLineBlocksAbove KbdMacroRecording KbdMacroRunning KbdPath Key
+ KeyWords1Attr KeyWords2Attr KeyWords3Attr KeyWords4Attr KeyWords5Attr
+ KeyWords6Attr KeyWords7Attr KeyWords8Attr KeyWords9Attr KillMax LastKey
+ LastMouseKey LastMouseX LastMouseY LeftHandedMouse LeftMargin LineDrawChar
+ LineDrawType LineDrawing LoadWildFromDOS LoadWildFromInside MacroCmdLine
+ MakeBackups Marking MaxHistoryPerList MaxHistorySize MaxRecentFiles
+ MenuBorderAttr MenuGrayAttr MenuSelectAttr MenuSelectGrayAttr
+ MenuSelectLtrAttr MenuTextAttr MenuTextLtrAttr MouseEnabled MouseHoldTime
+ MouseKey MouseRepeatDelay MouseX MouseY MsgAttr MsgLevel MultiLnDlmt1Attr
+ MultiLnDlmt2Attr MultiLnDlmt3Attr NumberAttr OtherWinBorderAttr
+ OtherWinBorderType OverwriteCursorSize ParaEndStyle PersistentHistory
+ PersistentRecentFiles PickFileChangesDir PickFileFlags PickFileSortOrder
+ PopWinCols PopWinRows PopWinX1 PopWinY1 PrintAddFF PrintBotMargin PrintCopies
+ PrintDevice PrintFirstPage PrintFooter PrintHeader PrintInit PrintLastPage
+ PrintLeftMargin PrintLineNumbers PrintLineSpacing PrintLinesPerPage
+ PrintPause PrintRightMargin PrintTopMargin PrintUseFF ProtectedSaves
+ QuitToPrompt Quote1Attr Quote2Attr Quote3Attr RemoveTrailingWhite
+ ReplaceOptions RestoreDirOnExit ReturnEqNextLine RightMargin SaveState
+ ScreenCols ScreenRows ShowEOFMarker ShowHelpLine ShowMainMenu ShowStatusLine
+ ShowSyntaxHilite SingleLnDlmt1Attr SingleLnDlmt2Attr SingleLnDlmt3Attr
+ StartupAttrSet StartupFlags StartupVideoMode StatusLineAtTop StatusLineAttr
+ StatusLineFillChar StatusLineRow StatusLineUpdating TSEPath TabType TabWidth
+ TemplateExpansion TextAttr TimeFormat TimeSeparator ToEOL1Attr ToEOL2Attr
+ ToEOL3Attr UnMarkAfterPaste UseCurrLineIfNoBlock VarTabs ViewFindsId
+ WindowCols WindowRows WindowX1 WindowY1 WordSet WordWrap X1 Y1 ZeroBasedTab
+ MAXINT MAXLINELEN MININT WIN32 _25_LINES_ _28_LINES_ _30_LINES_ _33_LINES_
+ _36_LINES_ _40_LINES_ _43_LINES_ _44_LINES_ _50_LINES_ _ADD_DIRS_ _ADD_SLASH_
+ _AFTER_COMMAND_ _AFTER_GETKEY_ _AFTER_NONEDIT_COMMAND_ _AFTER_UPDATEDISPLAY_
+ _AFTER_UPDATE_DISPLAY_ _AFTER_UPDATE_STATUSLINE_ _ALL_MESSAGES_
+ _ALL_WINDOWS_REFRESH_ _ALT_KEY_ _ANCHOR_SEARCH_ _APPEND_ _ARCHIVE_ _AT_EOL_
+ _AUTODETECT_ _AUTO_ _AUTO_DETECT_ _AUTO_DETECT__ _BACKWARD_ _BEFORE_COMMAND_
+ _BEFORE_GETKEY_ _BEFORE_NONEDIT_COMMAND_ _BEFORE_UPDATE_DISPLAY_ _BEYOND_EOL_
+ _BLOCK_SEARCH_ _BREAK_FIND_ _BREAK_LOADFILE_ _BREAK_MACRO_ _BREAK_SORT_
+ _BUILDPICKBUFFER_NOTIFY_ _CANT_LOCK_ _CAPS_LOCK_DEPRESSED_ _CLINE_REFRESH_
+ _COLOR_ _COLUMN_ _CREATE_NEW_CONSOLE_ _CTRL_KEY_ _DEFAULT_ _DESCENDING_
+ _DIRECTORY_ _DIRS_AT_TOP_ _DISPLAY_FINDS_ _DISPLAY_HELP_ _DISPLAY_HEX_
+ _DISPLAY_PICKFILE_ _DISPLAY_TEXT_ _DISPLAY_USER_ _DONT_CHANGE_VIDEO_
+ _DONT_CLEAR_ _DONT_EXPAND_ _DONT_LOAD_ _DONT_PROMPT_ _DONT_WAIT_
+ _DOSCOMM_HISTORY_ _DOS_HISTORY_ _DOWN_ _DRIVE_ _DRIVE_CDROM_
+ _DRIVE_DOESNOTEXIST_ _DRIVE_FIXED_ _DRIVE_RAMDISK_ _DRIVE_REMOTE_
+ _DRIVE_REMOVABLE_ _DRIVE_UNKNOWN_ _EDITFILE_HISTORY_ _EDIT_HISTORY_
+ _ENABLE_HSCROLL_ _ENABLE_SEARCH_ _EVENT_ABANDON_EDITOR_ _EVENT_AFTER_COMMAND_
+ _EVENT_AFTER_GETKEY_ _EVENT_AFTER_NONEDIT_COMMAND_
+ _EVENT_AFTER_UPDATEDISPLAY_ _EVENT_AFTER_UPDATESTATUSLINE_
+ _EVENT_BEFORE_COMMAND_ _EVENT_BEFORE_GETKEY_ _EVENT_BEFORE_NONEDIT_COMMAND_
+ _EVENT_BEFORE_UPDATEDISPLAY_ _EVENT_BUILDPICKBUFFER_NOTIFY_
+ _EVENT_CHANGE_FILES_ _EVENT_DELCHAR_ _EVENT_EXIT_CALLED_ _EVENT_FILE_LOAD_
+ _EVENT_FILE_QUIT_ _EVENT_FILE_SAVE_ _EVENT_FIRST_EDIT_ _EVENT_IDLE_
+ _EVENT_LIST_CLEANUP_ _EVENT_LIST_STARTUP_ _EVENT_NONEDIT_IDLE_
+ _EVENT_NONEDIT_UNASSIGNED_KEY_ _EVENT_ON_CONTROL_BREAK_ _EVENT_ON_MESSAGE_
+ _EVENT_ON_WARNING_ _EVENT_PICKFILE_CLEANUP_ _EVENT_PICKFILE_STARTUP_
+ _EVENT_PROMPT_CLEANUP_ _EVENT_PROMPT_STARTUP_ _EVENT_SELFINSERT_
+ _EVENT_UNASSIGNED_KEY_ _EXCLUSIVE_ _EXCLUSIVE_KEYDEF_ _EXECMACRO_HISTORY_
+ _EXECMAC_HISTORY_ _EXT_ _FILLBLK_HISTORY_ _FILLBLOCK_HISTORY_ _FINDHISTORY_
+ _FINDOPTIONS_HISTORY_ _FINDOPT_HISTORY_ _FIND_HISTORY_ _FIND_OPTIONS_HISTORY_
+ _FIXED_HEIGHT_ _FIXED_WIDTH_ _FLCARRY_ _FORWARD_ _FROM_CMDLINE_ _FULL_PATH_
+ _GOTOCOLUMN_HISTORY_ _GOTOLINE_HISTORY_ _GOTO_COLUMN_HISTORY_
+ _GOTO_LINE_HISTORY_ _HANDLE_LOCKING_ _HARD_ _HELPLINE_REFRESH_
+ _HELP_SEARCH_HISTORY_ _HIDDEN_ _HSCROLL_ _IDLE_ _IGNORE_CASE_
+ _INCLUDE_REMOVEABLE_DRIVES_ _INCLUSIVE_ _INSERT_ _INSERT_DEPRESSED_
+ _INSERT_PATH_ _KEYMACRO_HISTORY_ _KEYMAC_HISTORY_ _KEY_CTRL_ _LEFT_
+ _LEFT_SHIFT_KEY_ _LINE_ _LIST_CLEANUP_ _LIST_STARTUP_ _LOADED_
+ _LOADMACRO_HISTORY_ _LOADMAC_HISTORY_ _LOAD_FROM_DISK_ _LOAD_INDEX_ _LOCAL_
+ _MAXPATH_ _MAX_COLS_ _MAX_LINES_ _MAX_LINES_COLS_ _MAX_PATH_ _MF_CHECKED_
+ _MF_CLOSE_AFTER_ _MF_CLOSE_ALL_ _MF_CLOSE_ALL_AFTER_ _MF_CLOSE_ALL_BEFORE_
+ _MF_CLOSE_BEFORE_ _MF_DISABLED_ _MF_DIVIDE_ _MF_DONT_CLOSE_ _MF_ENABLED_
+ _MF_GRAYED_ _MF_HILITE_ _MF_SEPARATOR_ _MF_SKIP_ _MF_UNCHECKED_ _MF_UNHILITE_
+ _MONO_ _MOUSE_CLOSE_ _MOUSE_DOWN_ _MOUSE_HELEVATOR_ _MOUSE_HOLD_TIME_
+ _MOUSE_HRESIZE_ _MOUSE_HWINDOW_ _MOUSE_LEFT_ _MOUSE_MARKING_ _MOUSE_MOVE_
+ _MOUSE_PAGEDOWN_ _MOUSE_PAGEUP_ _MOUSE_RELEASE_ _MOUSE_RIGHT_ _MOUSE_TABLEFT_
+ _MOUSE_TABRIGHT_ _MOUSE_UP_ _MOUSE_VELEVATOR_ _MOUSE_VRESIZE_ _MOUSE_VWINDOW_
+ _MOUSE_ZOOM_ _MUST_ _MUST_EXIST_ _NAME_ _NEWFILE_ _NEWNAME_HISTORY_
+ _NONEDIT_IDLE_ _NONE_ _NONINCLUSIVE_ _NON_INCLUSIVE_ _NORMAL_
+ _NUM_LOCK_DEPRESSED_ _OFF_ _ON_ _ON_ABANDON_EDITOR_ _ON_CHANGING_FILES_
+ _ON_CONTROL_BREAK_ _ON_DELCHAR_ _ON_EXIT_CALLED_ _ON_FILE_LOAD_
+ _ON_FILE_QUIT_ _ON_FILE_SAVE_ _ON_FIRST_EDIT_ _ON_MESSAGE_
+ _ON_NONEDIT_UNASSIGNED_KEY_ _ON_SELFINSERT_ _ON_UNASSIGNED_KEY_ _ON_WARNING_
+ _OPEN_COMPATIBILITY_ _OPEN_DENYALL_ _OPEN_DENYNONE_ _OPEN_DENYREAD_
+ _OPEN_DENYWRITE_ _OPEN_DENY_NONE_ _OPEN_NOINHERIT_ _OPEN_READONLY_
+ _OPEN_READWRITE_ _OPEN_WRITEONLY_ _OVERWRITE_ _PARTIAL_FILE_ _PATH_
+ _PICKFILE_CLEANUP_ _PICKFILE_STARTUP_ _PICKSORT_ _PICK_SORT_
+ _PRESERVE_HELPLINE_ _PRESERVE_SCREEN_ _PREV_TOPIC_ _PROMPT_CLEANUP_
+ _PROMPT_STARTUP_ _QUERY_REMOVEABLE_DRIVES_ _QUIET_ _READONLY_
+ _READONLY_LOCKING_ _READ_ONLY_ _RECURSE_DIRS_ _REFRESH_STATUS_LINE_
+ _REFRESH_THIS_ONLY_ _REPEATCMD_HISTORY_ _REPLACEOPTIONS_HISTORY_
+ _REPLACE_HISTORY_ _REPLACE_OPTIONS_HISTORY_ _REPLOPT_HISTORY_ _REPL_HISTORY_
+ _RETURN_CODE_ _REVERSE_ _RIGHT_ _RIGHT_SHIFT_KEY_ _RPTCMD_HISTORY_
+ _RUN_DETACHED_ _SCROLL_LOCK_DEPRESSED_ _SEARCH_BACKWARD_ _SEARCH_FORWARD_
+ _SEARCH_HELP_ _SEARCH_INCLUSIVE_ _SEARCH_REVERSE_ _SEEK_BEGIN_ _SEEK_CURRENT_
+ _SEEK_END_ _SHIFT_KEY_ _SIZEOF_FINDINFO_ _SIZEOF_VIDEO_ _SMART_ _SOFT_
+ _SORT_COUNTRY_ _SORT_DESCENDING_ _SORT_IGNORE_CASE_ _SORT_PICK_
+ _STARTUP_FILEMGR_ _STARTUP_MENU_ _STARTUP_PICKLIST_ _STARTUP_PROMPT_
+ _STARTUP_RECENTFILES_ _STARTUP_RESTORESTATE_ _STARTUP_UNNAMED_ _START_HIDDEN_
+ _START_MAXIMIZED_ _START_MINIMIZED_ _STATE_EDIT_MAIN_LOOP_
+ _STATUSLINE_REFRESH_ _STATUS_LINE_REFRESH_ _STDERR_ _STDIN_ _STDOUT_ _STICKY_
+ _SYSTEM_ _TEE_OUTPUT_ _TYPEABLES_ _TYPEABLES_KEYDEF_ _UP_ _USEBLOCK_
+ _USE_BLOCK_ _VARIABLE_ _VOLUME_ _WARNINGS_ONLY_ _WARN_MESSAGES_
+ _WINDOW_REFRESH_ _WRITE_ACCESS_ _WRITE_BINARY_HEADER_ _YES_NO_
+ _YES_NO_CANCEL_
+ CLOSEAFTER CLOSEALLAFTER CLOSEALLBEFORE CLOSEBEFORE COMMAND DIVIDE DONTCLOSE
+ FALSE False HISTORY Main NOESCAPE NOKEYS OFF ON Off On SKIP TITLE TRUE True
+ WIDTH WhenLoaded WhenPurged X Y
+

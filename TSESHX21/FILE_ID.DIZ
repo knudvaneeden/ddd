@@ -1,0 +1,8 @@
+<07-09-99> Replaces TSESHX20.ZIP - TSE Pro/32
+TseShExt includes files and macros which
+allow you to tightly integrate TSE32 (v2.8 or
+later) into the Windows 95/98 and NT4 shell.
+This includes additional context menu entries
+and a shell new entry for some editor related
+file types.
+Author: Dieter Koessl

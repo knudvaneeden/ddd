@@ -1,0 +1,26 @@
+/****************************************************************************\
+
+    DeComp.SI
+
+    DeComp/ReComp: Shared code.
+
+    Version         v4.00/31.05.01
+    Copyright       (c) 1993-2001 by DiK, portions (c) SemWare
+
+\****************************************************************************/
+
+#ifdef WIN32
+
+proc MakeMagicHeader( var string header )
+
+    integer ver = Version()
+
+    header = header[1..7]
+        + Chr(LoByte(ver))
+        + Chr(HiByte(ver))
+        + header[10..Length(header)]
+
+end
+
+#endif
+

@@ -1,0 +1,1282 @@
+                       ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+                       ³TSE Tips and Mini-Macros³
+                       ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+                        ThisFile:  \tse_tip5.txt
+
+         Compiled by Tom Klein from Personal Notes and Slips of
+                     Paper used for Memory Joggers
+
+             and covers the dates from 11/05/94 to 02/07/95
+       although some tips/macros may be outside these two dates.
+
+===========================================================================
+
+ Special thanks to people that wrote the messages that I mis-appropiated
+ to provide the tips in this file and to the SemWare staff who have
+ provided us with TSE (pronounced TESSIE) that allows so much to be
+ accomplished with just a text editor.
+
+===========================================================================
+
+  Included with this issue are a small list of useful macros that are
+  available on the SemWare BBS.
+
+  In another file within the ZIP, read the text file 'tse2fils.inf' for
+  a list of most of the macros on the SemWare BBS.
+
+===========================================================================
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³REVISION HISTORY³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+01/17/95:  Original compilation and cleanup for release
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+  TIPS are intended to be a continuing series of hints and tips and each
+  subsequent release will be in-addition-to the previous versions.  That
+  is TIP4 will not contain any of the information in TIP3.  The one
+  exception is that grievous errors from a previous edition will be
+  corrected in the next release.
+
+ ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+ ³Public Releases:³  'tsetip3.zip', 'tsetip4.zip', 'tsetip5.zip'
+ ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+  If you have any problems or find errors please let me know [Tom Klein]
+  so that they may be fixed in the next version.
+
+  Contact me in any conference on the SemWare BBS or via RIME #330
+  (SemWare) or via Internet at either of the addresses below.
+
+          tom.klein@chrbbs.sccsi.com  OR tom.klein@lunatic.com
+
+  In general all macros start with this:
+
+/**************************************************************************
+
+  If you clip the macro area from that line to the end of the macro you
+  should be able to compile the clip.  Include the above ' /** ' because
+  it is the first part of a comment area.
+
+  Macro generally end with:
+
+//*************************************************************************
+//             Comment Here Indicating What Macro  <DATE>
+//*************************************************************************
+
+  and you could mark the ' /** .... '  as the start of a block and then
+  search for ' //***... ' for the end of each macro.  At least that is
+  how it worked when I tested it ;-).
+
+===========================================================================
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+          Macros on the SemWare BBS that you may have missed:
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+          Included within the ZIP is a complete list of macros
+                    available for TSE as of 01/17/95
+
+MFFIND46.ZIP    19735  01-13-95
+
+  New version of Multi-File Find/Replace includes menu-driven
+  configuration as well as severl other new features.  For TSE 2.00
+  PKZip 2.04g Uploaded by: Ray Asbury
+
+RHMACROS.ZIP    40667  01-05-95
+
+  Updated macros by Rob Howse.  There are several handy macros included
+  to box text, delete blank lines, blank the screen, along with some
+  macros to assist your keyboard macros.  New macros include updated
+  FOLDING macro, and incremental backup.
+
+BOOKMRK3.ZIP     3918  06-01-93
+
+  Visual BookMark macros v3. This set of macros give one-key bookmark
+  placement and selection of bookmarks from a visual buffer. The buffer
+  is dynamically generated when needed, showing bookmark letter,
+  filename, line# and first 56 chars from the mark line.  New: Deletion
+  of a selected bookmark, small optimizations, and a selected set of
+  menu calls. Uploaded by: Steve Kraus
+
+BOXIT11.ZIP      8918  11-28-94
+
+  BoxIt 0.11 -- 11/23/94.  This is a minor revision of BoxIt to support
+  TSE 2.0. No new features have been added.  This macro allows the user
+  to draw a box around a section of text marked with a column block.
+  Changes in this version: help removed, key assignments change to not
+  conflict with TSE 2.0's help system, documentation updated. Uploaded
+  by: George de Bruin
+
+CALENDUS.ZIP     3506  12-08-94
+
+TSE macro popup Calender with US Holidays Uploaded by: Egon Bosved
+
+BROWSE13.ZIP    17726  12-17-94
+
+  Browse v1.3 - TSE (v2) macro, makes the editor a brawny clone of Vern
+  Buerg's LIST Plus. Switch between Browse and edit modes
+  instantaneously. By DDA. New: fixed mouse problem, added LINE WRAP &
+  phone dialer. Uploaded by: David Daniel Anderson
+
+I_CMMT10.ZIP    16384  11-21-94
+
+  The "intelligent commenting" macro package for TSE.  Performs a
+  variety of context- sensitive and user-configurable program commenting
+  chores. Re-sent version of I_CMMT1.ZIP.  Now compiles under both beta
+  and pre-release. Uploaded by: John Goodman
+
+TSTSE10.ZIP     31709  12-03-94
+
+  SAL macros by Prof. Timo Salmi, the University of Vaasa, Finland, to
+  enhance the SemWare Editor. Uploaded by: Manfred Luft
+
+QUOTE11.ZIP      2407  10-22-94
+
+  QUOTE v1.1.  The Semware Editor (TSE) macro for use with BBS message
+  readers. Places a first line quote giving incoming message sender,
+  addressee, date, and subject.  Can be a called macro or can operate
+  automagically when a message is loaded into TSE.  This macro is
+  intended as a template for customization.  Feel free to make it your
+  own. Uploaded by: Mel Hulse
+
+===========================================================================
+
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+                        TSE 2.0 Macros and TIPS
+                -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+
+===========================================================================
+                    Date: 11-05-94  From: MEL HULSE
+                  Subj: Quote 1.1+ different approach
+---------------------------------------------------------------------------
+
+  re:  'quote11.zip'  Quoting macro for QWK message headers.
+
+  >  I had a problem with the macro when there was not a blank line
+  >  between the header and the start of the message.
+
+  I should have caught it.  I have been suffering with the problem with
+  this quoter for years and just got in the habit of insuring a blank
+  first line.  You tweeked me in to fixing it.
+
+ ÚÄo
+ ³   The change is already in the TIPS version.  I was going to put the
+ ³   boxed version that I use in the TIPS but decided that I want my
+ ³   heading quote to be somewhat unique, so I left the boxed version out.
+ ÀÄo
+
+  The whole idea was to provide a generic version with all the tools
+  (To, From, Header, Subject, Date) to do whatever folks want.
+
+  BTW.  I would have done it this way:
+
+//**Blank line after header if text was there *****************************
+
+        If CurrChar() > 0
+            AddLine()
+            EndIf
+        End
+//**Added lines end *******************************************************
+
+And would have put it here:
+
+       lFind("Subj:","^")          // move to "Subj:" field
+        Subject = GetText( 7, 28 )  // get "subject" field
+        BegFile()                   // goto start of file
+        DelLine( 7 )                // delete the header
+->>>
+        CReturn()                   // leave an empty line at the top
+        ^^^^^^^^^ <-  And left out this
+
+//*************************************************************************
+                                11/05/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 11-07-94  From: GEORGE DE BRUIN
+                      Subj: MORE on Finding words
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³Executing it, however, gave two error messages:
+  ³        Name #2 not marked!  Press <Escape>
+  ³        One of the name strings is null???  Press <Escape>
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³The text file in this case simple contained 4 names:
+  ³
+  ³rogers
+  ³norfolk
+  ³bedford
+  ³devon
+  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Okay, this is where there was something either I misunderstood, or
+  something else went awry...
+
+  My understanding of this macro was that you want to take a list of names
+  in groups of three and search for them in the file using the Regular
+  Expression that you asked about earlier (before I was delayed during the
+  shipping cycle).  What I designed was a macro that would look at a list
+  in the following format:
+
+    rogers  norfolk bedford
+    devon   test1   test2
+    ...     ...     ...
+
+  And use that to find the lines containing: rogers & norfolk & bedford,
+  then find the lines containing: devon & test1 & test2.  Is this no
+  correct?  Is there something that I misunderstood?  Would you go into
+  pain-staking detail so I can adjust the macro to do things the way you
+  want them done.
+
+//*************************************************************************
+                    MORE on Finding words  11/07/94
+//*************************************************************************
+
+===========================================================================
+                   Date: 11-03-94 From: JORJ STRUMOLO
+                          Subj: printer codes
+---------------------------------------------------------------------------
+
+ And behind it.  You have to turn an effect on, and then off again.
+ There's usually a chart in your printer book.  It varies with your
+ printer, but there are two major languages, Epson and IBM.  For
+ printers that can use Epson, some commands
+
+ underline ON                       {esc},45,49
+ underline OFF                      {esc},45,48
+ emphasized ON                      {esc},69
+ emphasized OFF                     {esc},70
+ double-print ON                    {esc},71
+ double-print OFF                   {esc},72
+
+ double-width characters ON         {esc},87,49
+ double-width characters OFF        {esc},87,48
+ Italic ON                          {esc},52
+ Italic OFF                         {esc},53
+ proportional spacing ON            {esc},112,49
+ proportional spacing OFF           {esc},112,48
+
+ superscript ON                     {esc},83,48
+ superscript OFF                    {esc},84
+ subscript ON                       {esc},83,49
+ subscript OFF                      {esc},84
+
+ I'm not sure whether "double print" or "emphasized" is "bold".  The
+ exact manner these are sent to the printer will vary, as well.  The
+ "{esc}" is the literal character 27, a left-arrow.  Basically, since so
+ much depends on your printer, you'll have to read up on it.
+
+//*************************************************************************
+                        printer codes  11/03/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 11-11-94  From: JACK HAZLEHURST
+                       Subj:  Keys in Prompt Box
+---------------------------------------------------------------------------
+
+> Ideally, you'd be able to assign keys within prompt boxes, and not
+> just when editing.  (Altho it's not just within editing now, as some
+> reassignments there incorrectly mess up prompt boxes: because my Home
+> key has a macro attached, Home doesn't work for me in the load file or
+> spell check boxes.)  Does that work now in TSE, I wonder?
+
+  First,  read  over  the  spell  checker  macro.    The  handling  of
+  SEMWARE.LEX is done with a binary for which we don't get the source,
+  but a lot of what you talk about IS  handled  in  the  macro.    Its
+  source comes with TSE.
+
+  I ran into the problem of assigning keys in prompt boxes.  There are
+  a couple of ways to do this,  but,  for most of them,  you  have  to
+  observe special rules.   The most generally effective way,  with the
+  fewest restrictions,  involves hooking _PROMPT_STARTUP_ and enabling
+  the  desired key definitions.   Here are some fragments from my User
+  Interface that illustrate how to do this:
+
+//
+// Additional prompt key support
+//
+keydef PromptKeys                       // These keys can be installed
+    <Ctrl cursorleft>   WordLeft()      // in "PromptKeys" without
+    <Ctrl cursorright>  WordRight()     // needing an Enable command.
+    <Alt y>             DelToEOL()
+end
+
+keydef MorePromptKeys                   // These keys have to be enabled
+    <Shift f3>          mAsciiChart()   // at _PROMPT_STARTUP_ time.
+    <Alt f3>            GlobalUnDelete()
+    <Ctrl t>            DelRightWord()
+    <Ctrl backspace>    DelLeftWord()
+    <Alt d>             mTwiddle()
+    <Alt f9>            mDelToBOL()
+    <Ctrl f10>          pShell()        // Macros will save screen.
+end
+
+proc OnPromptStartup()                  // This is the _PTOMPT_STARTUP_
+    Enable(MorePromptKeys)              // hook routine.
+end
+
+  You'll  want to look up "keydef" and "PromptKeys" along with info on
+  "Hook()" in your manual.   Obviously the various macros  called  out
+  have to be defined.  In the WhenLoaded() macro I have the line:
+
+    Hook(_PROMPT_STARTUP_, OnPromptStartup)
+
+--to enable the hook.
+
+  It's very handy to be able to shell out of a list or prompt box (see
+  the assignment to <Ctrl F10> above).   You need to save and  restore
+  the screen or things will get messy.  The macro I use for this is:
+
+//
+// Support for shelling out of a prompt box
+//
+proc pShell()
+    PopWinOpen(1,1,Query(ScreenCols),Query(ScreenRows),0,"",7)
+    ClrScr()
+    GotoXY(1,1)
+    Shell()
+    PopWinClose()
+end
+
+  The prompt box acts like a line in a buffer,  so you use things like
+  "InsertText()"   and   other   commands   you'd  normally  use  when
+  manipulating text in a buffer.
+
+
+//*************************************************************************
+                      Keys in Prompt Box  11/11/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 11-20-94  From: ARNOLD HENNIG
+                            Subj: Twiddle()
+---------------------------------------------------------------------------
+
+TAKnote:  A demo macro that swaps the two characters to the left of the
+          cursor.
+
+    proc mTwiddle()
+        left()
+        left()
+        lreplace("{.}+{.}+","\2\1","X1")
+    end
+
+<keypad5>  mTwiddle()
+
+===========================================================================
+                Date: 11-21-94  From: Richard Blackburn
+                         Subj: lReplace Example
+---------------------------------------------------------------------------
+
+  /---------------------------------------
+  |Using TSE 2.0, I would like to search a file for ascii 12 (^L) and replace
+  |each occurrence with a specified number of blank lines. I'm having some
+  |trouble figuring out how to do this....
+  \---------------------------------------
+
+>  What would you suggest as the best way of binding this to a key? I
+>  guess what I'm looking for is a global search and replace for ascii
+>  12, replacing each occurrence with exactly 24 \n's, non-interactively.
+
+   The easiest thing to do is to add the following line to your UI file:
+
+   <Key>   lReplace("\d012",
+                       "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
+                       "gxn"
+                   )
+
+   NOTE that <Key> is the key you want to assign the replace to.  Then you
+   will need to burn in your changed UI file.
+
+
+  Works like a charm. The actual replacement puts all those \n's on one
+  line, but when the file is saved and then reloaded, the \n's are all
+  replaced by blank lines... Neat!
+
+//*************************************************************************
+                       lReplace Example  11/21/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 11-21-94  From: GEORGE DE BRUIN
+                        Subj: Incremental Search
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³I have not been able to get the first-name last-name example (User's
+  ³Guide p.118) to work, though I have tried to type the identifiers
+  ³exactly as printed. If there is no error in the Guide (and I don't
+  ³suppose there is!) can you suggest what I may be doing wrong?
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  I double checked the example, and had it worked here...  So, I can only
+  think of three things that may have happened on your end: (1) mis-typing
+  the example text, (2) mis-typing the expression (likely, as I noted
+  there are a couple of things that are a bit tricky to read) or (3)
+  forgetting to put the 'X' in the options field.
+
+  See if you can get it working using the following:
+
+    (1)  Sammy Mitchell
+    (8)  Steve Watkins
+    (15) Kevin Carr
+
+    Find: {([0-9]#) +}{[a-zA-Z]#} {[a-zA-Z]#}
+    Replace: \1\3, \2
+    Options: X
+
+ Try using the above.  You can mark the Find expression, and then use
+ <Alt C> to copy it into the Find prompt.  It should produce the
+ following results:
+
+    (1)  Mitchell, Sammy
+    (8)  Watkins, Steve
+    (15) Carr, Kevin
+
+//*************************************************************************
+                      Incremental Search  11/21/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 11-28-94  From: SAMMY MITCHELL
+                   Subj: Shift Number Pad to Numbers
+---------------------------------------------------------------------------
+
+  We've had scores of requests for CUA style block marking using the
+  shift-cursor keys.  In order to accommodate this, we made those keys
+  assignable (as in <shift home>).  A side-effect of this, is that they
+  no longer insert their 'numbers' when shifted (they still work when
+  the numlock key is activated).  But, there is an easy remedy, in fact
+  two that I can think of:
+
+  1) Turn "Use Extended keyboard driver" off.
+          (Options->Full Configuration->Keyboard/Mouse Options)
+
+  Doing this, you'll lose TSE's 'double-shift-key' assignment capability, but
+  you'll regain use of the numeric keypad when the shift state is pressed.
+
+  or
+
+  2) Add the following to your .ui file, near the end, where the rest of
+     the key assignments occur.  Recompile it (<ctrl f9>), and the next
+     time you start the editor, you'll have you're numeric keypad again.
+
+  <shift del>          InsertText(".")
+  <shift ins>          InsertText("0")
+  <shift end>          InsertText("1")
+  <shift cursordown>   InsertText("2")
+  <shift pgdn>         InsertText("3")
+  <shift cursorleft>   InsertText("4")
+  <shift centercursor> InsertText("5")
+  <shift cursorright>  InsertText("6")
+  <shift home>         InsertText("7")
+  <shift cursorup>     InsertText("8")
+  <shift pgup>         InsertText("9")
+
+//*************************************************************************
+                 Shift Number Pad to Numbers  11/28/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 11-28-94  From: GEORGE DE BRUIN
+                           Subj: On-Line Help
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³modified the default help settings.. When he tried to modify the E
+  ³editor help he was limited to the help code that I guess you, Bobbi and
+  ³Sammy designed.  If Ray changed any of the reserved words he COULD not
+  ³use the on - line help. Text has to be a direct match or the help engine
+  ³will not find the matching text.
+  ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Okay, I understand what he's talking about now...
+
+  Yeah, this is something of a limitation at this point.  However, there
+  is a way to work around it in some situations.  If he's in a prompt, he
+  can Hook() proc that enables a key definition that can pull up the help
+  item he wants.  So, he would have something like this:
+
+  KeyDef AskKeys
+        <F1>        Help("Table of Contents")
+        <Alt F1>    PrevHelp()
+    end
+
+    proc EnableAskKeys()
+        Enable(AskKeys)
+    end
+
+    proc main()
+
+        string sWhat[10] = ""
+
+        // Whatever code he wants here
+
+        Hook(_Prompt_StartUp_, EnableAskKeys)
+
+        Ask("What?", sWhat)
+        UnHook(EnableAskKeys)
+        disable(AskKeys)
+
+        // Whatever code he wants here
+    end
+
+  However, this will only work with Ask(), Read(), lRead().  It won't work
+  from a menu item.
+
+
+//*************************************************************************
+                      Subj: On-Line Help  11/28/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 12-01-94  From: ARNOLD HENNIG
+                   Subj: Multi-file Repeat Operation
+---------------------------------------------------------------------------
+
+> I seem to remember a macro that would do the same operation on
+> all files in the edit ring (in TSE Jr.).  Has any one done the same
+> thing for TSE2. My e-mail address is bob.kowitt@som.com.
+
+
+  I just did one like that:
+
+    integer id    //Current Buffer at start of AutoEdit
+
+    id = GetBufferID()
+    repeat
+
+        ....stuff....
+
+        NextFile()
+    until (GetBufferID() == id)
+
+  This stops you when you get back to the beginning. Add in whatever you
+  want to do before, during, and/or after the autoedit.
+
+//*************************************************************************
+                 Multi-file Repeat Operation  12/01/94
+//*************************************************************************
+
+===========================================================================
+               Date: 12-06-94  From: SIEGHARD SCHICKTANZ
+                    Subj: Regular Expression Search
+---------------------------------------------------------------------------
+
+>  Does anyone here know of an easy way to "anchor" a search to the
+>  beginning of a word? I don't really understand regular expressions yet,
+
+  You can do this with the following regular expression:
+
+  {^<search string>}|{[ \t]\c<search string>}
+  |
+
+  Take care to include the carat in front of your search string; this
+  will effect the required anchoring if the pattern occurs at the
+  beginning of a line.
+
+  The second pattern (the parts contained within the braces "{}") takes
+  care of words within a line; they're assumed to start with either a
+  blank (space) or a tab character. The "\c" escape puts the cursor
+  right at the beginning of the word rather than before the preceding
+  space or tab, in case your next action required that.
+
+  Of course, the search options would have to specify a regular
+  e_x_pression search.
+
+>  Thus, the expression "{^foo}|{[ \t]\cfoo}" will find the word 'foo'
+>  (matching words like foos and fooey, as well as foos), but not
+>  matching 'unfoo'.
+
+//*************************************************************************
+                  Regular Expression Search  12/06/94
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                    Date: 12-05-94  From: RAY ASBURY
+                      Subj:  pnSetFirstCharCaps()
+---------------------------------------------------------------------------
+
+  ÚÄÄÄ<<<              >>>ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+  ³Can someone give an example of a macro that will force the first letter³
+  ³of each word within a block to upper-case, and the remaining chars in  ³
+  ³the word to lower-case?                                                ³
+  ÀÄÄÄ>>>     <<<ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+***************************************************************************/
+
+PROC pnSetFirstCharCaps()
+
+  INTEGER liChr,
+          liBlkMarked = IsBlockInCurrFile(),
+          liMarking   = Set(Marking, OFF),
+          liLastLine
+
+  IF (NOT liBlkMarked)
+    //MarkWord()      //SetFirstCharCaps on a single word if used
+
+    //Will warn that a block must be marked
+    WARN("SetFirstCharCaps) requires that a BLOCK be marked")  // tak 12/06/94
+
+  ENDIF
+  PushPosition()
+  liLastLine = Query(BlockEndLine)
+  GotoBlockBegin()
+  Lower()
+  REPEAT
+      IF (IsCursorInBlock())
+          liChr = CurrChar()
+          CASE (liChr)
+              WHEN _AT_EOL_, _BEYOND_EOL_
+                  liChr = 0
+              OTHERWISE
+                  InsertText(Upper(Chr(liChr)), _OVERWRITE_)
+          ENDCASE
+      ENDIF
+  UNTIL ( (NOT WordRight()) OR (CurrLine() > liLastLine) )
+  PopPosition()
+
+  IF (NOT liBlkMarked)
+      UnMarkBlock()
+  ELSE
+      Set(Marking, liMarking)
+  ENDIF
+
+END pnSetFirstCharCaps
+
+<Ctrl F4>  pnSetFirstCharCaps()
+
+//*************************************************************************
+//                        SetFirstCharCaps()  12/05/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 12-10-94  From: ARNOLD HENNIG
+                           Subj: One-Key Mode
+---------------------------------------------------------------------------
+
+  ºIs there any way to program TSE (TSE.UI or macro) such that TSE
+  ºcan be put into a state where it "thinks" that the Alt key is
+  ºbeing held down, but it isn't physically being held down. One-key
+  ºstrokes would then command the equivalent Alt-key strokes.  Esc
+  ºor something similar would put TSE back into its normal state.
+  Ó
+
+  I'm not one hundred percent sure, but it sems to me that what you
+  want is similiar to Charlie Harris's vi emulation. Basically it
+  establishes a separate command mode in which the keystrokes are
+  defined to perform commands instead of insert letters (in vi and
+  in Charlie's emulation of it, Ctrl-keystrokes are also defined
+  and used). I think that this would problably work for you.
+  Basically, you can do the following:
+
+  I am not sure how many changes I made to Charlie's origional
+  version, and I have tried to make it a bit more generic here for
+  your application. I have it as a sepatate file #include-ed near
+  the end of my .UI. I prefer this approach for maintainance
+  purposes.
+
+  You will need to define in the keydef each and every keystroke
+  that you want to be able to use while in the Process(). Also note
+  that Ctrl-Break does not work very well in a Process(), so try to
+  debug separately any macros you want to include.
+
+//*************************************************************************
+
+keydef SINGLEKEYS
+        <keystroke>    command()  // The actual keystrokes you
+        <keystroke>    command()  // want to be able to use (command
+        <keystroke>    command()  // may reference a macro defined
+        <keystroke>    command()  // earlier in the file)
+        <Escape>       EndProcess()
+end
+
+proc ModeMsg()                  // I added this because I tend to
+    VGoToXYAbs(64,1)            // forget and try to use the normal
+    PutStr("ONE-KEY MODE.")     // mode keystrokes, and then wonder
+end                             // why they don't work.
+
+proc onekeymode()                 //  go into single-key mode
+  if Enable(SINGLEKEYS, _EXCLUSIVE_)
+      Hook(_AFTER_UPDATE_STATUSLINE_,ModeMsg)
+      Process()
+      UnHook(ModeMsg)
+      Disable(SINGLEKEYS)       // return to normal mode
+      UpDateDisplay(_STATUSLINE_REFRESH_)
+  endif
+end
+
+<key_of_your_choice>  onekeymode()
+
+//*************************************************************************
+                         One-Key Mode  12/10/94
+//*************************************************************************
+
+===========================================================================
+                     Date: 12-14-94 To: FRED HOLMES
+               Subj: Strange Video Behavior 'browse.mac'
+---------------------------------------------------------------------------
+
+ÚÄÄÄÄÄÁÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+³However, on my home computer, it behaves strangely.  When first
+³invoked, BROWSE acts as if autoscroll were on, and scrolling
+³toward the beginning of the file.  If I, for example, use Ctrl-J
+ÀÄÄÄÄÄÂÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+While I was not able to reproduce the problem, Kyle was able to find it.
+The problem seems to be wether or not there is a mouse on the computer.
+Browse wasn't checking to see if there was a mouse before enabling the
+mouse scrolling.  The affect was, if there was no mouse, he was getting
+a bogus value which caused him to automatically scroll the screen.
+
+To fix the problem you need to modify the following code:
+
+     if NOT Hook(_IDLE_,bMouseScrolling)
+        Warn('Hook() for mouse scrolling unsuccessful.  Continuing anyway.')
+     endif
+
+Add the following check to his code so the mouse isn't enabled if it
+isn't present on the machine:
+
+     if Query(MouseEnabled)
+         if NOT Hook(_IDLE_,bMouseScrolling)
+            Warn('Hook() for mouse scrolling unsuccessful.  Continuing anyway.')
+         endif
+     endif
+
+
+//*************************************************************************
+             Strange Video Behavior 'browse.mac'  12/14/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 12-16-94 From: RICHARD HENDRICKS
+                             Subj: Alt-Fake
+---------------------------------------------------------------------------
+
+  Binary for TSE to make it look like the ALT key is always pressed.
+
+I think the following should create the BIN file.
+
+---------cut------------
+n alt_fake.bin
+
+e 0100  E9 03 00 E9 0B 00 B8 40 00 8E D8 80 0E 17 00 08
+e 0110  CB B8 40 00 8E D8 80 26 17 00 F7 CB
+rcx
+1c
+w
+q
+---------cut------------
+
+NOTE: The blank line between 'n alt_fake.bin' and 'e 0100 ...' is required.
+
+To use this. Create ALT_FAKE.SCR from the above lines. At DOS, type
+
+    DEBUG <ALT_FAKE.SCR [Enter]
+
+
+You should end up with ALT_FAKE.BIN.
+
+
+//*************************************************************************
+                           Alt-Fake  12/16/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 12-19-94  From: GEORGE DE BRUIN
+                           Subj: Hook/Unhook
+---------------------------------------------------------------------------
+
+  ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+  ³I'd missed before. I guess I could unhook when entering
+  ³ViewKeywid(), and hook a different help screen, then unhook the
+  ³second and rehook the first help, couldn't I? Hehe... as Emily
+  ³Litella would say "Never mind!".
+  ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+  Actually, you'd be better off with something that is a generic view
+  macro that accepts a flag to determine what to hook/unhook before
+  calling lList().  Something like this:
+
+    integer proc piView(string sHead, integer HelpKeys)
+
+        integer rc = 0
+
+        enable(iif(HelpKeys, HKey1, HKey2))
+        rc = lList(sHead, Query(ScreenCols), Query(ScreenRows),
+                   _ENABLE_SEARCH)
+        disable(iif(HelpKeys, HKey1, HKey2))
+
+        return(rc)
+    end /* piView() */
+
+  This would allow you to enable the keydef dynamically according to where
+  you are calling the list from.  Of course, if you need to set up more
+  than two keydefs, you'd probably want to use the case construct instead.
+
+//*************************************************************************
+                         Hook/Unhook  12/19/94
+//*************************************************************************
+
+===========================================================================
+                Date: 12-24-94  From: LOUIS VONDERSCHEER
+                        Subj: converting numbers
+---------------------------------------------------------------------------
+
+>I'm trying to use SAL to decode pure binary numbers into their ascii
+>equivalents, and, even morre necessary, trying to convert packed decimal
+>(a binary digit, 0 to 9, in each nybble of a byte) into ascii numbers.
+>I've made little progress. Any good ideas on the tactics and language
+>features to use?
+
+  I'm not sure I understand your question about converting "binary
+  numbers" ascii.  Check the Macro Reference Guide or the online help on
+  the "Format()" command.  This will return a string representation of a
+  number in any base you might wish.  Format(3 : 0 : '0' : 2) would return
+  the string '11' which is the binary representation of 3 decimal.
+
+  If you mean BCD (binary coded decimal) numbers when refering to packed
+  decimal the following routines might be helpful:
+
+string proc hi(integer num)   // returns upper nybble as string
+  Return(Format(num shr 4 :0:'0':16))
+end
+
+string proc lo(integer num)   // returns lower nybble as string
+  Return(Format(num & 0xF :0:'0':16))
+end
+
+proc main()
+  Warn(hi(asc('A'))+lo(asc('A')))   // displays string equivalent
+  Warn(Val(hi(asc('A'))),Val(lo(asc('A')))) // display integer values
+end
+
+  The hi() and low() procs could be modified to return integers directly
+  if that's what you're after.  Hopefully this is at least enough to get
+  you started.
+
+//*************************************************************************
+                      converting numbers  12/24/94
+//*************************************************************************
+
+===========================================================================
+                  Date: 12-27-94  From: STEVE WATKINS
+                        Subj: converting numbers
+---------------------------------------------------------------------------
+
+> I'm trying to use SAL to decode pure binary numbers into their ascii
+> equivalents, and, even more necessary, trying to convert packed decimal
+> (a binary digit, 0 to 9, in each nybble of a byte) into ascii numbers.
+> I've made little progress. Any good ideas on the tactics and language
+> features to use?
+
+The operators you will probably need are:
+
+    &   --- bit-wise AND
+    |   --- bit-wise OR
+    SHL --- bit-wise Shift-Left
+    SHR --- bit-wise Shift-Right
+
+  A complete list can be found in the TSE online help topic "Operator
+  Precedence" from the index.
+
+  For example, here's a simple macro to convert a packed decimal byte
+  into an ASCII string output: (I've been quite verbose with in order
+  that you can easily pick out what you need)
+
+/**************************** cut here *********************************/
+
+string proc UnPackToASCII(integer byte)
+    integer lower_nibble, upper_nibble
+    integer lower_char,   upper_char
+
+    lower_nibble = byte & 0x0f              // mask off lower nibble
+    upper_nibble = (byte shr 4) & 0x0f      // mask off upper nibble
+
+    lower_char   = lower_nibble + ASC('0')  // convert lower nibble to ASCII
+    upper_char   = upper_nibble + ASC('0')  // convert upper nibble to ASCII
+
+    return (chr(upper_char) + chr(lower_char))  // return string
+end
+
+// simple test
+proc main()
+    Message(UnPackToASCII(0x91))
+end
+
+/**************************** cut here *********************************/
+
+Here's an example which converts a packed byte into its binary equivalent:
+(very terse)
+
+/**************************** cut here *********************************/
+
+integer proc UnPack(integer byte)
+    return ( (10 * ((byte shr 4) & 0x0f)) + (byte & 0x0f) )
+end
+
+// simple test
+proc main()
+    Message(UnPack(0x91))
+end
+
+/**************************** cut here *********************************/
+
+//*************************************************************************
+                      converting numbers  12/27/94
+//*************************************************************************
+
+===========================================================================
+                 Date: 01-10-95  From: GEORGE DE BRUIN
+                          Subj: GetKeyFlags()
+---------------------------------------------------------------------------
+
+  The following table appears on page 143 of the Macro Manual, under the
+  GetKeyFlags() topic.
+
+                                              Associated
+                      Bit                   Editor Constant
+                _______________         _______________________
+
+                0 - Right Shift         _RIGHT_SHIFT_KEY_
+                1 - Left Shift          _LEFT_SHIFT_KEY_
+                2 - Ctrl                _CTRL_KEY_
+                3 - Alt                 _ALT_KEY_
+                4 - Scroll Lock         _SCROLL_LOCK_DEPRESSED_
+                5 - Num Lock            _NUM_LOCK_DEPRESSED_
+                6 - Caps Lock           _CAPS_LOCK_DEPRESSED_
+                7 - Insert              _INSERT_DEPRESSED_
+
+//*************************************************************************
+                        GetKeyFlags()  01/10/95
+//*************************************************************************
+
+===========================================================================
+                 Date: 01-16-95  From: GEORGE DE BRUIN
+                        Subj: TSE:  Block Types
+---------------------------------------------------------------------------
+
+  ³Why is MarkWord more like a stream than a column?
+  ÀÂÄÄÄÄÄÄÄÄ
+GDB³This is because the way TSE defines words, they do not span lines.
+
+  > Then that's backwards, no?  Streams *can* span lines.  Marked lines
+  > *are* lines, bounded only by the left margin and by whatever on the right.
+  > Marked Words are a subset of columns, in the way they appear on screen.
+
+  TSE defines words via the value of the WordSet variable.  This
+  handling is independent of the block type being used...
+
+  If you want to use a column block instead of the character marking,
+  you can use the following macro:
+
+    /* ******************************************************** *
+     * Title: mMarkWord()                                       *
+     *                                                          *
+     * Purpose: Mark a word as a column block instead of as a   *
+     *          character block.                                *
+     *                                                          *
+     * Notes: Query(BlockEndCol) returns the same value for     *
+     *        _INCLUSIVE_ and _NON_INCLUSIVE_ blocks.           *
+     *                                                          *
+     *        Column blocks are anchored to their columnar      *
+     *        position.                                         *
+     *                                                          *
+     * Returns: Nothing.                                        *
+     * ******************************************************** */
+
+    proc mMarkWord()
+
+        if MarkWord()
+            MarkColumn(CurrLine(), Query(BlockBegCol),
+                       CurrLine(), Query(BlockEndCol))
+        endif
+    end
+
+//*************************************************************************
+                      TSE:  Block Types  01/16/95
+//*************************************************************************
+
+/**************************************************************************
+
+  ======================================================================
+               Date: 01-23-95  From: DAVID DANIEL ANDERSON
+                   Subj: Removing Multiple Blank Lines
+                               Two Versions
+  ----------------------------------------------------------------------
+
+
+  I've now come up with two solutions for changing multiple blank lines
+  to single blank lines, starting from the line *after* the cursor.  If
+  I change these to start from the line *at* the cursor, then they hang
+  either at the end of the file or at the current position.
+
+  They are virtually the same length, I include both in case one is
+  found to not work properly after more rigorous testing and use.
+
+***************************************************************************/
+
+  PushPosition()
+  while lFind('^$','x+')
+    while Down() AND CurrLineLen()==0
+      DelLine()
+      Up()
+    endwhile
+  endwhile
+  PopPosition()
+
+// When put on one line, this is 119 characters
+
+  PushPosition()
+  while lFind('^$','x+')
+    while CurrLineLen()==0 AND DelLine()
+    endwhile
+    InsertLine()
+  endwhile
+  PopPosition()
+
+//*************************************************************************
+              Removing Multiple Blank Lines - Two Versions
+//*************************************************************************
+
+===========================================================================
+                  Date: 01-31-95  From: SAMMY MITCHELL
+                       Subj: Remember ONLINE Help
+---------------------------------------------------------------------------
+
+> Does anybody have or know of any TSE number conversion macro(s)?
+
+  How about the Val(), Str() and Format() functions?  They all allow a
+  base parameter.  See the online help (under Val, Str, and Format) for
+  additional info.
+
+  For instance, the Val online help:
+
+TAKnote:  The information below was obtained from ONLINE help
+          which almost more valuable than the manual.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Val
+
+Converts a string expression to an integer.
+
+Syntax:     INTEGER Val(STRING s [, INTEGER base])
+
+            ù s is the string expression to be converted to integer.
+
+            ù base is an optional parameter that specifies the number base
+              to use, which defaults to 10 if not specified.
+
+Returns:    The integer value of s.
+
+Notes:      Leading spaces are ignored, so that Val("55") and Val("  55")
+            both return 55.
+
+            If a leading minus or plus sign is present, it is taken into
+            account.
+
+            If s contains any non-numeric characters, only that portion of
+            s preceding those characters is converted.
+
+            If a blank, empty, or non-numeric string is encountered, Val()
+            will return 0.
+
+Examples:
+
+            To convert binary "1000b" to an integer:
+            a = Val("1000", 2)
+
+            To convert hex "0x7fff" to an integer:
+            a = Val("7fff", 16)
+
+            To convert decimal "1024" to an integer:
+            a = Val("1024")
+
+            Val() stops evaluating at a non-numeric character:
+            a = Val("12345,6789")   // a is 12345
+
+See Also:   Str()
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+//*************************************************************************
+                 ONLINE Help Reminder about VAL02/03/95
+//*************************************************************************
+
+//***********************  Start Comment Area *****************************
+/**************************************************************************
+
+===========================================================================
+                    Date: 02-05-95  From: JIM DEVER
+                     Subj:  DEMO of datadef & menu
+                      by way of a signature macro
+---------------------------------------------------------------------------
+TAKnote:
+
+  Macro was originally written by Jim Dever to select one of three
+  signatures for different conferences that he moderates and has been
+  modified to be a demo to select various options by way of a menu.
+
+  You can place any information that you wish in the 'datadef' areas.
+
+***************************************************************************/
+
+datadef DebateSig
+  "your_name_here"
+  "If you want an argument this is the place"
+end
+
+datadef GenSig
+  "your_name_here"
+  "Certified TSE 2.x User"
+end
+
+datadef SaleSig
+  "your_name_here"
+  "Selling ALL other editors except TSE"
+end
+
+proc InsGenSig()
+  EndFile()
+  BegLine()
+  AddLine()
+  InsertData(GenSig)
+  UnMarkBlock()
+end
+
+proc InsDebateSig()
+  EndFile()
+  BegLine()
+  AddLine()
+  InsertData(DebateSig)
+  UnMarkBlock()
+end
+
+proc InsSaleSig()
+  EndFile()
+  BegLine()
+  AddLine()
+  InsertData(SaleSig)
+  UnMarkBlock()
+end
+
+menu SigMenu()
+  title = "Signature Menu"
+  History
+
+  "Signature &GENERAL",              InsGenSig()
+  "Signature &DEBATE",               InsDebateSig()
+  "Signature &FORSALE",              InsSaleSig()
+
+end SigMenu
+
+<Ctrl F8>  SigMenu()
+
+//*************************************************************************
+                     Subj:  DEMO of datadef & menu
+                      by way of a signature macro
+                See an alternative method directly below
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                Date: 02-06-95  From: RICHARD HENDRICKS
+                   Subj: Alternate Insert Signatures
+---------------------------------------------------------------------------
+***************************************************************************/
+
+/**************************************************************************
+===========================================================================
+                Date: 02-06-95  From: RICHARD HENDRICKS
+                   Subj: Alternate Insert Signatures
+---------------------------------------------------------------------------
+***************************************************************************/
+
+proc InsSig( string name, string title )
+  EndFile()
+  BegLine()
+  AddLine()
+  AddLine(name)
+  AddLine(title)
+  UnMarkBlock()
+end
+
+menu SigMenu()
+  title = "Signature Menu"
+  history
+
+  "Moderator &GENERAL", InsSig( "your_name_here",
+             "If you want an argument this is the place for it!!")
+
+  "Moderator &DEBATE",  InsSig( "your_name_here",
+             "Certified TSE 2.x User.")
+
+  "Moderator &FORSALE", InsSig( "your_name_here",
+             "Selling ALL other editors except TSE.")
+
+end
+
+<Ctrl F8>  SigMenu()
+
+//*************************************************************************
+//               Alternate Insert Signatures  02/06/95
+//*************************************************************************
+
+/**************************************************************************
+===========================================================================
+                 Date: 02-06-95  From: GEORGE DE BRUIN
+                        Subj: Any even a 3rd way
+                          to Insert Signatures
+---------------------------------------------------------------------------
+
+  I see that Richard Hendricks already suggested an improvement...
+  There's a bit more that can be done with this.  Here's a revised version
+  of his macro:
+
+***************************************************************************/
+
+/* -----------------------------
+ * Signature Menu
+ * -----------------------------
+ */
+
+menu SigMenu()
+    title = "Signature Menu"
+    history
+    "If you want an &Argument this is the place for it!!"
+    "Certified TSE 2.x &User"
+    "&Selling ALL other editors except TSE"
+
+end
+
+/* -----------------------------
+ * Insert Signature
+ * -----------------------------
+ */
+
+proc InsSig()
+    if SigMenu()               // Call Signature Menu -- If true do:
+        EndFile()
+        BegLine()
+        AddLine()
+        AddLine("your_name_here")   // Insert Name
+        AddLine(MenuStr(SigMenu, MenuOption()))
+                               // Insert string from selected menu item
+    endif
+end
+
+<Ctrl F8>  InsSig()
+
+//*************************************************************************
+                        Subj: Any even a 3rd way
+             to Insert Signatures and this will be the LAST
+//*************************************************************************
+

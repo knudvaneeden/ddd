@@ -1,0 +1,902 @@
+/****************************************************************************
+             TSGREP ... A regular expression line extractor
+                              David Marcus
+ ****************************************************************************
+                                Version 6.5
+                               *************
+
+Description:
+
+        TSGREP is a line extractor that searches groups of files
+        and lists lines matching a search string. You can then go
+        directly to any line listed. You can toggle the listing to
+        include file names only or lines with matches as well.
+
+Author: David Marcus  (davidm@iqsc.com)
+
+Date:   10-24-95
+
+Copyright: 1992-95 David Marcus
+
+        Permission is granted to all persons for non-commercial distribution
+        of this file and the macros and ideas contained herein provided
+        (a) credit is given to the author and (b) all changes not made by
+        the author are attributed.
+
+        Permission is granted to SemWare for commercial distribution
+        provided (a) and (b) above.
+
+Assistance:
+
+        You can reach the author as davidm@iqsc.com.
+
+        TSGREP is 3,750+/- lines of code. Please do not ask for help with
+        seriously altered versions except for alterations as suggested by
+        the author. Feel free to make suggestions for changes and ask for
+        advice about doing them yourself. The author guarantees *only* that
+        TSGREP functionality and support will always be worth the price the
+        author charges for it. However, he will work to fix bugs and enhance
+        TSGREP whenever possible.
+
+Contents:
+
+    I: Basics
+        A. Installation
+        B. Quick Start
+        C. How to Use TSGREP
+        D. Special Keystrokes While TSGREP Is Active
+        E. Defaults
+
+    II: More Details than You Need
+        F. Search String
+        G. Input File Spec
+        H. Search Options
+        I. TSGREP Options
+        J. Additional Options for Command Line Execution
+        K. Output File
+        L. Customization of Defaults and Special Characters
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³NOTES FOR v5 USERS:                                                      ³
+³                                                                         ³
+³   1. TSGREP.BAT HAS CHANGED; BE SURE TO USE THE NEW ONE.                ³
+³                                                                         ³
+³      Arguments are now:                                                 ³
+³       TSGREP string file_spec search_options TSGREP_options outfile_name³
+³                                                                         ³
+³   2. All options are now stated in the positive. For instance:          ³
+³        i now means 'include line numbers'                               ³
+³       -i now means 'do not ...'                                         ³
+³                                                                         ³
+³   3. Many option codes have changed. All now option codes conform to the³
+³      hot key for the option on the TSGREP options menu.  You can, if    ³
+³      you want, change these option codes. They're defined in TSGREP2.s  ³
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+TSGREP BASICS
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+A. Installation:
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+1. Place these files in the directory where your macro source files reside:
+
+          tsgrep.s
+          tsgrep2.s
+          tsgrep3.s
+          tsgrep4.s
+          tsgrep5.s
+          tsgrep.inc
+
+          NOTE: wptsgrep.bin, used in previous versions, is no longer used.
+
+2. (Optional; required only for command-line operation)
+
+   Place TSGREP.BAT in a directory on your path. If your copy of TSE is not
+   named e.exe, edit TSGREP.BAT to change the name from e to whatever you
+   use.
+
+3. Compile TSGREP source files using sc:
+
+     D:> sc TSGREP
+     D:> sc TSGREP2
+     D:> sc TSGREP3
+     D:> sc TSGREP4
+     D:> sc TSGREP5
+
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+B. Quick Start
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+    Type TSGREP at the command line or execute the macro from within TSE.
+    You give TSGREP:
+
+        * a search string
+        * filespec(s) to search
+        * search options                        <-- optional
+        * TSE options                           <-- optional
+        * the name of an output file to create  <-- optional
+
+    TSGREP gives you:
+
+        * A file that includes each line with the search string on it
+
+        * The ability to press <CTRL>+<ENTER> to load the file and
+          go to line listed at the current cursor position. You can
+          then press <CTRL+ENTER> to go back to the list file.
+
+    Bells & Whistles:
+
+        * You can run TSGREP from the command line, specifying all
+          arguments on the command line. Type
+            TSGREP /H <ENTER>
+          to see how to do this.
+
+        * TSGREP will automatically search across line boundaries, and do it
+          in a fairly efficient manner. (It shows you if it is using
+          across_line search; you can set TSGREP not to do it at all.)
+
+        * You can specify searching of files in all subdirectories of the
+          one that is part of the search filespec. Enter a '+' following the
+          filespec to do this.
+
+        * If you enter multiple filespecs, and one or more don't have a
+          drive or path specified, TSGREP uses the drive and path of the
+          previous filespec. For instance, if you say to search
+          "i:\usr\both\*.asc" and also "*.doc", TSGREP searches
+          "i:\usr\both\*.asc" and also "i:\usr\both\*.doc".
+
+        * You can specify files never to search as within TSGREP' source
+          code or as part of the batch file. (TSGREP is preset to ignore
+          .img .exe .com .dll .tif .pcx .$hp .$sc .cif .ps .bmp & .vgr in
+          its source code, and  .bak & .$hp in the batch file.
+
+        * You can use "-or-" or "-and-" in your search string without
+          using regular expression syntax. For instance, enter
+            "boys-or-girls"
+          to find lines containing either "boys" or "girls". If your
+          search string is
+            "boys-and-girls"
+          TSGREP finds lines containing both "boys" and "girls".
+
+        * TSGREP automatically searches any loaded files.
+
+        * TSGREP processes 'list files' - files containing a list of
+          files or file specs to process. It treats any file whose name
+          starts '@' as a list file.
+
+        * When you are looking at the list of matches TSGREP produces, you
+          can toggle to seeing only file names or file names + lines with
+          matches.
+
+        * You can save TSE settings to an options file.
+
+          If the options file is present, TSE automatically loads it
+          settings before presenting you with its menus (or starting command
+          line operation). You can manually load the saved settings, too.
+          TSE can automatically save settings between sessions, too.
+
+        * All available keystrokes are listed on the help line.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+C. How to Use TSGREP
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+1. While in an edit session:
+
+   Just load and execute like any other TSE macro using TSE's Macro Execute
+   menu selection. You'll be prompted for the information TSGREP needs.
+
+   Once TSGREP is loaded, <Alt S><G> will start it.
+
+2. Use TSGREP in a batch file (named TSGREP.BAT) as follows:
+
+   C:> TSGREP searchstring filespec [search_options [ts_options [outfile]]]
+
+   ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+   ³  Note that if the environment variable SSTRING is set (to anything),   ³
+   ³  TSGREP assumes that you do NOT want to be prompted for the arguments, ³
+   ³  and executes using values from the DOS environment. So, if you use    ³
+   ³  TSGREP from a batch file, be sure that your batch file resets SSTRING ³
+   ³  to '' after execution:                                                ³
+   ³                         SET SSTRING=                                   ³
+   ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+3. Using it in a batch file without arguments:
+
+   d:> TSGREP
+
+   or executing TSGREP from the DOS command line:
+
+   d:> E -eTSGREP <enter>
+
+   In either case, TSGREP prompts for all arguments, showing help for each
+   as it prompts. Remember, that TSGREP can be compiled with two
+   different interfaces. Find the lines beginning #INCLUDE in TSGREP.s
+   to change interfaces.
+
+You can start TSGREP with the batch file. Then, with the output file
+loaded (or any other), you can restart it (via <Alt S>, <G> TSE's Macro
+Execute selection) and it will prompt for values.
+
+You can also edit your TSE configuration file to add a keystroke definition to
+start TSGREP. I myself have it tied to the key <alt s><g>:
+
+  <alt s> <g>         Execmacro('tsgrep')
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+D. Special Keystrokes While TSGREP Is Active
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+All keystrokes are listed on the help line. These are defined in TSGREP3.s,
+and may be changed at will or whim.
+
+TSGREP keys are active when you are in
+
+    (a) the TSGREP list file or
+
+    (b) the file TSGREP last took you to when you pressed CTRL+ENTER from
+        the list file.
+
+If you use another command, macro, keystroke or menu to switch from on file
+to another, all TSGREP keystrokes except the "unload TSGREP" keys are made
+inactive until you switch back.
+
+Like all other macros, TSGREP keys will be superseded by those in macro
+files you load _after_ TSGREP is loaded (if there are duplicate key
+definitions in the other macro).
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+E. Defaults, Save/Restore Settings, and the Initialization File
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+If you choose "Save Settings" from the TSGREP menu, TSGREP creates or
+updates the file TSGREP initialization file in your TSE directory. The name
+of this file can be set from the menu. If you set the environment variable
+TSGREP_INI_FILE to a file name, that is the file used at startup. For
+example:
+
+    SET TSGREP_INI_FILE=q:\tsgrep.i21
+
+If this variable is not set, then TSGREP uses the file TSGREP.INI in
+your TSE directory as the initialization file.
+
+Each time TSGREP is loaded, it looks for the initialization file as
+specified in the TSGREP_INI_FILE environment variable (or TSGREP.INI in your
+TSE directory, if that variable is not set.)  If found, it loads those
+settings. (Note that the "!n" command line option allows you to specify
+different variants of the initialization file name.)
+
+Any time you choose "Restore Settings," TSGREP reads the initialization file
+from disk and loads the settings from it.
+
+The TSGREP options menu includes "Save All Settings on Exit." This defaults
+to "Yes." When it is set to YES, TSGREP save all settings to the
+initialization file when (a) it is unloaded or (b) you end TSE.
+
+Note: If you have had this set to YES, settings are saved and you then turn
+it to NO, note that TSGREP changes this in the settings file, but leaves all
+other items in it alone.
+
+The TSGREP options menu includes "Restore Defaults."  This item returns all
+TSGREP options to the settings that were burned into TSGREP when it was
+compiled. If you choose "Save Settings" after doing that, TSGREP.INI will
+contain only the settings that are the defaults for TSGREP options.
+
+ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
+MORE DETAILS THAN YOU NEED
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+F. Search String
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Your search string may be any TSE search string.
+
+However, when you are running TSGREP and giving it arguments on the DOS
+command line:
+
+  * When you are entering the search string from the TSGREP menu, you can
+    use -or- to mean "or" and use -and- to mean "and" as long as "Auto Reg.
+    Expr. Search" option is set to Yes.
+
+  * Use -and- to mean "AND" in the search string. May be only used
+    once in the string. Order is not important; a-and-b means find
+    (a.*b) or (b.*a) ... and that is exactly how it is implemented.
+
+    If combining OR with AND, use braces to surround the terms
+    being ORd; results will be unpredictable otherwise. For instance
+    if you use this:
+          sort-and-{search|subtotal}
+     TSGREP will it interpret it as:
+          {{sort.*{search}|{subtotal}} | {{search}|{subtotal}.*sort}}
+     (spaces added for clarity)
+
+  * If you use AND or OR operators, you can omit braces--TSE supplies them
+    automatically as long as "Auto Reg. Expr. Search" option is set to Yes.
+    So,
+
+            menu-or-proc-or-keydef
+            menu|proc|keydef
+
+    both get turned into
+
+            {menu}|{proc}|{keydef}
+
+    All braces you supply will be honored, too.
+
+When specifying search strings on the DOS command line:
+
+  * Use -or- instead of | to avoid DOS piping. -OR- is ok, too.
+
+  * Use _ instead of space.
+    (But use -_ in the TSGREP options to force reading of _ as an underscore)
+
+  * Use -- for =
+
+  * Use [[ to mean < in the search string.
+    Use ]] to mean > in the search string.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+G. Input File Spec
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+Input file spec may be any valid filespec, wildcards included.
+
+When TSGREP operates during an edit session, files currently in the ring
+are always searched. Files specified at the filespec prompt are searched
+additionally; the original ring is restored after the searches, and no
+additional files are left loaded.
+
+When entering arguments at the DOS command line, use ^ as a separator for
+multiple files, as in:
+
+    TSGREP sort *.q^*.inc^q:c*.??c
+
+When you give TSGREP more than one filespec, if a filespec has no drive and
+path, the ones for the preceding filespec are applied to it. For instance:
+
+    i:\usr\*.txt^*.doc^c:\*.txt^*.doc
+
+is processed as
+
+    i:\usr\*.txt^i:\usr\*.doc^c:\*.txt^c:\*.doc
+
+Files with '@' in any position of the name are treated as list files.
+List files may contain:
+
+    * specific file names
+    * wildcarded filespecs
+    * additional listfile names
+
+Place one spec per line, starting each in column 1.
+
+You can use multiple list files on the command line or combine them
+with other filespecs.
+
+Add a plus sign (+) to the end of a filespec to have TSGREP process matching
+files in subdirectories of the specified directory. You can use the plus
+sign both in filespecs and inside list files.
+
+TSGREP ignores any files whose extension is found in the list specified by
+the environment variable EXCLUDE or the definition of the string EXCLUDE in
+TSGREP.s.
+
+The string EXCLUDE in TSGREP.s specifies these extensions as excluded:
+
+    .img .exe .com .dll .tif .pcx .$hp .$sc .cif
+    .vgr .mac .zip .bin .hlp .bak
+
+If you want to override this, and have the files included, you can change
+the "Exclude excluded files" menu selection to NO. For command line
+execution, you can use the -e option to do this.
+
+NOTES: 1. You cannot use the ^ separator inside a list file.
+       2. List files must actually have the @ as part of the file name.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+H. Search Options
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+The following TSE find options are either always ignored or always used by
+TSGREP; using them as part of your search options will have no effects:
+
+        b  g  l  +  c
+
+You can use any other TSE options, including:
+
+        ^  - search beginning of line only
+        $  - search end of line only
+        x  - regular expression search
+        w  - match whole words only
+        i  - case-insensitive
+
+TSGREP assumes 'i' if you enter no option. When you do not want i, enter a
+space for the options or enter any other option.
+
+TSGREP adds 'x' to the search options when your search string contains:
+
+               -or-
+               .*
+               [...]
+               -and-
+
+Set the "Auto Reg. Expr. Search" option to NO to suppress this. In command
+line operations, use the -x TSGREP Option to suppress it.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+I. TSGREP Options
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Option      Description                           Default     Options
+------      ------------------------------        -------     -------
+!           Initialization File Variant           ***         ***
+_           Honor underscores in search string    ***         ***
+a           Process only files after ...          00-00-00    any date
+b           Process only files before ...         12-31-99    any date
+c           Number of context lines to include    0           2-9
+d           Create directory list                 YES         NO
+e           Exclude excluded files                YES         NO
+f           File list only-no search              NO          YES
+h           Recount hits after completing         NO          YES
+i           Include line numbers for matches      YES         NO
+k           Press any key message                 ***         ***
+l           List matches in output file           YES         NO
+m           List only files with _m_atches        NO          YES
+n           Query before unloading viewed files   YES         NO
+o           One match only                        NO          YES
+p           Pause after TSGREP messages           0           1-9 /16ths sec
+r           Search across lines                   AUTO        OFF,FAST,SLOW
+s           Suppress TSE messages                 NO          YES
+t           Load/view output file                 YES         ***
+u           Unload loaded files                   NO          YES
+v           Save loaded files before unloading    PROMPT      ALWAYS, NEVER
+w           Show keystroke help line              YES         NO
+x           Auto regular expression search        YES         NO
+
+*** Cmd line option only; see description.
+
+Cmd Line:   !n  where n is the number of the file to use.
+Flag:       INIFILE_NUMBER
+
+Option:     ***** Restore Defaults *****
+Default:    n/a
+Descriptn:  Select this choice to restore all defaults from the option
+            settings burned into TSGREP when it was compiled.
+Cmd Line:   n/a
+Flag:       n/a
+
+Option:     Auto Reg. Expr. Search
+Default:    Yes
+Descriptn:  When set to Yes, TSGREP adds an 'x' to the search options when
+            certain characters are used in the search string:
+                .*
+                [...]       (any set)
+                -and-
+                -or-
+
+            Additionally, when set to Yes, TSGREP allows you to use -or- to
+            mean "or" and to use -and- to mean "and" -- it automatically
+            builds regular expression search strings for these. And ... it
+            supplies braces when you use -or-, -and-, and | without braces.
+Cmd Line:   x = Yes, -x =
+No Flag:    AUTO_RE_FLAG
+
+Option:     Context Lines
+Default:    0
+Descriptn:  When set to a number between 2 and 9, TSGREP includes that many
+            lines of 'context' around each line it writes to the output file.
+            For instance, if it is set to 5 and line 100 of a file contains a
+            match, TSGREP writes lines 95 through 105 to the output file. You
+            cannot use across line search with the context option. TSGREP
+            automatically shuts off the context option when it uses across
+            line search. (If you set TSGREP to auto and is doesn't use across
+            line search, is not shut off.)
+Cmd Line:   cN, where N is 2 to 9
+Flag:       CONTEXT
+
+Option:     Create Directory List
+Default:    Yes
+Descriptn:  When this option is set to Yes, TSGREP creates a file containing
+            a list of directories found. Used only when recursive
+            subdirectory searching is used and more than one directory is
+            searched. If no recursive search is being done, then a Yes
+            setting here is overridden to become No.
+Cmd Line:   d = Yes; -d = No
+Flag:       MAKE_LIST_OF_DIRS
+
+Option:     Exclude Excluded Files
+Default:    Yes
+Descriptn:  When this option is set to Yes, TSGREP does not process any
+            files that have an extension (a) listed in the EXCLUDE string
+            burned into TSGREP macro or (b) is listed on the EXCLUDE
+            environment variable (for command line operation). When this
+            option is set to No, these files are processed, and files
+            that do not match date criteria are also processed.
+Cmd Line:   e = Yes; -e = No
+Flag:       EXCLUDE_FILES
+
+Option:     File List OnlyÄNo Search
+Default:    No
+Descriptn:  List ALL  files matching filespec regardless of search result.
+            Uses fastest search  automatically--it is faster than "o" but
+            does not separate files with matches and files without matches.
+            This is not as fast as a program designed with this function in
+            mind, but it is a free bonus especially useful with subdirectory
+            search.
+Cmd Line:   f = Yes, -f = No
+Flag:       FILES_ONLY_NO_SEARCH
+
+Option:     One match Only
+Default:    No
+Descriptn:  When set to No, TSGREP thoroughly searches all files, from
+            beginning to end. When set to Yes, TSGREP stops searching each
+            file as soon as it finds a match in the file.
+Cmd Line:   o = Yes, -o = No
+Flag:       ONE_HIT_ONLY_PER_FILE
+
+Option:     Files After
+Default:    n/a
+Descriptn:  When a date is entered here, TSGREP only searches files which
+            have a DOS date after the date entered.
+Cmd Line:   -aMM-DD-YY
+Flag:       n/a
+
+Option:     Files Before
+Default:    n/a
+Descriptn:  When a date is entered here, TSGREP only searches files which
+            have a date is before the date entered.
+Cmd Line:   -bMM-DD-YY
+Flag:       n/a
+
+Option:     Include Line Numbers for Matches
+Default:    Yes
+Descriptn:  When set to Yes, TSGREP includes line numbers with any lines it
+            writes to the output file. When set to No, line numbers are
+            omitted. When set to No,  you cannot use <alt><enter> or <ctrl
+            enter> to go back and forth from the output file to the file
+            containing the match listed on the current output file line.
+Cmd Line:   i = Yes; -i = No
+Flag:       LINE_NUMBERS
+
+Option:     List Matches in Output File
+Default:    Yes
+Descriptn:  When set to Yes, the output file includes all lines that contain
+            matches for the search string. When set to No, these lines are
+            not written to the output file and the output file tells you only
+            which files had matches. Additionally, TSGREP does no more than
+            a single match per file, so the total matches counter shows the
+            number of files with matches.
+Cmd Line:   l = Yes, -l = No
+Flag:       WRITE_HITS
+
+Option:     List Only Files w/Matches
+Default:    No
+Descriptn:  When this is set to No, TSGREP includes a section in the output
+            file for files with no match and includes a section for files
+            that were excluded because of extension or date. When set to
+            Yes, these two sections are not included.
+Cmd Line:   h = Yes; -h = No
+Flag:       LIST_FILES_W_HITS_ONLY
+
+Option:     Pause After Message
+Default:    0
+Descriptn:  Sets the duration, in 1/16th second increments, for TSGREP to
+            delay after most screen messages.  Use only if you want to see
+            what TSGREP is doing. Once TSGREP starts searching, you can
+            press <escape> once to cancel the delay.
+Cmd Line:   pN, where N is from 1 to 9
+Flag:       PAUSE_LENGTH
+
+Option:     Query Unload After View
+Default:    Yes
+Descriptn:  When set to Yes, if
+                you go to a file with matches,
+                and it it is a file that TSGREP loaded
+                and you change the  file,
+                and then return to the TSGREP output file,
+            TSGREP will unload the file, first querying you
+            whether to save changes to it. Your choices are:
+
+                    Yes -- Save and unload the file
+                    No  -- Abandon changes and unload the file
+                    Don't Unload
+                    ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ-
+                    Never Unload
+                    Always Save and Unload
+
+            The last two choices remain in effect until you next reload
+            TSGREP. When set to No, TSGREP does not prompt, and it neither
+            saves nor unloads the file when you return to the match list.
+Cmd Line:   n = Yes; -n = No
+Flag:       UNLOAD_FILES_WITH_HITS_AFTER_VIEWING
+
+Option:     Recount Hits
+Default:    No
+Descriptn:  If YES, TSGREP adds an extra phase after all searching is done,
+            during which it recounts the number of hits. The resulting total
+            in the output file is then an accurate count of all of the
+            occurrences of the search string in the file.
+
+            If NO, TSGREP executes a little faster (or a lot, if there were
+            thousands of hits) but the Total Matches reported in the output
+            file is a count of the lines with hits. (The use of context
+            lines and searches across lines may possibly throw off the
+            unrecounted total, hence it is always reported as
+            '~' (approximately) xxxx matches.
+Cmd Line:   h = YES; -h = NO
+Flag:       RECOUNT_HITS_FLAG
+
+Option:     Save All Settings on Exit
+Default:    Yes
+Descriptn:  When YES, TSGREP saves all settings to the initialization file
+            when (a) you unload TSGREP or (b) you end your TSE session.
+            The file name used is either the one you entered as the
+            initialization file (or, if none entered, the one specified by
+            the TSGREP_INI_FILE environment variable (or, if none defined,
+            the file TSGREP.INI in your TSE directions)).
+
+            Note: If you have had this set to YES, settings are saved and
+            you then turn it to NO, note that the "NO" applies only to the
+            current session. You must save the settings manually (i.e.,
+            using the menu) to make the "NO" permanent.
+Cmd Line:   n/a
+Flag:       SAVE_SETTINGS_WHEN_UNLOADED
+
+Option:     Save Loaded Files
+Default:    Prompt
+Descriptn:  This option is used only when "Unloaded Loaded Files" is set to
+            Yes. This prompt dictates the action TSGREP will take when a
+            loaded file has been changed but not saved:
+                Prompt =  TSGREP will prompt you whether to save it.
+                Always =  TSGREP will save all files without prompting
+                Never =   TSGREP will abandon changes all files without
+                          prompting.
+Cmd Line:   s1 = Always; s0 = Never
+            s2 - s9 = Prompt
+Flag:       SAVE_LOADED_FLAG
+
+Option:     Search Across Lines
+Default:    No
+Descriptn:  Normal TSE search only find matches within a single line. When
+            this is set to other than OFF, TSGREP finds a match even if it
+            spans 2 lines.
+
+            Across line search lets you find instances of a string when part
+            of the string is at the end of one line and the remainder is at
+            the beginning of the next line. TSGREP ignores white space at the
+            end of the line and the beginning of line when doing across line
+            search; it consider a line break to be the equivalent of a
+            single space. For instance, if you have the paragraph
+
+                Jack and Jill
+                went up a hill
+
+            and search for "Jill went", TSGREP will find it (no matter how
+            many spaces and tabs follow "Jill" or precede "went". This
+            'compression' of white space only occurs at line breaks. If you
+            have the paragraph
+
+                Jack and Jill    went
+                up a hill
+
+            and search for "Jill went", TSGREP will not find it.
+
+            You can set the 'search across lines' mode to OFF, AUTO, FAST,
+            or SLOW.
+
+            AUTO is the best setting for across line search and is the
+            TSGREP default. TSGREP will decide when to use it and when not
+            to use it, based on the search string you enter (and on whether
+            you are doing regular expression searching). TSGREP will also
+            decide whether to use fast or slow mode like this:
+
+                if SEARCH_ACROSS_LINES mode == AUTO
+                    if there is whitespace in the search string
+                        if (regular expr search
+                            and "or" is used in search string)
+                          or
+                           (regular expr search
+                            and whitespace is between [ and ])
+                            set SEARCH_ACROSS_LINES to slow mode
+                        else
+                            set SEARCH_ACROSS_LINES to fast mode
+                        endif
+                    else
+                            set SEARCH_ACROSS_LINES to off
+                    endif
+                endif
+
+            You can manually set the mode to FAST or SLOW. SLOW means that
+            TSGREP joins each contiguous pair of lines together, searches
+            the combined line, and splits them.
+
+            ==> If you get an "incomplete class" message during a fast
+                across line search, set the mode to SLOW.
+
+            You cannot use across line search with the context option.
+            TSGREP automatically shuts off the context option when it uses
+            across line search. (If you set TSGREP to auto and is doesn't
+            use across line search, context is not shut off.)
+
+            How Fast Mode Works
+
+            1. TSGREP analyzes your search string and looks for the part of
+               it that could be at the end of a line. This is the part
+               precedes a space or tab. If you were looking for "Jill went",
+               that would be "Jill".
+
+               If you are using regular expression search, TSGREP will also
+               recognize various hex, octal, and decimal depictions of tab
+               and space and will recognize un-escaped wildcards as possible
+               whitespace.
+
+            2. It searches through your file for any occurrence of "Jill".
+
+            3. When found, it deletes all whitespace at the end of the line.
+
+            4. It deletes whitespace at beginning of the line below,
+
+            5. It then joins the two lines, adding a single space between
+               them.
+
+            6. It then does a search limited to the combined line for "Jill
+               went".
+
+            7. Whether found or not, TSGREP splits the lines, adding back
+               any deleted whitespace.
+
+            This is pretty fast--if "Jill" occurs only 25 times in a 1,000
+            line file, then TSGREP only has to do the join/split thing 25
+            times. Some examples:
+
+            * A search for "end when" in 110 files (909,879 bytes) took 31
+              seconds without across line search.  With across line search,
+              it took 1:28. During this search, TSGREP found 3191 instances
+              of "end".
+
+            * A search for "whenloaded() xxx" in these files took 33.12
+              seconds -- two seconds longer than the above search executed
+              without across line searching enabled. During this search,
+              TSGREP found 32 instances of "whenloaded".
+
+            * A search for "whenloaded" took 33.17 seconds when there were
+              no finds. The time it took to do the joining and splitting of
+              lines was more than offset by the time to write the 32 finds
+              into the output file.
+
+Cmd Line:   r0 = OFF,  r1 = AUTO, r2 = FAST, r3 = SLOW
+Flag:       SEARCH_ACROSS_LINES
+
+Option:     Suppress TSE Messages
+Default:    No
+Descriptn:  When Yes, warning and messages such as "Long Lines Split" are
+            suppressed during TSE operations. Use with care.
+Flag:       n/a
+Option:     s
+Flag:       NO_WARNING_FLAG
+
+Option:     Show Help Line
+Default:    TRUE
+Descriptn:  This option is used to control whether the TSE help line is
+            shown when TSGREP is loaded. When it is shown, help for all
+            TSGREP keystrokes is shown. The available keystrokes and the
+            help vary according the whether you are in the list file, a
+            file you have switched to from the list file (via CTRL-ENTER)
+            or another file.
+Cmd Line:   w=TRUE -w=FALSE
+Flag:       SHOW_HELP_LINE
+
+Option:     Unload Loaded Files
+Default:    No
+Descriptn:  When this option is set to No, TSGREP searches but does not
+            otherwise touch loaded files. When it is set to Yes, TSGREP
+            unloaded these files before starting and reloads them when
+            ending. This results in greater overhead time but may, when
+            there are very large files loaded, speed search time.
+Cmd Line:   u = Yes; -u = No
+Flag:       UNLOAD_LOADED_FILES
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+J. Additional Options for Command Line Execution
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Option      Description                         Default    FLAG
+
+!n          Initialization File Variant. This     n/a       n/a
+            option lets you change the last
+            character of the initialization
+            file name extension to a value
+            between 1 and 9. For instance, if
+            your ini file name is
+            'tsgrep.ini', using !2 would cause
+            TSGREP to look for and load
+            tsgrep.in2 as the initialization
+            file. This option allows you to
+            use multiple initialization files
+            from the command line.
+
+[-]k       Display message "Press any key" after   TRUE    PRESS_ANY_KEY
+           processing is done (command line opera-
+           tion only). If this option is used,
+           TSGREP will pause and say 'press any key'
+           before returning to DOS. This option has
+           no effect on interactive operation.
+
+[-]t       Load output file into TSE. Command     YES     LOAD_OUT_FILE
+           line execution only. Use of -t allows
+           creation of multiple output files in
+           an unattended batch.
+
+_          Don't convert underscores in search    CONVERT  n/a
+           string to spaces. Command line
+           execution only. In command line mode,
+           a search string must be entered with
+           underscores instead of spaces (so that
+           DOS sees it as one argument.) TSGREP
+           automatically converts underscores to
+           spaces unless you use this options
+
+Preceding an option with a minus sign, where allowable, reverses the meaning
+of the option.  For instance, -# means 'do not include line numbers'.
+
+Note: All special characters in searchstring and in TSGREP options are
+      user-configurable.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+K. Output File
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+Output file is optional; default is TSGREP.TMP or as set by the
+default_name string.
+
+Files with no matches are listed at the end of the output file.
+
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+L. Customization of Defaults and Special Characters
+ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+The easiest way to set the default options is to start TSGREP, to set all
+options the way you want them and then to select "Save Settings."
+
+If you want to change the burned-in defaults however, see the "TSGREP
+Options" section of this document for the names of flags that control the
+defaults for each TSGREP option. To change a default, locate the proc
+set_flags_to_defaults() in TSGREP.INC. Change the setFlag() command
+in it for the flag you want to change.
+
+TSGREP option characters are of concern only if you want to run TSGREP from
+the command line, giving it arguments. The characters for all of these
+options are the same as the hot key for the TSGREP options menu item for the
+option.
+
+You can edit TSGREP2.s to change the characters used for TSGREP Options. You
+can also edit that file to change the and operator (default -and-) and or
+operator (default -or-) used in search string.
+
+You can edit TSGREP3.s to change key assignments.
+
+Optional: If you do not use an extension as part of directory names -- and
+          most people do not -- change the value variable of the constant
+          dirs_with_extensions to FALSE. This is found in the CONSTANT
+          section of TSGREP.INC.
+
+Optional: If you have a RAM drive, change the string ramdrive in the STRING
+          section of TSGREP.s to the designator for that drive. Use the
+          format 'd:\' for your entry.
+
+Optional:  These are the default names and extensions TSGREP uses for the
+           files it creates:
+
+    default_name[MAXFN] ="TSGREP.TMP", // :U: default for hit list
+    default_ext_2[4]    =      ".$MP", // :U: ext for files-only list
+    dir_list_ext[4]     =      ".D$$", // :U: name for dirs-only list
+
+    You can change these in TSGREP.INC.
+
+Optional: These are the characters TSGREP uses as special flags in
+          filespecs:
+
+    file_sep_char[1]  = '^',           // :U: filespec separator character
+                                       // for cmd line entry only
+    recurse_char[1]   = '+' ,          // :U: recursive search indicator
+    list_file_char[1]  = '@'           // :U: list file flag
+
+    You can change these in TSGREP.5 (file_sep_char) and TSGREP.INC (other
+    characters).

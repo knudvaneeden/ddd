@@ -1,0 +1,936 @@
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 1
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Preliminaries
+
+      1					     IDEAL
+      2				     ;******************************************************************************;
+      3				     ;										    ;
+      4				     ;				  CRAZY	JACK'S TABOLATOR			    ;
+      5				     ;										    ;
+      6				     ; (c)Copyright 1993 by Jack Hazlehurst					    ;
+      7				     ; Author :	Jack Hazlehurst							    ;
+      8				     ; Date   :	07/01/93							    ;
+      9				     ;										    ;
+     10				     ; Use  the	binary to your heart's content when you	customize your copy of The  ;
+     11				     ; Semware Editor.	If you modify it (creating a  derivative  work)	 you  MUST  ;
+     12				     ; retain the copyright notice, and	add your own if	you wish.  Just	don't make  ;
+     13				     ; anyone pay any more for its use than I charge you (which	is nothing).	    ;
+     14				     ;------------------------------------------------------------------------------;
+     15				     ; These  routines support the conversion of tabs to spaces, and visa-versa, in ;
+     16				     ; text files.  The	 conversion  proceeds  a  line	fragment  at  a	 time,	the ;
+     17				     ; individual  line	 fragments being passed	in from	an SAL macro that reads	the ;
+     18				     ; original	data.  Before the first	fragment is  processed,	 an  initialization ;
+     19				     ; routine	must be	called to provide the information necessary for	controlling ;
+     20				     ; the operation, including	key characters that change the processing, and	the ;
+     21				     ; size of the tabs.							    ;
+     22				     ;										    ;
+     23				     ; Use this	declaration:							    ;
+     24				     ;	 binary	["tabolate.bin"]						    ;
+     25				     ;	     integer proc StartTabs( string SetupString, integer TabSize )  : 0	    ;
+     26				     ;	     integer proc EndALine( var	string LineOut )		    : 3	    ;
+     27				     ;	     integer proc TabALine( var	string LineIn, var string LineOut,	    ;
+     28				     ;						      integer StartState )  : 6	    ;
+     29				     ;	 end									    ;
+     30				     ;										    ;
+     31				     ; Borland's Turbo Assembler v 3.2 assembles this thing.			    ;
+     32				     ;										    ;
+     33				     ;******************************************************************************;
+     34
+     35	0000				     SEGMENT _TEXT
+     36					     ASSUME  CS:_TEXT
+     37					     LOCALS
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 2
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+State Table Entry Definition
+
+     38				     ;...............................................................................
+     39				     ; The State Table determines what are key tokens and how they affect the
+     40				     ; expansion of tabs and the en-tabment of spaces.
+     41				     ;
+     42	*000				     STRUC   CTLNTRY
+     43	*000  01*(00)		     CTLBTS  DB	     0	    ;Control bits (meaning if bit ON):
+     44	      =0001		     XPTBS   =	     1		     ;Convert tabs to spaces.
+     45	      =0002		     SP2TBS  =	     2		     ;Convert spaces to	tabs.
+     46	      =0004		     EOLNDS  =	     4		     ;This state ends at end of	line.
+     47	      =0008		     END1    =	     8		     ;This state ends after one	character more.
+     48				     ; These next control bits never appear in the state table.	 They are set,
+     49				     ; cleared and used	internally by the routines:
+     50	      =0010		     CHK4BAK =	     16		     ;Retest last char (after one-char state ends).
+     51	      =0020		     SP2TB   =	     32		     ;Indicates	spaces being converted to tabs.
+     52	      =0040		     NDTB    =	     64		     ;Need 1-space tab replacement.
+     53				     ;
+     54	*001  01*(00)		     STATE   DB	     0	    ;State that	this entry belongs to.
+     55	*002  01*(20)		     CHR     DB	     SPACE  ;The character to look for.
+     56	*003  01*(00)		     NXTSTAT DB	     0	    ;State to go to when this token is found.
+     57	*004				     ENDS    CTLNTRY
+     58
+     59				     ;
+     60				     ; Other Symbols
+     61				     ;
+     62	      =0009		     TAB     =	     9
+     63	      =0020		     SPACE   =	     32
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 3
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+The Entry Vector
+
+     64				     ;...............................................................................
+     65				     ; The  following macro aligns each	jump on	a 3 byte boundary.  That way, the
+     66				     ; "binary"	declaration within the macro file can assume each function starts
+     67				     ; on the next multiple of 3
+     68
+     69				     MACRO   JUMP    dest	     ;force a 3	byte jump
+     70					     DB	     0E9H	     ;;jmp long
+     71					     DW	     OFFSET dest - $ - 2
+     72					     ENDM
+     73				     ;...............................................................................
+     74
+     75	0000				     PROC    VECTORS
+     76
+     77					     JUMP    STARTTABS	     ;StartTabs
+1    78	0000  E9			     DB	     0E9H	     ;
+1    79	0001  01CA			     DW	     OFFSET STARTTABS -	$ - 2
+     80					     JUMP    ENDALINE	     ;EndALine
+1    81	0003  E9			     DB	     0E9H	     ;
+1    82	0004  017A			     DW	     OFFSET ENDALINE - $ - 2
+     83				     ;	     JUMP    TABALINE	     ;TabALine (not real jump -	just falls in.
+     84
+     85	0006				     ENDP    VECTORS
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 4
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+     86				     ;===============================================================================
+     87				     ;
+     88				     ;	     integer proc TabALine( var	string LineIn, var string LineOut,
+     89				     ;						       integer StartState )   :	6
+     90				     ;
+     91				     ;	     Enter  with  a pointer to the string to be	processed, a pointer to	a
+     92				     ;	     string to receive the resulting string, and a starting state for the
+     93				     ;	     string.   Move  the  line	to  be processed into the string "LineIn"
+     94				     ;	     before calling.  Have a sufficiently large	(but empty) string  ready
+     95				     ;	     to	 receive  the  results ("LineOut").  Place the starting	state for
+     96				     ;	     the line as "StartState", and call	in.  Upon return, "LineOut"  will
+     97				     ;	     contain  the processed data, the contents of "LineIn" are unchanged,
+     98				     ;	     and the new state will be returned	as an integer.
+     99				     ;
+    100				     ;	     If	the return code	is negative, an	error has occurred.
+    101				     ;
+    102				     ;	     This  routine  assumes  that you've called	"StartTabs" to initialize
+    103				     ;	     the tab system, and that you are supplying	the state  returned  from
+    104				     ;	     that call,	or the state returned from the last call to "TabALine" or
+    105				     ;	     "EndALine"	as the "StartState".  The value	 will  be  in  the  range
+    106				     ;	     0-15,  and	represents one of the states in	the control info supplied
+    107				     ;	     in	your call to "StartTabs".  This	parameter  is  not  checked,  and
+    108				     ;	     wrong  values give	stra-a-ange results.  It does, however,	allow you
+    109				     ;	     to	override or otherwise manipulate  the  way  in	which  "TabALine"
+    110				     ;	     operates,	and  it	lets you resubmit smaller pieces of a line if you
+    111				     ;	     get "LineOut" overflows.
+    112				     ;
+    113				     ;	     To	make it	possible to handle lines longer	than 255 bytes,	 TabALine
+    114				     ;	     does  not	recognize end-of-line.	You pass the line to be	processed
+    115				     ;	     to	"TabALine" one piece at	a time until the  entire  line	has  been
+    116				     ;	     processed,	 then  call  "EndALine"	to invoke the end-of-line proces-
+    117				     ;	     sing.  Each call to "TabALine" must be provided with the state  code
+    118				     ;	     returned  from the	previous call to "TabALine".  "EndALine" does NOT
+    119				     ;	     get the state, but	it DOES	return one.  This returned state must  be
+    120				     ;	     used in the next call to "TabALine".
+    121				     ;
+    122				     ;	     IMPORTANT:	 The way to get	a negative (error) return code is to have
+    123				     ;	     insufficient room in the  output  string  to  hold	 the  results  of
+    124				     ;	     expanding	tabs in	the input string.  This	problem	is most	likely to
+    125				     ;	     occur whenever you	are replacing tabs with	spaces.	  When	expanding
+    126				     ;	     tabs,  you	 should	 use  smaller  chunks for your input strings, and
+    127				     ;	     check the return code.  If	it is negative,	break your  input  string
+    128				     ;	     into smaller chunks and resubmit, using the same state code to start
+    129				     ;	     off the first piece of the	string as the  state  code  you	 used  to
+    130				     ;	     start  the	 original  piece.   You	can do this recursively	until the
+    131				     ;	     string gets correctly processed.
+    132				     ;
+    133				     ;	     The  code in TabALine may seem oddly ordered.  This is the	result of
+    134				     ;	     trying to minimize	jumps along frequently taken  paths  through  the
+    135				     ;	     code  and	avoidance  of  Jcond --	JMP  constructs	which jump either
+    136				     ;	     way, thus introducing a pipeline delay into both branches.
+    137				     ;
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 5
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+    138				     ;-------------------------------------------------------------------------------
+    139
+    140	0006				     PROC    TABALINE FAR
+    141
+    142					     ; The stack:
+    143	      =	[DWORD BP+16]	     @@InStr EQU     [DWORD BP+16]	     ;Pointer to input string.
+    144				     ; Max length of input string ignored
+    145	      =	BP+10		     @@OutSt EQU     BP+10		     ;Pointer to output	string.
+    146				     ; Upper byte of output string max length ignored
+    147	      =	[BYTE BP+8]	     @@OSMxL EQU     [BYTE BP+8]	     ;Maximum length of	output string.
+    148				     ; Upper 3 bytes of	requested state	ignored
+    149	      =	[BYTE BP+4]	     @@RStat EQU     [BYTE BP+4]	     ;Requested	starting state.
+    150				     ; ret address   BP	+ 0
+    151
+    152	      =0004			     LOCAL   @@SAVEAREA	: BYTE : 4   =@@VARSIZ
+    153				     ;
+    154				     ; Initialize
+    155				     ;
+    156	0006  8B EC			     MOV     BP, SP		     ;Address the parameters.
+    157	0008  83 EC 04			     SUB     SP, @@VARSIZ	     ;Allocate local variables on stack.
+    158	000B  FC			     CLD
+    159
+    160	000C  2E: A1 041E		     MOV     AX, [WORD CS:CRNTST]
+    161	0010  89 46 FC			     MOV     [WORD @@SAVEAREA],	AX
+    162
+    163	0013  C5 76 10			     LDS     SI, @@InStr	     ;Get pointer to input string.
+    164	0016  AD			     LODSW			     ;Get its length
+    165	0017  8A F0			     MOV     DH, AL		     ;and point	to start of string.
+    166	0019  FE C6			     INC     DH			     ;Adjust length for	counting.
+    167	001B  C4 7E 0A			     LES     DI, [DWORD	@@OutSt]     ;Get address of output string.
+    168	001E  83 C7 02			     ADD     DI, 2
+    169	0021  8A 56 08			     MOV     DL, @@OSMxL	     ;Get maximum size
+    170	0024  FE C2			     INC     DL			     ;and adjust for counting.
+    171	0026  75 02			     JNZ     @@OSRDY		     ;Maximum size of output string is
+    172	0028  FE CA			     DEC     DL			     ;limited to 254 bytes.
+    173	002A			     @@OSRDY:
+    174	002A  88 56 FF			     MOV     [@@SAVEAREA+3], DL	     ;Save for return string size calc.
+    175	002D  2E: 8B 0E	041C		     MOV     CX,[WORD CS:NXTAB]	     ;Get distance to next tab & space count.
+    176	0032  2E: 8A 26	0420		     MOV     AH, [CS:CTRLBTS]	     ;Get control bits.
+    177	0037  88 66 FE			     MOV     [@@SAVEAREA+2], AH	     ;Save 'em in case of error.
+    178	003A  8A 46 04			     MOV     AL, @@RStat	     ;Get starting state from caller.
+    179	003D  24 0F			     AND     AL, 0Fh
+    180	003F  BB 031A			     MOV     BX, OFFSET	XLATTBL	     ;Ready to go.
+    181
+    182	0042  2E: 3A 06	041E		     CMP     AL, [CS:CRNTST]	     ;Does caller want state changed?
+    183	0047  74 1A			     JE	     @@STRDY		     ;Jump if not.
+    184
+    185	0049  F6 C4 20			     TEST    AH, SP2TB		     ;Need to put out some spaces?
+    186	004C  74 12			     JZ	     @@2NUST		     ;Just change states if not.
+    187	004E  2A D5			     SUB     DL, CH		     ;Enough room for spaces?
+    188	0050  76 14			     JNA     @@ERRXIT		     ;Uh-oh, if	not,
+    189	0052  51			     PUSH    CX			     ;else get us some working registers.
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 6
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+    190	0053  8A CD			     MOV     CL, CH		     ;Ready the	count.
+    191	0055  32 ED			     XOR     CH, CH
+    192	0057  E3 06			     JCXZ    @@NOSP		     ;Jump if no spaces	needed.
+    193	0059  50			     PUSH    AX
+    194	005A  B0 20			     MOV     AL, SPACE		     ;Put out the spaces.
+    195	005C  F3>			     REP
+    196	005D  AA			     STOSB
+    197	005E  58			     POP     AX
+    198	005F			     @@NOSP:
+    199	005F  59			     POP     CX			     ;Restore things.
+    200	0060			     @@2NUST:
+    201	0060  E8 01D5			     CALL    SWSTATS		     ;Change states.
+    202	0063			     @@STRDY:
+    203	0063  E9 0099			     JMP     @@INTST		     ;Go to processing loop.
+    204				     ;
+    205				     ; Exit with error
+    206				     ;
+    207	0066			     @@ERRXIT:
+    208	0066  8B 7E 0A			     MOV     DI, [WORD @@OutSt]
+    209	0069  33 C0			     XOR     AX, AX		     ;Return zero-length output	string.
+    210	006B  AB			     STOSW
+    211	006C  48			     DEC     AX			     ;Return -1	error code.
+    212	006D  8B D0			     MOV     DX, AX
+    213	006F  83 C4 04			     ADD     SP, @@VARSIZ	     ;Deallocate local variables.
+    214	0072  CB			     RETF			     ;Back to caller.
+    215				     ;
+    216				     ; Register	useage:	AH - current state control bits
+    217				     ;			AL - current character
+    218				     ;			BX - pointer to	translate table
+    219				     ;			CH - count spaces during space-to-tab conversions
+    220				     ;			CL - count to next tab position
+    221				     ;			DH - input string counter
+    222				     ;			DL - output string counter
+    223				     ;			DS:SI -	input string pointer
+    224				     ;			ES:DI -	output string pointer
+    225				     ;
+    226
+    227				     ;
+    228				     ; Process one-space interval
+    229				     ;
+    230	0073			     @@XTRATB:
+    231	0073  80 E4 BF			     AND     AH, NOT NDTB	     ;Kill the flag.
+    232	0076  FE CA			     DEC     DL			     ;Plant tab	for one-space interval
+    233	0078  74 54			     JZ	     @@OUTFUL		     ;now that we know there is	more than
+    234	007A  AA			     STOSB			     ;one space.
+    235	007B  32 ED			     XOR     CH, CH		     ;Unprocessed spaces count starts over.
+    236	007D  EB 11			     JMP     @@CTTB		     ;Continue processing
+    237				     ;
+    238				     ; Process conversion of spaces to tabs
+    239				     ;
+    240	007F			     @@SPC2TBS:
+    241	007F  F6 C4 02			     TEST    AH, SP2TBS		     ;Compress spaces?
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 7
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+    242	0082  74 6C			     JZ	     @@CHROUT		     ;Treat as non-special character.
+    243	0084  F6 C4 20			     TEST    AH, SP2TB		     ;Are we processing	spaces-to-tabs now?
+    244	0087  74 1B			     JZ	     @@STSP2TB		     ;Go start it if not right now.
+    245	0089  B0 09			     MOV     AL, TAB
+    246	008B  F6 C4 40			     TEST    AH, NDTB		     ;Do we need an extra tab?
+    247	008E  75 E3			     JNZ     @@XTRATB		     ;Yes, to complete last interval (which
+    248	0090			     @@CTTB:				     ;only had one space).
+    249	0090  FE C5			     INC     CH			     ;Count the	space we have now.
+    250	0092  FE C9			     DEC     CL			     ;Time to put in a tab?
+    251	0094  75 69			     JNZ     @@INTST		     ;Jump if not yet.
+    252	0096  FE CA			     DEC     DL			     ;Store the	tab.
+    253	0098  74 34			     JZ	     @@OUTFUL
+    254	009A  AA			     STOSB
+    255	009B  2E: 8A 0E	0421		     MOV     CL, [CS:TABWDTH]	     ;Distance to next tab stop.
+    256	00A0  32 ED			     XOR     CH, CH		     ;Reset the	space counter.
+    257	00A2  EB 5B			     JMP     @@INTST
+    258				     ;
+    259				     ; Start new conversion interval
+    260				     ;
+    261	00A4			     @@STSP2TB:
+    262	00A4  80 CC 20			     OR	     AH, SP2TB		     ;Flag "converting spaces to tabs".
+    263	00A7  B5 01			     MOV     CH, 1		     ;Initialize space count.
+    264	00A9  FE C9			     DEC     CL			     ;Right next to tab	stop?
+    265	00AB  75 52			     JNZ     @@INTST		     ;To next character	if not.
+    266
+    267	00AD  80 CC 40			     OR	     AH, NDTB		     ;If yes, note we might need a tab,
+    268	00B0  2E: 8A 0E	0421		     MOV     CL, [CS:TABWDTH]	     ;and start	next tab stop.
+    269	00B5  EB 48			     JMP     @@INTST
+    270				     ;
+    271				     ; Spaces end before next tab stop
+    272				     ;
+    273	00B7			     @@FNSHSC:
+    274	00B7  2A D5			     SUB     DL, CH		     ;Enough room for spaces?
+    275	00B9  76 13			     JNA     @@OUTFUL
+    276	00BB  51			     PUSH    CX			     ;Okay, get	us some	working	registers.
+    277	00BC  8A CD			     MOV     CL, CH		     ;Ready the	count.
+    278	00BE  32 ED			     XOR     CH, CH
+    279	00C0  E3 06			     JCXZ    @@NUN		     ;Jump if no spaces	to plant.
+    280	00C2  50			     PUSH    AX
+    281	00C3  B0 20			     MOV     AL, SPACE		     ;No tab, put out the
+    282	00C5  F3>			     REP			     ;original spaces.
+    283	00C6  AA			     STOSB
+    284	00C7  58			     POP     AX
+    285	00C8			     @@NUN:
+    286	00C8  59			     POP     CX			     ;Restore things.
+    287	00C9  80 E4 9F			     AND     AH, NOT (SP2TB OR NDTB) ;Not converting a space sequence.
+    288	00CC  EB 1E			     JMP     @@TBTST		     ;Go see what we've	got.
+    289				     ;
+    290				     ; Output string overflows
+    291				     ;
+    292	00CE			     @@OUTFUL:				     ;If the output string overflows,
+    293	00CE  8A 46 FC			     MOV     AL, [@@SAVEAREA]	     ;switch back to original entry state,
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 8
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+    294	00D1  E8 0164			     CALL    SWSTATS
+    295	00D4  8B 46 FD			     MOV     AX, [WORD @@SAVEAREA+1] ;then restore other entry conditions.
+    296	00D7  2E: A3 041F		     MOV     [WORD CS:NXTST], AX
+    297	00DB  EB 89			     JMP     @@ERRXIT		     ;Go to return error code.
+    298				     ;
+    299				     ; Main processing loop
+    300				     ;
+    301	00DD			     @@MORE:
+    302	00DD  AC			     LODSB			     ;Get next byte.
+    303	00DE  F6 C4 08			     TEST    AH, END1		     ;Processing one-character state?
+    304	00E1  75 71			     JNZ     @@1SHOT		     ;Jump if yes.
+    305	00E3  3C 20			     CMP     AL, SPACE		     ;Is it a space?
+    306	00E5  74 98			     JE	     @@SPC2TBS		     ;See if compressing if yes.
+    307	00E7  F6 C4 20			     TEST    AH, SP2TB		     ;Doing space compression?
+    308	00EA  75 CB			     JNZ     @@FNSHSC		     ;Need to put out some spaces if yes.
+    309	00EC			     @@TBTST:
+    310	00EC  3C 09			     CMP     AL, TAB		     ;Have we a	tab?
+    311	00EE  74 39			     JE	     @@XPNDTBS		     ;Yes, go expand it	if that's needed.
+    312	00F0			     @@CHROUT:
+    313	00F0  FE CA			     DEC     DL			     ;Move character to	output if there's
+    314	00F2			     @@RELAY:				     ;enough room.  (also used as a relay
+    315	00F2  74 DA			     JZ	     @@OUTFUL		     ;from out-of-range	jump.)
+    316	00F4  AA			     STOSB
+    317	00F5  FE C9			     DEC     CL			     ;Count distance to	next tab point.
+    318	00F7  74 29			     JZ	     @@2NXTTB		     ;Reset if we hit one.
+    319	00F9			     @@XLT:
+    320	00F9  2E: D7			     XLAT    [CS:XLATTBL]	     ;Does this	character flag state change?
+    321	00FB  0A C0			     OR	     AL, AL
+    322	00FD  75 46			     JNZ     @@SCHG		     ;Jump if it does.
+    323	00FF			     @@INTST:
+    324	00FF  FE CE			     DEC     DH			     ;Input string exhausted?
+    325	0101  75 DA			     JNZ     @@MORE		     ;Process next character if	not.
+    326				     ;
+    327				     ; Normal exit
+    328				     ;
+    329	0103  2E: 89 0E	041C		     MOV     [WORD CS:NXTAB], CX     ;Save current status
+    330	0108  2E: 88 26	0420		     MOV     [CS:CTRLBTS], AH
+    331	010D  8A 46 FF			     MOV     AL, [@@SAVEAREA+3]	     ;Calculate	size of	output string--
+    332	0110  2A C2			     SUB     AL, DL
+    333	0112  33 D2			     XOR     DX, DX
+    334	0114  8A E6			     MOV     AH, DH
+    335	0116  8B 7E 0A			     MOV     DI, [WORD @@OutSt]	     ;--and store it there.
+    336	0119  AB			     STOSW
+    337	011A  2E: A0 041E		     MOV     AL, [CS:CRNTST]	     ;Return current state as an integer.
+    338	011E  83 C4 04			     ADD     SP, @@VARSIZ	     ;Release space for	local variables.
+    339	0121  CB			     RETF
+    340				     ;
+    341				     ; Start new tab interval
+    342				     ;
+    343	0122			     @@2NXTTB:
+    344	0122  2E: 8A 0E	0421		     MOV     CL, [CS:TABWDTH]
+    345	0127  EB D0			     JMP     @@XLT
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 9
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+    346				     ;
+    347				     ; Expand tabs
+    348				     ;
+    349	0129			     @@XPNDTBS:
+    350	0129  F6 C4 01			     TEST    AH, XPTBS		     ;Are we expanding tabs?
+    351	012C  75 04			     JNZ     @@XTAB		     ;Expand it	if yes,	else
+    352	012E  B1 01			     MOV     CL, 1		     ;force next tab position alignment.
+    353	0130  EB BE			     JMP     @@CHROUT		     ;Copy the tab out.
+    354	0132			     @@XTAB:
+    355	0132  2A D1			     SUB     DL, CL		     ;Be sure there's enough room to hold
+    356	0134  76 98			     JNA     @@OUTFUL		     ;spaces in	the output string.
+    357	0136  32 ED			     XOR     CH, CH
+    358	0138  50			     PUSH    AX
+    359	0139  B0 20			     MOV     AL, SPACE		     ;Move spaces to output string.
+    360	013B  F3>			     REP
+    361	013C  AA			     STOSB
+    362	013D  58			     POP     AX
+    363	013E  2E: 8A 0E	0421		     MOV     CL, [CS:TABWDTH]	     ;Reset count to next tab position.
+    364	0143  EB BA			     JMP     @@INTST		     ;Back to main processing.
+    365				     ;
+    366				     ; Change state
+    367				     ;
+    368	0145			     @@SCHG:
+    369	0145  FE C8			     DEC     AL			     ;Calculate	new state value.
+    370	0147  3C 1F			     CMP     AL, SPACE-1	     ;Use default state?
+    371	0149  75 04			     JNE     @@SWST		     ;Jump if no,
+    372	014B  2E: A0 041F		     MOV     AL, [CS:NXTST]	     ;else get default state.
+    373	014F			     @@SWST:
+    374	014F  E8 00E6			     CALL    SWSTATS		     ;Switch to	new state.
+    375	0152  EB AB			     JMP     @@INTST		     ;Process next character.
+    376				     ;
+    377				     ; Process one-character state
+    378				     ;
+    379	0154			     @@1SHOT:
+    380	0154  FE CA			     DEC     DL			     ;Move character to	output if there's
+    381	0156  74 9A			     JZ	     @@RELAY		     ;enough room.
+    382	0158  AA			     STOSB
+    383	0159  FE C9			     DEC     CL			     ;Count distance to	next tab point.
+    384	015B  74 1C			     JZ	     @@NUTB		     ;Reset if we hit one.
+    385	015D			     @@QBYPS:
+    386	015D  F6 C4 10			     TEST    AH, CHK4BAK	     ;Bypass testing this character?
+    387	0160  74 0E			     JZ	     @@SKIP1		     ;No, just skip it.
+    388	0162			     @@@XLT:
+    389	0162  2E: D7			     XLAT    [CS:XLATTBL]	     ;Does this	character flag state change?
+    390	0164  0A C0			     OR	     AL, AL
+    391	0166  75 DD			     JNZ     @@SCHG		     ;Jump if it does.
+    392
+    393	0168  FE C6			     INC     DH			     ;Back up pointers to reprocess
+    394	016A  4E			     DEC     SI			     ;the last character.
+    395	016B  FE C2			     INC     DL
+    396	016D  4F			     DEC     DI
+    397	016E  FE C1			     INC     CL
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 10
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Routine	To Compress A Line
+
+    398	0170			     @@SKIP1:
+    399	0170  2E: A0 041F		     MOV     AL, [CS:NXTST]	     ;Get default state.
+    400	0174			     @@SWP:
+    401	0174  E8 00C1			     CALL    SWSTATS		     ;Switch states.
+    402	0177  EB 86			     JMP     @@INTST		     ;Process next character.
+    403
+    404	0179			     @@NUTB:
+    405	0179  2E: 8A 0E	0421		     MOV     CL, [CS:TABWDTH]	     ;Start new	tab interval.
+    406	017E  EB DD			     JMP     @@QBYPS
+    407
+    408	0180				     ENDP    TABALINE
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 11
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+End-Of-Line Processing
+
+    409				     ;===============================================================================
+    410				     ;
+    411				     ;	     integer proc EndALine( var	string LineOut )		      :	3
+    412				     ;
+    413				     ;	     You call this function whenever you reach an end of line.	Since TSE
+    414				     ;	     allows for	lines longer than 255 bytes, and the maximum length of	a
+    415				     ;	     string  is	 255  bytes, you may have to send the line to TabALIne in
+    416				     ;	     pieces.  (See the notes for "TabALines", above.)	Thus  we  need	a
+    417				     ;	     separate function to signal an end-of-line	condition.
+    418				     ;
+    419				     ;	     Call  EndALine with a var string parameter.  Usually nothing will be
+    420				     ;	     put in this string, but in	the case  where	 you  are  NOT	stripping
+    421				     ;	     trailing  spaces  from  each  line, the line ends in spaces, you are
+    422				     ;	     converting	spaces to tabs,	and the	 spaces	 do  not  end  at  a  tab
+    423				     ;	     boundary,	you  will  find	 some spaces here to tack onto the end of
+    424				     ;	     your result line.	The size of this string	need not exceed	the  size
+    425				     ;	     of	the tab	width.
+    426				     ;
+    427				     ;	     The  return value is either -1 (in	case your "LineOut" string is too
+    428				     ;	     short to take spaces generated)  or  the  state  that  results  from
+    429				     ;	     reaching end of line.  You	must save the returned state value to use
+    430				     ;	     in	your next call to TabALine().
+    431				     ;
+    432				     ;-------------------------------------------------------------------------------
+    433
+    434	0180				     PROC    ENDALINE FAR
+    435
+    436					     ; The stack:
+    437	      =	[DWORD BP+6]	     @@OutSt EQU    [DWORD BP+6]	     ;Pointer to result	string.
+    438	      =	[WORD BP+4]	     @@OSMxL EQU    [WORD BP+4]		     ;Maximum length of	result string.
+    439				     ; ret address   BP	+ 0
+    440
+    441	0180  8B EC			     MOV     BP, SP		     ;Address parameter.
+    442	0182  FC			     CLD
+    443
+    444	0183  C4 7E 06			     LES     DI, @@OutSt	     ;Locate output string.
+    445	0186  33 C0			     XOR     AX, AX
+    446	0188  2E: F6 06	0420 20		     TEST    [CS:CTRLBTS], SP2TB     ;Converting a string of spaces?
+    447	018E  74 04			     JZ	     @@SETSIZ		     ;Jump if not.
+    448	0190  2E: A0 041D		     MOV     AL, [CS:SPCCT]	     ;Get count	of spaces needed.
+    449	0194			     @@SETSIZ:
+    450	0194  3B 46 04			     CMP     AX, @@OSMxL	     ;Is there enough room for the spaces?
+    451	0197  77 2D			     JA	     @@BUBU		     ;Jump if not.
+    452	0199  AB			     STOSW			     ;Set output string	size.
+    453	019A  8B C8			     MOV     CX, AX		     ;Zero length?
+    454	019C  E3 04			     JCXZ    @@SETTBW		     ;All done if it is,
+    455	019E  B0 20			     MOV     AL, SPACE		     ;else put spaces in output	string.
+    456	01A0  F3>			     REP
+    457	01A1  AA			     STOSB
+    458
+    459	01A2			     @@SETTBW:
+    460	01A2  2E: A0 0421		     MOV     AL, [CS:TABWDTH]	     ;Set first	tab position for next line
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 12
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+End-Of-Line Processing
+
+    461	01A6  2E: A3 041C		     MOV     [WORD CS:NXTAB], AX     ;and clear	SPCCT.
+    462	01AA			     @@AGAIN:
+    463	01AA  2E: A1 041E		     MOV     AX, [WORD CS:CRNTST]    ;Get current and default states.
+    464	01AE  2E: F6 06	0420 04		     TEST    [CS:CTRLBTS], EOLNDS    ;Does EOL end current state?
+    465	01B4  74 0B			     JZ	     @@RTN		     ;Jump if not.
+    466	01B6  3A E0			     CMP     AH, AL		     ;To same state? (Protects against loops,
+    467	01B8  74 07			     JE	     @@RTN		     ;though only immediate ones.)
+    468
+    469	01BA  8A C4			     MOV     AL, AH		     ;Get new state.
+    470	01BC  E8 0079			     CALL    SWSTATS		     ;Set it.
+    471	01BF  EB E9			     JMP     @@AGAIN		     ;See if we	back out of this, too.
+    472	01C1			     @@RTN:
+    473	01C1  33 D2			     XOR     DX, DX		     ;Return what is now current state.
+    474	01C3  8A E6			     MOV     AH, DH
+    475	01C5  CB			     RETF			     ;Back to caller.
+    476				     ;
+    477	01C6			     @@BUBU:
+    478	01C6  33 C0			     XOR     AX, AX		     ;In case result string is too short,
+    479	01C8  AB			     STOSW			     ;return zero-length string
+    480	01C9  48			     DEC     AX			     ;and a -1 return code.
+    481	01CA  8B D0			     MOV     DX, AX
+    482	01CC  CB			     RETF
+    483
+    484	01CD				     ENDP    ENDALINE
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 13
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Initialization Routine
+
+    485				     ;===============================================================================
+    486				     ;
+    487				     ;	     integer proc StartTabs( string SetupString, integer TabSize )    :	0
+    488				     ;
+    489				     ;	     You supply	a setup	string as described elsewhere, and the width of	a
+    490				     ;	     tab.  If everything is okay, StartTabs returns  the  starting  state
+    491				     ;	     (0, if you	must know).  It	is this	state value that you pass back in
+    492				     ;	     when you call TabALine.  If an error occurs, -1 is	returned.
+    493				     ;
+    494				     ;	     NOTE:  the	 only error that is checked for	is a setup string that is
+    495				     ;	     NOT an integral number of four-character entries long, or	one  with
+    496				     ;	     more  than	 16  entries,  or  one	with  NO entries.  You have to be
+    497				     ;	     careful about preparing your entries, and you should test them  with
+    498				     ;	     care.   You don't have to do this very often, so it should	NOT be an
+    499				     ;	     imposition.  If necessary,	we can add more	checks at another time.
+    500				     ;
+    501				     ;	     If	 TabSize  is zero, it will be assumed to be 8.	If TabSize is too
+    502				     ;	     big, you'll get an	error (-1) return.  Only the  low-order	 word  is
+    503				     ;	     checked, and it must not exceed 64.
+    504				     ;
+    505				     ;	     StartTabs	must  always be	called before the first	call to	TabALine,
+    506				     ;	     and at any	time that the scanning rules must be changed.
+    507				     ;
+    508				     ;-------------------------------------------------------------------------------
+    509
+    510	01CD				     PROC    STARTTABS FAR
+    511
+    512					     ; The stack:
+    513	      =	[DWORD BP+8]	     @@StpSt EQU    [DWORD BP+8]	     ;Pointer to the setup string.
+    514	      =	[WORD BP+4]	     @@TabSz EQU    [WORD BP+4]		     ;Tab width.
+    515				     ; ret address   BP	+ 0
+    516
+    517	01CD  8B EC			     MOV     BP, SP		     ;To address the parameters.
+    518	01CF  FC			     CLD
+    519
+    520	01D0  33 D2			     XOR     DX, DX		     ;Handy zero.
+    521	01D2  8B 46 04			     MOV     AX, @@TabSz	     ;Get tab width.
+    522	01D5  3D 0040			     CMP     AX, 64		     ;Check for	excessive width.
+    523	01D8  77 21			     JA	     @@BADNESS
+    524	01DA  0A C0			     OR	     AL, AL		     ;If zero, make it 8.
+    525	01DC  75 02			     JNZ     @@SVTB
+    526	01DE  B0 08			     MOV     AL, 8
+    527	01E0			     @@SVTB:
+    528	01E0  2E: A2 0421		     MOV     [CS:TABWDTH], AL	     ;Save tab width.
+    529	01E4  2E: A3 041C		     MOV     [WORD CS:NXTAB], AX     ;Set up position of first tab.
+    530									     ;(Also clears SPCCT.)
+    531	01E8  C5 76 08			     LDS     SI, @@StpSt	     ;Point at the string
+    532	01EB  AD			     LODSW			     ;and get its length.
+    533	01EC  A8 03			     TEST    AL, 3		     ;There must be an integral	number
+    534	01EE  75 0B			     JNZ     @@BADNESS		     ;of 4-character entries.
+    535	01F0  D0 E8			     SHR     AL, 1
+    536	01F2  D0 E8			     SHR     AL, 1
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 14
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Initialization Routine
+
+    537	01F4  74 05			     JZ	     @@BADNESS		     ;There must be at least one entry--
+    538	01F6  3D 0010			     CMP     AX, 16		     ;--but not	more than 16.
+    539	01F9  76 04			     JNA     @@OK2GO
+    540	01FB			     @@BADNESS:
+    541	01FB  4A			     DEC     DX
+    542	01FC  8B C2			     MOV     AX, DX		     ;Set up -1.
+    543	01FE  CB			     RETF			     ;Back to caller.
+    544
+    545	01FF			     @@OK2GO:
+    546	01FF  8B C8			     MOV     CX, AX		     ;Loop count ready.
+    547	0201  8C C8			     MOV     AX, CS		     ;Address the state	table.
+    548	0203  8E C0			     MOV     ES, AX
+    549	0205  BF 02D8			     MOV     DI, OFFSET	STATTBL
+    550				     ;
+    551				     ; Okay, we're ready to go.
+    552				     ;
+    553				     ; Register	useage:	AL - Entry character being processed.
+    554				     ;			CX - Count of entries to process.
+    555				     ;			DX - preset to zero for	return value and handy constant.
+    556				     ;			DS:SI -	Pointer	to next	character in setup string.
+    557				     ;			ES:DI -	Pointer	to next	place in entry table.
+    558				     ;
+    559	0208			     @@NXTNTRY:
+    560	0208  AD			     LODSW			     ;Next entry: Get control bits and state.
+    561	0209  FE CC			     DEC     AH			     ;Suck 'em down by one, then
+    562	020B  FE C8			     DEC     AL			     ;mask off upper nybble.
+    563	020D  25 0F0F			     AND     AX, 0F0Fh
+    564	0210  AB			     STOSW			     ;Store results.
+    565	0211  AD			     LODSW			     ;Get next bytes.
+    566	0212  80 FC 20			     CMP     AH, SPACE		     ;Prepare "next state" byte.
+    567	0215  74 07			     JE	     @@RQDFLT		     ;Don't mask it if it requests default.
+    568	0217  FE CC			     DEC     AH			     ;This forces next state into the range
+    569	0219  80 E4 0F			     AND     AH, 0Fh		     ;1	- 16.  We don't	want a zero value
+    570	021C  FE C4			     INC     AH			     ;since it will go into the	XLAT table.
+    571	021E			     @@RQDFLT:
+    572	021E  AB			     STOSW			     ;Store next state and character.
+    573	021F  E2 E7			     LOOP    @@NXTNTRY		     ;Process all entries.
+    574
+    575	0221  B8 FF00			     MOV     AX,0FF00h		     ;Plant stopper.
+    576	0224  AB			     STOSW
+    577
+    578	0225  8B C2			     MOV     AX, DX		     ;Clear the	translate table.
+    579	0227  B1 80			     MOV     CL, 128		     ;CH is already zero.
+    580	0229  BF 031A			     MOV     DI, OFFSET	XLATTBL
+    581	022C  F3>			     REP
+    582	022D  AB			     STOSW
+    583	022E  2E: A2 041F		     MOV     [CS:NXTST], AL
+    584	0232  E8 003C			     CALL    NEWSTATE		     ;Set up table for initial state (zero).
+    585
+    586	0235  8B C2			     MOV     AX, DX		     ;Return starting state to caller.
+    587	0237  CB			     RETF			     ;Done.
+    588
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 15
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Initialization Routine
+
+    589	0238				     ENDP    STARTTABS
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 16
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Helper Subroutines
+
+    590				     ;===============================================================================
+    591				     ;
+    592				     ;	     Helper subroutines
+    593				     ;
+    594				     ;-------------------------------------------------------------------------------
+    595
+    596				     ;
+    597				     ; Switch states
+    598				     ;
+    599				     ;	     NOTE:  Enter with desired new state in AL
+    600				     ;
+    601	0238				     PROC    SWSTATS NEAR
+    602
+    603	0238  2E: 3A 06	041E		     CMP     AL, [CS:CRNTST]	     ;Is state REALLY changing?
+    604	023D  74 31			     JE	     @@GOBAK		     ;Skip processing if not.
+    605				     ;
+    606				     ; Register	useage:	AH - current state
+    607				     ;			AL - new state being requested
+    608				     ;			BH - handy zero	value
+    609				     ;			BX - index into	XLAT table
+    610				     ;			SI - pointer into STATTBL
+    611				     ;
+    612	023F  56			     PUSH    SI			     ;These registers will be used,
+    613	0240  53			     PUSH    BX			     ;so save them.
+    614
+    615	0241  2E: 8A 26	041E		     MOV     AH, [CS:CRNTST]	     ;Get current state.
+    616	0246  2E: 88 26	041F		     MOV     [CS:NXTST], AH	     ;Save as next default state.
+    617	024B  2E: 8B 36	041A		     MOV     SI, [CS:CEPTR]	     ;Get pointer to current state 1st entry.
+    618	0250  32 FF			     XOR     BH, BH
+    619	0252			     @@CLRNXT:
+    620	0252  2E: 8A 9C	02DA		     MOV     BL, [CS:(STATTBL+SI).CHR] ;Get next control character.
+    621	0257  2E: 88 BF	031A		     MOV     [CS:XLATTBL+BX], BH     ;Clear its	entry in translate table.
+    622	025C  83 C6 04			     ADD     SI, 4		     ;Bump to next state table entry.
+    623	025F  2E: 3A A4	02D9		     CMP     AH, [CS:(STATTBL+SI).STATE] ;Is it	part of	this state?
+    624	0264  73 EC			     JAE     @@CLRNXT			 ;Go clear it if yes.
+    625
+    626	0266  E8 0008			     CALL    NEWSTATE		     ;Go set up	the new	state.
+    627
+    628	0269  5B			     POP     BX			     ;Restore caller.
+    629	026A  5E			     POP     SI
+    630	026B  2E: 8A 26	0420		     MOV     AH, [CS:CTRLBTS]	     ;Get new control bits.
+    631	0270			     @@GOBAK:
+    632	0270  C3			     RETN
+    633
+    634	0271				     ENDP    SWSTATS
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 17
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Helper Subroutines
+
+    635				     ;
+    636				     ; Set up new state
+    637				     ;
+    638				     ;	     NOTE: This	routine	expects	the desired new	state to be in AL
+    639				     ;
+    640	0271				     PROC    NEWSTATE NEAR
+    641
+    642	0271  32 FF			     XOR     BH, BH		     ;Need some	zero values.
+    643	0273  8A E7			     MOV     AH, BH
+    644	0275  8B F0			     MOV     SI, AX
+    645	0277  D1 E6			     SHL     SI, 1		     ;Calculate	offset in STATTBL to
+    646	0279  D1 E6			     SHL     SI, 1		     ;first entry for this state.
+    647	027B  2E: 89 36	041A		     MOV     [CS:CEPTR], SI	     ;Save for next clear-state.
+    648	0280  2E: A2 041E		     MOV     [CS:CRNTST], AL	     ;Plant new	state value.
+    649	0284  2E: 8A 9C	02DB		     MOV     BL, [CS:(STATTBL+SI).NXTSTAT]
+    650	0289  80 FB 20			     CMP     BL, SPACE		     ;If next state is not space,
+    651	028C  74 07			     JE	     @@GTDFLT		     ;save it as possible default.
+    652	028E  FE CB			     DEC     BL			     ;(Value is	one higher than	correct.)
+    653	0290  2E: 88 1E	041F		     MOV     [CS:NXTST], BL
+    654	0295			     @@GTDFLT:
+    655	0295  2E: 8A 9C	02D8		     MOV     BL, [CS:(STATTBL+SI).CTLBTS]
+    656	029A  2E: 80 BC	02DA 20		     CMP     [CS:(STATTBL+SI).CHR], SPACE
+    657	02A0  74 03			     JE	     @@SAVNXT		     ;Space can't be found.  If	not space,
+    658	02A2  80 CB 10			     OR	     BL, CHK4BAK	     ;then we may have to retest char.
+    659	02A5			     @@SAVNXT:
+    660	02A5  2E: 88 1E	0420		     MOV     [CS:CTRLBTS], BL	     ;Make it easy to access control bits.
+    661	02AA  EB 06			     JMP     @@1STNTRY
+    662				     ;
+    663				     ; Register	useage:	AH - used to store (next state + 1) in XLAT table
+    664				     ;			AL - New state value
+    665				     ;			BX - Index into	translate table
+    666				     ;			SI - Offset to current entry in	state table
+    667				     ;
+    668	02AC			     @@NXTNTRY:
+    669	02AC  2E: 80 0E	0420 10		     OR	     [CS:CTRLBTS], CHK4BAK	 ;More than one	entry for this state
+    670										 ;means	we may have to retest last
+    671	02B2			     @@1STNTRY:					 ;character if others not found.
+    672	02B2  2E: 8B 9C	02DA		     MOV     BX, [WORD CS:(STATTBL+SI).CHR]
+    673	02B7  8A E7			     MOV     AH, BH			 ;Get character	and use	as index
+    674	02B9  32 FF			     XOR     BH, BH			 ;into translate table to store
+    675	02BB  2E: 88 A7	031A		     MOV     [CS:XLATTBL+BX], AH	 ;next state.
+    676	02C0  83 C6 04			     ADD     SI, 4			 ;Bump to next state table entry.
+    677	02C3  2E: 3A 84	02D9		     CMP     AL, [CS:(STATTBL+SI).STATE] ;Is it	part of	this state?
+    678	02C8  73 E2			     JAE     @@NXTNTRY			 ;Include it if	yes.
+    679
+    680	02CA  2E: C6 06	0323 00		     MOV     [CS:XLATTBL+TAB], 0	 ;Space	and tab	have
+    681	02D0  2E: C6 06	033A 00		     MOV     [CS:XLATTBL+SPACE], 0	 ;special meanings.
+    682
+    683	02D6  C3			     RETN				 ;Back to caller.
+    684
+    685	02D7				     ENDP    NEWSTATE
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 18
+TABOLATE.ASM
+Tab Conversion Support For Semware Editor Macros
+Constants and Work Areas
+
+    686				     ;===============================================================================
+    687				     ;
+    688				     ;	     The XLAT table, the State Table and other such things that	can't be
+    689				     ;	     allocated on the stack are	kept here.
+    690				     ;
+    691				     ;-------------------------------------------------------------------------------
+    692
+    693				     ;
+    694				     ;	This is	the state table	that controls the operation of the Tabolator.
+    695				     ;	It can hold a MAXIMUM of 16 entries.
+    696				     ;
+    697	02D7  ??			     EVENDATA
+    698	02D8  10*(00 00	20 00)	     STATTBL CTLNTRY 16	DUP ({})	     ;Initialized to do-nothing.
+    699	0318  FF00			     DW	     0FF00h		     ;Stopper (high value in .STATE).
+    700				     ;
+    701				     ;	The XLAT table is used to determine the	course of action to be taken when
+    702				     ;	a particular character is encountered while scanning a line.
+    703				     ;
+    704
+    705	031A  0100*(00)		     XLATTBL DB	     256 DUP (0)	     ;Initialized to zeros (do nothing).
+    706
+    707				     ;
+    708				     ;	Variables that have to be preserved between calls to Tabolator routines
+    709				     ;
+    710				     ;	     WARNING! DO NOT CHANGE THE	ORDER OR SIZE OF ANY OF	THESE VARIABLES!
+    711				     ;		      They are,	on occasion, picked up and deposited in	pairs!
+    712				     ;
+    713	041A  0000		     CEPTR   DW	     0		     ;Direct offset to current entry in	STATTBL.
+    714	041C  00		     NXTAB   DB	     0		     ;Count to next tab	stop.
+    715	041D  00		     SPCCT   DB	     0		     ;Accumulated spaces to be converted to tab.
+    716	041E  00		     CRNTST  DB	     0		     ;Current state.
+    717	041F  00		     NXTST   DB	     0		     ;Possible default state to	use.
+    718	0420  00		     CTRLBTS DB	     0		     ;Control bits for this state.
+    719	0421  00		     TABWDTH DB	     0		     ;The width	of a tab with high-order zero.
+    720
+    721
+    722	0422				     ENDS    _TEXT
+    723
+    724					     END
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 19
+Symbol Table
+Tab Conversion Support For Semware Editor Macros
+
+
+
+Symbol Name		Type   Value			   Cref	(defined at #)
+
+??DATE			Text   "07/08/93"
+??FILENAME		Text   "TABOLATE"
+??TIME			Text   "19:08:53"
+??VERSION		Number 0314
+@@1SHOT			Near   _TEXT:0154		   304	#379
+@@1STNTRY		Near   _TEXT:02B2		   661	#671
+@@2NUST			Near   _TEXT:0060		   186	#200
+@@2NXTTB		Near   _TEXT:0122		   318	#343
+@@@XLT			Near   _TEXT:0162		   #388
+@@AGAIN			Near   _TEXT:01AA		   #462	 471
+@@BADNESS		Near   _TEXT:01FB		   523	534  537  #540
+@@BUBU			Near   _TEXT:01C6		   451	#477
+@@CHROUT		Near   _TEXT:00F0		   242	#312  353
+@@CLRNXT		Near   _TEXT:0252		   #619	 624
+@@CTTB			Near   _TEXT:0090		   236	#248
+@@ERRXIT		Near   _TEXT:0066		   188	#207  297
+@@FNSHSC		Near   _TEXT:00B7		   #273	 308
+@@GOBAK			Near   _TEXT:0270		   604	#631
+@@GTDFLT		Near   _TEXT:0295		   651	#654
+@@INSTR			Text   [DWORD BP+16]		   #143	 163
+@@INTST			Near   _TEXT:00FF		   203	251  257  265  269  #323  364  375  402
+@@MORE			Near   _TEXT:00DD		   #301	 325
+@@NOSP			Near   _TEXT:005F		   192	#198
+@@NUN			Near   _TEXT:00C8		   279	#285
+@@NUTB			Near   _TEXT:0179		   384	#404
+@@NXTNTRY		Near   _TEXT:0208		   #559	 573
+@@NXTNTRY		Near   _TEXT:02AC		   #668	 678
+@@OK2GO			Near   _TEXT:01FF		   539	#545
+@@OSMXL			Text   [BYTE BP+8]		   #147	 169
+@@OSMXL			Text   [WORD BP+4]		   #438	 450
+@@OSRDY			Near   _TEXT:002A		   171	#173
+@@OUTFUL		Near   _TEXT:00CE		   233	253  275  #292	315  356
+@@OUTST			Text   BP+10			   #145	 167  208  335
+@@OUTST			Text   [DWORD BP+6]		   #437	 444
+@@QBYPS			Near   _TEXT:015D		   #385	 406
+@@RELAY			Near   _TEXT:00F2		   #314	 381
+@@RQDFLT		Near   _TEXT:021E		   567	#571
+@@RSTAT			Text   [BYTE BP+4]		   #149	 178
+@@RTN			Near   _TEXT:01C1		   465	467  #472
+@@SAVEAREA		Number [BP-0004]		   #152	 161  174  177	293  295  331
+@@SAVNXT		Near   _TEXT:02A5		   657	#659
+@@SCHG			Near   _TEXT:0145		   322	#368  391
+@@SETSIZ		Near   _TEXT:0194		   447	#449
+@@SETTBW		Near   _TEXT:01A2		   454	#459
+@@SKIP1			Near   _TEXT:0170		   387	#398
+@@SPC2TBS		Near   _TEXT:007F		   #240	 306
+@@STPST			Text   [DWORD BP+8]		   #513	 531
+@@STRDY			Near   _TEXT:0063		   183	#202
+@@STSP2TB		Near   _TEXT:00A4		   244	#261
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 20
+Symbol Table
+Tab Conversion Support For Semware Editor Macros
+
+
+@@SVTB			Near   _TEXT:01E0		   525	#527
+@@SWP			Near   _TEXT:0174		   #400
+@@SWST			Near   _TEXT:014F		   371	#373
+@@TABSZ			Text   [WORD BP+4]		   #514	 521
+@@TBTST			Near   _TEXT:00EC		   288	#309
+@@VARSIZ		Number 0004			   #152	 157  213  338
+@@XLT			Near   _TEXT:00F9		   #319	 345
+@@XPNDTBS		Near   _TEXT:0129		   311	#349
+@@XTAB			Near   _TEXT:0132		   351	#354
+@@XTRATB		Near   _TEXT:0073		   #230	 247
+@CPU			Text   0101H
+@CURSEG			Text   _TEXT			   #35
+@FILENAME		Text   TABOLATE
+@WORDSIZE		Text   2			   #35
+CEPTR			Word   _TEXT:041A		   617	647  #713
+CHK4BAK			Number 0010			   #50	386  658  669
+CRNTST			Byte   _TEXT:041E		   160	182  337  463  603  615	 648  #716
+CTRLBTS			Byte   _TEXT:0420		   176	330  446  464  630  660	 669  #718
+END1			Number 0008			   #47	303
+ENDALINE		Far    _TEXT:0180		   82  #434
+EOLNDS			Number 0004			   #46	464
+NDTB			Number 0040			   #52	231  246  267  287
+NEWSTATE		Near   _TEXT:0271		   584	626  #640
+NXTAB			Byte   _TEXT:041C		   175	329  461  529  #714
+NXTST			Byte   _TEXT:041F		   296	372  399  583  616  653	 #717
+SP2TB			Number 0020			   #51	185  243  262  287  307	 446
+SP2TBS			Number 0002			   #45	241
+SPACE			Number 0020			   55  #63  194	 281  305  359	370  455  566  650  656	 681
+SPCCT			Byte   _TEXT:041D		   448	#715
+STARTTABS		Far    _TEXT:01CD		   79  #510
+STATTBL			Struct _TEXT:02D8 CTLNTRY	   549	620  623  649  655  656	 672  677  #698
+SWSTATS			Near   _TEXT:0238		   201	294  374  401  470  #601
+TAB			Number 0009			   #62	245  310  680
+TABALINE		Far    _TEXT:0006		   #140
+TABWDTH			Byte   _TEXT:0421		   255	268  344  363  405  460	 528  #719
+VECTORS			Near   _TEXT:0000		   #75
+XLATTBL			Byte   _TEXT:031A		   180	320  389  580  621  675	 680  681  #705
+XPTBS			Number 0001			   #44	350
+
+Macro Name						   Cref	(defined at #)
+
+JUMP							   #69	77  80
+
+Structure Name		Type  Offset			   Cref	(defined at #)
+
+CTLNTRY							   #42	698
+ CTLBTS			Byte   0000
+ STATE			Byte   0001
+ CHR			Byte   0002
+ NXTSTAT		Byte   0003
+Turbo Assembler	 Version 3.2	    07/08/93 19:08:58	    Page 21
+Symbol Table
+Tab Conversion Support For Semware Editor Macros
+
+
+
+Groups & Segments	Bit Size Align	Combine	Class	   Cref	(defined at #)
+
+_TEXT			16  0422 Para	none		   #35	36
+

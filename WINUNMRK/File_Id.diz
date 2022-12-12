@@ -1,0 +1,4 @@
+(10-03-2004) - WinUnMrk for TSE Pro 4.0 upwards.
+WinUnMrk unmarks Windows-blocks after direction keys.
+A Windows-block is what TSE calls a _non_inclusive_ block.
+Author: Carlo.Hogeveen@xs4all.nl.

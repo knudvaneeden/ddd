@@ -1,0 +1,8 @@
+SMTHSCRL -- Put this in your AutoLoad list 
+to make the vertical scrollbar in TSE 
+editing windows scroll proportional to how 
+many pixels you move the mouse, rather than 
+how many characters you move the mouse.  For 
+TSE 2.6 and higher, both console and GUI 
+versions.  See the enclosed SMTHSCRL.TXT for 
+details.

@@ -1,0 +1,9 @@
+<06-05-01> v4.00 replaces v3.4 dated 05-14-01
+This package includes SAL macros, which allow
+you to edit your TSE-Pro v2.5 and TSE Pro/32
+key macros.  DeComp reads a binary keyboard
+macro file and produces a readable key
+listing.  This listing can be altered and
+recompiled to binary format using ReComp.
+EditKbd can be used to change the currently
+defined key macros on the fly.

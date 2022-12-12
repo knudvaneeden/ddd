@@ -1,0 +1,6 @@
+<08-22-98>   TSE Pro v2.5 and TSE Pro/32 v2.8
+This macro will add the macro descriptions
+from a source Potpourr.dat file to a
+destination Potpourr.dat file, overwriting
+duplicate descriptions.
+Author: Carlo Hogeveen (hyphen@xs4all.nl)

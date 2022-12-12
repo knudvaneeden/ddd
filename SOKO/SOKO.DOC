@@ -1,0 +1,63 @@
+Welcome ...
+------------
+
+Here's the SAL version of SOKOBAN - I did this mainly to learn more about 
+SAL, and I liked what I learned. This archive contains SOKO.S, 50 level 
+files named LEVEL.01 to LEVEL.50, and this documentation file.
+
+
+The aim of the game
+-------------------
+
+In the unlikely case you never heard of SOKOBAN, the aim of the game is 
+simple: move all stars (*) to the storage positions (ú), by pushing them 
+with the 'actor' (). You may only push, not pull them, and only one at a 
+time. When you push a star onto a storage position, it will change its aspect
+from '*' to ''. (N.B. Your actor will also look different on a storage 
+position: it changes its aspect from  to )
+
+         
+Compiling the macro
+-------------------
+
+You can either compile SOKO.S from the commandline, using
+
+   SC SOKO.S
+
+or from within TSE: load SOKO.S into the editor, and hit Ctrl-F9 to compile
+it. When asked whether to Execute or Load the macro, select Load.
+
+
+Playing
+-------
+
+To play, load one of the level files (start with LEVEL.01) into TSE and hit 
+Ctrl-X, then specify SOKO. The macro will switch to 'SOKOBAN Mode' and 
+position the cursor on the actor - just move it with the cursor keys.
+
+To exit SOKOBAN mode at any time, hit ESC. To resume playing, launch the 
+macro again (repeat the above procedure). When you solved a level, the macro
+will automatically quit SOKOBAN mode.
+
+
+Tips, Room for improvement
+--------------------------
+
+To save the state of a level that you haven't completely solved, just save 
+the file. I suggest you keep a copy of the distribution archive so that you 
+can later go back to the original levels. There's much room for improvement
+in the current version of this macro. Automatic loading of the next level
+could be added, as well as a 'save status' and 'restore status' key or even 
+a genuine 'undo' feature. The SAL programming itself can probably also stand 
+some improvement - this is my first try at anything nontrivial in SAL, and 
+some of the workarounds are less than elegant. Feel free to improve and 
+enhance, and please share whatever you come up with.
+
+Author
+------
+
+Written by Gilles Kohl, CIS Id # 100114,3146.
+
+
+
+ 

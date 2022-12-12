@@ -1,0 +1,9 @@
+Win95Xit shuts down TSE, if it is
+running in a windowed session under
+Win95 after the user has chosen the
+Windows Close command. Moreover, it
+displays the current filename as the
+title of the window. This also includes
+some hints how you can start TSE from
+the Windows Explorer loading marked
+files.

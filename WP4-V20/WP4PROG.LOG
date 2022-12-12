@@ -1,0 +1,54 @@
+*****************************************************************************
+
+            WordPerfect For Programmers User Interface for
+                       The SemWare Editor V2.0
+       The Semware Editor Copyright 1991-1994 SemWare Corporation.
+                    All Rights Reserved Worldwide.
+
+           WordPerfect for Programmers Interface by Mike Hammer
+                          Original Release 4/93
+
+                      Log of changes made to interface
+
+*****************************************************************************
+
+10/1/94     Tested with Production/Final Release v.2.0.  Finally gave up
+            on underlining -- you'll have to plug in an underliner
+            yourself in the F8 key.  (See WP4PROG.DOC under F8)
+
+6/7/94      Adjusted for Beta version 1.52B. Many changes to routine and
+            variable names; the CONVERT.S macro provided by Semware did
+            most of the work.  Thanks, guys!
+
+3/31/94     Adjusted for Beta version 1.51O. Played with colors a lot
+            lately, with help from many beta testers, and have settled
+            on a slight variation of Phyllis Holt's color scheme. Thanks,
+            Phyllis!
+
+1/15/94     Adjusted for Beta version 1.51A. Implemented Semware spell
+            checking package from beta TSE.
+
+12/19/93    Adjusted for Beta version 1.01G; rearranged some Ctrl-<letter>
+            keys to get more in; added paragraph wrapping package.
+
+11/28/93    Updated to Beta veraion 1.01a; implemented Compile.Mac package.
+
+10/23/93    Finished changes and adjustments for Beta level 1.00Z; added
+            Clock(); moved some F10 and F12 keys to make more logical and
+            accomodate Function List; updated .Hlp and .Doc files
+
+10/17/93    Modified for Beta level 1.00U version; added PCTags.S and
+            FPCalc.S; changed main menu line
+
+10/93       Added enhanced Match.S package
+
+5/1/93      Fixed error in documentation stating Shift F2 was Backward
+            Search, when in reality RepeatFind was assigned to Shft-F2.
+            Backward searches can be specified easily with plain F2 by
+            specifying the B option at the Search Options prompt. (Also
+            more user-friendly to those who used TSE Jr.'s WP emulator;
+            Randy had Shft-F2 as RepeatFind there.)
+
+4/22/93     First release of WordPerfect for Programmers User Interface
+            for TSE; pre-release version 0.93.
+

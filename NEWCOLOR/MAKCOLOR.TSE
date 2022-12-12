@@ -1,0 +1,81 @@
+!		GC
+!=		GE dt
+!elif		GB
+!else		GB
+!endif		GB
+!error		GB
+!if		GB
+!ifdef		GB
+!ifndef 	GB
+!include	GB
+!undef		GB
+"		GD sq
+"		GE x
+#		GA ste
+$		GC
+$&		GF dt
+$*		GF
+$**		GF
+$.		GF dt
+$:		GF dt
+$<		GF dt
+$?		GF dt
+$@		GF dt
+$d		GF dt
+%		GC
+&		GE st
+(		GC st
+)		GC st
+*		GC st
++		GC st
+,		GC st
+-		GC st
+.		GC
+.autodepend	GB
+.ignore 	GB
+.noautodepend	GB
+.noignore	GB
+.nosilent	GB
+.noswap 	GB
+.path		GB
+.precious	GB
+.silent 	GB
+.suffixes	GB
+.swap		GB
+/		GC st
+0		GB sw
+1		GB sw
+2		GB sw
+3		GB sw
+4		GB sw
+5		GB sw
+6		GB sw
+7		GB sw
+8		GB sw
+9		GB sw
+:		GC st
+;		GC st
+<		GE st
+<<		GC dt
+<=		GE dt
+=		GC st
+==		GE dt
+>		GE st
+>=		GE dt
+>>		GC dt
+?		GC st
+@		GC st
+MAKE		GF
+MAKEDIR 	GF
+MAKEFLAGS	GF
+[		GC st
+\		GC st
+]		GC st
+^		GE st
+_		T
+__MAKE__	GF
+__MSDOS__	GF
+{		GC st
+|		GE st
+}		GC st
+~		GC st

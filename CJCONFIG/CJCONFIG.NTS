@@ -1,0 +1,1554 @@
+
+                         CRAZY JACK'S CONFIGURATION NOTES
+
+     (c)Copyright 1993 by Jack Hazlehurst
+     All Rights Reserved
+
+     This  file  contains  NO  page breaks.  To get a printed copy, use your
+     favorite file printer, or, better, suck it in to TSE and print it.
+
+     Like many of you, I have customized the <expletive deleted> out  of  my
+     copy  of The Semware Editor.  TSE is a fine editor, but given it's pro-
+     grammabilty, what Red-Blodded Programmer could keep his hands off?
+
+     Some of the things I used are canned and can just be dropped in.  Other
+     things require a certain amount of effort to integrate into the burn-in
+     file.  By "burn-n file" I mean that combination of SAL files you use to
+     burn your favorite  custom  interface  into  your  copy  of  TSE.   You
+     probably  have  separate  Master  Menu  files, Key Bindings files, Help
+     Screen files and, no doubt, a humongous macro file full of all kinds of
+     goodies.  Maybe even a binary file or two.  Or three.  Or however many.
+
+     Some of the things I use in my burn-in file I have provided  elsewhere,
+     and  you  won't  find  them  included  here.  Things like TABOLATE, and
+     BITSET and STRSTUFF.  You'll find them in separate .ZIP  files  on  the
+     Semware BBS.
+
+     I've included Other People's stuff.  There are a couple of routines for
+     drawing boxes around things on the Semware BBS.  I use the simpler  one
+     by  Urs Mellini (DrawFrameBox()) since it does the job I need.  I would
+     never use the fancier features because I don't do a lot  of  fancy  box
+     drawing.
+
+     I'm  not going to go over every little piece of code in my burn-in file
+     either.  After looking at mWrapPara(), and noting the  way  it  handles
+     wrapping in column blocks I decided to apply the same idea to mAlign().
+     I align comments with it.  If I can do a thing like that, so  can  you.
+     Most  of  my modifications are a snore.  Here, if you don't believe me,
+     is an example:
+
+     In  DELTOBOL.S,  which comes with your TSE, there is a delete-to-begin-
+     of-line function that works, pretty much this way:
+
+
+     if CurrChar() < 0       // are we past end of line?
+         BegLine()
+         DelToEOL()          // let the editor do it for us
+     else
+         while Left()
+             DelChar()       // by using DelChar(), the deleted text is
+         endwhile            //    not placed into the kill buffer
+     endif
+
+     Simple enough.  But if we are beyond the end of line, DelToEOL() is
+     used which saves the deleted line in the kill buffer, but otherwise the
+     deleted data is just tossed.  If we DIDN'T want to save anything,
+
+
+     proc DelToBOL()
+         integer i = CurrPos() - 1
+         BegLine()
+         DelChar(i)
+     end
+
+     Does the job as nicely as anything.  If we DO want to save the data, we
+     need to mark a block and delete THAT.
+
+     proc mDelToBOL()
+         if CurrPos() > 1
+             PushBlock()             // This does it in a way that can be
+             UnMarkBlock()           // recovered by "UnDelete".  (We assume
+             MarkChar()              // that KillMax is greater than zero!)
+             BegLine()
+             MarkChar()
+             DelBlock()
+             PopBlock()
+         endif
+     end
+
+     As  is frequently the case, the "elegant" solution either doesn't quite
+     do the job right, or it does it slower.  I always opt for the way  that
+     does it right, and/or faster, even if it is sort of sloppy looking.
+
+     Still awake?  Okay, try THIS one
+
+     // Replacement for LineTypeMenu
+
+     proc mUserDefLDC()
+         integer i = mInnerASCIIChart( Query(LineDrawChar) )
+         if i >= 0
+             Set(LineDrawType, 7)
+             Set(LineDrawChar, i )
+         endif
+     end
+
+     Menu mLineTypeMenu()
+         history = Query(LineDrawType)
+         command = Set( LineDrawType, MenuOption() )
+
+         "&Single      ÚÄ¿"  ,, CloseAfter
+         "Double &Top  ÕÍ¸"  ,, CloseAfter
+         "Dou&Ble side ÖÄ·"  ,, CloseAfter
+         "&Double both ÉÍ»"  ,, CloseAfter
+         "&ASCII       +-|"  ,, CloseAfter
+         "&Eraser"           ,, CloseAfter
+         "&User-defined"     [chr(Query(LineDrawChar)) : 1],
+                                                   mUserDefLDC(), CloseAfter
+     end
+
+     See what I means?  All I wanted was to be able to use the  ASCII  chart
+     when  I  select  "User-defined"  from  the  LineTypeMenu().   Of course
+     LineTypeMenu(), just HAD to be built-in.  <sigh>.  So I wrote  my  own.
+     It  looks  and acts just like the original, but now I can mess with it.
+     You can easily see what I did to the "User-defined" entry.  Now I don't
+     have  to remember the codes for all the different block characters that
+     I might want to use.  If I make that selection, the  ASCII  chart  pops
+     up.  If I want to keep the current character, I just hit Esc; otherwise
+     I scroll up to the character I want, then hit Enter and lo --  the  box
+     outline  character  is  changed.   If you have one of those "draw a box
+     around a marked block" routines, replace any calls to  "LineTypeMenu()"
+     with ones to "mLineTypeMenu()" as I did in "DrawLineBox()".
+
+     NO!  Enough is enough, even if you DO have insomnia.
+
+     ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+
+     The  main things I will cover are the modifications to the mMatch() and
+     mBackSpace() macros, the full justify macro, the macros for finding the
+     beginning  and  end  of paragraphs, and the means by which I allow each
+     file in the buffer ring to have different settings, and how I save them
+     for later reuse.
+
+     I  have included .S files where a modified macro is pretty much a caned
+     drop-in and is too big to consider copying  into  this  writeup.   They
+     have  all  been  en-tabbed (with the Tabolator -- download TABOLATE.ZIP
+     for more on that), so you'll want to set TSE to expand tabs using a tab
+     width of 8 for easy reading.
+
+                                     mMatch()
+
+     Because of its size, I've clipped my modified mMatch() and its  support
+     out  of  my burn-in file and placed it in a file of its own (MMATCH.S),
+     which you can peruse.
+
+     This  is  a  modification  to the mMatch found in TSE.S and some of the
+     other user interface files that come with TSE.  You can  use  it  as  a
+     drop-in  relpalcement  if you decide to use it.  There are two areas of
+     modification: First,  I  have  made  the  sets  of  bracket  characters
+     reconfigurable,  and,  second,  I  have  added  code  to  make mMatch()
+     direction sensitive.  I've also made an adjustment that  allows  it  to
+     look for separators and matching quotes.
+
+     To  do  this,  I've  taken  the  string  constants  out of the original
+     mMatch() and made  them  into  variables.   Their  initial  values  are
+     similar to the origianl string constants.
+
+     The  macro  "GetALLBrackets()"  is  used  to  edit  the string variable
+     "AllBrackets".  Since this variable is used as a table  with  pairs  of
+     brackets  (left first, then right) the routine makes a check to be sure
+     the length is an integral multiple of two.
+
+     The chnges that allow us to handle string quotes also let us deal with
+     separators, like commas and semicolons.  This feature is useful for
+     finding your way around in a cluttered C/C++ program.
+
+     Because mMatch is now direction sensitive, we can  go  in  the  desired
+     direction to find such alike pairs of characters.  To enter alike pairs
+     in AllBrackets, just enter the same character  twice.   Note  that  the
+     default AllBrackets string has a pair of "s in it.
+
+     To support directionality in mMatch(), I've added a parameter.  If this
+     integer is less than 0  (a  negative  value)  the  search  moves  left,
+     otherwise  it  moves  right.   1  and  -1  work  fine.  If the original
+     mMatch() was not on a bracket, it would search FORWARD for ANY bracket.
+     The modified version searches either way, depending on the value of the
+     parameter.  If it moves left, it  looks  only  for  left  brackets  (as
+     defined  by  the "LeftBrackets" variable).  If it moves right, it looks
+     only for right brackets (as defined by the  "RightBrackets"  variable).
+     To support this we need those separate variables to hold left and right
+     brackets.
+
+     The routine "GetLRBarckets()" is used for editing  both  "LeftBrackets"
+     and  "RightBrackets".   It  takes two parameters.  The first one is the
+     message you wnat displayed by Ask().  The second  is  a  pointer  (note
+     that  it's  a  var string) to the variable to be edited.  The first and
+     last characters are stripped off before editing (they are  supposed  to
+     be  [  and  ])  and  the result is re-square-bracketed before it is put
+     back.  If "GetLRBarckets()" finds a right square bracket in the  edited
+     string,  it  checks  to  see if there's a backslash in front of it.  If
+     there isn't, it redisplays the string for further editing.   Note  that
+     these  strings  are used for an lFind() "x" (regular expression) search
+     on a list of single characters.  Be careful how you modify them!
+
+     This  is one of those things you'll just have to try to see if you like
+     it or not before you include it permanently in your  burn-in  file.   I
+     haven't  attempted  to  include  features  to  let it try to find word-
+     brackets like "begin-end" pairs.  This is  more  complicated  than  you
+     might think.  Suppose we have a Pascal program, and we're sitting on an
+     "end", and we want to find the "begin" that it's  paired  with.   Well,
+     just a minute -- "end" can be paired with "case", too, or "record".  We
+     have quite a list to scan for.  We would also have to avoid such  words
+     in  comments,  and  we  would  have to watch for nesting.  Typically we
+     would have an "end" in the middle of a series of "end"s and we want  to
+     find  the associated "begin", "case", "record", etc.  We would probably
+     want to be able to match "else" with an "if",  or  "case".   The  rules
+     would be different for different languages.
+
+     The  version  of  mMatch()  included here can easily make mistakes upon
+     finding parentheses and quote marks in comments, and that's pretty bad.
+     But  words  like  "if"  and  "else" and "end" appear more frequently in
+     well-commented source than quote marks or parentheses.  The  complexity
+     could  get out of hand.  Right now, my modified mMatch() does more than
+     most, and does what I need, so I don't think I'll go further.
+
+     You might want to, though.
+
+                                   mBackSpace()
+
+     If you've ever used the Borland editors, you know that when you put the
+     cursor on the first non-white character on a line and hit  the  BS  key
+     (good  name  for  it here!) it doesn't just tab out, it aligns with the
+     next level to its left of indenting above it.  Each time  you  hit  the
+     key,  you outdent another level.  It works sort of like an "align" that
+     searches upward for the next level to its left to align to.
+
+     That's what this modification brings to mBackSpace().
+
+     The modified code is in the file BACKSPAC.S.  The changes  are  in  the
+     section  in  the  middle where the original just did a TabLeft() if the
+     "language" flag  is  ON  and  we're  sitting  on  the  first  non-white
+     character of the line.  I've put in comments to try to explain what I'm
+     doing.
+
+     We need to have "expand tabs" ON for this, as it's a way of getting TSE
+     to  do  calculations  for us in the event there are tabs in the leading
+     whitespace areas in front of indented lines.
+
+     I scan back up the file looking for a line in which  the  column  where
+     the  first  non-white  character  appears is to the left of the current
+     line's.  If I can't find one, I go back and issue a LeftTab().  If I DO
+     find  one, I mark it as a char block, then return to the original line,
+     remove the current leading white using the DelChar() with a  parameter,
+     then copy the marked leading whitespace string in its place.
+
+     DelChar() with a parameter?  Oh, yeah---
+
+     There's  a  file  on  the Semware BBS called TSEMAC.ZIP, which contains
+     some intersting  macros.   In  the  file  ALIGN.S  is  a  macro  called
+     "ALIGN.S".  It's very interesting.  It aligns by copying the whitespace
+     from in front of the next non-empty line above the current one in place
+     of  the  whitespace  in  front  of  the  current  line.  By copying the
+     whitespace instead of just inserting spaces, Mr.  Mitchell accounts for
+     tabs  that  might  be  there, and includes them in front of the current
+     line.  Even more interesting is his use of a parameter  for  DelChar().
+     Now  I've  held  the  manual up to the light, and rubbed to see if some
+     kind of white powder was covering up a possible explanation,  and  I've
+     looked  through  the  READ.ME file that came with my copy of TSE, but I
+     can't find any explanation of this parameter.
+
+     Naturally I just HAD to try it and experiment a little.
+
+     The  parameter  is,  quite  obviously, optional, and is an integer that
+     specifies the number of characters to be  deleted,  starting  with  the
+     current one and moving right.  If the number is 1, or is omitted, or is
+     negative, the single character at the cursor is deleted.  If the  value
+     is  zero, no characters are deleted.  And because it is DelChar(), none
+     of the characters are saved  in  the  kill  buffer.
+
+     While I'm on the digression, I see in "EnTab()" (see  TABUTIL.S,  which
+     came  with  your  TSE)  that Right() takes a parameter, too.  I haven't
+     experimented with it yet.  I wonder if  "Left()",  "Up()"  or  "Down()"
+     take parameters as well.
+
+     Anyhow,  when you use DelChar() with a parameter it is s-l-o-w.  If you
+     have my Tabolator, look at Tabolate1Line().  In the code I remove  from
+     the line the fragment just Tabolated right before replacing it with the
+     Tabolated data.  I do this by marking and deleting.  To keep this  from
+     messing  up  the kill buffer, I've set KillMax to zero (this is done in
+     Tabolate() so it doesn't get set and restored for every  line).   Since
+     using  DelChar()  would save this nuisance, and also eliminate the need
+     for saving the current marked block, I  tried  using  DelChar  instead.
+     Depending on the file, it INCREASED the total Tabolation time by 50% to
+     100%!  AAIEEE!  I'm wondering if the implementation of the parameter is
+     in  the  SAL  compiler rather than in TSE since this would save room in
+     TSE and make it easier to add features of this kind as  only  SC  would
+     have  to  be  chanmged.   SC would generate code for a counted loop.  I
+     dunno, though -- if it DID, I would expect it to  make  a  while  loop,
+     say:
+
+          X = parameter
+          while X > 0
+              DelChar()
+          endwhile
+
+     --and would account for the  slowness.   But  this  would  delete  zero
+     characters  if the parameter is negative.  Also, it would not return an
+     error code.  Since a negative parameter  causes  one  character  to  be
+     deleted,  it's  clearly  not  using a "while".  Hmm.  There HAS to be a
+     reason why it's so slow.  I'd sure like to know what it is!
+
+     Here in mBackSpace(), however, it's only done once, so its glacial pace
+     is of no consequence.
+
+     If  you  write a lot of source code with your TSE, you'll probably like
+     these changes.
+
+     Note also the changes in handling when the cursor is to  the  right  of
+     the  end  of the line.  As long as the previous tab stop is also to the
+     right of the EOL we tab backwards for extra speed, then drop to  single
+     characters.   You'll  find  this  handy when you're out there trying to
+     position yourself to add a comment below a line of code, and smart tabs
+     has  you  in  the  wrong  place.  You can just backspace to hit the tab
+     positions.  Since you're beyond the last white character,  you  can  do
+     the  final  single  column  positioning  with the left and right arrows
+     keys.
+
+     This  is  just a drop-in replacement for the mBackSpace that comes with
+     the various TSE user interfaces.
+
+
+                                  mJustifyPara()
+
+     Among  the  macros  delivered  with  the  TSE pre-release is one called
+     JUSTIFY,  which  justifies  paragraphs,  using  the   first   non-white
+     character  on a line and the right margin as boundaries.  It works, but
+     lacks features.  For example, if you make a correction  and  rejustify,
+     you  will  get  odd results, depending upon the nature of your changes.
+     Even if you do a WrapPara() on it first, the  extra  spaces  originally
+     inserted  to  justify  the  lines  will not be removed.  As you revise,
+     re-wrap and re-justify, your lines become increasingly sparse  as  more
+     and more spaces are added.
+
+     To  be  useful,  a full-justify routine must actually RE-justify, first
+     removing extra spaces, then re-wrapping, and,  finally,  justiying  the
+     result.   In  any  event, we need to be able to remove the extra spaces
+     and re-wrap even without justification  so  we  can  go  from  a  full-
+     justified  paragraph  to a ragged-right one if we want to.  That's what
+     mJustifyPara() in the file FULLJUST.S does.
+
+     In incorporates and adds to the routine in JUSTIFY.S.
+
+     The  big,  hairy  thing  at  the  front  does the space removal and re-
+     wrapping of the paragraph.  By using TSE's WrapPara() command to do the
+     wrapping,  we  let IT decide what constitutes a paragraph.  Sneaky, eh?
+     It re-wraps, then goes through each line and  takes  out  all  but  one
+     space  from  between  words.   It puts TWO spaces following any period,
+     exclamation point and question mark that is followed by  at  least  one
+     space  to provide proper separation between sentences.  Note that I say
+     "at least one space".  We wouldn't want to mess up numbers with decimal
+     points,  or concatenated variable names, would we?  We also replace any
+     tabs that we find with spaces.  We don't expect tabs in paragraphs that
+     are  to be justified, but they COULD get put there by something like my
+     Tabolator.
+
+     If there are spaces removed, tabs overwritten, or other messing around,
+     we  call  for  another iteration of the process.  WrapPara() might well
+     change the lines on which certain words appear.  There's  a  danger  of
+     infinite looping here.  Suppose we have a sentence that ends at the end
+     of a line, and a short word, like "I" or  "If"  starts  the  next  one.
+     Putting  two  spaces  after  the  sentence-ending period would push the
+     first word of the next sentence onto the next line.  Wrapping it  again
+     would  put  one  space after the period and pull the word back onto the
+     line with the end-of-sentence.  Then we add one more  space,  extending
+     the  line too far, and -- well, you get the idea.  To prevent this I've
+     included an iteration counter that stops things after five  iterations,
+     even  if  we're still adding and removing spaces.  Usually it will quit
+     by itself after two iterations.
+
+     My code has a test for a variable "Justify" to determine whether or not
+     to do the full-justification.  In FULLJUST.S I have the code that tests
+     "Justify" commented out.  If you want to define (as I  have)  a  global
+     integer  "Justify"  and  maintain it, then you can un-comment the lines
+     involved.  With the comments in place, it ALWAYS full justifies.
+
+     I've also made mJustifyPara() return an  integer,  just  as  WrapPara()
+     does.  It returns whatever the last WrapPara() call returned during the
+     stage that removes excess spaces from the text.
+
+     I  have  placed  the  mJustifyPara()  definition  just  in   front   of
+     mWrapPara()  in  my burn-in file.  mWrapPara() is the macro provided by
+     Semware with TSE to enhance the normal action of  WrapPara().   I  then
+     went  through  mWrapPara() and replaced every call to WrapPara() with a
+     call  to  mJustifyPara().   No  other  changes  to   mWrapPara()   were
+     necessary.   It's  fun to be able to column mark the comments in header
+     boxes in source code and full justify them!  Examples of  this  can  be
+     found  in  the  assembler source code in TABOLATE.ZIP, STRSTUFF.ZIP and
+     BITSET.ZIP.  The paragraphs in this writeup have all been processed  by
+     mJustifyPara().
+
+     FULLJUST.S  contains  a  main()  and  a  routine  "mTest()" to act as a
+     driver.  You will want to clip out just  mJustifyPara()  to  drop  into
+     your  burn-in  file.   You  might want to remove the "public" from this
+     definition.
+
+
+                             mPrevPara()/mNextPara()
+
+     Going  back  to  the  file  TSEMAC.ZIP you'll find a file called PARA.S
+     which contains a routine for moving the cursor  to  the  start  of  the
+     previous paragraph or the start of the next.
+
+     The  routines are simple and direct.  But who am I to leave well enough
+     alone?  |-)
+
+     I have written new routines which you will find in the file PARAFIND.S.
+
+     Included in  this  file  are  a  couple  of  little  throwaways  called
+     RepoTop() and RepoBot().  They reposition things on the screen a little
+     when necessary.  When you run macros like  mJustifyPara(),  mNextPara()
+     and mPrevPara(), you often wind up with the cursor on the top or bottom
+     row of the screen.  When this happens to me, I always wish I could  see
+     a  little  of  what's  above  the top or below the bottom.  I have such
+     macros in my burn-in file call one of these "Repo" macros to take  care
+     of  this  for  me.  They are kind of simple-minded, but effective.  You
+     might want to change the trigger points and adjustment amounts to  suit
+     your own tastes.  I have put them near the top of my burn-in file and i
+     added a call to RepoBot() at the end of  mWrapPara().   When  I  finish
+     justifying  a paragraph I can always see enough of what follows to know
+     whether I want to justify the next paragraph or not.  You  will  notice
+     the calls to these macros at the end of mNextPara() and mPrevPara().
+
+     Both of the macros mPrevPara() and mNextPara() take a single parameter,
+     and they return an integer.  The parameter says whether to look for the
+     beginning  or  end  of a paragraph.  If the parameter is FALSE, we look
+     for the BEGINNING of a paragraph.  If the parameter id  TRUE,  we  look
+     for  the  END  of a paragraph.  If the find succeeds, the macros return
+     TRUE; if the search fails, they return FALSE.
+
+     Regardless of the setting  of  the  TSE  variable  "ParaEndStyle",  the
+     searches  are  made  to  find  a  blank  line  OR a line with different
+     indenting from the others.  The routines can be faked out, but  not  by
+     much.   At  least  you'll end up near where you want to be, and running
+     the macros a time or two more will usually land you right on the spot.
+
+     I don't even wanna TRY to explain these things.  I get a headache  just
+     THINKING  about  them.  They are commented.  They are drop-ins for your
+     burn-in file.  The .S file can be compiled as  an  external  macro  for
+     testing.  Cut out the "Repo" macros and put them near the front of your
+     burn-in file where your other macros can  access  them.   Cut  out  the
+     mNextPara() and mPrevPara() macros and drop them in whereever you think
+     is best.
+
+     They  pair  conveniently  with  mWrapPara().   I  use  a  Wordstar-like
+     interface, since I'm a long-time Wordstar user.  I have <Ctrl CursorUp>
+     bound to mPrevPara(),  and  <Ctrl  CursorDown>  bound  to  mNextPara().
+     Another  variable  says  whether  we go to paragraph begin or paragraph
+     end.  mWrapPara(), with  its  calls  to  mJustifyPara()  (as  described
+     above),  is  bound to <Ctrl b>.  I enable full justification by putting
+     on the "Justify" variable, then, as I proof-read  a  paragraph  I  move
+     around  an  make  corrections,  then  I hit <Ctrl CursorUp> followed by
+     <Ctrl b> (without lifting my finger from the Ctrl key and the  Deed  is
+     Done.
+
+
+                               CUSTOM FILE SETTINGS
+
+     I like to have more than one file loaded at any given  time.   I  might
+     have  an SAL file, an assembler file, and a writeup all in at once.  As
+     I work, I may notice errors that have to be fixed in other files, so  I
+     load  them,  switch  around a bit, change them then abandon them.  Each
+     has different margins, a different setting of  the  WordWrap  variable,
+     and different settings for WordSet, TabWidth, the "language" switch and
+     the "c_mode" switch.  I'd like to have these retained and switched as I
+     move from file to file.
+
+     The burn-in files that come with TSE already have some of the pieces of
+     code needed.  If you look in the "OnChangingFiles()"  routine  in  your
+     burn-in file you'll see a CASE statement that looks at the extension of
+     the current file and sets several variables accordingly.
+
+     The trouble with this is that it doesn't  keep  track  of  things  like
+     margins,  WordSet,  and  other settings.  In addition, it just provides
+     fixed values for everything.  I like to change my margins.  I  like  to
+     edit my WordSet set for special purposes.  I even wrote the code in the
+     file BITSET.ZIP so I could modify WordSet.
+
+     I implemented a scheme that did this.  I set aside  a  _SYSTEM_  buffer
+     and  stored  the values of the things I wanted to track about each file
+     in it.  I moved the CASE statement  into  the  "OnFirstEdit()"  routine
+     where  I  established  standard  settings  that are used when a file is
+     first loaded or created; I then put these values into the temp  buffer.
+     In  "OnChangingFiles()" I look the file name up in the buffer and reset
+     things to those defined for the file.  Before doing this,  I  take  the
+     values  that were in effect at buffer change time and store them in the
+     temp buffer under the previous file name.
+
+     As time goes by during an editing session  I  accumulate  quite  a  few
+     entries.   Since  the  entries  stay  in  the  buffer  even  after I've
+     abandoned a file, the settings are not lost.  If I load one  of  thoses
+     files again, the settings are still available!.  It then occurred to me
+     that I could save this information in a file and restore it  later,  at
+     the  beginning  of  another  session and get all the old settings back.
+     This file could get pretty big, of course, so I arranged that each time
+     I  switched  files and the new file was looked up in the temp buffer, I
+     would move all its information to the front of the temp  buffer.   This
+     way  the  most  recently  edited  files would always be near the front.
+     Then I limited myself to writing only the first <some number>  of  sets
+     of info to the configuration save file.
+
+     The  default  settings  are  those  that  are  present  when TSE begins
+     execution (the burned-in stuff).  Since this is quickly overwritten,  I
+     save  it,  as  well,  in  the  temp  buffer.  However I DON'T write the
+     default data to the save file.  This way, if I do a  new  burn-in  with
+     different  values  for  some of the variables, this new default will be
+     used instead of the old default  data.   And  since  it  isn't  needed,
+     there's no sense in writing it out.
+
+     Note  that  this  is  quite  different  from  the  scheme  used  in the
+     PROJ090.ZIP file on the Semware BBS where all the files loaded  at  the
+     end  of  the  last  session  are  reloaded for the next one.  My scheme
+     retains the configurations for files not even loaded at the  end  of  a
+     session,  so  if  they are reloaded later in another session, the setup
+     information is still available.  As  more  and  more  newer  files  are
+     loaded,  the  older  ones  are  slowly dropped as they move in the temp
+     buffer past the maximum save number and are not written  out.   Because
+     of  this, I don't attempt to save book marks and other things like this
+     that might cause conflicts with other files using the  same  bookmarks.
+     In  the  PROJ090 approach, only the files loaded at the end of the last
+     session are retained, so it's practical to retain book marks and marked
+     blocks.   This  latter is more like the approach Borland takes with its
+     editors.  The method I use is more suited to the way I work.   Some  of
+     you  may  want to work out a cross between the methods.  You might save
+     extra information about the  files  loaded  at  the  end  of  the  last
+     session, but retain information about older files not loaded.  Then you
+     would restore the files that WERE loaded, but could still get the  main
+     file-specific  settings  if  you  reload  one of the others.  I'm still
+     thinking about this myself.  By the way, note that  the  bookmarks  and
+     the marked block are EDITOR-wide, not file-specific.  You can have only
+     one marked block at a time no matter how many files  are  loaded.   The
+     same goes for each book mark (only ONE bookmark A, one B, etc.).
+
+     Part  of  my  problems arise from running all this on an 8mHz XT clone.
+     With the stuff I have now, switching files takes a noticeable amount of
+     time  (about  3/4 of a second).  On a 25mHz 486 system I have access to
+     the switch seems instantaneous.  Judging from the  Tabolator  times  on
+     the two machines, the 486 is about 16 times as fast as my old beater XT
+     clone.  Saving files is a retch, too.  Since  I  can  get  out  of  the
+     editor  without  going  through the _ON_EXIT_CALLED_ hook (save all the
+     files individually, then hit escape to go to the command  line)  I  can
+     lose my settings by failing to save them.  To prevent this, the routine
+     that saves the configuration is currently in the _ON_FILE_SAVE_ routine
+     which adds the time to save the configuration data to the time required
+     to save the file.  I suppose I'll get around  to  fixing  this,  but  I
+     think  I  may wait until the final version of TSE comes out to see what
+     extra hooks it may have.  I'd  hate  to  have  to  write  "enhancement"
+     macros for all the different commands that might lead to an exit!
+
+     This  code is no simple drop-in.  It has to be integrated with the hook
+     routines, and a fair amount  of  additional  support  is  needed.   For
+     example, I've got menu selections that let me change the settings for a
+     file.  My burn-in file has several included parts.  They all  have  the
+     name  "jhhjr.*"  with  the  extensions  different  for different files.
+     "jhhjr.s" is the  main  burn-in  file;  "jhhjr.key"  contains  the  key
+     bindings;  "jhhjr.mnu"  holds  the menu system.  Each of these contains
+     SAL code, and I should have the SAL setting  for  them.   But  I'm  not
+     going to look for those file extensions and treat them all as SAL code.
+     I may use those extension for other kinds of file.  So I've provided  a
+     menu  that I can use for changing the language standard settings.  Then
+     the configuration file holds these for me, even across editing sessions
+     until  I haven't edited that file for long enough that it falls off the
+     bottom of the saved information.
+
+     So I'm going to include the various chunks of code right here  in  this
+     writeup  to illustrate what I do.  You may wish to cut pieces of it out
+     and put them, with suitable modifications, into your own burn-in  file.
+     Or you may wish to write your own stuff.
+
+     We'll  begin  with the macros that save and restore the configurations.
+     To support them we need to define some global values:
+
+     constant
+         CfgItemCount  = 30,       // Number of items saved plus file name.
+         SavedCfgCount = 16        // Save cfgs for just this many files.
+     integer
+         CfgBuffer = 0,            // Buffer ID of configuration buffer.
+         CfgID = 1,                // identifies current configuration.
+         IsExiting = FALSE         // Used by both "OnExitCalled" and
+                                   // "OnSavingFiles".
+     string
+         LastFileName[64], // Holds name of last file at next/prev file time
+         SavCfgFilNam[64] = "tsecfgs.sav" // Name of configs save file.
+
+     "CfgItemCount" is the number of variable to be saved for each file PLUS
+     ONE  MORE  for the file name.  The configuration for each file is saved
+     by creating a line for each variable saved, plus a line  on  which  the
+     file  name is found.  The items are NOT identified; as long as they are
+     saved and restored in the same order, it isn't  necessary  to  identify
+     them.  It puts a little more burden on YOU, when you set things up, but
+     you don't do it often,  and  leaving  out  identifiers  greatly  speeds
+     things up.  If you've got a 66mHz 486, go ahead and put in identifiers.
+     As it is, on my 8mHz XT clone it takes a noticeable amount of  time  to
+     make  the switch from one file to the next and I'm not going to slow it
+     down any more.
+
+     "SavedCfgCount" is the number of file configurations we will save  when
+     we  write  the  configuration save file.  If you are working with large
+     numbers of files all the time, and you have a  fast  machine,  you  may
+     want to set this number up a bit.
+
+     "CfgBuffer"  is a holder for the buffer ID of the configuration buffer.
+     This is a _SYSTEM_ buffer which, as we shall see later, is allocated in
+     the burn-in files "main()" procedure.
+
+     "CfgID"  identifies  the  current  configuration.  It contains the menu
+     option number for the menu "StdCfgMenu()" which can be used  to  change
+     the configuration.
+
+     "IsExiting" is used to control config file saving when we are doing  an
+     "Exit()".   There  are  problems here which I'll discuss a little later
+     on.
+
+     "LastFileName" is needed to keep track of what the last file  was  when
+     we  switch files and need to save the configuration of the file we just
+     switched from.
+
+     "SavCfgFilNam"  holds  the  name  of  the  configuration save file.  It
+     initially  holds  only  the  file  name  and  extension.    After   the
+     configuration  file  is  loaded,  or  after  the path to the first file
+     loaded is known, this variable will  contain  the  complete  path.   64
+     bytes  is probably overkill, but there must be enough room for whatever
+     the path turns out to be, and the path does include the file name.  The
+     file  name  I  give here is the one I use.  You can, of course, make it
+     whatever suits you.
+
+     Next we need some short subroutines:
+
+     // This macro finds a file in the configuration buffer
+
+     integer proc FindFileCfg( string FilNam )
+         GotoBufferID(CfgBuffer)
+         return( lFind( "CfgSav4<" + FilNam + ">", "^$g" ) )
+     end
+
+     // This macro saves the current settings in the configuration buffer
+
+     proc StashCfgItem( string Item )
+         Down()
+         BegLine()
+         DelToEOL()                // Be sure KillMax is 0 before calling!
+         InsertText( Item, _INSERT_ )
+     end
+
+     // --and this one get the configuration items back
+
+     string proc RestoreCfgItem()
+         Down()
+         return( GetText( 1, 255 ) )
+     end
+
+     "FindFileCfg()" assumes that the configuration file buffer  exists  and
+     its  buffer  ID  is stored in the global variable "CfgBuffer".  It also
+     assumes that you have already saved  the  buffer  ID  of  your  current
+     buffer  so  you  can  go  back  to it when you're done.  Note the extra
+     characters added to the file name.  Also notice that the string must be
+     pinned  to  BOTH  the beginning and end of the line.  For our search to
+     work, the line containing the file name must be  unique.   We  rely  on
+     this  line  being  followed  by the correct number of lines holding the
+     values of the expected variables, all  converted  to  strings,  in  the
+     expected order.
+
+     "StashCfgItem()"  just  moves  down  a  line, clears what is there, and
+     inserts the string it was given as a parameter.  RestoreCfgItem() moves
+     down  a  line  and  grabs  out  whatever  is on the line.  Nothing very
+     complex here.
+
+     The macros that use StashCfgItem() and RestoreCfgItem() are "SaveCfg()"
+     and "RestoreCfg()":
+
+     // This macro saves parts of the current configuration
+
+     proc SaveCfg( string FilNam )
+         string StrHolder[255] = ""
+         integer kmx
+
+         if SplitPath( FilNam, _EXT_ ) == ".tmp"
+             return()                        // Don't keep temp file poop.
+         endif
+
+         kmx = Set(KillMax, 0)
+         Set( Marking, OFF )
+         if not FindFileCfg( FilNam )        // Locate entry.
+             BegFile()                       // If no entry, create one.
+             repeat
+                 InsertLine()
+                 Down()
+             until CurrLine() > CfgItemCount
+             BegFile()
+             InsertText( "CfgSav4<" + FilNam + ">", _INSERT_ )
+         endif
+                                             // Save the configuration.
+         StashCfgItem( Str( Query(EOLType) ) )
+         StashCfgItem( Str( Query(EOFType) ) )
+         StashCfgItem( Str( Query(MakeBackups) ) )
+         StashCfgItem( Str( Query(ProtectedSaves) ) )
+         StashCfgItem( Query(BackupExt) )
+         WrdSet2WrdChrs( Query(WordSet), StrHolder )
+         StashCfgItem( StrHolder )
+         StashCfgItem( Str( Query(AutoIndent) ) )
+         StashCfgItem( Str( Query(WordWrap) ) )
+         StashCfgItem( Str( Query(ParaEndStyle) ) )
+         StashCfgItem( Str( Query(RemoveTrailingWhite) ) )
+         StashCfgItem( Str( Query(TabType) ) )
+         StashCfgItem( Str( Query(TabWidth) ) )
+         StashCfgItem( Str( Query(ExpandTabs) ) )
+         TabSet2TabPosns( Query(VarTabs), StrHolder )
+         StashCfgItem( StrHolder )
+         StashCfgItem( Str( Query(LeftMargin) ) )
+         StashCfgItem( Str( Query(RightMargin) ) )
+         StashCfgItem( Str( TabsOut ) )
+         StashCfgItem( Str( Justify ) )
+         StashCfgItem( Str( Language ) )
+         StashCfgItem( Str( Cmode ) )
+         StashCfgItem( Str( Pmode ) )
+         StashCfgItem( Str( IndentAmt ) )
+         StashCfgItem( Str( CfgID ) )
+         StashCfgItem( KeyWords )
+         StashCfgItem( LeftBrackets )
+         StashCfgItem( RightBrackets )
+         StashCfgItem( AllBrackets )
+         StashCfgItem( Str(TabRuleID) )
+         StashCfgItem( Tabolations )
+         Set(KillMax, kmx)
+     end
+
+     // This macro restores the settings from the configuration buffer
+
+     integer proc RestoreCfg( string FilNam )
+         string SetHolder[32]                // We try to locate a matching
+         integer ilb                         // entry in the config buffer.
+                                             // We fake a default for temp
+         Set( Marking, OFF )                 // files.
+         if FindFileCfg( iif( SplitPath( FilNam, _EXT_ ) == ".tmp", "", FilNam ) )
+             PushBlock()                     // If entry found,
+             UnMarkBlock()                   // bring it to the top of the
+             ilb = Set( InsertLineBlocksAbove, TRUE )// config buffer.
+             MarkLine()
+             GotoLine( CurrLine() + CfgItemCount - 1 )
+             MarkLine()
+             BegFile()
+             MoveBlock()
+             Set( InsertLineBlocksAbove, ilb )
+             PopBlock()
+                                             // Restore the configuration.
+             Set( EOLType, val( RestoreCfgItem() ) )
+             Set( EOFType, val( RestoreCfgItem() ) )
+             Set( MakeBackups, val( RestoreCfgItem() ) )
+             Set( ProtectedSaves, val( RestoreCfgItem() ) )
+             Set( BackupExt, RestoreCfgItem() )
+             SetHolder = ""
+             WrdChrs2WrdSet( RestoreCfgItem(), SetHolder )
+             Set( WordSet, SetHolder )
+             Set( AutoIndent, val( RestoreCfgItem() ) )
+             Set( WordWrap, val( RestoreCfgItem() ) )
+             Set( ParaEndStyle, val( RestoreCfgItem() ) )
+             Set( RemoveTrailingWhite, val( RestoreCfgItem() ) )
+             Set( TabType, val( RestoreCfgItem() ) )
+             Set( TabWidth, val( RestoreCfgItem() ) )
+             Set( ExpandTabs, val( RestoreCfgItem() ) )
+             SetHolder = ""
+             TabPosns2TabSet( RestoreCfgItem(), SetHolder )
+             Set( VarTabs, SetHolder )
+             Set( LeftMargin, val( RestoreCfgItem() ) )
+             Set( RightMargin, val( RestoreCfgItem() ) )
+             TabsOut = val( RestoreCfgItem() )
+             Justify = val( RestoreCfgItem() )
+             Language = val( RestoreCfgItem() )
+             Cmode = val( RestoreCfgItem() )
+             Pmode = val( RestoreCfgItem() )
+             IndentAmt = val( RestoreCfgItem() )
+             CfgID = val( RestoreCfgItem() )
+             KeyWords = RestoreCfgItem()
+             LeftBrackets = RestoreCfgItem()
+             RightBrackets = RestoreCfgItem()
+             AllBrackets = RestoreCfgItem()
+             TabRuleID = val( RestoreCfgItem() )
+             Tabolations = RestoreCfgItem()
+             return( TRUE )
+         endif
+         return( FALSE )
+     end
+
+     As you look at these two macros you'll see that the items are saved and
+     restored in the same order.  There are 29 items.  Integer variables are
+     converted into strings.  The  bit  sets  "VarTabs"  and  "WordSet"  are
+     converted  into ASCII strings (and back) using the binary routines from
+     the file BITSET.ZIP from the Semware BBS.  I could  save  these  latter
+     two  exactly as is, since the bit sets are strings already, but I worry
+     about bit configurations that might appear.  Suppose one of  the  bytes
+     turned  out  to be a carriage return.  What would happen when we try to
+     reload the file?  Or how about a Ctrl-Z?  Neither of  these  characters
+     is  likely  to  appear in the converted ASCII string, but beware not to
+     enter one of them into your "WordSet"!
+
+     It isn't likely that you'll want to save the same  things  that  I  do.
+     You  probably  won't have a number of the variables that I have.  Alter
+     the macros to suit.  Then DON'T  FORGET  TO  ADJUST  "CfgItemCount"  to
+     reflect  the number of items plus one for the file name.  Yes, boys and
+     girls, I DID step in this one while testing.
+
+     The  special  handling of files with the extension ".tmp" is to prevent
+     the temporary files produced by the "mComplie()" macro that comes  with
+     TSE from wasting space in the configuration file or buffer.
+
+     In "SaveCfg()", if we can't find a file name in the buffer, we create a
+     new entry for it at the front of the buffer.  When we find an entry  in
+     "RestoreCfg()",  we  mark  it  and  move it to the front of the buffer.
+     This makes it easier to find the next time  we  switch  files,  and  it
+     keeps  the  most recently edited files at the front of the buffer where
+     we can pick them up to put in the configuration save file.
+
+     Because it calls "StashCfgItem()",  you  must  set  "KillMax"  to  zero
+     before you call it and restore the original value later.  Since BOTH of
+     these macros call "FindFileCfg()", you must save your current buffer ID
+     before calling so you can restore yourself to it later.
+
+     Let's look at the changes I made to "OnChangingFiles()".  I  moved  the
+     code  that looks at the file extensions out of "OnChangingFiles()" into
+     "OnFirstEdit()" where I modified it extensively, as we shall see  in  a
+     bit.   Then  I  went up between the line than says "InsertLine(fn)" and
+     the one that says  "GotoBufferId(cid)"  and  inserted  code  to  switch
+     configurations.  The result looks like:
+
+             InsertLine(fn)     <--------original line
+
+     // Switch configuration settings
+
+             if LastFileName <> fn       // If we just came from OnFirstEdit
+                 SaveCfg( LastFileName ) // configs are already swapped.
+                 RestoreCfg( fn )
+                 LastFileName = fn
+             endif
+
+             GotoBufferId(cid)  <--------original line
+
+     Next I modified "OnFirstEdit()" to set up the values according to the
+     file type.  As deleiverd with TSE, "OnFirstEdit() is an empty routine.
+     Look at it after I got through with it:
+
+     proc OnFirstEdit()
+         string fn[65] = CurrFilename(),
+                fx[4]  = CurrExt(),
+                fp[64]
+         integer mk, cid = GetBufferId()
+
+         IsExiting = FALSE              // Just in case.
+
+         if  Query(BufferType) == _NORMAL_
+             mk = Set(KillMax, 0)
+     //
+     // There's some stuff here to support directory tracking.
+     // I've removed it for this illustration, but I'll tell
+     // you about it later.
+     //
+             if LastFileName <> ""      // Save previous file's
+                 SaveCfg( LastFileName )// configuration.
+             endif
+
+             if not RestoreCfg( fn )    // Reuse existing config if present.
+                 RestoreCfg( "" )       // Set defaults.
+
+                 case fx                // Customize by file type.
+                     when ".s"
+                         SetSALCfg()
+                     when ".sc"         // Special for PAL scripts.
+                         SetPALCfg()
+                     when ".scr",".prg",".spr",".mpr",".qpr",
+                          ".fmt",".frg",".lbg",".ch"
+                         SetLngCfg()
+                     when ".a",".asm"
+                         SetAsmCfg()
+                     when ".pas",".inc"
+                         SetPasCfg()
+                     when ".c",".h",".cpp",".hpp"
+                         SetCCfg()
+                     when ".txt",".doc",".me","1st"
+                         SetDocCfg()
+                     when ".msg"        // Special for use with SLMR replies
+                         SetDocCfg()
+                         Set( RightMargin, 68 )
+                 endcase
+                 SaveCfg( fn )          // Save custom configuration.
+             endif
+
+             LastFileName = fn
+             GotoBufferId(cid)
+             Set(KillMax, mk )
+         endif
+     end
+
+     The code isn't tricky.  It DOES refer to a couple of things  I  haven't
+     talked  about  yet.   The  reference  to  "IsExiting" will be explained
+     later.  A block of code used in tracking directories has  been  removed
+     and will be discussed later under "THE CURRENT DIRECTORY".
+
+     First  we  check to make sure there was a last file, and if so, we save
+     the current configuration.  If we've just loaded a new file,  the  con-
+     figuration  data will be that of the last file we were editing, but the
+     current file name is the name of the file just loaded.   "LastFileName"
+     contains the name of the file of the current configuration.
+
+     First we check to see if a configuration already exists in  the  buffer
+     for  the file just loaded.  This could be left over from earlier in the
+     editing session, or it could have been read  in  from  a  configuration
+     save  file.   If we get a hit, we're ready to go.  If not, we've got to
+     configure for the new  file.   The  line  RestoreCfg("")  restores  the
+     default  configuration.   We'll  see  how that's set up later.  What it
+     does is to restore all saved variables to the burned-in values.   Then,
+     based  on  the  extension of the current file name we alter the default
+     configuration to suit the type of file we  have.   I  have  made  these
+     routines separate macros for a reason we'll get to shortly.
+
+     We save the new configuration under the new file name.  We save the new
+     file name for when IT becomes the "last file".
+
+     The setting up is done partly in "WhenLoaded()" and partly in "main()".
+     Here's my "WhenLoaded()":
+
+     proc WhenLoaded()
+
+         string S[65]
+         integer cid = GetBufferId()
+
+         S = GetEnvStr( "TMP" )
+         if Length( S ) == 0
+             S = GetEnvStr( "TEMP" )
+         endif
+         if Length( S )
+             if S[Length(S)] <> "\"
+                 S = S + "\"
+             endif
+             Set( SwapPath, S )
+         endif
+
+         pick_buffer = CreateTempBuffer()
+         CfgBuffer = CreateTempBuffer()
+         GotoBufferId(cid)
+         Hook(_ON_FILE_SAVE_, OnSavingFiles)
+         Hook(_ON_CHANGING_FILES_, OnChangingFiles)
+         Hook(_ON_FIRST_EDIT_, OnFirstEdit)
+         Hook(_ON_EXIT_CALLED_, OnExitCalled)
+     end
+
+     I  allocate  the configuration buffer here, and hook _ON_FILE_SAVE_ and
+     _ON_EXIT_CALLED_ in addition to the stuff that was  already  there.   I
+     also  added  some  code  to see if there's a "TEMP" or "TMP" in the DOS
+     environment to direct the swap files.  I carry a  copy  of  TSE  around
+     with  me as an editor when I set up systems for people, and this allows
+     me flexibility in placing the swap files.  It's  easier  than  using  a
+     command line parameter, too.
+
+     After  the  first  file  has  been  loaded, but before anything else is
+     called, including "OnFirstEdit()", "main()" is called.  By now we  know
+     where  the first file is located.  My rules for where the configuration
+     save file goes is: first I look in the directory where the  first  file
+     loaded  is.   Then I look in the default directory.  If it's in neither
+     place, I assume that there is no configuration save file.  In this case
+     I  set  up the drive\subdirectory of the first file loaded as the place
+     where a configuration save file will be written if the user wants  one.
+     If  I  DO  find  a  configuration save file, I read it into the config-
+     uration buffer, and get its drive\subdirectory.  In either case, I take
+     the  current configuration, which is still the one in the burn-in file,
+     and save it as the default configuration using the file name "".
+
+     The "main()" delivered with TSE is empty.  Here is my replacement:
+
+
+     proc Main()
+         string sp[64] = SplitPath( CurrFileName(), _DRIVE_ | _PATH_ )
+         integer cid = GetBufferId(),
+                 mk  = Set(KillMax, 0 )
+
+         DefaultPath = SplitPath( ExpandPath( "*.*" ), _DRIVE_ | _PATH_ )
+         if FileExists( sp + SavCfgFilNam )  // Config save file in
+             SavCfgFilNam = sp + SavCfgFilNam // initial file's directory?
+             goto LoadIt                     // If so, use it.
+         elseif FileExists( SavCfgFilNam )   // Is there one in default
+             SavCfgFilNam = DefaultPath + SavCfgFilNam // directory?
+     LoadIt:
+             GotoBufferID( CfgBuffer )       // Load it now.
+             InsertFile( SavCfgFilNam )
+             UnMarkBlock()
+         else                                // Else prepare name in case
+             SavCfgFilNam = sp + SavCfgFilNam // user wants one later.
+         endif
+
+         SaveCfg( "" )                       // Save default configuration.
+         LastFileName = ""
+         GotoBufferID( cid )
+         Set(KillMax, mk )
+     end
+
+     Now  we  see  how the default configuration entry comes to be.  We also
+     see how the configuration save file is located  (if  it's  there).   if
+     there  is  no configuration save file, we have prepared to put one into
+     the drive\subdirectory from whence the first file is loaded.
+
+     If  there  were  some  SURE  way  of  doing  it, I would only write the
+     configuration save file out at the  point  where  we  are  leaving  the
+     editor.   Unfortunately  there's no one place this happens.  If you use
+     "Exit()", you go to the _ON_EXIT_CALLED_ hook routine.  But I find that
+     when  I  have the editor configured the way I like it, I can go through
+     saving files with the "SaveFile()" command, then, after the  last  one,
+     when  I  get  just a box on the screen asking for a file name, if I hit
+     escape, I just go to  the  command  line,  WITHOUT  going  through  the
+     _ON_EXIT_CALLED_  hook.  Ugh.  Well, I now write the configuration file
+     each time I save a file.  This slows down file saving a bit.  Since, if
+     I DO go out via "Exit()", I would write the configuration save file for
+     each file I save, a s-l-o-w process, I  write  the  configuration  save
+     file, then set a flag so the _ON_FILE_SAVE_ hook routine won't do it as
+     we switch from file to file around the buffer ring doing saves.
+
+     Aha!  But I can cancel out of an "Exit()",  and  that  flag  will  stop
+     future  saving, won't it?  Yes, it will.  To help mitigate this problem
+     I've put that "IsExiting = FALSE" line in "OnFirstEdit()",  and,  as  a
+     kind  of  bailout,  I've  added  a  test into the macro that writes the
+     configuration file.  If it finds "IsExiting" TRUE, it  sets  it  FALSE,
+     then  returns  without doing the save.  As I have this macro bound to a
+     key and a menu selection, I can correct the problem with  a  keystroke.
+     Well,  I  can  as long as I don't forget.  The macro is SaveFileCfgs(),
+     and while we're talking about it, let's look at it:
+
+     //
+     // This macro is called from other macros.  It saves the current set
+     // of file configurations.
+     //
+     proc SaveFileCfgs()
+         string fn[65] = CurrFilename()
+         integer j, mk, cid, ilb, tbid = 0, tbid2 = 0
+
+         if IsExiting                   // Bailout in case we cancelled
+             IsExiting = FALSE          // of "Exit()".
+             return()
+         endif
+
+         mk = Set(KillMax, 0)
+         cid = GetBufferID()
+         ilb = Set( InsertLineBlocksAbove, TRUE )
+
+         SaveCfg( fn )                  // In case changes were made.
+
+         if FindFileCfg( "" )           // We now save the configuration
+             PushBlock()                // data. But to allow for changes to
+             UnMarkBlock()              // the default configuration between
+             MarkLine()                 // executions of the editor, we
+             GotoLine( CurrLine() + CfgItemCount - 1 )
+             MarkLine()                 // temporarily remove the default
+             tbid = CreateTempBuffer()  // config before writing the other
+             MoveBlock()                // stuff out.
+             GotoBufferID(CfgBuffer)
+         endif
+
+         j = (SavedCfgCount * CfgItemCount)
+         if NumLines() < j              // We either save the entire set of
+             j = NumLines()             // configs or, if there are too
+         endif                          // many, just the first 
+         PushBlock()                    // "SavedCfgCount" of them.
+         UnMarkBlock()
+         BegFile()
+         MarkLine()
+         GotoLine( j )
+         MarkLine()
+         tbid2 = CreateTempBuffer()
+         CopyBlock()
+         SaveAs( SavCfgFilNam, _OVERWRITE_ )
+         GotoBufferID( CfgBuffer )
+         AbandonFile(tbid2)
+         PopBlock()
+
+         if tbid                        // Okay, now we restore the
+             BegFile()                  // default config data.
+             MoveBlock()
+             PopBlock()
+             AbandonFile(tbid)
+         endif
+
+         GotoBufferId(cid)              // The exit may now proceed.
+         Set(KillMax, mk)
+         Set( InsertLineBlocksAbove, ilb )
+     end
+
+     There  is,  again, nothing tricky here.  We move the default config out
+     of the buffer temporarily, then move the appropriate number of lines to
+     yet  another  temp  buffer  from whence we write the configuration save
+     file.  We then toss THAT buffer and put the default config back in  the
+     configuration buffer, and we're done.
+
+     As well as being bound to a key and a menu selection, "SaveFileCfgs()"
+     is called from the _ON_FILE_SAVE_ and _ON_EXIT_CALLED_ hooks.
+
+     proc OnExitCalled()
+
+         if  (Query(BufferType) == _NORMAL_) // Note that we save the file
+         and FileExists( SavCfgFilNam )      // configs only if a save file
+             SaveFileCfgs()                  // already exists.
+             IsExiting = TRUE
+         endif
+
+     end
+
+     proc OnSavingFiles()
+
+         if Query(BufferType) == _NORMAL_    // It's possible to get out of
+             if  NOT IsExiting               // TSE without going thru
+             and FileExists( SavCfgFilNam )  // "OnExitCalled". This routine
+                 SaveFileCfgs()              // ensures that the cfg file
+             endif                           // DOES get saved.
+         endif
+
+     end
+
+     Notice  that  we  only  write  the  configuration save file if there is
+     already one there.  This is how we avoid writing one if we  don't  want
+     one.   To  get  things  started,  we  need only strike the key to which
+     "SaveFileCfgs()" is bound to get one written, since it  DOESN'T  check,
+     it  just  writes.   If  one  did  NOT exist when we atarted the editing
+     session, the new one will be written to the drive\subdirectory that  we
+     loaded  the  first  file  of the editing session from.
+
+     You may wish to change these rules to suit your own tastes, but I  find
+     my rules very convenient for the way I work.  For general systems work,
+     batch command files, and like that, I don't keep a  configuration  save
+     file.   Projects  like my TSE stuff I put on floppy disks by themselves
+     and here I keep configuration files.  When TSE comes up I just  put  in
+     the  letter of the disk drive and hit Enter.  Then I move thru the pick
+     lists to the subdirectory and first  file  I  want.   There  I  have  a
+     configuration save file which gets picked up and I'm on my way.  When I
+     fool around on someone else's machine I DON'T keep a configuration save
+     file.
+
+     Changing a file name creates an interesting problem.  When the file  is
+     renamed a the "CurrFileName()" is changed and the current donfiguration
+     remains unchanged.  We won't save the configuration under the new  file
+     name by the normal means of switching, so we must intercept the call to
+     "ChangeCurrFileName()" and see if there's an existing configuration  we
+     can  restore.   If  there isn't, we save the current under the new file
+     name.  We must also change "LastFileName" to reflect the name change.
+
+     //
+     // This macro "enhances" ChangeCurrFilename() as used WITHOUT its
+     // optional parameter
+     //
+     integer proc mChangeCurrFileName()
+         integer i = ChangeCurrFileName(),   // Change the file name.
+                 k = Set(KillMax, 0),
+                 b = GetBufferID()
+
+         if i                                // If all went well, we try to
+             LastFileName = CurrFileName()   // restore a previous config.
+             if NOT RestoreCfg( LastFileName ) // If this fails, save the
+                 SaveCfg( LastFileName )     // current one under the
+                 GotoBufferID(b)             // under the new file name.
+             endif
+         endif
+         Set(KillMax, k)
+         return( i )                         // Return the result.
+     end
+
+
+     Setting up specific environments is done with little subroutines.   (Or
+     should they be called submacros?) You'll recall that we called them out
+     of "OnFirstEdit()".  They are simple-minded  macros  that  set  various
+     variables,  both  system  and  mine,  to  the  values  I  want for that
+     particular kind of file.  Here are a few of them:
+
+     // Routines that customize for standard configurations
+
+     proc SetDfltCfg()                       // Sets the default configuration.
+         integer mk = Set(KillMax, 0),
+                 cid = GetBufferId()
+         RestoreCfg( "" )
+         GotoBufferId(cid)
+         Set(KillMax, mk)
+         CfgID = 1
+     end
+
+     proc SetSALCfg()                        // SAL configuration.
+         CfgID = 4
+         language = TRUE
+         cmode = FALSE
+         Pmode = FALSE
+         TabsOut = TRUE
+         Set( ExpandTabs, OFF )
+         IndentAmt = 4
+         Set( TabType, _SMART_ )
+         Set( WordSet, ChrSet("/-9A-Z_a-z") )
+         Set( RightMargin, 80 )
+         KeyWords =
+    " if else elseif while repeat loop for switch case when otherwise proc "
+         AllBrackets = "(){}[]<>,,''" + '""'
+         LeftBrackets = "[({[]"
+         RightBrackets = "[)}\]]"
+         SetTabRules(3)
+     end
+
+     proc SetAsmCfg()                        // Assembler configuration.
+         CfgID = 5
+         language = TRUE
+         cmode = FALSE
+         Pmode = FALSE
+         TabsOut = TRUE
+         Set( ExpandTabs, OFF )
+         IndentAmt = 8
+         Set( TabType, _SMART_ )
+         Set( VarTabs, TabSet("9 17 41") )
+         Set( WordSet, ChrSet("%&0-9;?-Z_a-z") )
+         Set( RightMargin, 80 )
+         KeyWords = ""
+         AllBrackets = "(){}[]<>''" + '""'
+         LeftBrackets = "[({[<]"
+         RightBrackets = "[)}\]>]"
+         SetTabRules(4)
+     end
+
+     proc SetPasCfg()                        // Pascal configuration.
+         CfgID = 6
+         language = TRUE
+         cmode = FALSE
+         Pmode = TRUE
+         TabsOut = TRUE
+         Set( ExpandTabs, OFF )
+         IndentAmt = 2
+         Set( TabType, _SMART_ )
+         Set( WordSet, ChrSet("0-9A-Z_a-{") )
+         Set( RightMargin, 78 )
+         KeyWords = " then else begin case repeat while for do "
+         AllBrackets = "(){}[]<>,,;;''"
+         LeftBrackets = "[({[]"
+         RightBrackets = "[)}\]]"
+         SetTabRules(6)
+     end
+
+     proc SetCCfg()                          // C configuration.
+         CfgID = 7
+         language = TRUE
+         cmode = TRUE
+         Pmode = FALSE
+         TabsOut = TRUE
+         Set( ExpandTabs, OFF )
+         IndentAmt = 8
+         Set( TabType, _SMART_ )
+         Set( WordSet, ChrSet("/-9A-Z_a-z") )
+         Set( RightMargin, 78 )
+         KeyWords = " if else switch while for "
+         AllBrackets = '(){}[]<>,,;;""'
+         LeftBrackets = "[({[]"
+         RightBrackets = "[)}\]]"
+         SetTabRules(5)
+     end
+
+     proc SetDocCfg()                        // Document configuration.
+         CfgID = 2
+         Language = TRUE
+         cmode = FALSE
+         Pmode = FALSE
+         TabsOut = FALSE
+         IndentAmt = 5
+         Set( TabType, _VARIABLE_ )
+         Set(VarTabs, TabSet("6 11 16 21 26 31 36 41 46 51 56 61 66 71 76"))
+         KeyWords = ""
+         AllBrackets = '(){}[]<>""'
+         LeftBrackets = "[({[<]"
+         RightBrackets = "[)}\]>]"
+         Set( WordWrap, ON )
+         Justify = TRUE
+     end
+
+     This is a sampling of the configuration macros, just enough so you  get
+     the  idea.   An  important thing each of these macros MUST do is to set
+     "CfgID" to the proper value.  This value will be the menu option number
+     for  the  menu  "StdCfgMenu()"  so that the selection scheme will work.
+     The numbering and ordering of these IDs is strictly up to you when  you
+     set  up  your custom version.  Note that I have different bracket pairs
+     set  up  for  the  different  languages.   For  documents  I  have  the
+     "language"  switch  ON  to  get the special backspace effects.  They're
+     extremely useful  in  writeups  like  this.   I'll  move  around  in  a
+     paragraph making changes, then drop down with the down arrow to a blank
+     line, then hit backspace to move the cursor over to the place where  my
+     next  line  is  to begin.  With "KeyWords" empty, I don't have to worry
+     about sudden indents.  I'm sure you  will  create equally  "interesting"
+     configurations of your own.
+
+     The  configuration selection done by "OnFirstEdit()" will not always be
+     perfect.  To make it easy to change configurations when this happens  I
+     have  a  couple  of additional macros.  One is a menu, and the other is
+     used as the "command" for the menu:
+
+
+     // Now for some stuff to reconfigure
+
+     integer proc SetCfg( integer n )
+
+         case n
+           when 1 SetDfltCfg()
+           when 2 SetDocCfg()
+           when 3 SetLngCfg()
+           when 4 SetSALCfg()
+           when 5 SetAsmCfg()
+           when 6 SetPasCfg()
+           when 7 SetCCfg()
+           when 8 SetPALCfg()
+           otherwise return( FALSE )
+         endcase
+         return( TRUE )
+     end
+
+     //
+     // The Standard Configurations Menu
+     //
+     // Be sure to keep the correspondence between the entrie lines in this menu
+     // and the config IDs in the "SetCfg()" macro above.
+     //
+     Menu StdCfgMenu()
+         history = CfgID
+         command = SetCfg( MenuOption() )
+
+         "De&Fault"        ,, CloseAfter
+         "&Document"       ,, CloseAfter
+         "&Language"       ,, CloseAfter
+         "&SAL"            ,, CloseAfter
+         "&Assembler"      ,, CloseAfter
+         "&Pascal"         ,, CloseAfter
+         "&C/C++"          ,, CloseAfter
+         "PAL (&X)"        ,, CloseAfter
+     end
+
+     These  are MY current selections.  Over time the will, no doubt, change
+     a lot.  Note that the new selection merely overlays some, but not  all,
+     of  the  configuration  variables.   Only  "default"  is  different; it
+     locateds the default configuration in the buffer and restores  it.   If
+     you want to get a match for what you'd get if you loaded a file and the
+     correct configuration was picked automatically, first choos  "Default",
+     then pick the configuration you want.  I don't use this often enough to
+     warrant binding it to a key; I just make do with a selection  from  one
+     of my main menu system menus.
+
+
+                              THE CURRENT DIRECTORY
+
+     When TSE asks you for the name of a file to edit, and you reply by just
+     hitting  Enter,  you  get  a pick list.  If you arrow about and move to
+     some remote directory, then pick a file, the next time you go to edit a
+     file,  and you hit Enter, you wind up back at your starting point.  Who
+     likes to have to chase all those directories again?
+
+     In the file DIRCHNG.ZIP (available on the Semware BBS) is a macro  that
+     addresses  this  problem.   It intercepts calls to EditFile(), gets the
+     file name from the  user,  then  switches  to  that  file's  drive  and
+     subdirectory.
+
+     This  isn't  exactly  what  I  want.   Rather  than  switch to whatever
+     drive\subdirectory the last file came from, I prefer  to  stay  in  the
+     current  one  and, instead, use History to direct us to the appropriate
+     directory.
+
+     Another thing I don't like is getting the same file name back at me  if
+     I  DO type in a full file name.  All I really need is to be able to get
+     to the appropriate subdirectory without a lot of typing or subdirectory
+     chasing.   Usually  I  do  my  work in one subdirectory with occasional
+     forays into nearby ones.
+
+     My  solution (such as it is) to these problems involves scattering code
+     around in several other macros, but mostly in the routine that hooks to
+     _ON_FIRST_EDIT_.  In support, we need some global variables to hold the
+     path to the last file loaded and to control the saving thereof:
+
+     string DefaultPath[64] = ""        // Current DefaultDrive:Path.
+     integer SkipThisOne = FALSE        // Controls saving directory name.
+
+     Actually  it  contains  ONLY  the drive and subdirectory.  I think of a
+     "path" as a way to get to a file,  not  the  file  itself.   A  lot  of
+     literature  seems  to include the file name and extension when they say
+     "path".  I think they do it wrong.  Writers do a LOT of  things  wrong.
+     They  spell  "nybble"  as  "nibble".   I  guess  they don't know that a
+     "nybble" is half a "byte".  Or what about the way they spell "kluge" as
+     "kludge"?   I  would  think  that  the  people  who put Turbo Lightning
+     together would know better,  ut  they  don't.   <Sigh>.   The  word  is
+     pronounced to rhyme with "stooge", not "sludge".  I've run across folks
+     (young stuffs, mostly) who DO pronounce it to rhyme with  "sludge".   I
+     can tell they've only read the word, and have never heard it pronounced
+     by someone who's been around since the o-o-old days before the  writers
+     took  over  from  the  programmers  (we  are,  generally,  pretty lousy
+     writers).  >:-(
+
+     We pick up the path to the default subdirectory in "Main()" just before
+     we try to suck in the configuration save file.  We do it with the line:
+
+         DefaultPath = SplitPath( ExpandPath( "*.*" ), _DRIVE_ | _PATH_ )
+
+     "DefaultPath" is used in "OnFirstEdit()".  Whenever we begin editing  a
+     new  file, we grab the file's drive and subdirectory.  If it's the same
+     as what's in "DefaultPath", we push a null onto the edit history stack.
+     If  they  are  different,  the  drive  and directory of the new file is
+     pushed on.  Whatever we push on is what will show  in  the  dialog  box
+     that  pops  up  when we want to edit a new file.  This code is inserted
+     into "OnFirstEdit()" in the place where I made the  comment  about  re-
+     moving directory tracking code:
+
+     mk = Set(KillMax, 0)     <----original line, still there
+
+     if SkipThisOne                  // Don't save file's path if
+         SkipThisOne = FALSE         // it's not wanted!
+     else                                        // This weird piece of
+         fp = SplitPath( fn, _DRIVE_ | _PATH_ )  // business ensures that
+         if  fp == DefaultPath                   // the next time we go to
+             AddHistoryStr( "", _EDIT_HISTORY_ ) // get a file we remain
+         else                                    // in the same subdirectory
+             AddHistoryStr( fp, _EDIT_HISTORY_ ) // as the file we just
+         endif                                   // loaded.
+     endif
+
+     if LastFileName <> ""    <----original line, still there
+
+     All this has the effect of offering you,  as  an  initial  choice,  the
+     option  of going straight back into the subdirectory that the last file
+     you loaded came from.  If it happens to be the default  directory,  you
+     get  a  blank  box.   If you pick from the directories a lot (the way I
+     do), you will find this very convenient.  If the directory shown is not
+     what  you want, you can either type it in or scroll up and down through
+     the other choices in the _EDIT_HISTORY_ list.
+
+     Unfortunately, when the mCompile macro loads the error message file for
+     examination and display,k "OnFirstEdit()" gets called.  We really don't
+     want the path to the .tmp file showing up the next time we want to load
+     a file, so I've put in "SkipThisOne" to prevent the code from picking
+     it up.  Go looking through the "mComplie()" code for these lines:
+
+
+     EraseDiskFile(err_fn)
+     Dos(LoadDir() + "sc " + fn + ">" + err_fn, _DONT_CLEAR_)
+     EditFile(err_fn)
+     EraseDiskFile(err_fn)
+     //
+     // 3 cases -
+     //      1 - SC didn't run, probably not found. Identify by empty err_fn
+
+
+     --and modify it to read:
+
+                                             (Add these lines)------+
+     EraseDiskFile(err_fn)                                          |
+     Dos(LoadDir() + "sc " + fn + ">" + err_fn, _DONT_CLEAR_)       |
+     SkipThisOne = TRUE          // Don't save path.   <------------+
+     EditFile(err_fn)                                               |
+     EraseDiskFile(err_fn)                                          |
+     SkipThisOne = FALSE         // Just be sure it's back off.  <--+
+     //
+     // 3 cases -
+     //      1 - SC didn't run, probably not found. Identify by empty err_fn
+
+     We shouldn't need the line that clears "SkipThisOne", but it's here for
+     the sake of robustness.
+
+     This way  of  tracking  directories  obviates  the  need  for  actually
+     changing the default directory.  Still, there will be times when you'll
+     want  to  change  it  anyway.   Here's  what  to  do:  first,  download
+     DIRCHNG.ZIP  from  the Semware BBS (if you havem't already done so) and
+     extract the binary, then copy this macro into your burn-in file:
+
+     //
+     // Change default directory
+     //
+
+     binary ['dirchng.bin']
+         integer proc cd(string dir):0
+     end
+
+     proc mChangeDefaultDir()
+         string dd[64] = SplitPath( CurrFileName(), _DRIVE_ | _PATH_ ),
+                drv[2], bs[1] = ""
+         integer a
+
+         repeat
+             if NOT Ask( "New default directory is:", dd )
+                 return()
+             endif
+             dd = ExpandPath( dd )
+             if Length( dd ) > 2
+                 drv = SplitPath( dd, _DRIVE_ )
+                 dd = SplitPath( dd, _PATH_ )
+                 if dd <> "\"
+                     bs = SubStr( dd, Length(dd), 1 )
+                     dd = SubStr( dd, 1, Length(dd)-1 )
+                 endif
+             endif
+         until (Length( dd ) > 0)
+           and cd( drv + dd + chr(0) )
+
+         DefaultPath = drv + dd + bs
+         LogDrive( SubStr( drv, 1, 1 ) )
+         AddHistoryStr( "", _EDIT_HISTORY_ )
+
+     end
+
+     This  macro  uses the path to the current file name as its first guess.
+     If this isn't what you want, type in what it is you DO want,  then  hit
+     Enter.  Notice that the code changes to that drive and subdirectory (if
+     it can) and sets it as the new default path.  The next time you ask  to
+     edit a file, this is the directory you'll get.
+
+     Notice  that  it  does  NOT change the path to where the configuaration
+     save  file  is  written.   That  remains  either  the  initial  default
+     subdirectory or the subdirectory from which the first file was loaded.
+
+     ±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±±
+
+     Okay,  gang,  I've  stuck  MY  neck  out and showed some of the custom-
+     izations that I've made to MY copy of TSE.  No doubt I look like some
+     kind of nit-picking idiot who doesn't know how it should REALLY be
+     done.  Okay.  Now what about YOU?
+
+     I  kno-o-ow  that the people at Semware would just lo-o-ove to see what
+     their customers do to TSE and what sort of stuff they like to  have  in
+     their  own personal editors.  It's one thing to make suggestions.  It's
+     another thing to show how and why.  Some of the things  we  see  posted
+     look  more  like  programming  exercises than like things someone would
+     actually use a lot.  Others are things I want in MY  editor,  and  I've
+     used  a  number of them.  No, I won't discuss them here.  I'll stick to
+     the things I've dome myself.  This writeup is too long as  it  is,  and
+     soon  the  DEA  will be after me for giving away general anesthetics to
+     the public.
+
+     The  things I've described above are things I use all the time.  I also
+     use my Tabolator and the binaries that make it  possible  to  edit  the
+     "WordChar"  and  "VarTabs" bit sets during an editing session.  I allow
+     strings that control the  mMatch()  functions  to  be  modified  during
+     editing  sessions  because  I need to do it from time to time.  Since I
+     have different needs for different files,  I  have  arranged  that  the
+     configurations for different files be retained for each of those files,
+     and my TSE switches between them as it switches between the  files.   I
+     use my editor for writing programs, mostly, and for writeups like this.
+     I carry it around with me on a floppy so I can use it when  I  work  on
+     someone else's machine, and I don't want to tote a pile of special .mac
+     files around with it.  So far, the result is an enormous  burn-in  file
+     that  compiles  to  a .MAC file 29963 bytes long.  I do that to see how
+     closely I'm crowding the 32K limit.  To keep the size of e.exe  down  I
+     squeeze it with DIET, which produces a smaller file than PKLITE.
+
+     I've  had an interesting side benefit from writing this.  You would not
+     believe the number of little bug fixes and changes to how  things  work
+     that I have made.  Some of them stem from the exercise of the software;
+     others come from trying to explain what I've done.   It's  amazing  how
+     your  vision  clears  when you try to explain something kind of dumb to
+     someone else!
+
+     You  probably  use  your editor differently from the way I do.  What do
+     you find most useful, and how do you do it?  What do YOU have  in  YOUR
+     editor  that makes your life easier?  You might be doing something that
+     I haven't thought of that I could really use.  Let's stick to the stuff
+     we use a lot, not mere programming exercises.
+
+     But tell us about it!
+
+     Inquiring Minds want to Know....
+
+                           *** END OF CJCONFIG.NTS ***

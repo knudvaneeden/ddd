@@ -1,0 +1,76 @@
+The following steps will allow you to set up The SemWare Editor (TSE) as an
+external editor for TAPCIS 6.0.  I am assuming the use of a registered
+version of TSE when I refer to support files.  (Items such as the spelling
+checker that is part of the TSE Pro registered package.)  These instructions
+will work even with the shareware version, __EXCEPT__ you will not have
+access to the support files that I refer to.
+
+0.   BE SURE THAT TSE AND ITS SUPPORT FILES (IF YOU USE THEM) ARE IN YOUR
+     DOS PATH.  Otherwise, in Step 3 below, include the full path name to
+     reach TSE.
+
+1.   Activate the SETUP > EDITORS > CONFIGURE menu options in TAPCIS 6.
+
+2.   Select which external editor setting (1 or 2) that you want to
+     configure as TSE and <TAB> to the first data entry field.
+
+3.   Enter the following information for each field.
+
+     Edit:     e
+
+     Reply:    e root~.tmp editor~.tmp
+
+     Write:    e editor~.tmp
+
+     NOTE:     If you want to have TSE automatically split into two
+               horizontal windows with the original message in the upper
+               window and a blank message in the lower window for your
+               reply, make the REPLY line look like this:
+
+                    e root~.tmp editor~.tmp -estart
+
+               Then, before you attempt to use TSE the first time, look at
+               the instructions contained in the header section of the
+               START.S macro file and follow them.  They will tell you how
+               to set up the macro and compile it so that it is ready for
+               use.
+
+4.   Select the save option and return to the main screen of T6.
+
+5.   (THIS IS THE SECRET TO MAKING IT WORK) Exit T6 and then restart it.  If
+     you don't do this, the changes you made in the configuration are not
+     saved to the proper location and you can't use the editor.
+
+6.   Return to the SETUP > EDITORS sub-menu.  Select the number for the
+     external editor as you configured it in Step 2 above.
+
+7.   Get some messages to read.  When you see one that you want to reply to,
+     simply press "R".  TSE will load both temp files into the editor, and
+     you will be presented with a single screen showing the message you are
+     replying to.  (If you use the "-estart", you will be in the lower
+     window of a split screen with the message you are replying to in the
+     upper window.)
+
+8.   (THIS STEP MAY BE DIFFERENT, DEPENDING ON HOW YOU HAVE TSE CONFIG'ED)
+     Use the appropriate command from the keyboard (<CTRL O, H> by default)
+     or the menu (ESC, WINDOW, HORIZONTAL) to create an additional
+     horizontal window.  You will write your message in this window.
+
+You can move back and forth between the files, if you feel the need to quote
+from the first message.  When you are done responding, simply exit the
+program with a file save.  You will be returned to the message reading area
+in T6.
+
+BTW, if you are using the registered version of TSE, you can spell check the
+reply message before you save it.
+
+Writing a new message is even simpler.  There is only one, blank screen to
+worry about.  Simply start writing, spell check if desired, and save/exit.
+
+NOTE:     If you are doing work with a Windows-based word processor and like
+          the ability to mark text with the SHIFT-arrows, consider adding
+          the SHIFT macro to your AUTOLOAD List (on the Macro Menu).  This
+          makes marking text very easy.  All of the keystrokes are indicated
+          on the menu for moving back and forth (Window Menu) and copying,
+          deleting, unmarking text (Block Menu).  Enjoy.
+

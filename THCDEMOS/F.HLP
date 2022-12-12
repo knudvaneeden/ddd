@@ -1,0 +1,4 @@
+" use f factype       to search the facility description file for factype. "
+" use f -a            to display the entire facility description file. "
+" use qallfac anyword to search the entire facility file for anyword which can "
+"                     be a quoted phrase. "

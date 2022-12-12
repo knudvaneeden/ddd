@@ -1,0 +1,62 @@
+VESA.S - a macro for The Semware Editor
+copyright (c) 1994 by Klaus Hartnegg, Kleist-Street 7,
+D-79331 Teningen, Germany
+
+Purpose:
+   Allows to switch to any of the available text modes
+   that your VESA compatible VGA graphics card supports.
+
+Required:
+   PC compatible computer
+   VGA graphics card with VESA support
+   The Semware Editor pre-release 1.0 or beta-test version up to 1.60a
+   (will likely work with newer versions too)
+
+What is VGA VESA?
+   VGA VESA is a standard for programming VGA graphics cards.
+   It's available in most VGA graphics cards that are in use today.
+   For many old VGA cards small TSR programs are available to add
+   VESA compatibility where it is not already included in the
+   on-board bios.
+
+Usage:
+   You can either run the file VESA.MAC from within the macro menu
+   or load the file VESA.MAC and use the new keyboard binding (see below)
+   or edit the last lines of VESA.S to create your own keyboard binding,
+   recompile and then load it.
+   The included file VESA.MAC was compiled for the pre-release.
+   If you are using a newer version, you will need to compile VESA.S.
+   To do this just copy VESA.S and VESA.BIN to your TSE directory
+   and issue the command SC VESA
+
+Keyboard binding:
+   The macro contains 6 new keyboard bindings that replace the
+   default binding of <alt f9> to Dos(). You can easily modify
+   them (see Usage above). The default keyboard binding is:
+      <alt f9> <v>  VesaMenu()                      // VGA VESA only
+      <alt f9> <1>  Set(CurrVideoMode, _25_lines_)  // all cards
+      <alt f9> <2>  Set(CurrVideoMode, _28_lines_)  // VGA only
+      <alt f9> <3>  Set(CurrVideoMode, _43_lines_)  // EGA and VGA
+      <alt f9> <4>  Set(CurrVideoMode, _50_lines_)  // VGA only
+      <alt f9> <D>  Dos()
+
+Included files:
+   VESA.DOC  you are reading this right now
+   VESA.MAC  precompiled macro, load this from the macro menu
+   VSEA.S    source for VESA.MAC, compiling needs VESA.BIN
+   VESA.BIN  assembler subprograms
+   VESA.ASM  source for VESA.BIN
+
+Autor:
+   Klaus Hartnegg
+   Kleist-Street 7
+   D-79331 Teningen
+   e-mail: hartnegg@einstein.freinet.de
+       or: hartnegg@ruf.uni-freiburg.de
+
+License:
+   You are allowed to use and distribute this VESA macro if you distribute
+   it complete (see list of files above) and unmodified.
+
+Cost:
+   none (but donations are always welcome)

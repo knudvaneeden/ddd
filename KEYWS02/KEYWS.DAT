@@ -1,0 +1,272 @@
+//variables for QBook format (change for other recipe databases)
+string BEG_REC[]     = "-Begin Recipe Export-"    //start marker
+string END_REC[]     = "-End Recipe Export-"    //end marker
+string TITLE_LINE[]  = "Title:"     //Header of title line
+string KEY_LINE[]    = "Keywords:"  //Header of keyword line
+string KEY_SEP[]     = ", "         //keyword separator
+
+//variables for Meal-Master format
+//string BEG_REC[]     = "MMMMM----- Recipe via Meal-Master (tm) v8.01"    //start marker
+//string END_REC[]     = "MMMMM"    //end marker
+//string TITLE_LINE[]  = "      Title:"     //Header of title line
+//string KEY_LINE[]    = " Categories:"  //Header of keyword line
+//string KEY_SEP[]     = ", "         //keyword separator
+
+//constants for QBook format
+constant MAX_KEYWLEN = 32           //maximum keyword length
+constant MAX_KEYLINE = 78           //maximum length of keyword line
+
+//procedures
+forward integer proc    FixKeywords()
+forward integer proc    GetBuffers()
+forward integer proc    GetRec()   //get recipe to work buffer
+forward integer proc    AutoScan()  //menu: autoadd keys
+forward         proc    SortKeys(integer buffer_id)
+forward integer proc    GotoNextRec()
+forward integer proc    GChgKey()
+forward integer proc    GDelKey()
+forward string  proc    ViewKeywid()
+forward string  proc    PickCountry()
+forward string  proc    PickMainCat()
+//forward integer proc    GFixKeyCase()
+forward integer proc    ManualKey()    //menu: add keys from list
+forward         proc    SaveKeys()
+forward integer proc    SaveRecipe(integer nextrec)
+//forward         proc    GetMatchKeys(integer src_id, integer dest_id)
+forward         proc    GetMatchKeys(integer src_id, integer dest_id, integer wword)
+forward         proc    GetRecKeys()
+forward integer proc    RecAddKey()
+forward integer proc    SaveKeywordFile()
+forward integer proc    _InsertFile(string fn)
+forward integer proc    LoadKeyFile(integer l_id, integer insf, string fname, integer fsrc)
+forward integer proc    LoadKeywordFile()
+//forward integer proc    FindKeyword(string word)
+forward integer proc    FindKeyword(string word, integer wword)
+forward         proc    FixKeyCase()
+forward integer proc    ModKeyword()
+forward integer proc    AddKeyword(string kword, integer keyid)
+//forward integer proc    lDelKeyword(integer line)
+//forward integer proc    DelKeyword()
+forward integer proc    ExitKeyws()
+forward         proc    HelpHook()
+forward         proc    HelpOnListKeys()
+forward         proc    ListStartup()
+forward         proc    WhenLoaded()
+forward         proc    WhenPurged()
+forward         HelpDef ListKeysHelp
+forward         keydef  ListKeys
+forward         menu    KeywordMenu()
+
+//misc constants
+constant _SUCCESS =         1
+constant _FAIL =            0
+constant _ABORT =           -1
+constant _EXIT =            99  //exit macro
+
+//misc variables
+integer listwidth
+integer oldlines
+integer newlines
+integer StartRec
+integer EndRec
+integer lastrec
+//integer StartMsg
+//integer EndMsg
+//integer StandAlone                      //1 = running as standalone macro
+//                                        //0 = called from another macro
+string Marked_Keyw[MAX_KEYWLEN]         //contains keyword to add to recipe
+string keyw_fn[128]                     //keywords filename
+
+//buffers
+integer keyw_id         //list buffer id
+integer newkeyw_id      //new keywords buffer
+integer work_id         //work buffer (for single recipe)
+integer curr_id         //user file buffer
+integer autoscan_id     //for autoscan function
+integer autoscan1_id    //for autoscan function
+integer maincat_id      //for add main category keyword
+integer country_id      //for add country keyword
+
+datadef KeywordList
+    "Mascarpone~"
+    "Prosciutto~"
+    "Marinara~"
+    "Zucchini~"
+    "Shrimp~"
+    "Lobster~"
+    "Scallops~"
+    "Amish~"
+    "Cajun~"
+    "Creole~"
+    "Crawfish~"
+    "Squash~"
+    "Barbecue~"
+end
+
+constant listESCAPE     =   0,
+         listENTER      =   1,
+         listCTRLENTER  =   2,
+         listDEL        =   3,
+         listINS        =   4,
+         listF2         =   5,
+         listF7         =   6,
+         listF8         =   7,
+         listF9         =   8,
+         listF10        =   9
+
+HelpDef ListMenuHelp
+    title = "Help on menu"
+    x = 30
+    y = 2
+
+    "NOTE: the 'Add Keywords', 'AutoScan', and"
+    "'Global Add' functions all perform checks for"
+    "duplicate keywords so that no dupes will be"
+    "added. All searches are case insensitive."
+    ""
+    "'Add Keywords' menu function:"
+    ""
+    "This function creates a popup list of keywords"
+    "for the recipe. The list includes the following:"
+    ""
+    "1. keywords from the original recipe"
+    "2. words from the KEYWS.KEY file which match"
+    "   words in the recipe."
+    ""
+    "Help for functions available while viewing the"
+    "list is available by pressing F1 while the list"
+    "is displayed."
+    ""
+    "The KEYWS.KEY file must be located in the same"
+    "directory as this macro. If it doesn't exist, a"
+    "small file will be created."
+    ""
+    ""
+    "'Autoscan' menu function:"
+    ""
+    "This function automatically adds keywords to each"
+    "recipe in the file which is loaded. You will be"
+    "prompted whether to match 'whole words' or not."
+    "If you respond 'No', more matches will probably"
+    "be found. For example, if you have 'Game hen' in"
+    "your AUTOSCAN.KEY file and you say 'No' to the"
+    "match whole words prompt, 'Game hens' will be"
+    "found as a match, whereas it would not match if"
+    "you chose whole word matches only."
+    ""
+    "The following files (if they exist) are used to"
+    "provide the keywords for AutoScan:"
+    ""
+    "In the same directory as this macro:"
+    "1. AUTOSCAN.KEY - list of words to search for in"
+    "   the recipe. If a match is found, the word will"
+    "   be added as a keyword."
+    "2. ALLREC.KEY - list of words to add to ALL"
+    "   recipes in any file that AutoScan is run on."
+    "   This could be used, for example, by a BBS"
+    "   sysop to add their BBS name, as a keyword, to"
+    "   all recipes."
+    ""
+    "In the current directory:"
+    "1. ALLDIR.KEY - list of words to add to ALL"
+    "   recipes in all files in the current directory."
+    "2. (filename).KEY - where '(filename)' is the"
+    "   name of the recipe file being edited. These"
+    "   words will be added only to recipes in a file"
+    "   if the filenames match. For example, if you"
+    "   are editing a file named 'SWEDISH.QBF', any"
+    "   words found in a file named 'SWEDISH.KEY' will"
+    "   be added as keywords."
+    ""
+    ""
+    "'Global Delete' menu function:"
+    ""
+    "This function will prompt you for a keyword to"
+    "delete from ALL recipes in the file being edited."
+    "The search for keywords to delete is not case"
+    "sensitive, but the word must otherwise match"
+    "exactly or it will not be deleted."
+    ""
+    ""
+    "'Global Change' menu function:"
+    ""
+    "This function will prompt you for a keyword to"
+    "change, and for the word to replace it with. I"
+    "tried to be sure that only exact matches would"
+    "be changed. For example, if you want to change"
+    "all occurrances of the keyword 'main' to 'Main"
+    "dish', other keywords containing the word 'main'"
+    "(as 'Main course') will not be changed. The"
+    "search is not case sensitive, however."
+    ""
+end ListMenuHelp
+
+
+HelpDef ListKeysHelp
+    title = "Help on keys"
+    x = 24
+    y = 2
+
+    "Keys marked with ** are the meanings  "
+    "while viewing KEYWS.KEY. Keys with no "
+    "'**' have no usage while viewing the  "
+    "KEYWS.KEY file.                       "
+    ""
+    "<Enter>      Modify keyword at cursor "
+    "<Enter>**    Add keyword at cursor to "
+    "             the recipe keyword list  "
+    ""
+    "<Ctrl Enter> Fix caps- keyword at     "
+    "             cursor                   "
+    ""
+    "<Ins>        Add new keyword to list  "
+    "<Ins>**      Add new keyword to list  "
+    ""
+    "<Del>        Delete keyword from list "
+    "<Del>**      Delete keyword from list "
+    ""
+    "<F2>         View/modify/select word  "
+    "             from KEYWS.KEY file      "
+    ""
+    "<F7>         Select Country Category  "
+    ""
+    "<F8>         Select Main Category     "
+    ""
+    "<F9>         Save keywords to recipe  "
+    ""
+    "<F10>        Save keywords to recipe; "
+    "             go to next recipe.       "
+    ""
+    "<Escape>     Close keyword list, don't"
+    "             modify recipe keywords   "
+    "<Escape>**   Close KEYWS.KEY list     "
+    "             (changes made will be    "
+    "             saved to the file)       "
+    ""
+    ""
+    "NOTE: The recipe MUST have a valid    "
+    "'end of recipe' line for this macro   "
+    "to work properly!.                    "
+    ""
+    "For example, '-End Recipe Export-'    "
+    "for a QBook format recipe.            "
+end ListKeysHelp
+
+keydef ListKeys
+    <Escape>            EndProcess(listESCAPE)
+    <Enter>             EndProcess(listENTER)
+    <GreyEnter>         EndProcess(listENTER)
+    <Ctrl Enter>        EndProcess(listCTRLENTER)
+    <Ctrl GreyEnter>    EndProcess(listCTRLENTER)
+    <Del>               EndProcess(listDEL)
+    <GreyDel>           EndProcess(listDEL)
+    <Ins>               EndProcess(listINS)
+    <GreyIns>           EndProcess(listINS)
+    <F2>                EndProcess(listF2)
+    <F7>                EndProcess(listF7)
+    <F8>                EndProcess(listF8)
+    <F9>                EndProcess(listF9)
+    <F10>               EndProcess(listF10)
+    <F1>                HelpOnListKeys()
+end ListKeys
+

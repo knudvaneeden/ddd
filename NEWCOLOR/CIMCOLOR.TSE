@@ -1,0 +1,89 @@
+!			GA STE
+"			GD S
+"			GE XQ
+%			T
+%BaudRate		GD
+%Cancel 		GD
+%DialType		GD
+%Dir			GD
+%ESCIResponse		GD
+%Failure		GD
+%LogonParams		GD
+%mdm_Ack		GD
+%mdm_DCOn		GD
+%mdm_ECOn		GD
+%mdm_EscapeCode 	GD
+%mdm_Failure		GD
+%mdm_Hangup		GD
+%mdm_Init		GD
+%mdm_Prefix		GD
+%mdm_Pulse_Dial 	GD
+%mdm_Reset		GD
+%mdm_Speaker		GD
+%mdm_Success		GD
+%mdm_Suffix		GD
+%mdm_Tone_Dial		GD
+%NetWork		GD
+%Password		GD
+%Phone			GD
+%Port			GD
+%Retry			GD
+%Success		GD
+%UserID 		GD
+%X121Address		GD
+%_init			GD
+&			GE ST
+(			GC ST
+)			GC ST
+*			GC ST
++			GC ST
+,			GC ST
+-			GC ST
+.			GC ST
+/			GC ST
+0			GB SW
+1			GB SW
+2			GB SW
+3			GB SW
+4			GB SW
+5			GB SW
+6			GB SW
+7			GB SW
+8			GB SW
+9			GB SW
+:			GC ST
+:			GE YP
+;			GC ST
+<			GE ST
+<=			GE DT
+<>			GE DT
+=			GE ST
+>			GE ST
+>=			GE DT
+and			GE
+call			GC
+cancel			GF
+define			GB
+else			GE
+exit			GC
+gosub			GC N
+gosub			GE X
+goto			GC N
+goto			GE X
+if			GE
+ifndef			GB
+init			GF
+not			GC
+on			GF
+or			GE
+reset			GF
+result			GF
+return			GC
+send			GF
+sendi			GF
+sendm			GF
+show			GF
+until			GC
+wait			GC
+^			GC ST
+_			T

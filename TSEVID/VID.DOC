@@ -1,0 +1,73 @@
+
+	---------------------------------------------------------
+	Video Routines for the Semware Editor by Rob Staveley
+	---------------------------------------------------------
+
+	Though it has always impressed me that TSE Jr. and latterly
+	The Semware Editor support 132 & 100 column text modes, I
+	have found it an irritation that you have to shell out to
+	DOS and back in again to get them, if did not start your
+	editing session in such a mode.
+
+	However..
+
+	I have just noticed (okay I am not the greatest R-er of T
+	F-ing M) that TSE supports "binary" file includes, and
+	pretty straight forward ones at that.
+
+	Here goes:
+
+		(1) Put VID.BIN into a directory called \TSE\ASM\
+		    (optionally along with BIN.BAT and VID.ASM).
+
+		(2) Put VID.S into \TSE\UI\.
+
+		(3) Add an inclusion for VID.S in \TSE\UI\TSE.S.
+
+			#include ["vid.s"]      // include VID.S
+
+		(4) Add macro calls in you key definition file
+		    \TSE\UI\TSE.KEY:
+
+			<F12>		mHiMode()
+			<Ctrl F12>	mPageFlip()
+
+		    ..or whichever keys you find intuitive.
+
+                (5) ** IMPORTANT **
+                    Edit \TSE\UI\VID.S lines 46 and 47 to suit your
+                    video adaptor. There are notes for this above those
+                    lines in the file.
+
+			HICOLS = 132,	/* Number of columns in high mode */
+			HIMODE = 22h	/* High video mode */
+
+		(6) Burn in the new configuration using SC.EXE eg:
+
+			CD \TSE\UI
+			SC -b..\E.EXE TSE
+
+	..and Rob's your uncle.
+
+
+	=========================================================
+	Techies:
+
+	The only real trick in all this is in line 64 of VID.S:
+
+		Set(CurrVideoMode,_AUTO_DETECT_)
+
+	The internal variables ScreenCols and ScreenRows are
+	protected from poking, which means abusing the Set()
+	command. I was even sensibly prevented from sending them
+	as references, using the var keyword.
+
+	It was a nice surprise to discover that _AUTO_DETECT_
+	could be used with CurrVideoMode. This is undocumented,
+	but let's face it, who in their right mind would want to
+	do that!
+
+	The BIN source is written for TASM (apologies,
+	Microsofties).
+
+		- Rob 28-08-93

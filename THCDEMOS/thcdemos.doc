@@ -1,0 +1,83 @@
+For help with THC.ZIP or THCDEMOS.ZIP questions, email billh@gci.net.
+
+To run the demos successfully, you will need to setup a directory C:\RTP
+and extract or move the contents of THCDEMOS.ZIP into that directory.
+
+The contents of THC.ZIP can be extracted into that directory or another
+directory which is included in your PATH statement.  The system from which
+these are extracted has an icon called SEARCH RTP on a desktop.  When it
+is double-clicked, it runs the SEARCH.BAT program.  The command line in the
+icon is CMD.EXE /k C:\RTP\SEARCH.BAT, and it starts in C:\RTP.  The SEARCH.BAT
+file simply reminds users that they can type HELP to see a help list of
+available commands.  Only three of those commands are provided in this demo.
+The searching of USA_LOCS.TXT using the MATCH program is provided by QUS.BAT
+and QUSID.BAT.  MATCH finds matches in LINES of text.
+
+The QUS program searches the entire file for one or two
+arguments provided on the command line.  These will usually be city names,
+but can include a state designation in the form of ", st" where st is the
+standard state abbreviation for the state.  QUSID searches only the first four
+characters of the USA_LOCS.TXT looking for a location identifier, the three
+or four characters found on your baggage claim tag after taking a flight
+somewhere and checking some baggage.
+
+The F program searches the Facility Description file for the description
+of a facility included in the National Airspace System (NAS).  It uses the
+PPM (Paragraph Pattern Match) program to search only the first line of each
+paragraph looking for the acronym you provide on the command line as the
+argument to the command.  Example: F ADAS
+
+The F, QUS and QUSID scripts provide help if called with no arguments.  The
+help is generated from the COLORMSG utility.
+
+Name          Length  Method   Size  Ratio    Date     Time    CRC-32  Attr
+----          ------  ------   ----- -----    ----     ----   -------- ----
+USA_LOCS.TXT 1402806  DeflatX 409384  71%  07-15-2005  10:03  e67dc195 --wa
+Official location identifiers for airports and other airway facilities.
+Used by QUS.BAT and QUSID.BAT files.
+
+FSEP.FIL      611099  DeflatX 138185  78%  08-13-2005  10:49  3d049453 --wa
+File of NAS facility descriptions.
+
+QUS.BAT          619  DeflatX    376  40%  08-13-2005  10:40  ca9cc350 --wa
+Search for a city or airport.  Shows help if called with no argument.
+
+QUSID.BAT        600  DeflatX    368  39%  08-13-2005  10:40  07645f5a --wa
+Search for an identifier to verify it is valid.  Shows help if called with
+no argument.
+
+F.BAT            447  DeflatX    227  50%  04-19-2005  11:12  88952405 --wa
+Search the FSEP.FIL for a facility acronym using F or search the entire file
+by using the command QALLFAC.  F shows help if called without an argument.
+
+USAHEAD          175  DeflatX     60  66%  01-14-2004  10:07  a71e47ac --wa
+The heading which remains on the display throughout multiple screenfulls of
+information if you search for a single letter by QUS A for example.
+
+QUS.HLP          615  DeflatX    362  42%  06-16-2004  09:23  ea3c596f --wa
+The help shown by the COLORMSG utility if you call QUS with no argument.
+
+QUSID.HLP        404  DeflatX    271  33%  03-24-2005  11:15  6558c47a --wa
+The help shown by the COLORMSG utility if you call QUSID with no argument.
+
+F.HLP            279  DeflatX    147  48%  12-30-2003  07:16  8109c1a3 --wa
+The help shown by the COLORMSG utility if you call F with no argument.
+
+SEARCH.BAT       165  DeflatX    146  12%  04-24-2003  14:22  ef021a3c --wa
+The script which can be linked to an icon on your desktop.  A simple reminder
+that typing HELP will show a menu or guide.
+
+HELP.BAT          41  DeflatX     41   0%  09-10-2004  14:42  8c7e49a0 --wa
+The script which causes COLORMSG to display the contents of RTPMENU.MNU.
+
+RTPMENU.MNU     2615  DeflatX   1052  60%  08-21-2005  15:57  a0f8e044 --wa
+The help file displayed by COLORMSG.
+
+QALLFAC.BAT      430  DeflatX    218  50%  04-19-2005  11:17  c2dd207a --wa
+The script which causes the entire FSEP.FIL to be searched for the entered
+argument or acronym.
+
+FILE_ID.DIZ      188  DeflatX    178   6%  08-21-2005  16:00  948806fd --wa
+Brief identification file.
+-------       ------          ------  ---
+     14      2020483          551015  73%

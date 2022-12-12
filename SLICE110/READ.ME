@@ -1,0 +1,54 @@
+Using Slice
+-----------
+
+The slice macro allows you to split larger files into smaller pieces using
+TSE Pro-32. Using slice is easy:
+
+    (a)     execute the macro
+    (b)     choose a file to split
+            (either type the filename of press enter to pick one)
+    (c)     choose a size for the slices
+
+The individual slices will be named by appending numerical extensions to the
+original filename. E.g., if your large file is foo.zip, your slices will be
+foo.zip.001, foo.zip.002, etc.
+
+To reassemble the slices use the following dos command:
+
+    copy /b foo.zip.001 + foo.zip.002 [+ ...] foo.zip
+
+The /b switch is important, otherwise dos would stop copying a slice at the
+first null character it encounters.
+
+
+Using the batch files
+---------------------
+
+First of all, the batch files need JP Software's 4dos (or one of its
+siblings) to execute. If you don't own one of these, you're out of luck,
+since the command shells provided with any MS product cannot interpret the
+extended syntax.
+
+The batch files simplify using slice even more. To split a file type
+
+    slice foo.zip
+
+at the command line and choose a size for your slices at TSE's menu. To
+reassemble the slices use
+
+    glue foo.zip.001
+
+The numerical extension, e.g. 001, is mandatory. The reason is that slices
+usually include multiple dots and therefore there is no straight forward way
+to provide a default extension. Moreover, at the 4dos prompt it's easy to
+enter the somewhat longer filename by using filename completion.
+
+
+Disclaimer
+----------
+
+These files are provided as is. Should you inadvertently destroy some of
+your own files while using them, it's not my fault. On the other hand, if
+you should find a bug, please let me know. You can contact me at
+DieterKoessl@compuserve.com.
+

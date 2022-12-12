@@ -1,0 +1,85 @@
+                              TCD Version 1.1
+                       Richard Hendricks June 5, 1993
+
+Here is a Change Directory/Drive Utility using TSE ("The Semware Editor" by
+Semware Corporation) and it's powerful macro language.
+
+I have been working on a Novell Network where the directory paths get kind
+of long and complicated. I was using Norton's Change Directory NCD, but for
+it to work quickly it wants to write a reference file in the root directory
+of each drive. I'm not authorized to write to the root directory of my
+network drive -- so Norton was kind of slow. I looked at a couple of other
+change directory programs, but I really wasn't satisfied with any particular
+one.
+
+So, here is how it all works...
+
+TCD requires a single directory reference file (TCD.DIR) and it is stored on
+the C: Drive. (The drive/path location of this reference file can be changed
+by editing the TCD.BAT and TCDSCAN.BAT.)
+
+After you have configured TCD, established the reference file and compiled
+TCD -- you are ready to start using it. TCD uses the TSE Regular Expression
+search capability, so wildcards are supported
+
+TCD dir_spec [command to execute]
+
+dir_spec  - this can be the directory name, only a portion of the name or a
+            string that contains the normal DOS wildcard characters or TSE
+            Regular Expression Characters.
+
+            Examples: TCD tse     ; goes to c:\tse
+                      TCD ROCC    ; goes to d:\procomm
+                      TCD E:*TEMP ; goes to e:\temp
+                      TCD *DAT*   ; goes to the first directory that
+                                    includes DAT in it's name. Some possible
+                                    matches might be DATA, COMDATA, GOODDAT
+                                    or BAD.DAT
+                      TCD C       ; first directory that contains 'C' in the
+                                    path
+                      TCD C:      ; goes to c:\
+
+            TCD does not support syntax like CD ..\..\TEMP or CD C: (CD
+            stays in the current directory on the C: Drive, TCD changes to
+            the root of the C: Drive) -- just used CD <grin>
+
+command to execute -
+           After TCD tries to change to the directory that you've entered,
+           it will then pass the remaining arguments to DOS for execution.
+           NOTE: TCD does not do any checking to see if the change was made
+           -- so it is possible that the command will be executed in the
+           wrong directory.
+
+           Examples: TCD data e engdata.603 ; TCD will change to
+                                              e:\data and then run TSE
+                                              telling it to load ENGDATA.603
+                     TCD PCP PCPLUS         ; TCD will change to c:\pcplus
+                                              and then start Procomm Plus
+
+How to get started...
+
+1) Compile the TCD macro, SC TCD
+
+2) I use a DOS environment variable (MACPATH) that points to TSE and my
+macros. This variable needs to include the trailing backslash.
+
+    For example:   set macpath=e:\tse\
+
+3) Run TCDSCAN. This requires DOS 5 or greater. I use the new switches that
+are available with the DIR command.
+
+The syntax for the TCDSCAN is  TCDSCAN d: [[d:] ...]
+
+     For example: TCDSCAN c: d:
+
+Notes/Hints:
+
+    The TCD.DIR can be edited to add directories, change the order of the
+    directories or remove directories. I removed some of the directories
+    that were included on the network drive.
+
+History:
+    Version 1.0 06/03/1993 Initial Release, using DOS( "CD "+newpath,..)
+    Version 1.1 06/05/1993 Uses Richard Blackburn's DIRCHNG.BIN
+
+// end-of-file

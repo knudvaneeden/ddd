@@ -1,0 +1,9 @@
+<12-20-97> v1.12 - TSE Pro/32 v2.8           
+Selector v1.12 displays a GUI listbox of the 
+files in the TSE Pro/32 ring.  Picking a file
+from the list box makes it the current file  
+in TSE Pro/32.  New for this version:        
+-ability to close TSE by closing selector    
+-ability to limit number of instances of     
+selector windows                             
+Author:  Chris Lee (cslee@bc.sympatico.ca)   
