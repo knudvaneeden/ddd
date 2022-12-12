@@ -1,7 +1,14 @@
-OS2CMD.ZIP contains a TSE-Pro 2.5 macro with
-a utility, the combination of which allows a
-TSE-Pro user to issue an OS/2 (2.1 or higher)
-command from TSE and to return to the
-originating TSE session with the captured
-screen output from the OS/2 command in a new
-file.
+OS2CLIP.S
+Version 0.8, Nov 19, 1995
+-
+Clipboard server and TSE interface macro
+to access the OS/2 clipboard from TSE.
+Works by using a native server appli-
+cation  (CSERVER.EXE) to get access to
+the clipboard contents. The server pro-
+gram is started from within TSE auto-
+matically on macro start up.
+Only text entries  supported.
+Cut, paste and copy operations are
+possible.
+Now also functional under OS/2 Warp!
