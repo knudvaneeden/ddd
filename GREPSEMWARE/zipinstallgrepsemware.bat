@@ -13,12 +13,27 @@ REM
 REM ===
 REM
 REM zipping all these files
+REM (remove to disable or add to enable the REM in front of the line of the zip executable command line)
 REM
+REM if using PKWare pkzipc.exe (commercial, default) / https://www.pkware.com/zip/products/pkzip
 pkzipc -add -dir grepsemware_knud.zip *.*
 REM
-REM view the result in the zip file
+REM if using Winzip (commercial) / https://www.winzip.com/en/pages/download/winzip
+REM winzip -min -a grepsemware_knud.zip *.*
 REM
-@ECHO "zipview grepsemware_knud.zip"
+REM if using 7z (free download)
+REM 7z a -r grepsemware_knud.zip *.*
+REM
+REM if using rar (free download) / https://www.rarlab.com/download.htm
+REM rar a grepsemware_knud.zip *.*
+REM
+REM if using info-zip (free download) / https://sourceforge.net/projects/infozip/
+REM zip grepsemware_knud.zip *.*
+REM
+REM ===
+REM
+REM optional: view the result in the zip file
+@ECHO pkzipc -preview grepsemware_knud.zip
 REM
 @ECHO "To install"
 @ECHO "1. -Store all the files in this directory in some temporary directory"
