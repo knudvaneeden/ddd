@@ -13,7 +13,7 @@ REM
 REM ===
 REM
 REM zipping all these files
-REM (remove to disable or add to enable the REM in front of the line of the zip executable command line)
+REM (remove to enable or add to disable the REM in front of the line of the zip executable command line)
 REM
 REM if using PKWare pkzipc.exe (commercial, default) / https://www.pkware.com/zip/products/pkzip
 pkzipc -add -dir grepsemware_knud.zip *.*
