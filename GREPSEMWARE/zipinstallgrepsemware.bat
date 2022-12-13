@@ -21,7 +21,7 @@ REM
 REM if using Winzip (commercial) / https://www.winzip.com/en/pages/download/winzip
 REM winzip -min -a grepsemware_knud.zip *.*
 REM
-REM if using 7z (free download)
+REM if using 7z (free download) / https://www.7-zip.org/download.html
 REM 7z a -r grepsemware_knud.zip *.*
 REM
 REM if using rar (free download) / https://www.rarlab.com/download.htm
