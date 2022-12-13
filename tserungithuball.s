@@ -16,7 +16,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: program: run: tse: github: all <description></description> <version control></version control> <version>1.0.0.0.13</version> <version control></version control> (filenamemacro=tserungithuball.s) [<Program>] [<Research>] [kn, ri, mo, 12-12-2022 21:00:22]
+// library: program: run: tse: github: all <description></description> <version control></version control> <version>1.0.0.0.18</version> <version control></version control> (filenamemacro=tserungithuball.s) [<Program>] [<Research>] [kn, ri, mo, 12-12-2022 21:00:22]
 INTEGER PROC FNProgramRunTseGithubAllB()
  // e.g. #DEFINE ELIST_INCLUDED FALSE
  // e.g. #include [ "eList.s" ]
@@ -95,18 +95,24 @@ INTEGER PROC FNProgramRunTseGithubAllB()
   //
   PushPosition()
   PushBlock()
-  GotoBufferId( bufferI )
   //
-  ExecMacro( "tserungithuballline" )
-  //
-  AddLine( "quit" )
-  //
+  IF GotoBufferId( bufferI )
+   PushBlock()
+   PushPosition()
+   ExecMacro( "tserungithuballline" )
+   AddLine( "quit" )
+   PurgeMacro( "tserungithuballline" )
+   PopBlock()
+   PopPosition()
+  ENDIF
   //
   GotoLine( 1 )
   IF eList( "Choose an option" )
    s1 = Trim( GetText( 1, 255 ) )
   ELSE
    AbandonFile( bufferI )
+   PopBlock()
+   PopPosition()
    RETURN( FALSE )
   ENDIF
   AbandonFile( bufferI )
@@ -128,7 +134,12 @@ INTEGER PROC FNProgramRunTseGithubAllB()
   //
   s1 = FNStringGetCarS( s1 )
   //
+  PushBlock()
+  PushPosition()
   ExecMacro( s1 )
+  UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  PopBlock()
+  PopPosition()
   //
  UNTIL EquiStr( s1, "quit" )
  //
