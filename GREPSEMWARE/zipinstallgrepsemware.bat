@@ -27,7 +27,7 @@ REM
 REM if using rar (free download) / https://www.rarlab.com/download.htm
 REM rar a r grepsemware_knud.zip *.*
 REM
-REM if using info-zip (free download) / https://sourceforge.net/projects/infozip/ otherwise (older) GNUWin32 downloads
+REM if using info-zip (free download) / install zip (at least 3.x) and unzip (at least 6.x) from https://cygwin.com/ / https://sourceforge.net/projects/infozip/ (source code only) / (older) GNUWin32 downloads / http://stahlworks.com/zip
 REM zip -r grepsemware_knud.zip *.*
 REM
 REM ===
