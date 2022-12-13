@@ -12,7 +12,7 @@ del grepsemware_knud.zip
 REM
 REM ===
 REM
-REM zipping all these files
+REM zipping all these files (add and recurse all subdirectories)
 REM (remove to enable or add to disable the REM in front of the line of the zip executable command line)
 REM
 REM if using PKWare pkzipc.exe (commercial, default) / https://www.pkware.com/zip/products/pkzip
@@ -25,7 +25,7 @@ REM if using 7z (free download) / https://www.7-zip.org/download.html
 REM 7z a -r grepsemware_knud.zip *.*
 REM
 REM if using rar (free download) / https://www.rarlab.com/download.htm
-REM rar a grepsemware_knud.zip *.*
+REM rar a r grepsemware_knud.zip *.*
 REM
 REM if using info-zip (free download) / https://sourceforge.net/projects/infozip/ otherwise (older) GNUWin32 downloads
 REM zip -r grepsemware_knud.zip *.*
