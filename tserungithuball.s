@@ -1,6 +1,5 @@
 FORWARD INTEGER PROC FNProgramRunTseGithubAllB()
 FORWARD PROC Main()
-FORWARD STRING PROC FNStringGetCarS( STRING s1 )
 
 
 // --- MAIN --- //
@@ -16,7 +15,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: program: run: tse: github: all <description></description> <version control></version control> <version>1.0.0.0.18</version> <version control></version control> (filenamemacro=tserungithuball.s) [<Program>] [<Research>] [kn, ri, mo, 12-12-2022 21:00:22]
+// library: program: run: tse: github: all <description></description> <version control></version control> <version>1.0.0.0.22</version> <version control></version control> (filenamemacro=tserungithuball.s) [<Program>] [<Research>] [kn, ri, mo, 12-12-2022 21:00:22]
 INTEGER PROC FNProgramRunTseGithubAllB()
  // e.g. #DEFINE ELIST_INCLUDED FALSE
  // e.g. #include [ "eList.s" ]
@@ -99,9 +98,17 @@ INTEGER PROC FNProgramRunTseGithubAllB()
   IF GotoBufferId( bufferI )
    PushBlock()
    PushPosition()
-   ExecMacro( "tserungithuballline" )
+   // ExecMacro( "tserungithuballline" )
+   // #INCLUDE [ "tserungithuballline.inc" ]
+   //
+   // The .inc file is a comma separated value (=CSV) file (separator is here the semi-colon)
+   //
+   // this path means that the include file is in the same directory as the loaded TSE macro
+   //
+   InsertFile( Format( AddTrailingSlash( SplitPath( CurrMacroFilename(), _DRIVE_ | _PATH_ ) ), "tserungithuballline.inc" ) )
+   EndFile()
    AddLine( "quit" )
-   PurgeMacro( "tserungithuballline" )
+   // PurgeMacro( "tserungithuballline" )
    PopBlock()
    PopPosition()
   ENDIF
@@ -132,12 +139,14 @@ INTEGER PROC FNProgramRunTseGithubAllB()
   PopBlock()
   PopPosition()
   //
-  s1 = FNStringGetCarS( s1 )
+  // s1 = FNStringGetCarS( s1 )
+  s1 = GetToken( s1, ";", 1 )
   //
   PushBlock()
   PushPosition()
   ExecMacro( s1 )
   UpDateDisplay() // IF WaitForKeyPressed( 0 ) ENDIF // Activate if using a loop
+  Warn( "<Press any key>" )
   PopBlock()
   PopPosition()
   //
@@ -146,22 +155,5 @@ INTEGER PROC FNProgramRunTseGithubAllB()
  B = TRUE
  //
  RETURN( B )
- //
-END
-
-// library: string: get: word: token: get: first: FNStringGetCarS(): Get the first word of a string (words delimited by a space " " (=space delimited list)). <description></description> <version control></version control> <version>1.0.0.0.1</version> (filenamemacro=getstgca.s) [<Program>] [<Research>] [kn, ni, su, 02-08-1998 15:54:17]
-STRING PROC FNStringGetCarS( STRING s )
- // e.g. PROC Main()
- // e.g.  STRING s1[255] = FNStringGetInitializeNewStringS()
- // e.g.  s1 = FNStringGetInputS( "string: get: word: token: get: first: s = ", "this is a test" )
- // e.g.  IF FNKeyCheckPressEscapeB( s1 ) RETURN() ENDIF
- // e.g.  Message( FNStringGetCarS( s1 ) ) // gives e.g. "this"
- // e.g. END
- // e.g.
- // e.g. <F12> Main()
- //
- // variation: RETURN( FNStringGetTokenFirstS( s, " " ) )
- //
- RETURN( GetToken( s, " ", 1 ) ) // faster, but not central
  //
 END
