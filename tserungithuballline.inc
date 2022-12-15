@@ -1,3 +1,4 @@
+tsemacroloadedget\tsemacroloadedget.mac;                                    Get all loaded TSE macro filenames
 __dbed2r0\__dbed2r0.mac;                                                    TSE macro to edit dBase databases
 zz_log\zz_log.mac;
 zoom\zoom.mac;
