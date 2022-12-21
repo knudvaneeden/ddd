@@ -135,6 +135,42 @@ LRESULT CALLBACK Mouse( int nCode, WPARAM wParam, LPARAM lParam ) {
    }
   }
   //
+  else if ( wParam == WM_LBUTTONDBLCLK ) {
+   //
+   delta = 13;
+   //
+  }
+  //
+  else if ( wParam == WM_RBUTTONDBLCLK ) {
+   //
+   delta = 14;
+   //
+  }
+  //
+  else if ( wParam == WM_MBUTTONDBLCLK ) {
+   //
+   delta = 15;
+   //
+  }
+  //
+  else if ( wParam == WM_XBUTTONDBLCLK ) {
+   //
+   if ( button == XBUTTON1 ) {
+    //
+    // XBUTTON1 was clicked.
+    //
+    delta = 16;
+    //
+   }
+   else if ( button == XBUTTON2 ) {
+    //
+    // XBUTTON2 was clicked.
+    //
+    delta = 17;
+    //
+   }
+  }
+  //
   else {
    //
    delta = 0;
@@ -268,6 +304,36 @@ int main() {
   else if ( d == 12 ) {
    //
    cout << "XBUTTON2 DOWN (DownBtn down) " << endl;
+   //
+  }
+  //
+  else if ( d == 13 ) {
+   //
+   cout << "BUTTON LEFT DOUBLECLICK (LeftBtn doubleclick)" << endl;
+   //
+  }
+  //
+  else if ( d == 14 ) {
+   //
+   cout << "BUTTON RIGHT DOUBLECLICK (RightBtn doubleclick)" << endl;
+   //
+  }
+  //
+  else if ( d == 15 ) {
+   //
+   cout << "BUTTON CENTER DOUBLECLICK (CenterBtn doubleclick)" << endl;
+   //
+  }
+  //
+  else if ( d == 16 ) {
+   //
+   cout << "XBUTTON1 DOUBLECLICK (UpBtn doubleclick)" << endl;
+   //
+  }
+  //
+  else if ( d == 17 ) {
+   //
+   cout << "XBUTTON2 DOUBLECLICK (DownBtn doubleclick)" << endl;
    //
   }
   //
