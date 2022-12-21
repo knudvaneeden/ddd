@@ -17,30 +17,53 @@
 //
 #include <windows.h>
 //
-using namespace std;
+#include <winuser.h>
 //
-#define MOUSEEVENTF_HWHEEL 0x01000
+using namespace std;
 //
 int main() {
  //
- while ( 1 )
+ // int totalI = 2000;
+ //
+ // while ( 1 )
   //
   // rotate mouse wheel up
   // mouse_event( MOUSEEVENTF_WHEEL, 0, 0, 1 * 120, 0 );
   //
+  // Sleep( totalI );
   // ===
   //
   // rotate mouse wheel down
   // mouse_event( MOUSEEVENTF_WHEEL, 0, 0, -1 * 120, 0 );
   //
+  // Sleep( totalI );
+  //
   // ===
   //
   // tilt mouse wheel left
-  mouse_event( MOUSEEVENTF_HWHEEL, 0, 0, 1 * 120, 0 );
+  // mouse_event( MOUSEEVENTF_HWHEEL, 0, 0, 1 * 120, 0 );
+  //
+  // Sleep( totalI );
   //
   // ===
   //
   // tilt mouse wheel right
-  // mouse_event( ( MOUSEEVENTF_HWHEEL, 0, 0, -1 * 120, 0 );
+  // mouse_event( MOUSEEVENTF_HWHEEL, 0, 0, -1 * 120, 0 );
+  //
+  // Sleep( totalI );
+  //
+  // ===
+  //
+  // press mouse XBUTTON1 or XBUTTON2 (forward button / up button)
+  // mouse_event( MOUSEEVENTF_XDOWN, 0, 0, 1 * 120, 0 );
+  //
+  // Sleep( totalI );
+  //
+  // press mouse XBUTTON1 or XBUTTON2 (backwards button / up button)
+  mouse_event( MOUSEEVENTF_XUP, 0, 0, -1 * 120, 0 );
+  //
+  // Sleep( totalI );
+  //
+  // ====
   //
  }
