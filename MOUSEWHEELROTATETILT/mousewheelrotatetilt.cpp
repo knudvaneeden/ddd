@@ -124,7 +124,7 @@ int main() {
   //
   else if ( d == 2 ) {
    //
-   cout << "TILT RIGHT (WheelLeft)" << endl;
+   cout << "TILT RIGHT (WheelRight)" << endl;
    //
   }
   //
@@ -140,4 +140,3 @@ int main() {
   }
  }
 }
-
