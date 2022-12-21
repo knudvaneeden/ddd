@@ -6,11 +6,15 @@
 //
 #include <windows.h>
 //
+#include <winuser.h>
+//
 #include <ctime>
 //
 #include <iostream>
 //
 #include <conio.h>
+//
+#include <windef.h>
 //
 using namespace std;
 //
@@ -29,6 +33,8 @@ LRESULT CALLBACK Mouse( int nCode, WPARAM wParam, LPARAM lParam ) {
  MSLLHOOKSTRUCT* pMouseStruct = ( MSLLHOOKSTRUCT* ) lParam;
  //
  if ( pMouseStruct != NULL ) {
+  //
+  LONG button = HIWORD( pMouseStruct->mouseData );
   //
   if ( wParam == WM_MOUSEWHEEL ) {
    //
@@ -95,14 +101,38 @@ LRESULT CALLBACK Mouse( int nCode, WPARAM wParam, LPARAM lParam ) {
   //
   else if ( wParam == WM_XBUTTONUP ) {
    //
-   delta = 9;
-   //
+   if ( button == XBUTTON1 ) {
+    //
+    // XBUTTON1 was clicked.
+    //
+    delta = 9;
+    //
+   }
+   else if ( button == XBUTTON2 ) {
+    //
+    // XBUTTON2 was clicked.
+    //
+    delta = 10;
+    //
+   }
   }
   //
   else if ( wParam == WM_XBUTTONDOWN ) {
    //
-   delta = 10;
-   //
+   if ( button == XBUTTON1 ) {
+    //
+    // XBUTTON1 was clicked.
+    //
+    delta = 11;
+    //
+   }
+   else if ( button == XBUTTON2 ) {
+    //
+    // XBUTTON2 was clicked.
+    //
+    delta = 12;
+    //
+   }
   }
   //
   else {
@@ -219,13 +249,25 @@ int main() {
   //
   else if ( d == 9 ) {
    //
-   cout << "XBUTTON1 OR XBUTTON2 UP (UpBtn or DownBtn up)" << endl;
+   cout << "XBUTTON1 UP (UpBtn up) " << endl;
    //
   }
   //
   else if ( d == 10 ) {
    //
-   cout << "XBUTTON1 OR XBUTTON2 Down (UpBtn or DownBtn down)" << endl;
+   cout << "XBUTTON2 UP (DownBtn up) " << endl;
+   //
+  }
+  //
+  else if ( d == 11 ) {
+   //
+   cout << "XBUTTON1 DOWN (UpBtn down) " << endl;
+   //
+  }
+  //
+  else if ( d == 12 ) {
+   //
+   cout << "XBUTTON2 DOWN (DownBtn down) " << endl;
    //
   }
   //
