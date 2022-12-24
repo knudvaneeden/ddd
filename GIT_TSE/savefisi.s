@@ -15,7 +15,7 @@ END
 
 // --- LIBRARY --- //
 
-// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.10</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
+// library: file: save: file: version: control: git: simplest: initialize <description></description> <version control></version control> <version>1.0.0.0.13</version> <version control></version control> (filenamemacro=savefisi.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:28:38]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestInitializeB()
  // e.g. //
  // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
@@ -121,12 +121,14 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestInitializeB()
  SetGlobalStr( "s037", "Delete your currently loaded file in TSE from your local repository directory" )
  SetGlobalStr( "s111", "Delete a filename not to be loaded into TSE from your current local repository directory" )
  SetGlobalStr( "s112", "Delete a filename not to be loaded into TSE from your remote repository directory" )
+ SetGlobalStr( "s113", "Delete a directory not to be loaded into TSE from your current local repository directory" )
  SetGlobalStr( "s104", "Delete your currently loaded file in TSE from your remote repository directory (from git + also disk)" )
  SetGlobalStr( "s105", "Delete your currently loaded file in TSE from your remote repository directory (from git only)" )
  SetGlobalStr( "s038", "Download once and install: Git-Cygwin" )
  SetGlobalStr( "s103", "Download once and install: Git-SmartGit" )
  SetGlobalStr( "s039", "Download once and install: Git-Tortoise" )
  SetGlobalStr( "s040", "Get all filenames in your current local repository directory" )
+ SetGlobalStr( "s114", "Get the source code of a previous revision (git show / svn cat)" )
  SetGlobalStr( "s041", "Goto your remote Git server web page on the Internet: GitHub" )
  SetGlobalStr( "s042", "Goto your remote Git server web page on the Internet: GitLab" )
  SetGlobalStr( "s043", "Load a whole git directory into TSE" )

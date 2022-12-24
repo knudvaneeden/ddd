@@ -134,6 +134,9 @@ PROC Main()
   s16 = "initialize first git"
   SetGlobalStr( s16, "s011 s012 s013 s014" )
   //
+  s17 = "Get the source code of a previous revision (git show / svn cat)"
+  SetGlobalStr( s17, "s114" )
+  //
   PushPosition()
   bufferI = CreateTempBuffer()
   PopPosition()
@@ -158,6 +161,7 @@ PROC Main()
   AddLine( s14 )
   AddLine( s15 )
   AddLine( s16 )
+  AddLine( s17 )
   //
   AddLine( "quit" )
   //
@@ -299,7 +303,7 @@ PROC PROCProgramRunPopupWindowPositionTse()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.81</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
+// library: file: save: file: version: control: git: simplest: program <description></description> <version control></version control> <version>1.0.0.0.84</version> <version control></version control> (filenamemacro=git_tse.s) [<Program>] [<Research>] [kn, ri, th, 24-11-2022 00:19:45]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g. //
  // e.g. STRING iniFileNameGS[255] = ".\git_tse.ini"
@@ -403,6 +407,9 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   s16 = "initialize first git"
  // e.g.   SetGlobalStr( s16, "s011 s012 s013 s014" )
  // e.g.   //
+ // e.g.   s17 = "Get the source code of a previous revision (git show / svn cat)"
+ // e.g.   SetGlobalStr( s17, "s114" )
+ // e.g.   //
  // e.g.   PushPosition()
  // e.g.   bufferI = CreateTempBuffer()
  // e.g.   PopPosition()
@@ -427,6 +434,7 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestProgramB( STRING inS )
  // e.g.   AddLine( s14 )
  // e.g.   AddLine( s15 )
  // e.g.   AddLine( s16 )
+ // e.g.   AddLine( s17 )
  // e.g.   //
  // e.g.   AddLine( "quit" )
  // e.g.   //
@@ -648,7 +656,7 @@ INTEGER PROC FNWindowSetCenterPopupOnB()
  //
 END
 
-// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.371</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
+// library: file: save: file: version: control: git: simplest: case <description></description> <version control></version control> <version>1.0.0.0.377</version> <version control></version control> (filenamemacro=savefisp.s) [<Program>] [<Research>] [kn, ri, su, 13-11-2022 23:45:27]
 INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g. //
  // e.g. #DEFINE ELIST_INCLUDED FALSE
@@ -764,7 +772,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  // e.g.   AddLine( GetGlobalStr( "s065" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s066" ) ) //
  // e.g.   AddLine( GetGlobalStr( "s067" ) ) AddLine( "--------------------------------------------------------------------------" )
- // e.g.   AddLine( GetGlobalStr( "s068" ) ) AddLine( "--------------------------------------------------------------------------" )
+ // e.g.   AddLine( GetGlobalStr( "s068" ) ) //
+ // e.g.   AddLine( GetGlobalStr( "s114" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s069" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s070" ) ) AddLine( "--------------------------------------------------------------------------" )
  // e.g.   AddLine( GetGlobalStr( "s071" ) ) AddLine( "--------------------------------------------------------------------------" )
@@ -1028,6 +1037,8 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
  //
  STRING fileNameOldS[255] = ""
  STRING fileNameNewS[255] = ""
+ //
+ STRING fileNameS[255] = ""
  //
  STRING s[255] = ""
  //
@@ -3537,6 +3548,54 @@ INTEGER PROC FNFileSaveFileVersionControlGitSimplestCaseB( STRING caseS )
    s = Format( s, "pause" )
    //
    B = FNProgramRunGitTseOutputB( s, "s068", TRUE )
+   //
+  ENDIF
+  //
+ ENDIF
+ //
+ // ------------------------------------------------------------------------------
+ //
+ IF s3 == GetGlobalStr( "s114" )
+  //
+  s = ""
+  s1 = "0|1|2|3|4|5|..."
+  s2 = ""
+  fileNameS = fileNameExtensionS
+  //
+  IF NOT FileExists( directoryRepositoryS )
+   //
+   PROCProgramRunPopupWindowPositionTse()
+   Warn( "Run the initialize step first to create a Git repository" )
+   //
+  ELSE
+    //
+   PROCProgramRunPopupWindowPositionTse()
+   IF ( ( Ask( "N = ", s1, _EDIT_HISTORY_ ) ) AND ( Length( s1 ) > 0 ) )
+    //
+    IF ( ( Ask( "filenameS = ", fileNameS, _EDIT_HISTORY_ ) ) AND ( Length( fileNameS ) > 0 ) )
+     //
+     s2 = QuotePath( Format( SplitPath( fileNameS, _DRIVE_ | _PATH_ | _NAME_ ), s1, SplitPath( fileNameS, _EXT_ ) ) )
+     //
+     s = Format( driveLetterS, " ", "&", " ", "cd", " ", directoryRepositoryS )
+     //
+     s = Format( s, " ", "&", " " )
+     s = Format( s, executableS, " ", "show", " ", "HEAD", "~", s1, ":", "./", fileNameS, " ", ">", s2 )
+     //
+     // PushPosition()
+     // EditFile( s2 )
+     Message( "Saved this revision HEAD~", s1, " ", "as file", " ", s2 )
+     // PopPosition()
+     //
+     s = Format( s, " ", "&", " " )
+     s = Format( s, "pause" )
+     //
+     // CopyToWinClip( s )
+     //
+   ENDIF
+   //
+   B = FNProgramRunGitTseOutputB( s, "s0114", TRUE )
+   //
+   ENDIF
    //
   ENDIF
   //
